@@ -1,0 +1,367 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6 col-md-10">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="jaune text-center mx-3 mb-3">
+            Form to become a carrier
+          </h3>
+        </div>
+        <div class="card-body">
+          <div class="modal-body col-sm-6 col-md-12">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-xs-12 tab">
+                  <nav>
+                    <div class="nav nav-tabs nav-fill" role="tablist">
+                      <a class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="nav-home"
+                        aria-selected="true" onclick="openTab(event, 'personal');isCompagnyAccount=false"
+                        aria-selected="true" id="tab-1">Personal</a>
+                      <a class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="nav-profile"
+                        aria-selected="false" onclick="openTab(event, 'company');isCompagnyAccount=true"
+                        aria-controls="tabs-2" aria-selected="true" id="tab-2">Company</a>
+                    </div>
+                  </nav>
+                </div>
+                <br><br>
+                <!-- Tabs navs -->
+                <!-- <div class="tab">
+                    <ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-mdb-toggle="tab" aria-controls="tabs-1"
+                          onclick="openTab(event, 'personal');isCompagnyAccount=false" aria-selected="true"
+                          id="tab-1">Personal</a>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-mdb-toggle="tab"
+                          onclick="openTab(event, 'company');isCompagnyAccount=true" aria-controls="tabs-2"
+                          aria-selected="true" id="tab-2">Company</a>
+                      </li>
+                    </ul>
+                  </div> -->
+                <div class="tab-content col-md-10 col-lg-11 centreVerticalemen" id="nav-tabContent">
+                  <br>
+
+                  <div id="personal" class="tabcontent tab-pane show active card-body col-12">
+
+                    <div class="cont2">
+                      <div class="form">
+                        <div class="col-12">
+                          <h3 class="text-center">Personal</h3>
+                        </div>
+                        <form *ngIf="!waitForSubmittionProviderPersonnalForm" [formGroup]="bePersonnalCarrierForm"
+                          (ngSubmit)="submit()" class="align-content-center col-12 ml-auto mr-auto">
+                          <div class="container-fluid">
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text"
+                                  id="service_title" 
+                                  formControlName="field_service_title"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Service title" 
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.field_service_title.errors }">
+                                  <div *ngIf="submitted && fPersonnal.field_service_title.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.field_service_title.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Service title</strong></p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text"
+                                  id="passportNum" 
+                                  formControlName="fiel_passportNumber"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Passport Number"
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.fiel_passportNumber.errors }">
+                                  <div *ngIf="submitted && fPersonnal.fiel_passportNumber.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.fiel_passportNumber.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Passport Number</strong></p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-11">
+                                <app-search-location #personnalZone></app-search-location>
+                              </div>
+                            </div>
+                            <br>
+                            <p class="text-left"><strong>Adress for verification</strong></p>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adPersonal1" 
+                                  formControlName="fiel_adPersonal1"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Personal Adress 1"
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.fiel_adPersonal1.errors }">
+                                  <div *ngIf="submitted && fPersonnal.fiel_adPersonal1.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.fiel_adPersonal1.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Personal Adress 1</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adPersonal2" 
+                                  formControlName="fiel_adPersonal2"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Personal Adress 2"
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.fiel_adPersonal2.errors }">
+                                  <div *ngIf="submitted && fPersonnal.fiel_adPersonal2.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.fiel_adPersonal2.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Personal Adress 2</strong></p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adPersonal3" 
+                                  formControlName="fiel_adPersonal3"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Personal Adress 3"
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.fiel_adPersonal3.errors }">
+                                  <div *ngIf="submitted && fPersonnal.fiel_adPersonal3.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.fiel_adPersonal3.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Personal Adress 3</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adPersonal4" 
+                                  formControlName="fiel_adPersonal4"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Personal Adress 4"
+                                  [ngClass]="{ 'is-invalid': submitted && fPersonnal.fiel_adPersonal4.errors }">
+                                  <div *ngIf="submitted && fPersonnal.fiel_adPersonal4.errors" class="invalid-feedback">
+                                      <div *ngIf="fPersonnal.fiel_adPersonal4.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Personal Adress 4</strong></p>
+                              </div>
+                            </div><br>
+                            <div class="col-12">
+                              <p class="text-left"><strong>Description</strong></p>
+                              <textarea rows="5" class="form-control field-form1 field"
+                                placeholder="Here can be your description" formControlName="field_service_description"
+                                value=""></textarea>
+                            </div><br>
+                            <!-- row-item-->
+
+                            <!-- row-item-->
+                            <app-input-file-upload-list #personnalUploadFile label="Idencation file">
+                            </app-input-file-upload-list>
+                          </div>
+
+                        </form>
+                        <div class="row" *ngIf="waitForSubmittionProviderPersonnalForm">
+                          <app-progress-indeterminate></app-progress-indeterminate>
+                        </div>
+                      </div>
+                      <!-- row-item-->
+                    </div>
+                    <br>
+                    <div class="modal-footer" *ngIf="!waitForSubmittionProviderPersonnalForm">
+                      <button type="button" class="btn btn-danger"
+                        style="background-color: rgb(179, 33, 33) !important;"
+                        [routerLink]="['/carrier/be-carrier']">Cancel</button>
+                      <button type="button" class="btn btn-success"
+                        style="background-color: rgb(13, 138, 13) !important;"
+                        (click)="isCompagnyAccount=false;submit()">Confirm</button>
+                    </div>
+
+                  </div>
+
+                  <div id="company" class="tab-pane tabcontent card-body col-12">
+
+                    <div class="cont2">
+                      <div class="form">
+                        <div class="col-12">
+                          <h3 class="text-center">Company</h3>
+                        </div>
+
+                        <form *ngIf="!waitForSubmittionProviderCompanyForm" (ngSubmit)="submit()"
+                          [formGroup]="beCompagnyCarrierForm" class="align-content-center col-12 ml-auto mr-auto">
+                          <div class="container-fluid"><br>
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text" 
+                                  id="service_title2" 
+                                  formControlName="field_service_title"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Service title"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.field_service_title.errors }">
+                                  <div *ngIf="submitted && fCompagny.field_service_title.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.field_service_title.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Service title</strong></p>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-12">
+                                <input type="text" 
+                                  id="companyName" 
+                                  formControlName="field_companyName"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Name"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.field_companyName.errors }">
+                                  <div *ngIf="submitted && fCompagny.field_companyName.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.field_companyName.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Company Carrier Name</strong></p>
+                              </div>
+                            </div>
+                            <div class="col-12">
+                              <app-search-location #compagnyZone></app-search-location>
+                            </div><br>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="regNum" 
+                                  formControlName="field_regNum"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Registration Number"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.field_regNum.errors }">
+                                  <div *ngIf="submitted && fCompagny.field_regNum.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.field_regNum.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Registration Number</strong>
+                                </p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="impExpCode" 
+                                  formControlName="field_impExpCode"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Code"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.field_impExpCode.errors }">
+                                  <div *ngIf="submitted && fCompagny.field_impExpCode.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.field_impExpCode.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Import / Export code</strong>
+                                </p>
+                              </div><br>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="passportNum" 
+                                  formControlName="fiel_passportNumber"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Passport Number"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_passportNumber.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_passportNumber.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_passportNumber.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Passport Number</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="comAdd" 
+                                  formControlName="fiel_compagnyaddress"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Address"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_compagnyaddress.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_compagnyaddress.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_compagnyaddress.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Compagny address</strong></p>
+                              </div>
+                            </div>
+
+                            <p class="text-left"><strong>Adress for verification</strong></p>
+                            <div class="row">
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adCompany1" 
+                                  formControlName="fiel_adCompany1"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Adress 1"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_adCompany1.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_adCompany1.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_adCompany1.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Company Adress 1</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adCompany2" 
+                                  formControlName="fiel_adCompany2"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Adress 2"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_adCompany2.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_adCompany2.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_adCompany2.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Company Adress 2</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adCompany3" 
+                                  formControlName="fiel_adCompany3"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company Adress 3"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_adCompany3.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_adCompany3.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_adCompany3.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Company Adress 3</strong></p>
+                              </div>
+                              <div class="col-md-6">
+                                <input type="text" 
+                                  id="adCompany4" 
+                                  formControlName="fiel_adCompany4"
+                                  class="form-control field-form1 field" 
+                                  placeholder="Company address 4"
+                                  [ngClass]="{ 'is-invalid': submitted && fCompagny.fiel_adCompany4.errors }">
+                                  <div *ngIf="submitted && fCompagny.fiel_adCompany4.errors" class="invalid-feedback">
+                                      <div *ngIf="fCompagny.fiel_adCompany4.errors.required">This field is required</div>
+                                  </div>
+                                <p class="title-form sub-indication text-left"><strong>Company Adress 4</strong></p>
+                              </div>
+                            </div>
+                          </div><br>
+                          <div class="col-12">
+                            <p class="text-left"><strong>Description</strong></p>
+                            <textarea rows="5" class="form-control field-form1 field"
+                              placeholder="Here can be your description" formControlName="field_service_description"
+                              value=""></textarea>
+                          </div><br>
+                          <!--<div class="col-">
+                        <input type="text" id="field_cities2" formControlName="field_cities2"
+                          class="form-control field-form1 field" placeholder="Cities">
+                        <p class="title-form sub-indication text-left"><strong>Cities</strong></p>
+                      </div><br>-->
+                          <!-- row-item-->
+                          <app-input-file-upload-list #compagnyUploadFile label="Idencation file">
+                          </app-input-file-upload-list>
+
+                          <br>
+                        </form>
+                        <div class="row" *ngIf="waitForSubmittionProviderCompanyForm">
+                          <app-progress-indeterminate></app-progress-indeterminate>
+                        </div>
+                      </div>
+
+                      <!-- row-item-->
+
+                      <!-- row-item-->
+
+                    </div>
+                    <br>
+                    <div class="modal-footer" *ngIf="!waitForSubmittionProviderCompanyForm">
+                      <button type="button" class="btn btn-danger"
+                        style="background-color: rgb(179, 33, 33) !important;"
+                        [routerLink]="['/carrier/be-carrier']">Cancel</button>
+                      <button type="button" class="btn btn-success"
+                        style="background-color: rgb(13, 138, 13) !important;"
+                        (click)="isCompagnyAccount=true;submit()">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

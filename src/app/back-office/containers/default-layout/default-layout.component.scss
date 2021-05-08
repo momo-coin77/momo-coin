@@ -1,0 +1,15 @@
+.sidebar .nav-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: rgb(158, 63, 63) !important;
+  text-decoration: underline !important;
+  background: transparent;
+}
+.sidebar .nav-link:hover {
+  color: white !important;
+  background: #de8538 !important;
+}
+.sidebar .nav-link:active {
+  color: white !important;
+  background: #47412e71 !important;
+}

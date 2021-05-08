@@ -1,0 +1,56 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card text-center">
+        <div class="card-header">
+          <h3 class="jaune text-left mx-4 mb-4">
+          Curent balance
+          </h3>
+        </div>
+        <div class="card-body">
+          <strong style="text-shadow: 1px 1px 3px rgb(172, 140, 10);">{{balence}} </strong> 
+          <span *ngIf="cameroon">FCFA</span>
+          <span *ngIf="gabon">FCFA</span>
+          <span *ngIf="nigeria">NAIRA</span>
+          <span *ngIf="southAfrica">RAND</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="jaune text-left mx-4 mb-4">
+          Deposit
+          </h3>
+        </div>
+        <app-payment></app-payment>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+
+
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm your transaction</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you confirm the transaction?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="myModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="myModal.hide();showNotification('top','center', 'danger', 'pe-7s-close-circle', '\<b>Sorry\</b>\<br>This service was not available now. Tray later.')">Confirm</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

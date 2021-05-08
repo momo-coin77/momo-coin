@@ -1,0 +1,162 @@
+<div *ngIf="!waitingProviderInfos">
+  <div class="row">
+    <br>
+    <h4 class="mb-2 text-left title-form"> Carriers List available for your request.</h4>
+    <br><br>
+  </div>
+  <div class="row" *ngIf="selectedProvider!=null">
+    <span class="col-12">Selected driver: {{selectedProvider.name}}</span>
+  </div>
+
+  <div class="row">
+    <table class="table table-bordered table-striped table-sm">
+      <thead>
+        <tr>
+          <th>Driver</th>
+          <th>Location</th>
+          <th>Vehicles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="showProviderDetail(provider)" *ngFor="let provider of providerList">
+          <td>{{provider.name}}</td>
+          <td>{{provider.getLocationString()}}</td>
+          <td>{{provider.getVehiculeString()}}</td>
+        </tr>
+
+      </tbody>
+    </table>
+    <nav>
+      <ul class="pagination pull-right">
+        <li class="page-item"><a class="page-link">Prev</a></li>
+        <li class="page-item active">
+          <a class="page-link">1</a>
+        </li>
+        <li class="page-item"><a class="page-link">2</a></li>
+        <li class="page-item"><a class="page-link">3</a></li>
+        <li class="page-item"><a class="page-link">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-registration text-right">
+
+  </div>
+  <div class="footer-registration text-right">
+    <a [routerLink]="['/post-requests/packages/add']" class="btn next-button btn-w">
+      Previous
+    </a>
+
+    <button type="button" (click)="myModal.show()" [disabled]="selectedProvider==null" class="btn next-button btn-w">
+      Submit
+    </button>
+  </div>
+</div>
+<app-progress-indeterminate *ngIf="waitingProviderInfos"></app-progress-indeterminate>
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div *ngIf="selectedUserInfos!=null" class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Provider informations</h4>
+        <button type="button" class="close" (click)="cancelModel()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="col-xl-12 order-xl-2 mb-xl-0">
+          <div class="row">
+            <div class="col-lg-2 order-lg-2">
+              <div class="card-profile-image pull-left">
+                <img class="rounded-circle responsive-img" src="{{userProfileImg}}" alt="Image" />
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0 pt-md-4">
+            <div class="text-center">
+              <label *ngIf="this.selectedUserInfos.isCompany; else noCompany">{{companyName}}</label>
+              <ng-template #noCompany> <label>No Company</label></ng-template>              
+              <br>
+              <div>
+                <span>
+                  <span class="badge material-icons-profil black-text black">4.5</span>
+                  <i class="fas fa-star jaune"></i>
+                  <i class="fas fa-star jaune"></i>
+                  <i class="fas fa-star jaune"></i>
+                  <i class="fas fa-star jaune"></i>
+                </span>
+              </div>
+              <h3>
+                {{selectedUserInfos.getSimpleName()}}
+              </h3>
+              <div class="h5 font-weight-300">
+                <i class="ni location_pin mr-2"></i>{{selectedUserInfos.username}}
+              </div>
+              <div class="h5 mt-4">
+                {{selectedUserInfos.adresse.phone}}
+              </div>
+              <div>
+                {{selectedUserInfos.adresse.country}}; {{selectedUserInfos.adresse.city}}
+              </div>
+              <br>
+              <hr class="my-4">
+              <!-- <p>{{selectedUserInfos.getSimpleName()}}</p> -->
+              <div class="text-center">
+                <button href="#" class="btn btn-simple"><i class="fa fa-facebook-square"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-twitter"></i></button>
+                <button href="#" class="btn btn-simple"><i class="fa fa-google-plus-square"></i></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-12">
+            <div class="card">
+              <h3 class="jaune">
+                Vehicles list</h3>
+              <div class="card-body">
+                <table class="table table-bordered table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>Status</th>
+                      <th>Type</th>
+                      <th>Brand</th>
+                      <th>Registration date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let vehicle of selectedProvider.vehicles">
+                      <td>
+                        <span class="badge badge-success">Active</span>
+                      </td>
+                      <td>{{vehicle.type}}</td>
+                      <td>{{vehicle.name}}</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <nav>
+                  <ul class="pagination pull-right">
+                    <li class="page-item"><a class="page-link">Prev</a></li>
+                    <li class="page-item active">
+                      <a class="page-link">1</a>
+                    </li>
+                    <li class="page-item"><a class="page-link">2</a></li>
+                    <li class="page-item"><a class="page-link">3</a></li>
+                    <li class="page-item"><a class="page-link">Next</a></li>
+                  </ul>
+                </nav> -->
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="cancelModel()">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="myModal.hide();confirmAction()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>

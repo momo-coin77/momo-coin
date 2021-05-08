@@ -1,0 +1,225 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-9 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="jaune text-center mx-4 mb-4">
+            My Profil
+          </h3>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="updateProfilForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Company (disabled)</label>
+                  <input *ngIf="!user.isCompany" type="text" 
+                    class="form-control" 
+                    disabled placeholder="Company" 
+                    value="No Company">
+                  <input *ngIf="user.isCompany" type="text" 
+                    class="form-control" 
+                    disabled placeholder="Company" 
+                    [value]="user.companyName">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text"
+                    formControlName="userName" 
+                    class="form-control" 
+                    placeholder="null" 
+                    value="{{userName}}"
+                    [(ngModel)]="userName"
+                    [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
+                    <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
+                        <div *ngIf="f.userName.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" 
+                    formControlName="firstName" 
+                    class="form-control" 
+                    placeholder="First Name" 
+                    value="{{firstName}}"
+                    [(ngModel)]="firstName"
+                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
+                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" 
+                    formControlName="lastName" 
+                    class="form-control" 
+                    placeholder="Last Name" 
+                    [(ngModel)]="lastName"
+                    value="{{lastName}}"
+                    [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
+                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                        <div *ngIf="f.firstName.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input type="number" 
+                    formControlName="userPhone" 
+                    class="form-control" 
+                    placeholder="Phone number" 
+                    value="{{userPhone}}"
+                    [(ngModel)]="userPhone"
+                    [ngClass]="{ 'is-invalid': submitted && f.userPhone.errors }">
+                    <div *ngIf="submitted && f.userPhone.errors" class="invalid-feedback">
+                        <div *ngIf="f.userPhone.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Email address</label>
+                  <input type="text"
+                    formControlName="userEmail" 
+                    class="form-control" 
+                    placeholder="Email address" 
+                    value="{{userEmail}}"
+                    [(ngModel)]="userEmail"
+                    [ngClass]="{ 'is-invalid': submitted && f.userEmail.errors }">
+                    <div *ngIf="submitted && f.userEmail.errors" class="invalid-feedback">
+                        <div *ngIf="f.userEmail.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Address</label>
+                  <input type="text"
+                    formControlName="userAddress" 
+                    class="form-control" 
+                    placeholder="Home Address" 
+                    value="{{userAddress}}"
+                    [(ngModel)]="userAddress"
+                    [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors }">
+                    <div *ngIf="submitted && f.userAddress.errors" class="invalid-feedback">
+                        <div *ngIf="f.userAddress.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text"
+                    formControlName="userCountry" 
+                    class="form-control" 
+                    placeholder="Country" 
+                    value="{{userCountry}}"
+                    [(ngModel)]="userCountry"
+                    [ngClass]="{ 'is-invalid': submitted && f.userCountry.errors }">
+                    <div *ngIf="submitted && f.userCountry.errors" class="invalid-feedback">
+                        <div *ngIf="f.userCountry.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text"
+                    formControlName="userCity" 
+                    class="form-control" 
+                    placeholder="City" 
+                    value="{{userCity}}"
+                    [(ngModel)]="userCity"
+                    [ngClass]="{ 'is-invalid': submitted && f.userCity.errors }">
+                    <div *ngIf="submitted && f.userCity.errors" class="invalid-feedback">
+                        <div *ngIf="f.userCity.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Postal Code</label>
+                  <input type="number"
+                    formControlName="userZip"
+                    class="form-control" 
+                    placeholder="ZIP Code" 
+                    value="{{userZip}}"
+                    [(ngModel)]="userZip"
+                    [ngClass]="{ 'is-invalid': submitted && f.userZip.errors }">
+                    <div *ngIf="submitted && f.userZip.errors" class="invalid-feedback">
+                        <div *ngIf="f.userZip.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>About Me</label>
+                  <textarea rows="5" 
+                    formControlName="aboutUser" 
+                    class="form-control" 
+                    placeholder="Here can be your description"
+                    value="{{aboutUser}}"
+                    [(ngModel)]="aboutUser"
+                    [ngClass]="{ 'is-invalid': submitted && f.aboutUser.errors }">{{aboutUser}}</textarea>
+                    <div *ngIf="submitted && f.aboutUser.errors" class="invalid-feedback">
+                        <div *ngIf="f.aboutUser.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-info btn-fill pull-right">This Profile</button>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add payment</h4>
+        <button type="button" class="close" (click)="myModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <app-payment></app-payment>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="myModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-success"
+          (click)="myModal.hide();showNotification('top','center', 'danger', 'pe-7s-close-circle', '\<b>Sorry\</b>\<br>This service was not available now. Tray later.')">Confirm</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

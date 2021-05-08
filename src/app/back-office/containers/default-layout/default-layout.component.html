@@ -1,0 +1,408 @@
+<app-header style="background-color: #efefef;" [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/logo.png', width: 70, height: 50, alt: 'MoMo coin Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/logo.png', width: 30, height: 30, alt: 'MoMo coin Logo'}"
+  [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <a class="nav-link" style="font-family: 'Times New Roman', Times, serif; color: black;"
+        [routerLink]="['/profil']">{{userName}}</a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav ml-auto">
+    <!-- <li class="nav-item d-md-down-none">
+      <a class="nav-link" href="" [routerLink]="['/dashboard']"><i class="icon-bell"></i><span
+          class="badge badge-pill badge-danger">0</span></a>
+    </li> -->
+    <!-- <li class="nav-item d-md-down-none">
+      <strong><a class="nav-link" [routerLink]="['/wallet/deposit']">|| {{balence}} {{currency}}</a></strong>
+    </li> -->
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Account</strong></div>
+        <div class="dropdown-header text-center"><strong>Settings</strong></div>
+        <a class="dropdown-item" [routerLink]="['/profil']"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting</a>
+        <div class="divider"></div>
+        <a class="dropdown-item" (onclick)="logOut()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar style="background-color: #313030;" #appSidebar [fixed]="true" [display]="'lg'"
+    [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized">
+    </app-sidebar-nav>
+    <app-sidebar-minimizer style="background-color: #242121;"></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <!-- breaking change 'cui-breadcrumb' -->
+    <cui-breadcrumb>
+      <!-- Breadcrumb Menu-->
+      <li class="breadcrumb-menu">
+        <div class="btn-group" role="group" aria-label="Button group with nested">
+          <div class="btn-group">
+            <i class="btn fa fa-wallet"> Market</i>
+          </div>
+          <!-- <a class="btn" [routerLink]="['/dashboard']"><i class="icon-settings"></i> </a> -->
+          <!-- <a class="btn" (click)="logOut()"><i class="fa fa-sign-out-alt"></i></a> -->
+        </div>
+      </li>
+      <div class="btn-group ml-auto">
+        <a class="btn" (click)="logOut()"><i class="fa fa-sign-out-alt"></i></a>
+      </div>
+    </cui-breadcrumb>
+    <div class="container-fluid">
+      <div>
+        <p><strong>{{today | date:'fullDate'}}</strong></p>
+      </div>
+      <router-outlet></router-outlet>
+    </div><!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+    <tabset>
+      <tab>
+        <ng-template tabHeading><i class="icon-list"></i></ng-template>
+        <div class="list-group list-group-accent">
+          <div
+            class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+            Today</div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Potato bag </strong></div>
+            <div>
+              <font style="color:#20a8d8 !important;">Bangangte </font><strong> - </strong>
+              <font style="color: green !important;">Yaounde</font>
+            </div>
+            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+              <i class="icon-location-pin"></i>  11 : 30 am</small>
+            <small class="text-muted" style="color: green !important;">
+              <i class="icon-location-pin"></i>  04 : 55 pm</small>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Phone </strong></div>
+            <div>
+              <font style="color:#20a8d8 !important;">Douala </font><strong> - </strong>
+              <font style="color: green !important;">Manfe</font>
+            </div>
+            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+              <i class="icon-location-pin"></i>  08 : 30 am</small>
+            <small class="text-muted" style="color: green !important;">
+              <i class="icon-location-pin"></i>  01 : 30 pm</small>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> PC DEL </strong></div>
+            <div>
+              <font style="color:#20a8d8 !important;">Yaounde </font><strong> - </strong>
+              <font style="color: green !important;">Edea</font>
+            </div>
+            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+              <i class="icon-location-pin"></i>  08 : 30 am</small>
+            <small class="text-muted" style="color: green !important;">
+              <i class="icon-location-pin"></i>  1 : 30 pm</small>
+          </div>
+          <div
+            class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+            Yesterday</div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Beds <i class="fa fa-check" style="color: green !important;"></i></strong></div>
+            <div>
+              <font style="color:#20a8d8 !important;">Ebolowa </font><strong> - </strong>
+              <font style="color: green !important;">Bafoussam</font>
+            </div>
+            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+              <i class="icon-location-pin"></i>  10 : 11 am</small>
+            <small class="text-muted" style="color: green !important;">
+              <i class="icon-location-pin"></i>  04 : 55 pm</small>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Sofa <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
+            <div>
+              <div>
+                <font style="color:#20a8d8 !important;">Maroua </font><strong> - </strong>
+                <font style="color: green !important;">Yaounde</font>
+              </div>
+              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+                <i class="icon-location-pin"></i>  01 : 03 pm</small>
+              <small class="text-muted" style="color: green !important;">
+                <i class="icon-location-pin"></i>  04 : 55 pm</small>
+            </div>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Tomato bag <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
+            <div>
+              <font style="color:#20a8d8 !important;">Bangangte </font><strong> - </strong>
+              <font style="color: green !important;">Yaounde</font>
+            </div>
+            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+              <i class="icon-location-pin"></i>  04 : 06 pm</small>
+            <small class="text-muted" style="color: green !important;">
+              <i class="icon-location-pin"></i>  01 : 30 pm</small>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Sofa <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
+            <div>
+              <div>
+                <font style="color:#20a8d8 !important;">Douala </font><strong> - </strong>
+                <font style="color: green !important;">Kousserie</font>
+              </div>
+              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+                <i class="icon-location-pin"></i>  01 : 03 pm</small>
+              <small class="text-muted" style="color: green !important;">
+                <i class="icon-location-pin"></i>  04 : 55 pm</small>
+            </div>
+          </div>
+          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
+            <div><strong> Traditional dress <i class="fa fa-check" style="color: green !important;"></i></strong></div>
+            <div>
+              <div>
+                <font style="color:#20a8d8 !important;">Maroua </font><strong> - </strong>
+                <font style="color: green !important;">Yaounde</font>
+              </div>
+              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+                <i class="icon-location-pin"></i>  07 - 03 am</small>
+              <small class="text-muted" style="color: green !important;">
+                <i class="icon-location-pin"></i>  08 : 55 pm</small>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading><i class="icon-bell"></i></ng-template>
+        <div class="list-group list-group-accent">
+
+          <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+            <tabset style="align-items: right;">
+              <tab>
+                <ng-template tabHeading><i class="fas fa-car"></i></ng-template>
+                <div class="list-group list-group-accent">
+                  <div
+                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+                    Unread ({{unreadProjetList.length}})</div>
+
+                    <div *ngFor="let projet of unreadProjetList" 
+                      data-toggle="modal"
+                      (click)="showModal(projet)"
+                      class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                      <div><strong> {{projet.title}} <i class="fa fa-check" style="color: green !important;"></i></strong></div>
+                      <div>
+                        <div>
+                          <font style="color:#20a8d8 !important;">{{projet.from.city}} </font><strong> - </strong>
+                          <font style="color: green !important;">{{projet.to.city}}</font>
+                        </div>
+                        <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+                          <i class="icon-location-pin"></i>  {{projet.date_departure.length || "Undefined" }}</small>
+                        <small class="text-muted" style="color: green !important;">
+                          <i class="icon-location-pin"></i>  {{projet.date_arrival}}</small>
+                      </div>
+                    </div>
+
+                    <app-detail #modalDetail></app-detail>
+                  <!-- <div *ngFor="let msg of unreadMessageList"
+                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
+                    <div (click)="open(content,msg)">
+                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
+                    </div>
+                    <div>
+                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
+                      <font style="color: green !important;">{{msg.content.to_city}}</font>
+                    </div>
+                  </div> -->
+
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="fas fa-bus"></i></ng-template>
+                <div class="list-group list-group-accent">
+                  <div
+                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+                    Unread ({{unreadMessageList.length}})</div>
+                  <div *ngFor="let msg of unreadMessageList"
+                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
+                    <div (click)="open(content,msg)">
+                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
+                    </div>
+                    <div>
+                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
+                      <font style="color: green !important;">{{msg.content.to_city}}</font>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+            </tabset>
+          </app-aside>
+        </div>
+      </tab>
+    </tabset>
+  </app-aside>
+</div>
+<app-footer style="background-color: white;">
+  <span class="ml-auto">&copy; {{year | date: 'yyyy'}} <a target="_blank" href="https://MoMo coin.com"
+      style="color: #b48f30;"><strong>MoMo-Coin.</strong></a></span>
+</app-footer>
+
+<ng-template #content let-modal>
+  <div class="card-header">
+    <h4 class="modal-title jaune text-left mb-2" id="modal-basic-title">Parcel details</h4>
+  </div>
+  <div class="modal-body">
+    <br>
+    <div *ngIf="!waitingPackageInformation && selectedPackage!=null">
+      <div class="form-row mb-3">
+        <strong>Start : </strong>
+        <div class="col">
+          <div class="form-row mb-3">
+            <div class="col-md-5">
+              <div id="field_countryStart" name="field_countryStart" class="field">
+                {{selectedPackage.field_countryStart}}
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div type="text" id="field_cityStart" name="field_cityStart" class="field" placeholder="City">
+                {{selectedPackage.field_cityStart}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <strong> to : </strong>
+        <div class="col">
+          <div class="form-row mb-3">
+            <div class="col-md-5">
+              <div id="field_countryArrived" name="field_countryArrived" class="field">
+                {{selectedPackage.field_countryArrived}}
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div type="text" id="field_cityArrived" name="field_cityArrived" class="field">
+                {{selectedPackage.field_cityArrived}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- row-item-->
+      <!-- row-item-->
+      <div class="form-row mb-4">
+        <div class="col">
+          <div class="form-row mb-3">
+            <div class="col"><strong>Parcel type : </strong>
+              <div id="field_typeof" name="field_typeof" class="field">
+                {{selectedPackage.field_typeof}}
+              </div>
+            </div>
+            <div class="col-md-5"><strong>Vehicle type : </strong>
+              <div id="field_vehicleType" name="field_vehicleType" class="field">
+                {{selectedPackage.field_vehicleType}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- row-item-->
+      <div class="form-row mb-3">
+        <div class="col">
+          <div class="form-row mb-5">
+            <div class="col-md-3">
+              <strong>is fragil : </strong>
+              <span *ngIf="selectedPackage.field_isWeak"><i class="fa fa-check"
+                  style="color: green !important;"></i></span>
+              <span *ngIf="!selectedPackage.field_isWeak"><i class="fa fa-close"
+                  style="color: red !important;"></i></span>
+            </div>
+            <div class="col-md-3">
+              <strong>is urgent : </strong>
+              <span *ngIf="selectedPackage.field_isUrgent"><i class="fa fa-check"
+                  style="color: green !important;"></i></span>
+              <span *ngIf="!selectedPackage.field_isUrgent"><i class="fa fa-close"
+                  style="color: red !important;"></i></span>
+            </div>
+            <div class="col-md-5">
+              <strong>Delay : </strong>
+              <div type="date" id="field_delayDate" name="field_delayDate" class="field">
+                {{selectedPackage.field_delayDate}}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row mb-4">
+            <div class="col">
+              <strong>Parcel Name : </strong>
+              <div type="text" id="field_name" name="field_name" class="field"> {{selectedPackage.field_name}}
+              </div>
+            </div>
+            <div class="col-md-5">
+              <strong>Transaction Amount : </strong>
+              <div type="text" id="field_price" name="field_price" class="field"> {{selectedPackage.field_price}} XOF
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- row-item-->
+
+      <!-- row-item-->
+      <!-- Package Details-->
+
+      <!-- package image-->
+      <p class="text-left pack-img"><strong>PARCEL IMAGES</strong></p>
+      <!--<div class="form-row mb-4">
+        <i class="fas fa-plus-square fa-6x img-plus"></i>
+        <i class="ml-2 fas fa-plus-square fa-6x img-plus"></i>
+        <i class="ml-2 fas fa-plus-square fa-6x img-plus"></i>
+        <i class="ml-2 fas fa-plus-square fa-6x img-plus"></i>
+      </div>-->
+      <!-- package image-->
+
+
+      <!-- row-item-->
+      <div class="form-row">
+        <div class="col-md-3">
+          <label id="weightPackage" name="field_weightPackage" class="field"
+            placeholder="Weight">{{selectedPackage.field_weightPackage}}</label>
+          kg (weight)
+        </div>
+        <div class="col-md-3">
+          <label id="field_heightPackages" name="field_heightPackages" class="field"
+            placeholder="Height">{{selectedPackage.field_heightPackages}}</label>
+          cm (Height)
+        </div>
+        <div class="col-md-3">
+          <label id="field_widhtPackage" name="field_widhtPackage" class="field"
+            placeholder="Widht">{{selectedPackage.field_widhtPackage}}</label>
+          cm (Widht)
+        </div>
+        <div class="col-md-3">
+          <label id="field_lengthPackage" name="field_lengthPackage" class="field"
+            placeholder="Length">{{selectedPackage.field_lengthPackage}}</label>
+          cm (Length)
+        </div>
+      </div><br><br>
+
+      <!-- row-item-->
+
+      <!-- row-item-->
+      <div class="form-row mb-4 form-group shadow-textarea">
+        <strong>Description:</strong>
+        <div class="form-control field-form2 z-depth-1" id="field_descriptionPackage" name="field_descriptionPackage"
+          rows="3" placeholder="">{{selectedPackage.field_descriptionPackage}}
+        </div>
+      </div>
+      <!-- row-item-->
+    </div>
+
+    <app-progress-indeterminate *ngIf="waitingPackageInformation"></app-progress-indeterminate>
+  </div>
+
+  <div class="modal-footer" *ngIf="!waitingPackageInformation">
+    <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cross click')">Refuse</button>
+    <button type="button" class="btn btn-success" (click)="modal.close('Save click');acceptPrice()">Confirm</button>
+  </div>
+
+
+
+</ng-template>
