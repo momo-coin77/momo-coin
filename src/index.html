@@ -47,6 +47,7 @@
     // Angular ID
     gtag('config', 'UA-118965717-4');
   </script>
+
 <script>
   function openTab(evt, tabName) {
     var i, tabcontent, tablinks;
@@ -66,6 +67,27 @@
   // document.getElementById("tab-1").click();
   
 </script>
+
+
+<!-- Get realtimer -->
+<script type="text/javascript">
+  window.onload=function() {
+    horloge('div_horloge');
+  };
+   
+  function horloge(el) {
+    if(typeof el=="string") { el = document.getElementById(el); }
+    function actualiser() {
+      var date = new Date();
+      var str = date.getHours();
+      str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+      str += ':'+(date.getSeconds()<10?'0':'')+date.getSeconds();
+      el.innerHTML = str;
+    }
+    actualiser();
+    setInterval(actualiser,1000);
+  }
+  </script>
 </head>
 <body class="app">
   <!-- App Loading... -->

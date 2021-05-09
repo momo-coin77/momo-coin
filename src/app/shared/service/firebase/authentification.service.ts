@@ -15,7 +15,7 @@ export class AuthenticationService {
     userData: any;
 
     constructor(
-        public afs: AngularFirestore,
+        public fireStorage: AngularFirestore,
         private angularFireAuth: AngularFireAuth,
         public router: Router,
         public ngZone: NgZone) {
@@ -109,12 +109,17 @@ export class AuthenticationService {
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
   SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.fireStorage.doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
+      name: user.name,
+      phone: user.phone,
+      nicNumber: user.name,
+      status: user.photoURL,
+      country: user.country,
+      city: user.city,
+      sponsorshipId: user.sponsorshipId,
       emailVerified: user.emailVerified
     }
     return userRef.set(userData, {
@@ -126,7 +131,7 @@ export class AuthenticationService {
   SignOut() {
     return this.angularFireAuth.auth.signOut().then(() => {
       localStorage.removeItem('user');
-      this.router.navigate(['sign-in']);
+      this.router.navigate(['login']);
     })
   }
 

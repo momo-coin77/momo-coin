@@ -1,4 +1,4 @@
-<app-header style="background-color: #efefef;" [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+<app-header style="background-color: transparent !important;" [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
   [navbarBrandFull]="{src: 'assets/img/logo.png', width: 70, height: 50, alt: 'MoMo coin Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/logo.png', width: 30, height: 30, alt: 'MoMo coin Logo'}"
   [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
@@ -33,21 +33,19 @@
     [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
     <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized">
     </app-sidebar-nav>
-    <app-sidebar-minimizer style="background-color: #242121;"></app-sidebar-minimizer>
+    <app-sidebar-minimizer style="background-color: #3b3b3d;"></app-sidebar-minimizer>
   </app-sidebar>
   <!-- Main content -->
-  <main class="main">
+  <main class="main  linear-gradient">
     <!-- Breadcrumb -->
     <!-- breaking change 'cui-breadcrumb' -->
     <cui-breadcrumb>
       <!-- Breadcrumb Menu-->
-      <li class="breadcrumb-menu">
+      <li class="breadcrumb-menu" [routerLink]="['/market']">
         <div class="btn-group" role="group" aria-label="Button group with nested">
           <div class="btn-group">
             <i class="btn fa fa-wallet"> Market</i>
           </div>
-          <!-- <a class="btn" [routerLink]="['/dashboard']"><i class="icon-settings"></i> </a> -->
-          <!-- <a class="btn" (click)="logOut()"><i class="fa fa-sign-out-alt"></i></a> -->
         </div>
       </li>
       <div class="btn-group ml-auto">
@@ -55,8 +53,17 @@
       </div>
     </cui-breadcrumb>
     <div class="container-fluid">
-      <div>
-        <p><strong>{{today | date:'fullDate'}}</strong></p>
+      <div style="color: #5a4103 !important;">
+        <p>
+          <font size=6 style=""><strong>1 MoMo Coin = 1 XAF</strong></font>
+        </p>
+        <p>
+          <font size=3 style=""><strong>10 AM - 12 AM / 07 PM - 08 PM</strong></font>
+        </p>
+      </div>
+      <div id="div_horloge"></div>
+      <div class="right">
+        <p><strong>{{today | date:'fullDate'}} </strong></p>
       </div>
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->
@@ -65,174 +72,9 @@
     <tabset>
       <tab>
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
-        <div class="list-group list-group-accent">
-          <div
-            class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-            Today</div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Potato bag </strong></div>
-            <div>
-              <font style="color:#20a8d8 !important;">Bangangte </font><strong> - </strong>
-              <font style="color: green !important;">Yaounde</font>
-            </div>
-            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-              <i class="icon-location-pin"></i>  11 : 30 am</small>
-            <small class="text-muted" style="color: green !important;">
-              <i class="icon-location-pin"></i>  04 : 55 pm</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Phone </strong></div>
-            <div>
-              <font style="color:#20a8d8 !important;">Douala </font><strong> - </strong>
-              <font style="color: green !important;">Manfe</font>
-            </div>
-            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-              <i class="icon-location-pin"></i>  08 : 30 am</small>
-            <small class="text-muted" style="color: green !important;">
-              <i class="icon-location-pin"></i>  01 : 30 pm</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> PC DEL </strong></div>
-            <div>
-              <font style="color:#20a8d8 !important;">Yaounde </font><strong> - </strong>
-              <font style="color: green !important;">Edea</font>
-            </div>
-            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-              <i class="icon-location-pin"></i>  08 : 30 am</small>
-            <small class="text-muted" style="color: green !important;">
-              <i class="icon-location-pin"></i>  1 : 30 pm</small>
-          </div>
-          <div
-            class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-            Yesterday</div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Beds <i class="fa fa-check" style="color: green !important;"></i></strong></div>
-            <div>
-              <font style="color:#20a8d8 !important;">Ebolowa </font><strong> - </strong>
-              <font style="color: green !important;">Bafoussam</font>
-            </div>
-            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-              <i class="icon-location-pin"></i>  10 : 11 am</small>
-            <small class="text-muted" style="color: green !important;">
-              <i class="icon-location-pin"></i>  04 : 55 pm</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Sofa <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
-            <div>
-              <div>
-                <font style="color:#20a8d8 !important;">Maroua </font><strong> - </strong>
-                <font style="color: green !important;">Yaounde</font>
-              </div>
-              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-                <i class="icon-location-pin"></i>  01 : 03 pm</small>
-              <small class="text-muted" style="color: green !important;">
-                <i class="icon-location-pin"></i>  04 : 55 pm</small>
-            </div>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Tomato bag <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
-            <div>
-              <font style="color:#20a8d8 !important;">Bangangte </font><strong> - </strong>
-              <font style="color: green !important;">Yaounde</font>
-            </div>
-            <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-              <i class="icon-location-pin"></i>  04 : 06 pm</small>
-            <small class="text-muted" style="color: green !important;">
-              <i class="icon-location-pin"></i>  01 : 30 pm</small>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Sofa <i class="fa fa-check-double" style="color: green !important;"></i></strong></div>
-            <div>
-              <div>
-                <font style="color:#20a8d8 !important;">Douala </font><strong> - </strong>
-                <font style="color: green !important;">Kousserie</font>
-              </div>
-              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-                <i class="icon-location-pin"></i>  01 : 03 pm</small>
-              <small class="text-muted" style="color: green !important;">
-                <i class="icon-location-pin"></i>  04 : 55 pm</small>
-            </div>
-          </div>
-          <div class="list-group-item list-group-item-accent-warning list-group-item-divider">
-            <div><strong> Traditional dress <i class="fa fa-check" style="color: green !important;"></i></strong></div>
-            <div>
-              <div>
-                <font style="color:#20a8d8 !important;">Maroua </font><strong> - </strong>
-                <font style="color: green !important;">Yaounde</font>
-              </div>
-              <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-                <i class="icon-location-pin"></i>  07 - 03 am</small>
-              <small class="text-muted" style="color: green !important;">
-                <i class="icon-location-pin"></i>  08 : 55 pm</small>
-            </div>
-          </div>
-        </div>
       </tab>
       <tab>
         <ng-template tabHeading><i class="icon-bell"></i></ng-template>
-        <div class="list-group list-group-accent">
-
-          <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
-            <tabset style="align-items: right;">
-              <tab>
-                <ng-template tabHeading><i class="fas fa-car"></i></ng-template>
-                <div class="list-group list-group-accent">
-                  <div
-                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-                    Unread ({{unreadProjetList.length}})</div>
-
-                    <div *ngFor="let projet of unreadProjetList" 
-                      data-toggle="modal"
-                      (click)="showModal(projet)"
-                      class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                      <div><strong> {{projet.title}} <i class="fa fa-check" style="color: green !important;"></i></strong></div>
-                      <div>
-                        <div>
-                          <font style="color:#20a8d8 !important;">{{projet.from.city}} </font><strong> - </strong>
-                          <font style="color: green !important;">{{projet.to.city}}</font>
-                        </div>
-                        <small class="text-muted mr-3" style="color:#20a8d8 !important;">
-                          <i class="icon-location-pin"></i>  {{projet.date_departure.length || "Undefined" }}</small>
-                        <small class="text-muted" style="color: green !important;">
-                          <i class="icon-location-pin"></i>  {{projet.date_arrival}}</small>
-                      </div>
-                    </div>
-
-                    <app-detail #modalDetail></app-detail>
-                  <!-- <div *ngFor="let msg of unreadMessageList"
-                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                    <div (click)="open(content,msg)">
-                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
-                    </div>
-                    <div>
-                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
-                      <font style="color: green !important;">{{msg.content.to_city}}</font>
-                    </div>
-                  </div> -->
-
-                </div>
-              </tab>
-              <tab>
-                <ng-template tabHeading><i class="fas fa-bus"></i></ng-template>
-                <div class="list-group list-group-accent">
-                  <div
-                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-                    Unread ({{unreadMessageList.length}})</div>
-                  <div *ngFor="let msg of unreadMessageList"
-                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                    <div (click)="open(content,msg)">
-                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
-                    </div>
-                    <div>
-                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
-                      <font style="color: green !important;">{{msg.content.to_city}}</font>
-                    </div>
-                  </div>
-                </div>
-              </tab>
-            </tabset>
-          </app-aside>
-        </div>
       </tab>
     </tabset>
   </app-aside>

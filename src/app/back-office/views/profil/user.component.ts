@@ -36,7 +36,6 @@ export class UserComponent implements OnInit {
   // userCoverImg: string = 'assets/img/userCoverImg1.png';
   userProfileImg: string = '../../../../assets/img/user_image.png';
   userName: String = '';
-  aboutUser: String = '';
   isProvider: boolean = false;
   // this.userData.getUserInformations().isProvider;
 
@@ -72,7 +71,6 @@ export class UserComponent implements OnInit {
       this.userZip = '';
       this.userPhone = user.adresse.phone;
       this.userName = user.username;
-      this.aboutUser = '';
       this.isProvider = user.isProvider.valueOf();
       this.user=user;
     })
@@ -94,7 +92,6 @@ export class UserComponent implements OnInit {
       userZip: ['', Validators.required],
       userPhone: ['', Validators.required],
       userName: ['', Validators.required],
-      aboutUser: ['', Validators.required],
     });
   }
   // convenience getter for easy access to form fields

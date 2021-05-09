@@ -22,18 +22,18 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Market',
-    url: '/chat',
+    url: '/market',
     icon: 'fa fa-bank'
   },
   {
-    name: 'Purchases',
-    url: '/chat',
-    icon: 'fa fa-bar-chart'
+    name: 'Sales',
+    url: '/sales',
+    icon: 'fa fa-barcode'
   },
   {
-    name: 'Sales',
-    url: '/map',
-    icon: 'fa fa-barcode'
+    name: 'Purchases',
+    url: '/purchases',
+    icon: 'fa fa-bar-chart'
   },
   {
     name: 'Chat',
@@ -42,7 +42,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'History',
-    url: '/chat',
+    url: '/history',
     icon: 'fa fa-calculator'
   },
   {
@@ -50,10 +50,9 @@ export const navItems: INavData[] = [
   },
   {
     name: 'MoMo coin Support',
-    url: 'http://karryngo.com/support/',
+    url: '#',
     icon: 'fa fa-question-circle',
     class: 'mt-auto',
     variant: 'dark',
-    attributes: { target: '_blank', rel: 'noopener' }
   },
 ];

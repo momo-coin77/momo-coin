@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
-import { UserInfo } from '../service/user';
+import { User } from '../service/user';
 import { AuthService } from '../service/auth/auth.service';
 import { UserService } from '../service/user/user.service';
 
@@ -11,7 +11,7 @@ function myFunction(f: string) {
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    currentUser: UserInfo;
+    currentUser: User;
     constructor(private router: Router,private authService:AuthService) {
     }
 
@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
             // if(this.currentUser.user.title_role != "administrator"){
             if (true) {
                 // console.log(this.currentUser.user.title_role);
-                myFunction(this.currentUser.user.title_role);
+                // myFunction(this.currentUser.titleRole);
                 return;
             }
             return true;

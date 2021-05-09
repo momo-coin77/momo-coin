@@ -96,20 +96,11 @@ import { ViewTripTransportPersonsComponent } from './front-office/view-trip/view
 
 //// Back Office
 import { TripsModule } from './back-office/users/trips/trips.module';
-import { PostTripCarrierShipper1Component } from './back-office/users/trips/post-trip-carrier-shipper/post-trip-carrier-shipper1/post-trip-carrier-shipper1.component';
-import { PostTripCarrierShipper2Component } from './back-office/users/trips/post-trip-carrier-shipper/post-trip-carrier-shipper2/post-trip-carrier-shipper2.component';
-import { PostTripTransport1Component } from './back-office/users/trips/post-trip-transport1/post-trip-transport1.component';
-import { ProfileCarrierBusinessComponent } from './back-office/users/profile/profile-carrier-business/profile-carrier-business.component';
-import { ProfileCarrierComponent } from './back-office/users/profile/profile-carrier/profile-carrier.component';
-import { ProfileNormalUserComponent } from './back-office/users/profile/profile-normal-user/profile-normal-user.component';
-
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
-import { TestPagesComponent } from './test-pages/test-pages.component';
-import { MapsComponent } from './back-office/users/maps/maps.component';
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
 // import { ProgressIndeterminateComponent } from './shared/components/progress-indeterminate/progress-indeterminate.component';
 import { ChatModule } from './shared/components/chat/chat.module';
@@ -117,10 +108,8 @@ import { ProgressIndeterminateModule } from './shared/components/progress-indete
 // import { InputFileUploadListComponent } from './back-office/components/input-file-upload-list/input-file-upload-list.component';
 import { SearchLocationModule } from './back-office/components/search-location/search-location.module';
 import { PaymentModule } from './shared/components/payment/payment.module';
-import { LabTest2Component } from './lab-test/lab-test-2/lab-test-2.component';
 import { DetailService } from './shared/service/back-office/detail.service';
 import { DetailModule } from './shared/components/modals/detail.module';
-import { PostRequest0Component } from './front-office/post-request/post-request0.component';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -218,28 +207,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     FullIntroComponent,
     WelcomeComponent,
     VerifyEmailComponent,
-    PostTripCarrierShipper1Component,
-    PostTripCarrierShipper2Component,
-    PostTripTransport1Component,
-    // RegisterCarrierShipperTransporterComponent,
-    ProfileCarrierBusinessComponent,
-    ProfileCarrierComponent,
-    ViewTripCarrierShipmentComponent,
-    ViewTripTransportPersonsComponent,
-    ProfileNormalUserComponent,
-    LoginComponent,
     ForgotPasswordComponent,
-    TestPagesComponent,
     PrivacyPolicyComponent,
     AboutUsComponent,
     TermsAndConditionsComponent,
-    RegisterComponent,
     HowDoesItWorkComponent,
-    RequestsComponent,
     BlankPageComponent,
-    MapsComponent,
-    LabTest2Component,
-    PostRequest0Component,
   ],
   providers: [
     {

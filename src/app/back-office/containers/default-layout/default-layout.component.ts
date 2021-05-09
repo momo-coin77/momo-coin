@@ -12,6 +12,7 @@ import { NotificationService } from '../../../shared/service/notification/notifi
 import { ChatRealtimeService } from '../../../shared/service/back-office/chat-realtime.service';
 import { Package } from '../../../shared/entity/package';
 import { DetailComponent } from '../../../shared/components/modals/detail.component';
+import { AuthenticationService } from '../../../shared/service/firebase/authentification.service';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 declare var $: any;
@@ -39,7 +40,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   today: number = Date.now();
 
-  constructor (private userService: UserService,
+  constructor (
+    private fireAuthService: AuthenticationService, // firebase auth
+    private userService: UserService,
     private authService: AuthService,
     private packageService: PackageService,
     private chatService: ChatService,
@@ -66,7 +69,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
   logOut() {
       this.authService.logOut();
-      // this.notification.showNotification('top', 'right', 'success', '', '\<b>You\'re logged out !\</b>');
+      this.fireAuthService.signOut();
   }
 
   goToChat(idProjet:string)
