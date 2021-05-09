@@ -9,8 +9,8 @@ export class ConfigService {
   public config: Config = new Config();
 
   constructor() {
-    this.config.api = environment.config.api;
-    this.config.url = environment.config.url;
+    // this.config.api = environment.config.api;
+    // this.config.url = environment.config.url;
   }
 
 }

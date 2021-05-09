@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/service/auth/auth.service';
+import { AuthenticationService } from '../../shared/service/firebase/authentification.service';
 import { NotificationService } from '../../shared/service/notification/notification.service';
 import { UserService } from '../../shared/service/user/user.service';
+
 
 declare var $: any;
 
@@ -20,6 +22,7 @@ export class LoginComponent implements OnInit {
     user: any;
 
     constructor(
+        private fireAuthService: AuthenticationService, // firebase auth
         private router: Router,
         private authen: AuthService,
         private formLog: FormBuilder,
@@ -80,6 +83,7 @@ export class LoginComponent implements OnInit {
 
                     }
                 });
+            this.fireAuthService.signIn(this.loginForm.controls.field_email.value, this.loginForm.controls.field_password.value)
 
         }, 3000);
         this.submitted = false;

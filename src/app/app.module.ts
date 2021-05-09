@@ -128,6 +128,11 @@ import { RealtimeService } from './shared/service/realtime/realtime.service';
 import { ChatRealtimeService } from './shared/service/back-office/chat-realtime.service';
 import { EventService } from './shared/service/event/event.service';
 // const config: SocketIoConfig = { url: 'http://localhost:8090', options: {} };
+ import { environment } from '../environments/environment';
+import { AuthenticationService } from './shared/service/firebase/authentification.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   imports: [
@@ -199,6 +204,9 @@ import { EventService } from './shared/service/event/event.service';
     MatNativeDateModule,
     SearchLocationModule,
     DetailModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
   declarations: [
     AppComponent,
@@ -243,6 +251,7 @@ import { EventService } from './shared/service/event/event.service';
   RealtimeService,
   ChatRealtimeService,
   DetailService,
+  AuthenticationService
   
 ],
   bootstrap: [ AppComponent ]

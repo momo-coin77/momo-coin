@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user/user.service';
 import { AuthService } from '../../shared/service/auth/auth.service';
-// import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from '../../shared/service/firebase/authentification.service';
 import { MustMatch } from '../../shared/service/_helpers/must-match.validator';
 import { User } from '../../shared/entity/provider';
 import { NotificationService } from '../../shared/service/notification/notification.service';
@@ -26,7 +26,9 @@ export class RegisterComponent implements OnInit {
     user: any;
     i = 0; // my variable to condition the number of execution of the submit at 01 time
 
-    constructor(private formBuilder: FormBuilder,
+    constructor(
+        private fireAuthService: AuthenticationService, // firebase auth
+        private formBuilder: FormBuilder,
         private auth: AuthService,
         private userService: UserService,
         private router: Router,
@@ -69,8 +71,8 @@ export class RegisterComponent implements OnInit {
 
     /////
 
-    setFormData():User {
-        let user:User=new User();
+    setFormData(): User {
+        let user: User = new User();
         user.firstname = this.registerForm.controls.field_firstname?.value;
         user.lastname = this.registerForm.controls.field_surname?.value;
         user.adresse.email = this.registerForm.controls.field_email?.value;
@@ -86,34 +88,35 @@ export class RegisterComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
         this.waitingRegistration = false;
-        
+
         // stop here if form is invalid
         if (this.registerForm.invalid) {
             return;
         }
         this.waitingRegistration = true;
-     
-        setTimeout(() => {
-            let user:User=this.setFormData();
-        this.auth.createAccount(user)
-            .then((result) => {
-                this.messageColor = 'green';
-                this.registrationMessage = 'Success';
-                this.router.navigate(['login']);
-                this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
-                // this.notification.showNotification('top', 'center', 'success', 'pe-7s-like2', '\<b>succes !\</b>\<br>Your registration went well. Please log in to begin.');
-                this.submitted = false;
 
-            })
-            .catch((error) => {
-                this.waitingRegistration = false;
-                this.messageColor = 'red';
-                this.registrationMessage = error.message;
-                this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
-                // this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>This identifier already exist');
-                this.submitted = false;
-            });
-        
+        setTimeout(() => {
+            let user: User = this.setFormData();
+            this.auth.createAccount(user)
+                .then((result) => {
+                    this.messageColor = 'green';
+                    this.registrationMessage = 'Success';
+                    this.router.navigate(['login']);
+                    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
+                    // this.notification.showNotification('top', 'center', 'success', 'pe-7s-like2', '\<b>succes !\</b>\<br>Your registration went well. Please log in to begin.');
+                    this.submitted = false;
+
+                })
+                .catch((error) => {
+                    this.waitingRegistration = false;
+                    this.messageColor = 'red';
+                    this.registrationMessage = error.message;
+                    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
+                    // this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>This identifier already exist');
+                    this.submitted = false;
+                });
+            this.fireAuthService.signUp(this.registerForm.controls.field_email?.value, this.registerForm.controls.field_password?.value);
+
         }, 3000);
 
     }

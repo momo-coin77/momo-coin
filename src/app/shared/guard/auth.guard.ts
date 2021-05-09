@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
-import { UserInfo } from '../../back-office/_models/user';
+import { UserInfo } from '../service/user';
 import { AuthService } from '../service/auth/auth.service';
 import { UserService } from '../service/user/user.service';
 
