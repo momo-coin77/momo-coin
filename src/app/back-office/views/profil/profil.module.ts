@@ -14,11 +14,9 @@ import { ProfilRoutingModule } from './profil-routing.module';
 
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PaymentModule } from '../../../shared/components/payment/payment.module';
 
 @NgModule({
   imports: [
-    PaymentModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,

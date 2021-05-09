@@ -41,7 +41,7 @@ export class Package extends Entity {
         to: Location = new Location(),
     ) {
         super();
-        this._id=id;
+        this.uuid=id;
         this.is_urgent=is_urgent;
         this.description=details;
         this.images=images;
@@ -90,7 +90,7 @@ export class Package extends Entity {
         }
         this.date = purgeAttribute(this, entity, 'publicationDate') ? purgeAttribute(this, entity, 'publicationDate') : this.date;
         this.title = purgeAttribute(this, entity, 'title');
-        this._id=purgeAttribute(this,entity,"_id");
+        this.uuid=purgeAttribute(this,entity,"uuid");
         this.state=purgeAttribute(this,entity,"state");
 
         this.idRequester=purgeAttribute(this,entity,"idRequester");

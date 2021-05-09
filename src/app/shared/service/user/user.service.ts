@@ -78,7 +78,7 @@ export class UserService {
 
   setUser(user:User)
   {
-    if(! this.listUser.has(user._id.toString())) this.listUser.set(user._id.toString(),user)
+    if(! this.listUser.has(user.uuid.toString())) this.listUser.set(user.uuid.toString(),user)
   }
 
   //recuperer les informations d'un utilisateur
@@ -93,7 +93,7 @@ export class UserService {
             if (success.resultCode == 0) {
               let user:Provider=new Provider();
               user.hydrate(success.result);
-              this.listUser.set(user._id.toString(),user);
+              this.listUser.set(user.uuid.toString(),user);
               this.emitUsersData();
               resolve(user);
             }

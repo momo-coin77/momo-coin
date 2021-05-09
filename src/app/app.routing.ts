@@ -19,8 +19,6 @@ import { TermsAndConditionsComponent } from './shared/components/terms-and-condi
 
 //// Back Office
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
-import { AuthGuard } from './back-office';
-import { RedirectAuthGuard } from './shared/guard/redirect-auth.guard';
 
 export const routes: Routes = [
   {
@@ -51,27 +49,22 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    canActivate: [RedirectAuthGuard]
   },
   {
     path: 'signin',
     component: LoginComponent,
-    canActivate: [RedirectAuthGuard]
   },
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [RedirectAuthGuard]
   },
   {
     path: 'signup',
     component: RegisterComponent,
-    canActivate: [RedirectAuthGuard]
   },
   {
     path: 'registration',
     component: RegisterComponent,
-    canActivate: [RedirectAuthGuard]
   },
   {
     path: '',

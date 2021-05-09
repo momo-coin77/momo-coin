@@ -94,8 +94,6 @@ import { ViewTripCarrierShipmentComponent } from './front-office/view-trip/view-
 import { ViewTripTransportPersonsComponent } from './front-office/view-trip/view-trip-transport-persons/view-trip-transport-persons.component';
 // import { RegisterCarrierShipperTransporterComponent } from './front-office/registration/register-carrier-shipper-transporter/register-carrier-shipper-transporter.component';
 
-//// Back Office
-import { TripsModule } from './back-office/users/trips/trips.module';
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
@@ -105,20 +103,14 @@ import { VerifyEmailComponent } from './front-office/verify-email/verify-email.c
 // import { ProgressIndeterminateComponent } from './shared/components/progress-indeterminate/progress-indeterminate.component';
 import { ChatModule } from './shared/components/chat/chat.module';
 import { ProgressIndeterminateModule } from './shared/components/progress-indeterminate/progress-indeterminate.module';
-// import { InputFileUploadListComponent } from './back-office/components/input-file-upload-list/input-file-upload-list.component';
-import { SearchLocationModule } from './back-office/components/search-location/search-location.module';
-import { PaymentModule } from './shared/components/payment/payment.module';
 import { DetailService } from './shared/service/back-office/detail.service';
 import { DetailModule } from './shared/components/modals/detail.module';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { RealtimeService } from './shared/service/realtime/realtime.service';
-import { ChatRealtimeService } from './shared/service/back-office/chat-realtime.service';
-import { EventService } from './shared/service/event/event.service';
 // const config: SocketIoConfig = { url: 'http://localhost:8090', options: {} };
  import { environment } from '../environments/environment';
-import { AuthenticationService } from './shared/service/firebase/authentification.service';
+import { AuthentificationService } from './shared/service/auth/authentification.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -126,7 +118,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 @NgModule({
   imports: [
     DetailModule,
-    PaymentModule,
     BrowserModule,
     BrowserAnimationsModule,
     // SocketIoModule.forRoot(config),
@@ -148,7 +139,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
       timeOut: 2000,
       preventDuplicates: true
     }),
-    TripsModule,
     RouterModule,
 
     // NgModule,
@@ -191,7 +181,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MatSortModule,
     MatPaginatorModule,
     MatNativeDateModule,
-    SearchLocationModule,
     DetailModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -219,13 +208,13 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
   },
-  EventService,
-  UserService,
-  RealtimeService,
-  ChatRealtimeService,
-  DetailService,
-  AuthenticationService
-  
+  // EventService,
+  // UserService,
+  // RealtimeService,
+  // ChatRealtimeService,
+  // DetailService,
+  AuthentificationService
+
 ],
   bootstrap: [ AppComponent ]
 })

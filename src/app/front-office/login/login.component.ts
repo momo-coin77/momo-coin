@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../shared/service/auth/auth.service';
-import { AuthenticationService } from '../../shared/service/firebase/authentification.service';
+import { AuthentificationService } from '../../shared/service/auth/authentification.service';
 import { NotificationService } from '../../shared/service/notification/notification.service';
 import { UserService } from '../../shared/service/user/user.service';
 
@@ -22,9 +21,9 @@ export class LoginComponent implements OnInit {
     user: any;
 
     constructor(
-        private fireAuthService: AuthenticationService, // firebase auth
+        private fireAuthService: AuthentificationService, // firebase auth
         private router: Router,
-        private authen: AuthService,
+        // private authen: AuthService,
         private formLog: FormBuilder,
         private userData: UserService,
         private notification: NotificationService) {
@@ -61,7 +60,7 @@ export class LoginComponent implements OnInit {
         this.waitingRegistration = true;
 
         setTimeout(() => {
-            this.authen.authLogin(this.loginForm.controls.field_email.value, this.loginForm.controls.field_password.value)
+            this.fireAuthService.signIn(this.loginForm.controls.field_email.value, this.loginForm.controls.field_password.value)
                 .then((result) => {
                     this.notification.showNotification('top', 'right', 'success', '', '\<b>Welcome to karryngo !');
                     this.submitted = false;
@@ -71,20 +70,17 @@ export class LoginComponent implements OnInit {
                     if (error == '[object Object]') {
                         console.log('error 1: ' + error);
                         this.waitingRegistration = false;
-                        // this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>Email or password is incorrect.');
-                        this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
+                        this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>Email or password is incorrect.');
                         this.submitted = false;
                     } else {
                         console.log('error 2: ' + error);
                         this.waitingRegistration = false;
-                        this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
-                        // this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>No connection\</b>\<br>Check your internet connection.');
+                        // this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
+                        this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>No connection\</b>\<br>Check your internet connection.');
                         this.submitted = false;
 
                     }
                 });
-            this.fireAuthService.signIn(this.loginForm.controls.field_email.value, this.loginForm.controls.field_password.value)
-
         }, 3000);
         this.submitted = false;
     }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Router } from '@angular/router';
-import { User } from '../service/user';
-import { AuthService } from '../service/auth/auth.service';
+import { User } from '../entity/user';
+import { AuthentificationService } from '../service/auth/authentification.service';
 import { UserService } from '../service/user/user.service';
 
 function myFunction(f: string) {
@@ -12,7 +12,7 @@ function myFunction(f: string) {
 @Injectable()
 export class AuthGuard implements CanActivate {
     currentUser: User;
-    constructor(private router: Router,private authService:AuthService) {
+    constructor(private router: Router,private authService: AuthentificationService) {
     }
 
     canActivate() {

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Discussion, Message } from '../../entity/chat';
 import { ApiService } from '../api/api.service';
-import { RealtimeService } from '../realtime/realtime.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +14,7 @@ export class ChatService {
     headers = {};
 
     constructor(private api: ApiService,
-        private realtimeService:RealtimeService) {
+        ) {
         this.headers = {
             'Authorization': 'Bearer ' + this.api.getAccessToken(),
             'Content-Type': 'application/json',

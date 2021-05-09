@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-// import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+// import { AuthentificationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
     selector: 'app-forgot-password',
@@ -17,7 +17,7 @@ export class ForgotPasswordComponent implements OnInit {
     ]
     forgotForm: FormGroup;
     constructor(private router: Router,
-        // private authen: AuthenticationService,
+        // private authen: AuthentificationService,
         private formLog: FormBuilder) { }
 
     ngOnInit(): void {
