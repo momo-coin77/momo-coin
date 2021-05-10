@@ -26,24 +26,29 @@ export const navItems: INavData[] = [
     icon: 'fa fa-bank'
   },
   {
-    name: 'Sales',
-    url: '/sales',
-    icon: 'fa fa-barcode'
-  },
-  {
     name: 'Purchases',
     url: '/purchases',
     icon: 'fa fa-bar-chart'
   },
   {
-    name: 'Chat',
-    url: '/chat',
-    icon: 'fa fa-comments'
+    name: 'Sales',
+    url: '/sales',
+    icon: 'fa fa-barcode'
   },
   {
     name: 'History',
     url: '/history',
     icon: 'fa fa-calculator'
+  },
+  {
+    name: 'Forum',
+    url: '/chat',
+    icon: 'fa fa-comments',
+    badge: {
+      variant: 'warning',
+      text: '<Not available>'
+    },
+    attributes: { disabled: true },
   },
   {
     divider: true

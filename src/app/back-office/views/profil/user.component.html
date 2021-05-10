@@ -12,95 +12,71 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Username</label>
+                  <label><b> Name</b></label>
                   <input type="text"
-                    formControlName="userName" 
+                    formControlName="name" 
                     class="form-control" 
                     placeholder="null" 
-                    value="{{userName}}"
-                    [(ngModel)]="userName"
-                    [ngClass]="{ 'is-invalid': submitted && f.userName.errors }">
-                    <div *ngIf="submitted && f.userName.errors" class="invalid-feedback">
-                        <div *ngIf="f.userName.errors.required">This field is required</div>
+                    value="{{name}}"
+                    [(ngModel)]="name"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <div *ngIf="f.name.errors.required">This field is required</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label><b>Email</b></label>
+                  <input type="text"
+                    formControlName="useremail" 
+                    class="form-control" 
+                    placeholder="Email" 
+                    value="{{useremail}}"
+                    [(ngModel)]="useremail"
+                    [ngClass]="{ 'is-invalid': submitted && f.useremail.errors }">
+                    <div *ngIf="submitted && f.useremail.errors" class="invalid-feedback">
+                        <div *ngIf="f.useremail.errors.required">This field is required</div>
                     </div>
                 </div>
               </div>
             </div>
-
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>First Name</label>
-                  <input type="text" 
-                    formControlName="firstName" 
+                  <label><b>Network</b></label>
+                  <input type="text"
+                    formControlName="network" 
                     class="form-control" 
-                    placeholder="First Name" 
-                    value="{{firstName}}"
-                    [(ngModel)]="firstName"
-                    [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
-                    <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                        <div *ngIf="f.firstName.errors.required">This field is required</div>
+                    placeholder="Network" 
+                    value="{{network}}"
+                    [(ngModel)]="network"
+                    [ngClass]="{ 'is-invalid': submitted && f.network.errors }">
+                    <div *ngIf="submitted && f.network.errors" class="invalid-feedback">
+                        <div *ngIf="f.network.errors.required">This field is required</div>
                     </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
-                  <label>Last Name</label>
-                  <input type="text" 
-                    formControlName="lastName" 
-                    class="form-control" 
-                    placeholder="Last Name" 
-                    [(ngModel)]="lastName"
-                    value="{{lastName}}"
-                    [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
-                    <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                        <div *ngIf="f.firstName.errors.required">This field is required</div>
-                    </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>Phone</label>
+                  <label><b>Phone</b></label>
                   <input type="number" 
-                    formControlName="userPhone" 
+                    formControlName="phone" 
                     class="form-control" 
                     placeholder="Phone number" 
-                    value="{{userPhone}}"
-                    [(ngModel)]="userPhone"
-                    [ngClass]="{ 'is-invalid': submitted && f.userPhone.errors }">
-                    <div *ngIf="submitted && f.userPhone.errors" class="invalid-feedback">
-                        <div *ngIf="f.userPhone.errors.required">This field is required</div>
+                    value="{{phone}}"
+                    [(ngModel)]="phone"
+                    [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+                    <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                        <div *ngIf="f.phone.errors.required">This field is required</div>
                     </div>
                 </div>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Address</label>
-                  <input type="text"
-                    formControlName="userAddress" 
-                    class="form-control" 
-                    placeholder="Home Address" 
-                    value="{{userAddress}}"
-                    [(ngModel)]="userAddress"
-                    [ngClass]="{ 'is-invalid': submitted && f.userAddress.errors }">
-                    <div *ngIf="submitted && f.userAddress.errors" class="invalid-feedback">
-                        <div *ngIf="f.userAddress.errors.required">This field is required</div>
-                    </div>
-                </div>
-              </div>
-            </div>
-
-
             <div class="row">
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Country</label>
+                  <label><b>Country</b></label>
                   <input type="text"
                     formControlName="userCountry" 
                     class="form-control" 
@@ -115,7 +91,7 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>City</label>
+                  <label><b>City</b></label>
                   <input type="text"
                     formControlName="userCity" 
                     class="form-control" 
@@ -130,16 +106,16 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label>Postal Code</label>
+                  <label><b>Sponsorship ID</b></label>
                   <input type="number"
-                    formControlName="userZip"
+                    formControlName="sponsorshipId"
                     class="form-control" 
-                    placeholder="ZIP Code" 
-                    value="{{userZip}}"
-                    [(ngModel)]="userZip"
-                    [ngClass]="{ 'is-invalid': submitted && f.userZip.errors }">
-                    <div *ngIf="submitted && f.userZip.errors" class="invalid-feedback">
-                        <div *ngIf="f.userZip.errors.required">This field is required</div>
+                    placeholder="Sponsorship ID" 
+                    value="{{sponsorshipId}}"
+                    [(ngModel)]="sponsorshipId"
+                    [ngClass]="{ 'is-invalid': submitted && f.sponsorshipId.errors }">
+                    <div *ngIf="submitted && f.sponsorshipId.errors" class="invalid-feedback">
+                        <div *ngIf="f.sponsorshipId.errors.required">This field is required</div>
                     </div>
                 </div>
               </div>
