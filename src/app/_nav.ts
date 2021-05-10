@@ -3,11 +3,6 @@ import { title } from 'process';
 
 export const navItems: INavData[] = [
   {
-    name: 'Dashboard',
-    url: '/dashboard',
-    icon: 'fa fa-database'
-  },
-  {
     title: true,
     name: 'User',
   },
@@ -18,7 +13,12 @@ export const navItems: INavData[] = [
   },
   {
     title: true,
-    name: '============='
+    name: '======================'
+  },
+  {
+    name: 'Dashboard',
+    url: '/dashboard',
+    icon: 'fa fa-database'
   },
   {
     name: 'Market',

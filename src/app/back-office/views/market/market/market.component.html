@@ -3,19 +3,59 @@
     <div class="col-sm-6 col-md-12">
       <div class="card">
         <div class="card-header">
-          <h3 class="jaune text-left mx-4 mb-4">
+          <h3 class="jaune text-left mx-4 mb-2">
             Available Packs</h3>
         </div>
         <div class="card-body">
-          <table class="table table-bordered table-striped table-sm" (click)="showNotification('top','center', 'danger', 'pe-7s-close-circle', '\<b>Sorry\</b>\<br>This service was not available now. Tray later.')">
+          <table class="table table-bordered table-striped table-sm">
             <thead>
               <tr>
+                <th>Network</th>
                 <th>Amount</th>
-                <th>Days</th>
-                <th>Brand</th>
+                <th>Period</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <th>MTN</th>
+                <th>500000 MC</th>
+                <th>
+                  <select placeholder="5days">
+                      <option value="5days" selected>5days</option>
+                      <option value="10days">10days</option>
+                      <option value="20days">20days</option>
+                  </select>
+                </th>
+                <th> 
+                  <span class="badge badge-success"><i class="fa fa-shopping-cart center"></i></span></th>
+              </tr>
+              <tr>
+                <th>Orange</th>
+                <th>13500 MC</th>
+                <th>
+                  <select placeholder="5days">
+                      <option value="5days" selected>5days</option>
+                      <option value="10days">10days</option>
+                      <option value="20days">20days</option>
+                  </select>
+                </th>
+                <th> 
+                  <span class="badge badge-success"><i class="fa fa-shopping-cart center"></i></span></th>
+              </tr>
+              <tr>
+                <th>MTN</th>
+                <th>25000 MC</th>
+                <th>
+                  <select placeholder="5days">
+                      <option value="5days" selected>5days</option>
+                      <option value="10days">10days</option>
+                      <option value="20days">20days</option>
+                  </select>
+                </th>
+                <th> 
+                  <span class="badge badge-success"><i class="fa fa-shopping-cart center"></i></span></th>
+              </tr>
               <tr *ngFor="let v of listVehicle">
                 <td>
                   <span class="badge badge-success">Active</span>
@@ -23,7 +63,6 @@
                 <td>{{v.field_type}}</td>
                 <td>{{v.field_marque}}</td>
               </tr>
-             
             </tbody>
           </table>
           <nav>

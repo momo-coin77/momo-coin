@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user/user.service';
 import { AuthentificationService } from '../../shared/service/auth/authentification.service';
 import { MustMatch } from '../../shared/service/_helpers/must-match.validator';
-import { User } from '../../shared/entity/provider';
+import { User } from '../../shared/model/user';
 import { NotificationService } from '../../shared/service/notification/notification.service';
-
-declare var $: any;
 
 
 @Component({
@@ -36,20 +34,19 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
-            'field_firstname': ['', Validators.required],
-            'field_surname': ['', Validators.required],
-            'field_username': ['', Validators.required],
+            'name': ['', Validators.required],
             'user_agree': [false, Validators.requiredTrue],
-            'field_country': ['', Validators.required],
-            'field_city': ['', Validators.required],
-            'field_network': ['', Validators.required],
-            'field_phone': ['', Validators.required],
-            'field_password': ['', [Validators.required, Validators.minLength(6)]],
-            'field_password2': ['', Validators.required],
-            'field_email': ['', [Validators.required, Validators.email]],
+            'country': ['', Validators.required],
+            'city': ['', Validators.required],
+            'network': ['', Validators.required],
+            'sponsorshipId': ['', Validators.required],
+            'phone': ['', [Validators.required, Validators.minLength(9)]],
+            'password': ['', [Validators.required, Validators.minLength(6)]],
+            'password2': ['', Validators.required],
+            'email': ['', [Validators.required, Validators.email]],
 
         }, {
-            validator: MustMatch('field_password', 'field_password2')
+            validator: MustMatch('password', 'password2')
         });
     }
 
@@ -69,19 +66,17 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.firstname = this.registerForm.controls.field_firstname?.value;
-        user.lastname = this.registerForm.controls.field_surname?.value;
-        user.adresse.email = this.registerForm.controls.field_email?.value;
-        user.password = this.registerForm.controls.field_password?.value;
-        user.adresse.country = this.registerForm.controls.field_country?.value;
+        user.name = this.registerForm.controls.name?.value;
+        user.email = this.registerForm.controls.email?.value;
+        user.password = this.registerForm.controls.password?.value;
+        user.country = this.registerForm.controls.country?.value;
 
-        user.adresse.city = this.registerForm.controls.field_city?.value;
-        user.username = this.registerForm.controls.field_username?.value;
-        user.adresse.phone = this.registerForm.controls.field_phone?.value;
+        user.city = this.registerForm.controls.city?.value;
+        user.phone = this.registerForm.controls.phone?.value;
         return user;
     }
 
-    onSubmit() {
+    onSubmit(data) {
         this.submitted = true;
         this.waitingRegistration = false;
 
@@ -90,10 +85,9 @@ export class RegisterComponent implements OnInit {
             return;
         }
         this.waitingRegistration = true;
-
-        setTimeout(() => {
-            let user: User = this.setFormData();
-            this.fireAuthService.signUp(this.registerForm.controls.field_email?.value, this.registerForm.controls.field_password?.value)
+            // let user: User = this.setFormData();
+            this.fireAuthService.signUp(new User(data.email, data.password,data.nom))
+            // this.fireAuthService.signUp(new User(data.email, tdata.password)
             .then((result) => {
                     this.messageColor = 'green';
                     this.registrationMessage = 'Success';
@@ -109,9 +103,6 @@ export class RegisterComponent implements OnInit {
                     this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>The server is temporarily unavailable, please try again later.');
                     this.submitted = false;
                 });
-            
-
-        }, 3000);
 
     }
 

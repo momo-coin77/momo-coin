@@ -3,7 +3,7 @@ import { Entity } from "./entity";
 export class User extends Entity {
     uid: string;
     email: string;
-    // password: string;
+    password: string;
     name: string;
     nicNumber: string; // CNI num
     emailVerified: boolean;

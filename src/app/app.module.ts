@@ -114,6 +114,7 @@ import { AuthentificationService } from './shared/service/auth/authentification.
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { EventService } from './shared/service/event/event.service';
 
 @NgModule({
   imports: [
@@ -208,7 +209,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
   },
-  // EventService,
+  EventService,
   // UserService,
   // RealtimeService,
   // ChatRealtimeService,

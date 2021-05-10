@@ -16,6 +16,16 @@ body { margin: 0;
       // font-family: Roboto, "Helvetica Neue", sans-saerif !important;
     }
 
+    .linear-gradient {
+      background: linear-gradient(to right, #ce9927, white);
+    }
+    .linear-gradient2 {
+      background: linear-gradient(to top, #e7d09f, white);
+    }
+    .linear-gradient3 {
+      background: linear-gradient(to top, #ce9927, white);
+    }
+    
     
     textarea:focus,
     select:focus,

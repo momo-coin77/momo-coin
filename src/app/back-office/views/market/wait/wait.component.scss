@@ -1,0 +1,14 @@
+.blink {text-decoration: blink;}
+#blink{
+    animation: Test 5s infinite;
+}
+@keyframes Test{
+    0%{opacity: 1;}
+    50%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+img.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
