@@ -27,9 +27,9 @@ export class WaitComponent implements OnInit {
                 let d = new Date();
                 let hh = d.getMinutes();
                 this.hh = hh;
-                console.log(this.hh);
+                // console.log(this.hh);
                 if(tab[1] === 'market'){
-                    this.market(this.hh);
+                    // this.market(this.hh);
                 };
             });
     }

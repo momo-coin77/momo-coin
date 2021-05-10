@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { interval, Subscription } from 'rxjs';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 
@@ -16,12 +17,10 @@ export class MarketComponent implements OnInit {
   hh: number;
   private updateSubscription: Subscription;
   href: string;
+  @ViewChild('secondModal') public secondModal: ModalDirective;
+  @ViewChild('firstModal') public firstModal: ModalDirective;
 
-  constructor(private router: Router) {
-    let d = new Date();
-    let hh = d.getMinutes();
-    this.market(hh);
-    this.hh = hh;
+  constructor(private router: Router, private modalService: BsModalService) {
   }
 
   ngOnInit() {
@@ -32,25 +31,38 @@ export class MarketComponent implements OnInit {
         let d = new Date();
         let hh = d.getMinutes();
         this.hh = hh;
-        console.log(this.hh);
+        // console.log(this.hh);
         if (tab[1] === 'market') {
-          this.market(this.hh);
+          // this.market(this.hh);
         };
       });
   }
 
   market(hh) {
-    // if (hh != 11 && hh
-        if (hh == 11 || hh == 13 || hh == 15 || hh == 17) {
-          this.close = true;
-          return this.router.navigate(['market/open']);
-      } else {
-          this.open = true;
-          return this.router.navigate(['market/wait']);
-      }
+    if (hh == 11 || hh == 13 || hh == 15 || hh == 17) {
+      this.close = true;
+      return this.router.navigate(['market/open']);
+    } else {
+      this.open = true;
+      return this.router.navigate(['market/wait']);
+    }
   }
+
+  show2() {
+    console.log('teste pop');
+    this.secondModal.show();
+  }
+
+  show1() {
+    console.log('teste modal');
+    this.firstModal.show();
+  }
+
+  ok() {}
+
   OnDestroy(): void {
     this.open = false;
     this.close = false;
   }
+
 }

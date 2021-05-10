@@ -10,18 +10,20 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { MarketRoutingModule } from './market-routing.module';
 import { WaitComponent } from './wait/wait.component';
 import { MarketPlaceComponent } from './market-place.component';
+import { ConfirmPackComponent } from './confirm-pack/confirm-pack.component';
 
 @NgModule({
   imports: [
     CommonModule,
     MarketRoutingModule,
     AlertModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
   ],
   declarations: [
     MarketComponent,
     WaitComponent,
-    MarketPlaceComponent
+    MarketPlaceComponent,
+    ConfirmPackComponent
   ]
 })
 export class MarketModule { }
