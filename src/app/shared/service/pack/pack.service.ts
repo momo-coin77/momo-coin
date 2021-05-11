@@ -11,6 +11,7 @@ import { AuthService } from '../auth/auth.service';
 import { Message } from '../../entity/chat';
 import { UserNotificationService } from '../user-notification/user-notification.service';
 import { EntityID } from '../../entity/EntityID';
+import { UserHistoryService } from '../user-history/user-history.service';
 
 
 
@@ -20,30 +21,33 @@ import { EntityID } from '../../entity/EntityID';
 export class PackService {
     packs: Map<String, Pack> = new Map<String, Pack>();
     packList: BehaviorSubject<Map<String, Pack>> = new BehaviorSubject<Map<String, Pack>>(this.packs)
+
     currentUser:User;
-    
+
     constructor(
         private firestore: AngularFirestore,
         private firebaseApi:FirebaseApi,
         private authService:AuthService,
         private userNotificationService:UserNotificationService,
+        private userHistoryService:UserHistoryService,
         private router: Router,
         private eventService: EventService) {
             this.authService.currentUserSubject.subscribe((user:User)=>{
                 this.currentUser=user;
-              })
-            this.eventService.loginEvent.subscribe((user:User)=>{
-                if(!user) return;
-                //cette requete ne doit ce faire que si le marché est ouvert
-            })    
+              })   
     }
-    getPackFromApi(user:User)
+   
+    deletePack(packId:EntityID):Promise<ResultStatut>
     {
-        this.firebaseApi.fetch(`users/${user.id.toString()}/packs`)
-        .then((result:ResultStatut)=> {
-        this
-        }) 
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            this.firebaseApi.delete(`users/${this.authService.currentUserSubject.getValue().id.toString()}/packs/${packId.toString()}`)
+            .then((result:ResultStatut)=>{
+                this.packs.delete(packId.toString());
+                resolve(result);
+            })
+        })
     }
+    
     addPackForAdmin(pack:Pack,account:User):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve,reject)=>{
@@ -219,8 +223,20 @@ export class PackService {
                     link:`packs/${pack.id.toString()}/buyState`,
                     data:pack.buyState
                 },
+                
             ])
+            .then((result)=> this.userHistoryService.addToHistory(pack))
+            .then((result)=> {
+                let newPack:Pack = new Pack();
+                newPack.buyState=PackBuyState.ON_WAITING_BUYER;
+                newPack.state=PackState.NOT_ON_MARKET;
+                newPack.idOwner
 
+                 
+                this.firebaseApi.updates([
+
+                ])
+            })
             .then((result)=>{
                 let message:Message=new Message();
                 message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
@@ -239,16 +255,7 @@ export class PackService {
         })
     }
 
-        deletePack(pack:Pack):Promise<ResultStatut>
-        {
-            return new Promise<ResultStatut>((resolve,reject)=>{
-                this.firebaseApi.delete(`users/${this.authService.currentUserSubject.getValue().id.toString()}/packs/${pack.id}`)
-                .then((result:ResultStatut)=>{
-                    this.packs.delete(pack.id.toString());
-                    resolve(result);
-                })
-            })
-        }
+        
 
        getPackList() {
         let list: Pack[] = [];

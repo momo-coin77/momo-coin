@@ -15,6 +15,23 @@ export enum PackBuyState
     ON_END_SEL="on_end_sel"
 }
 
+export class PackGain{
+    pourcent:number=0;
+    jour:number=0;    
+}
+
+export class Pack5Gain extends PackGain
+{
+    pourcent:number=20;
+    jour:number=5;
+}
+
+export class Pack10Gain extends PackGain
+{
+    pourcent:number=45;
+    jour:number=10;
+}
+
 // pack representation
 export class Pack extends Entity {
 
