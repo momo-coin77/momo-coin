@@ -101,24 +101,18 @@ import { TermsAndConditionsComponent } from './shared/components/terms-and-condi
 
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
 // import { ProgressIndeterminateComponent } from './shared/components/progress-indeterminate/progress-indeterminate.component';
-import { ChatModule } from './shared/components/chat/chat.module';
+
 import { ProgressIndeterminateModule } from './shared/components/progress-indeterminate/progress-indeterminate.module';
 import { DetailService } from './shared/service/back-office/detail.service';
-import { DetailModule } from './shared/components/modals/detail.module';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 // const config: SocketIoConfig = { url: 'http://localhost:8090', options: {} };
  import { environment } from '../environments/environment';
-import { AuthentificationService } from './shared/service/auth/authentification.service';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { EventService } from './shared/service/event/event.service';
 
 @NgModule({
   imports: [
-    DetailModule,
     BrowserModule,
     BrowserAnimationsModule,
     // SocketIoModule.forRoot(config),
@@ -134,7 +128,7 @@ import { EventService } from './shared/service/event/event.service';
     ChartsModule,
     BrowserAnimationsModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=MY_GOOGLE_API_KEY'}),
-    ChatModule,
+    // ChatModule,
     ProgressIndeterminateModule,
     ToastrModule.forRoot({
       timeOut: 2000,
@@ -182,10 +176,6 @@ import { EventService } from './shared/service/event/event.service';
     MatSortModule,
     MatPaginatorModule,
     MatNativeDateModule,
-    DetailModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFirestoreModule
   ],
   declarations: [
     AppComponent,
@@ -214,7 +204,6 @@ import { EventService } from './shared/service/event/event.service';
   // RealtimeService,
   // ChatRealtimeService,
   // DetailService,
-  AuthentificationService
 
 ],
   bootstrap: [ AppComponent ]

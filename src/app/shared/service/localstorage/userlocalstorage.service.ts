@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, NavigationStart, Router, } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Provider } from '../../entity/provider';
+import { User } from '../../entity/user';
+
 export interface UserLocalStorageData
 {
   isLoggedIn:boolean,
-  user:Provider
+  user:User
 }
 
 @Injectable({
   providedIn:"root"
 })
 export class UserlocalstorageService {
-  dataUser:BehaviorSubject<UserLocalStorageData>=new BehaviorSubject<UserLocalStorageData>({isLoggedIn:false,user:new Provider()});
+  dataUser:BehaviorSubject<UserLocalStorageData>=new BehaviorSubject<UserLocalStorageData>({isLoggedIn:false,user:new User()});
   constructor(private router:Router) {
     this.getUserDataWhenNavStart();
    }
@@ -27,7 +28,7 @@ export class UserlocalstorageService {
           let isLogged:Boolean=JSON.parse(localStorage.getItem("isLoggedIn"));
           if(isLogged)
           {
-            let user:Provider=new Provider();
+            let user:User=new User();
             user.hydrate(JSON.parse(localStorage.getItem("user")))
             this.dataUser.next({
               isLoggedIn:true,
@@ -50,6 +51,6 @@ export class UserlocalstorageService {
   clearData()
   {
     localStorage.clear();
-    this.dataUser.next({isLoggedIn:false,user:new Provider()});
+    this.dataUser.next({isLoggedIn:false,user:new User()});
   }
 }

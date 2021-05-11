@@ -5,11 +5,8 @@ import { Discussion, Message } from '../../../shared/entity/chat';
 import { ChatService } from '../../../shared/service/back-office/chat.service';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Provider } from '../../../shared/entity/provider';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
-import { Package } from '../../../shared/entity/package';
-import { DetailComponent } from '../../../shared/components/modals/detail.component';
-import { AuthentificationService } from '../../../shared/service/auth/authentification.service';
+import { AuthService } from '../../../shared/service/auth/auth.service';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 declare var $: any;
@@ -19,12 +16,8 @@ declare var $: any;
   styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit {
-
-  @ViewChild("modalDetail") modalDetail:DetailComponent;
   public sidebarMinimized = false;
   public navItems = navItems;
-  unreadMessageList: Message[] = [];
-  unreadProjetList:Package[] =[];
   waitingPackageInformation = true;
   selectedPackage = null;
   errorFindingPackageMessage = '';
@@ -38,7 +31,7 @@ export class DefaultLayoutComponent implements OnInit {
   today: number = Date.now();
 
   constructor (
-    private fireAuthService: AuthentificationService, // firebase auth
+    private autService: AuthService, // firebase auth
     private userService: UserService,
     private chatService: ChatService,
     private modalService: NgbModal,
@@ -47,13 +40,13 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
+    // this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
   }
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }
   logOut() {
-      this.fireAuthService.signOut();
+      this.autService.signOut();
   }
 
   goToChat(idProjet:string)
@@ -77,7 +70,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   showModal(pkg)
   {
-    this.modalDetail.show(pkg);
+    // this.modalDetail.show(pkg);
   }
 
   ConfirmPayment() {

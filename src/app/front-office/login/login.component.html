@@ -40,10 +40,10 @@
                             </label>
                         </span>
                     </div><br>
-                    <app-progress-indeterminate *ngIf="waitingRegistration"></app-progress-indeterminate>
+                    <app-progress-indeterminate *ngIf="waitingLogin"></app-progress-indeterminate>
                     <span class="pull-right">
                         <button type="submit" class="login loginmodal-submit btn"
-                            value="Login" *ngIf="!waitingRegistration">Login</button>
+                            value="Login" *ngIf="!waitingLogin">Login</button>
                     </span>
                 </form>
                 <!-- Calling GoogleAuth Api from AuthService -->

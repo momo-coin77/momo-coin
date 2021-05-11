@@ -2,9 +2,9 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../../shared/service/user/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Provider, ServiceOfProvider, User } from '../../../shared/entity/provider';
+import { User } from '../../../shared/entity/user';
+import { AuthService } from '../../../shared/service/auth/auth.service';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
-import { AuthentificationService } from '../../../shared/service/auth/authentification.service';
 // import { AuthService } from 'app/shared/services/auth.service';
 // import { UserService } from 'app/shared/services/user.service';
 // import { User } from 'app/shared/services/user';
@@ -21,8 +21,7 @@ export class UserComponent implements OnInit {
   submitted: boolean = false;
   // user: any[];
   // users: any[];
-  user: Provider = new Provider();
-  userService: ServiceOfProvider = new ServiceOfProvider();
+  user: User = new User();
   userEmail: String = "";
   firstName: String = "";
   lastName: String = "";
@@ -47,7 +46,7 @@ export class UserComponent implements OnInit {
     // private userService: UserService,
     // public authService: AuthService,
     private userData: UserService,
-    private authService: AuthentificationService,
+    private authService: AuthService,
     public router: Router,
     public ngZone: NgZone,
     private notification: NotificationService) {

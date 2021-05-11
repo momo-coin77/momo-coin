@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from '../../shared/model/user';
-import { AuthentificationService } from '../../shared/service/auth/authentification.service';
+import { User } from '../../shared/entity/user';
+import { AuthService } from '../../shared/service/auth/auth.service';
+import { FireBaseConstant } from '../../shared/service/firebase/firebase-constant';
+import { ResultStatut } from '../../shared/service/firebase/resultstatut';
 import { NotificationService } from '../../shared/service/notification/notification.service';
 import { UserService } from '../../shared/service/user/user.service';
 
@@ -16,11 +18,10 @@ export class LoginComponent implements OnInit {
 
     submitted: boolean = false;
     loginForm: FormGroup;
-    waitingRegistration: boolean = false;
-    user: any;
+    waitingLogin: boolean = false;
 
     constructor(
-        private fireAuthService: AuthentificationService, // firebase auth
+        private authService:AuthService,
         private router: Router,
         // private authen: AuthService,
         private formLog: FormBuilder,
@@ -29,12 +30,11 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.user = localStorage.getItem('user-data');
         this.loginForm = this.formLog.group({
             'email': ['', [Validators.required, Validators.email]],
             'password': ['', [Validators.required, Validators.minLength(6)]]
         });
-        this.waitingRegistration = false;
+        this.waitingLogin = false;
     }
 
     get f() {
@@ -49,35 +49,29 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/forgot-password']);
     }
 
-    submit(data) {
+    submit() {
         this.submitted = true;
-        this.waitingRegistration = false;
         // stop here if form is invalid
         if (this.loginForm.invalid) {
             return;
         }
-        this.waitingRegistration = true;
-        this.fireAuthService.signIn(new User(data.email, data.password))
+        this.waitingLogin = true;
+        let user:User=new User();
+        user.email=this.loginForm.value.email;
+        user.password=this.loginForm.value.password;
+
+        this.authService.signIn(user)
             .then((result) => {
                 this.router.navigate(['/dashboard']);
                 this.submitted = false;
-
+                this.waitingLogin =false;
             })
-            .catch((error) => {
-                if (error == '[object Object]') {
-                    console.log('error 1: ' + error);
-                    this.waitingRegistration = false;
-                    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>Email or password is incorrect.');
-                    this.submitted = false;
-                } else {
-                    console.log('error 2: ' + error);
-                    this.waitingRegistration = false;
-                    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>No connection\</b>\<br>Check your internet connection.');
-                    this.submitted = false;
-
-                }
+            .catch((error:ResultStatut) => {
+                this.waitingLogin = false;
+                this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+                this.submitted = false;
+               
             });
-        this.submitted = false;
     }
 
 

@@ -50,11 +50,12 @@
                                 </div>
                                 <div class="mb-4 col-md-6">
                                     <label for="accontType">Mobile number</label>
-                                    <input type="number" id="phone" formControlName="phone"
+                                    <input type="text" id="phone" formControlName="phone"
                                         placeholder="Enter you Phone Number" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
                                     <div *ngIf="submitted && f.phone.errors" class="invalid-feedback text-danger">
-                                        <div *ngIf="f.phone.errors.required">Phone is required</div>
+                                        <div *ngIf="f.phone.errors.minlength">Phone is required</div>
+                                        <div *ngIf="f.phone.errors.pattern">Phone is invalid. format: 695-54-23-45</div>
                                     </div>
                                 </div>
                                 <div class="mb-4 col-md-6">

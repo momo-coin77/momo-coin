@@ -1,8 +1,0 @@
-<div class="px-4 py-5 chat-box bg-white">
-    <div *ngFor="let message of discussFils">
-        <app-send-message [message]="message"  *ngIf="senderIsAuthUser"></app-send-message>
-
-        <app-received-message [message]="message" *ngIf="!senderIsAuthUser"></app-received-message>
-    </div>
-    
-</div>

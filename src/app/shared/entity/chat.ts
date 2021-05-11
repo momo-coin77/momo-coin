@@ -1,5 +1,3 @@
-import { purgeAttribute } from './entity';
-
 export class Message
 {
     _id:String="";
@@ -29,7 +27,7 @@ export class Message
         let m:Message=new Message();
         for(const key in entity)
         {
-            Reflect.set(m,key,purgeAttribute(m,entity,key)); 
+            // Reflect.set(m,key,(m,entity,key)); 
         }
         return m;
     }
@@ -60,14 +58,14 @@ export class Discussion
         let d:Discussion=new Discussion();
         for(const key in entity)
         {
-            if(key=="chats") d.chats=purgeAttribute(d,entity,"chats")
-                ?purgeAttribute(d,entity,"chats").map((chat:Record<string,any>)=> {
-                    let m:Message=Message.hydrate(chat);
-                    m.idDiscussion=entity._id;
-                    return m;
-                })
-                :[];
-            else Reflect.set(d,key,purgeAttribute(d,entity,key)); 
+            // if(key=="chats") d.chats=purgeAttribute(d,entity,"chats")
+            //     ?purgeAttribute(d,entity,"chats").map((chat:Record<string,any>)=> {
+            //         let m:Message=Message.hydrate(chat);
+            //         m.idDiscussion=entity._id;
+            //         return m;
+            //     })
+            //     :[];
+            // else Reflect.set(d,key,purgeAttribute(d,entity,key)); 
         }
         return d;        
     }
