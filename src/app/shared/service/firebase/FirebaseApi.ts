@@ -43,6 +43,10 @@ export class FirebaseApi {
   {
     // if(this.offlineMode) firebase.firestore().enablePersistence();
   }
+  getFirebaseDatabase()
+  {
+    return this.db;
+  }
   add(url:string,value:any):Promise<ResultStatut>
   {
     let action=new ResultStatut();
@@ -107,12 +111,12 @@ export class FirebaseApi {
       this.db.ref(url).on('value', (doc)=>{
         try
         {
-          let r=[];
-          doc.forEach(element => {
-            r.push(element.val());
-          });
+          // let r=[];
+          // doc.forEach(element => {
+          //   r.push(element.val());
+          // });
           action.description="Successful fetching information";
-          action.result=r;
+          action.result=doc.val();
           resolve(action);
         }
         catch (err) {
@@ -145,6 +149,24 @@ export class FirebaseApi {
         reject(action);
       }
     });
+  }
+  updates(updates:{link:String,data:any}[]):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      let up={};
+      let result=new ResultStatut();
+      updates.forEach((update)=>up[update.link.toString()]=update.data);
+      this.db.ref().update(up,(error)=>{
+        if(error) 
+        {
+          result.apiCode=error.error;
+          result.message=error.message;
+          return reject(result);
+        }
+        resolve(result);
+      })
+    })
+    
   }
   delete(url:string):Promise<ResultStatut>
   {

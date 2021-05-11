@@ -56,6 +56,7 @@ export class UserService {
     })
   }
 
+  
   addUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve,reject)=>{
       if(this.listUser.has(user.id.toString())) return resolve(new ResultStatut())

@@ -1,36 +1,46 @@
-export class Message
+import { Entity } from "./entity";
+import { EntityID } from "./EntityID";
+
+export enum MessageReadState
 {
-    _id:String="";
-    from:String=new String();
-    to:String=new String();
+    UNREAD="unread",
+    READ="read"
+}
+
+export class Message extends Entity
+{
+    from:EntityID=new EntityID();
+    to:EntityID=new EntityID();
     date:String="";
-    title:String="";
     content:String="";
-    read:number=0;
+    read:MessageReadState=MessageReadState.UNREAD;
+    idPack:EntityID=new EntityID();
     idDiscussion:String="";
 
-    toString():any
-    {
-        return {
-            _id:this._id,
-            from:this.from,
-            to:this.to,
-            date:this.date,
-            title:this.title,
-            content:this.content,
-            read:this.read
-        };
+    hydrate(entity: Record<string | number, any>): void {
+        for (const key of Object.keys(entity)) {
+            if (Reflect.has(this, key)) {
+                if (key == "id") this.id.setId(entity.id)
+                else if(key=="from") this.from.setId(entity.idOwner)
+                else if(key=="to") this.to.setId(entity.idBuyer)
+                else if(key=="idPack") this.to.setId(entity.idPack)
+                else Reflect.set(this, key, entity[key]);
+            }
+        }
     }
 
-    static hydrate(entity: any): Message
-    {
-        let m:Message=new Message();
-        for(const key in entity)
-        {
-            // Reflect.set(m,key,(m,entity,key)); 
+    toString(): Record<string | number, any> {
+        let r = {};
+        for (const k of Object.keys(this)) {
+            if (k == "id")  r[k]=this.id.toString()
+            else if(k=="from") r[k]=this.from.toString();
+            else if(k=="to") r[k]=this.to.toString();
+            else if(k=="idPack") r[k]=this.idPack.toString();
+            else r[k] = Reflect.get(this, k);
         }
-        return m;
+        return r;
     }
+
 }
 
 export class Discussion

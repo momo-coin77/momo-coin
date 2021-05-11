@@ -1,80 +1,54 @@
 import { Entity, purgeAttribute } from './entity';
+import { EntityID } from './EntityID';
 
-export enum PackageState {
-    SERVICE_INIT_STATE = 'service_init_STATE',
-    SERVICE_IN_DISCUSS_STATE = 'service_in_discuss_state',
-    SERVICE_IN_TRANSACTION_STATE = 'service_in_transaction_state',
-    SERICE_END = 'service_end'
+export enum PackState {
+    ON_MARKET = 'on_market',
+    NOT_ON_MARKET = 'not_on_market',
 }
 
+export enum PackBuyState
+{
+    ON_WAITING_BUYER="on_waiting_buyer",
+    ON_WAITING_CONFRMATION_FOR_SELL="on_waiting_confirmation_for_sell",    
+    ON_WAITING_SELLER_CONFIRMATION_PAIEMENT="on_waiting_seller_confirmation_paiement",
+    ON_WAITING_BUYER_CONFIRMATION_PAIEMENT="on_waiting_buyer_confirmation",
+    ON_END_SEL="on_end_sel"
+}
 
 // pack representation
 export class Pack extends Entity {
 
-    amount: number; // montant du pack
-    payDate: string; // date de l'achat
-    saleDate: string; // date de mise sur le marché
+    amount: number=0; // montant du pack
+    nextAmount:number=0; //montant a obtenir apres mise sur le marché
+    payDate: string=""; // date de l'achat
+    saleDate: string="" // date de mise sur le marché (new Date()).toISOString();
     plan: number; // plan de l'achat ( 5 pour 5 jour, 10 pour 10 jours ...)
-    status: boolean; // état du pack ( )
     emailVerified: boolean;
-    idOwner: string;
-    transactions: any[]=[];
-    state: PackageState = PackageState.SERVICE_INIT_STATE;
-    idPack: String; // idantifaint du pack
+    idOwner: EntityID=new EntityID();
+    buyState:PackBuyState=PackBuyState.ON_WAITING_BUYER;
+    idBuyer:EntityID=new EntityID();
+    state: PackState = PackState.NOT_ON_MARKET;
 
-    constructor(
-        id: String = '', // idantifaint du pack
-    ) {
-        super();
-        this.idPack = id;
-
-        //hydrate date iso 8601
-        this.saleDate = (new Date()).toISOString();
-
-    }
-
-    /**
-     * @inheritdoc
-     */
-    hydrate(entity: any): void {
-        this.amount = purgeAttribute(this, entity, 'amount');
-        let deadline = purgeAttribute(this, entity, 'deadline');
-        if (deadline) {
-            this.payDate = purgeAttribute(this, deadline, 'payDate');
-            this.saleDate = purgeAttribute(this, deadline, 'saleDate');
-        }
-        this.idPack = purgeAttribute(this, entity, 'idPack');
-        this.idOwner = purgeAttribute(this, entity, 'idOwner');
-        this.state = purgeAttribute(this, entity, 'state');
-
-        this.plan = purgeAttribute(this, entity, 'plan');
-        this.status = purgeAttribute(this, entity, 'status');
-        this.emailVerified = purgeAttribute(this, entity, 'emailVerified');
-        if (entity.transactions) {
-            this.transactions = purgeAttribute(this, entity, 'transactions');
+    hydrate(entity: Record<string | number, any>): void {
+        for (const key of Object.keys(entity)) {
+            if (Reflect.has(this, key)) {
+                if (key == "id") this.id.setId(entity.id)
+                else if(key=="idOwner") this.idOwner.setId(entity.idOwner)
+                else if(key=="idBuyer") this.idBuyer.setId(entity.idBuyer)
+                else Reflect.set(this, key, entity[key]);
+            }
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    toString(): any {
-        return {
-            idPack: this.id,
-            idOwner: this.idOwner,
-            deadline: {
-                payDate: this.payDate,
-                saleDate: this.saleDate
-            },
-            amount: this.amount,
-            plan: this.plan,
-            state: this.state,
-            emailVerified: this.emailVerified,
-            status: this.status,
-            transactions: this.transactions
-        };
-        //stringify date format ISO 8601
-
+    toString(): Record<string | number, any> {
+        let r = {};
+        for (const k of Object.keys(this)) {
+            if (k == "id")  r[k]=this.id.toString()
+            else if(k=="idOwner") r[k]=this.idOwner.toString();
+            else if(k=="idBuyer") r[k]=this.idBuyer.toString();
+            else r[k] = Reflect.get(this, k);
+        }
+        return r;
     }
 }
 
@@ -84,10 +58,6 @@ export class ReceiverPayment extends Entity {
     public parttypesupplied: String = '';
 }
 
-export enum PackageTypeOf {
-    PERSON = 'person',
-    COLIS = 'colis'
-}
 
 export function packBuilder(entity: Record<string, any>): Pack {
     let pck: Pack = null;

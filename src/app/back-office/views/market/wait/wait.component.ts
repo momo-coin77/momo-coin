@@ -29,13 +29,13 @@ export class WaitComponent implements OnInit {
                 this.hh = hh;
                 // console.log(this.hh);
                 if(tab[1] === 'market'){
-                    // this.market(this.hh);
+                     this.market(this.hh);
                 };
             });
     }
 
     market(hh) {
-        if (hh == 11 || hh == 13 || hh == 15 || hh == 17) {
+        if(hh == 57 || hh == 59 || hh == 1 || hh == 3){
             this.close = true;
             return this.router.navigate(['market/open']);
         } else {

@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../entity/user';
+import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { UserLocalStorageData, UserlocalstorageService } from '../localstorage/userlocalstorage.service';
@@ -19,6 +20,7 @@ export class AuthService {
 
   constructor(private firebaseApi: FirebaseApi,
     private localStorageService: UserlocalstorageService,
+    private eventService:EventService,
     private userService: UserService) {
     this.localStorageService.dataUser.subscribe((userData: UserLocalStorageData) => {
       this.isLoggedIn = userData.isLoggedIn;
@@ -27,7 +29,7 @@ export class AuthService {
     });
   }
 
-  signIn(userN: User): Promise<ResultStatut> {
+  signIn(userN: User,emitEvent:boolean=true): Promise<ResultStatut> {
     let action = new ResultStatut();
     return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi.signInApi(userN.email, userN.password)
@@ -42,6 +44,7 @@ export class AuthService {
             isLoggedIn: true,
             user: userN
           });
+          if(emitEvent) this.eventService.loginEvent.next(userN);
           resolve(action)
         })
         .catch(result => {
@@ -54,13 +57,14 @@ export class AuthService {
   signOut(): void {
     this.firebaseApi.signOutApi();
     this.localStorageService.clearData();
+    this.eventService.logoutEvent.next(true);
   }
 
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi.createUserApi(user.email, user.password)
-        .then(() => this.signIn(user))
+        .then(() => this.signIn(user,false))
         .then(() => this.userService.addUser(user))
         .then(() => {
           this.signOut();

@@ -15,7 +15,7 @@ export class Entity {
     toString(): Record<string | number, any> {
         let r = {};
         for (const k of Object.keys(this)) {
-            if (k == "id") this.id.toString()
+            if (k == "id")  r[k]= this.id.toString()
             else r[k] = Reflect.get(this, k);
         }
         return r;
