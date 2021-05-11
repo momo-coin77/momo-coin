@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ApiService } from '../api/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Pack, packBuilder } from '../../../shared/entity/pack';
-import { Provider, ServiceOfProvider, Zone } from '../../entity/provider';
 import { EventService } from '../event/event.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TransactionService } from '../transaction/transaction.service';
-import { FetchApiService } from '../fetch-api.service';
+import { FetchService } from '../fetch/fetch.service';
 import { Router } from '@angular/router';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
@@ -22,7 +20,7 @@ export class PackService {
     headers = {};
     constructor(
         private firestore: AngularFirestore,
-        private fetchApi: FetchApiService,
+        private fetchApi: FetchService,
         private router: Router,
         private toastr: ToastrService,
         private transactionService: TransactionService,

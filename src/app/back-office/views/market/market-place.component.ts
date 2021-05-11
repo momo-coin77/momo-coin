@@ -8,7 +8,9 @@ import { Router } from '@angular/router';
 
 export class MarketPlaceComponent implements OnInit {
 
-    constructor ( private router: Router){}
+    constructor ( private router: Router){
+        this.router.navigate(['market/open']);
+}
 
     ngOnInit(){
         this.router.navigate(['market/open']);

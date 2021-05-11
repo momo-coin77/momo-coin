@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Transaction } from '../../entity/transaction';
-import { ApiService } from '../api/api.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,27 +10,20 @@ export class TransactionService {
     transactions: Map<String,Transaction>=new Map<String,Transaction>();
     transactionList:BehaviorSubject<Map<String,Transaction>> = new BehaviorSubject<Map<String,Transaction>>(this.transactions)
     constructor(
-        private apiService: ApiService
     ) { }
 
-    headers: Record<string, string> = {
-        'Authorization': 'Bearer ' + this.apiService.getAccessToken(),
-        'Content-Type': 'application/json'
-    };
-    
     startTransaction(providerId: String, requesterId: String, serviceId: String, initiatorId: String): Promise<any> {
-        // this.headers['Authorization']+=;
         return new Promise<any>((resolve, reject) => {
-            this.apiService.post("requester/service/transaction/start", {
-                "idService": serviceId,
-                "idProvider": providerId,
-                "idRequester": requesterId,
-                "idInitiator": initiatorId
-            }, this.headers)
-                .subscribe((result) => {
-                    if (result && result.resultCode == 0) resolve(result);
-                    else reject(result);
-                }, (error: any) => reject(error));
+        //     this.apiService.post("requester/service/transaction/start", {
+        //         "idService": serviceId,
+        //         "idProvider": providerId,
+        //         "idRequester": requesterId,
+        //         "idInitiator": initiatorId
+        //     }, this.headers)
+        //         .subscribe((result) => {
+        //             if (result && result.resultCode == 0) resolve(result);
+        //             else reject(result);
+        //         }, (error: any) => reject(error));
 
         })
     }

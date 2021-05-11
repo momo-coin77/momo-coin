@@ -2,7 +2,6 @@ import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../shared/service/user/user.service';
 import { navItems } from '../../../_nav';
 import { Discussion, Message } from '../../../shared/entity/chat';
-import { ChatService } from '../../../shared/service/back-office/chat.service';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
@@ -32,9 +31,6 @@ export class DefaultLayoutComponent implements OnInit {
 
   constructor (
     private autService: AuthService, // firebase auth
-    private userService: UserService,
-    private chatService: ChatService,
-    private modalService: NgbModal,
     private router:Router,
     private notification: NotificationService) {
   }
@@ -47,6 +43,8 @@ export class DefaultLayoutComponent implements OnInit {
   }
   logOut() {
       this.autService.signOut();
+      this.router.navigate(['/login']);
+      this.notification.showNotification('top', 'center', 'success', '', '\<b>You are out !\</b>');
   }
 
   goToChat(idProjet:string)

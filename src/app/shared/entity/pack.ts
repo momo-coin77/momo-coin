@@ -1,5 +1,4 @@
 import { Entity, purgeAttribute } from './entity';
-import { Zone as Location, Document, Vehicle } from './provider'
 
 export enum PackageState {
     SERVICE_INIT_STATE = 'service_init_STATE',
@@ -79,65 +78,7 @@ export class Pack extends Entity {
     }
 }
 
-export class ColisPackage extends Pack {
-    static TYPE = 'TransportColisService';
-
-    is_weak: Boolean = false;
-    typeof: String = '';
-    size_heigth: Number = 0.0;
-    size_depth: Number = 0.0;
-    size_width: Number = 0.0;
-    size_piece_nber: Number = 0;
-    size_piece_length: Number = 0;
-    package_name: String = '';
-    receiver: ReceiverColis = new ReceiverColis();
-
-    hydrate(entity: any): void {
-
-        let options = purgeAttribute(this, entity, 'options');
-        this.is_weak = purgeAttribute(this, options, 'is_weak');
-        this.typeof = purgeAttribute(this, options, 'typeof');
-        this.package_name = purgeAttribute(this, options, 'package_name');
-        if (entity.hasOwnProperty('size')) {
-            this.size_heigth = purgeAttribute(this, options.size, 'heigth');
-            this.size_depth = purgeAttribute(this, options.size, 'depth');
-            this.size_width = purgeAttribute(this, options.size, 'width');
-            this.size_piece_nber = purgeAttribute(this, options.size, 'piece_nber');
-            this.size_piece_nber = purgeAttribute(this, options.size, 'length');
-        }
-        if (entity.options.receiver) {
-            this.receiver.hydrate(entity.options.receiver);
-            this.receiver.id = this.receiver.id == null ? '' : this.receiver.id;
-        }
-        super.hydrate(entity)
-    }
-
-    /**
-     * @inheritdoc
-     */
-    toString(): any {
-        let stringifyO = super.toString();
-
-        stringifyO['options'] = {
-            ...stringifyO['options'],
-            is_weak: this.is_weak,
-            typeof: this.typeof,
-            size: {
-                heigth: this.size_heigth,
-                depth: this.size_heigth,
-                width: this.size_width,
-                piece_nber: this.size_piece_nber,
-                length: this.size_piece_length
-            },
-            package_name: this.package_name,
-            receiver: this.receiver.toString()
-        };
-        stringifyO['type'] = ColisPackage.TYPE;
-        return stringifyO;
-    }
-}
-
-export class ReceiverColis extends Entity {
+export class ReceiverPayment extends Entity {
     public name: String = '';
     public contact: String = '';
     public parttypesupplied: String = '';
@@ -151,9 +92,8 @@ export enum PackageTypeOf {
 export function packBuilder(entity: Record<string, any>): Pack {
     let pck: Pack = null;
     if (entity.options) {
-        if (entity.options.typeof != PackageTypeOf.PERSON) pck = new ColisPackage();
         pck.hydrate(entity);
     }
-    console.log('Hydrated pack ', pck)
+    console.log('Hydrated pack ', pck);
     return pck;
 }

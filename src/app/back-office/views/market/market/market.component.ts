@@ -25,7 +25,9 @@ export class MarketComponent implements OnInit {
 
   constructor(private router: Router,
     private modalService: BsModalService,
-    private packService: PackService) {
+    // private packService: PackService
+    ) {
+      this.calculDate();
   }
 
   ngOnInit() {
@@ -41,13 +43,13 @@ export class MarketComponent implements OnInit {
           // this.market(this.hh);
         };
       });
-    this.packService.packList.subscribe((packages: Map<String, Pack>) => {
-      this.posts = this.packService.getPackList();
-    });
+    // this.packService.packList.subscribe((packages: Map<String, Pack>) => {
+    //   this.posts = this.packService.getPackList();
+    // });
   }
 
   market(hh) {
-      if(hh == 11 || hh == 13 || hh == 15 || hh == 17) {
+      if(hh == 7 || hh == 9 || hh == 11 || hh == 13){
       this.close = true;
       return this.router.navigate(['market/open']);
     } else {
@@ -67,6 +69,9 @@ export class MarketComponent implements OnInit {
   }
 
   ok() { }
+
+  calculDate(){
+  }
 
   OnDestroy(): void {
     this.open = false;

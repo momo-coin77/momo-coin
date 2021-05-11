@@ -12,14 +12,14 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class AuthService {
-  currentUser:User=new User();
-  isLoggedIn:boolean=false;
+  currentUser: User = new User();
+  isLoggedIn: boolean = false;
   currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
 
 
-  constructor(private firebaseApi:FirebaseApi,
-    private localStorageService:UserlocalstorageService,
-    private userService:UserService) {
+  constructor(private firebaseApi: FirebaseApi,
+    private localStorageService: UserlocalstorageService,
+    private userService: UserService) {
     this.localStorageService.dataUser.subscribe((userData: UserLocalStorageData) => {
       this.isLoggedIn = userData.isLoggedIn;
       this.currentUser = userData.user;
@@ -27,54 +27,49 @@ export class AuthService {
     });
   }
 
-  signIn(userN:User):Promise<ResultStatut>
-  {
-    let action=new ResultStatut();
-    return new Promise<ResultStatut>((resolve,reject)=>{
-      this.firebaseApi.signInApi(userN.email,userN.password)
-      .then(result=>{
-        // userN.password="";
-        userN.name=result.result.user.displayName;
-        userN.email=result.result.user.email;
-        userN.photoUrl=result.result.user.photoUrl || "";
-        userN.id.setId(result.result.user.uid);
-        
-        this.localStorageService.setUserData({
-          isLoggedIn:true,
-          user:userN
-        });
-        resolve(action)
-      })
-      .catch(result=>{
-        this.firebaseApi.handleApiError(result);
-        reject(result);
-      })       
+  signIn(userN: User): Promise<ResultStatut> {
+    let action = new ResultStatut();
+    return new Promise<ResultStatut>((resolve, reject) => {
+      this.firebaseApi.signInApi(userN.email, userN.password)
+        .then(result => {
+          // userN.password="";
+          userN.name = result.result.user.displayName;
+          userN.email = result.result.user.email;
+          userN.photoUrl = result.result.user.photoUrl || "";
+          userN.id.setId(result.result.user.uid);
+
+          this.localStorageService.setUserData({
+            isLoggedIn: true,
+            user: userN
+          });
+          resolve(action)
+        })
+        .catch(result => {
+          this.firebaseApi.handleApiError(result);
+          reject(result);
+        })
     });
   }
 
-  signOut():void
-  {
+  signOut(): void {
     this.firebaseApi.signOutApi();
-    this.localStorageService.clearData();    
+    this.localStorageService.clearData();
   }
- 
- 
-  signInNewUser(user:User)
-  {
-    return new Promise<ResultStatut>((resolve,reject)=>
-    {
-      this.firebaseApi.createUserApi(user.email,user.password)
-      .then(()=> this.signIn(user))
-      .then(()=>this.userService.addUser(user))
-      .then(()=>{
-        this.signOut();
-        resolve(new ResultStatut());
-      })
-      .catch(e=>
-      {
-        this.firebaseApi.handleApiError(e);
-        reject(e)
-      })
+
+
+  signInNewUser(user: User) {
+    return new Promise<ResultStatut>((resolve, reject) => {
+      this.firebaseApi.createUserApi(user.email, user.password)
+        .then(() => this.signIn(user))
+        .then(() => this.userService.addUser(user))
+        .then(() => {
+          this.signOut();
+          resolve(new ResultStatut());
+        })
+        .catch(e => {
+          this.firebaseApi.handleApiError(e);
+          reject(e)
+        })
     });
   }
 }

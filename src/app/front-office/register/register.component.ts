@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit {
             this.authService.signInNewUser(user)
             .then((result) => {
                     this.router.navigate(['login']);
-                    this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Account created successfully');
+                    this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully');
                     this.waitingRegistration = false;
                     this.submitted = false;
 
