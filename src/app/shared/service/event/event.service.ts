@@ -5,6 +5,6 @@ import { BehaviorSubject } from 'rxjs';
 export class EventService {
   loginEvent = new BehaviorSubject<boolean>(false);
   loginRealtimeEvent = new BehaviorSubject<boolean>(false);
-  findPackageEvent = new BehaviorSubject<string>("");
+  findPackEvent = new BehaviorSubject<string>('');
   logoutEvent = new BehaviorSubject<boolean>(false);
 }

@@ -17,6 +17,9 @@
               </tr>
             </thead>
             <tbody>
+
+              
+              <!-- Données Statique -->
               <tr>
                 <th><b>MTN</b></th>
                 <th><b>500000 MC</b></th>
@@ -25,11 +28,13 @@
                       <option value="5days" selected>5days</option>
                       <option value="10days">10days</option>
                       <option value="20days">20days</option>
-                    </select>
-                  </b></th>
+                    </select></b>
+                </th>
                 <th><b>
-                    <span class="badge badge-success" (click)="show1()"><i
-                        class="fa fa-shopping-cart center"></i></span></b></th>
+                    <span class="badge badge-success" (click)="show1()">
+                      <i class="fa fa-shopping-cart center"></i>
+                    </span></b>
+                </th>
               </tr>
               <tr>
                 <th><b>Orange</b></th>
@@ -55,15 +60,35 @@
                     </select>
                   </b></th>
                 <th><b>
-                    <span class="badge badge-success"><i class="fa fa-shopping-cart center"></i></span></b></th>
+                    <span class="badge badge-success">
+                      <i class="fa fa-shopping-cart center"></i>
+                    </span></b>
+                </th>
               </tr>
-              <tr *ngFor="let v of listVehicle">
+
+              <!-- Données Dynamique -->
+              <tr *ngFor="let pack of posts">
                 <td>
-                  <span class="badge badge-success">Active</span>
+                  <span class="badge badge-secondary">New</span>
                 </td>
-                <td>{{v.field_type}}</td>
-                <td>{{v.field_marque}}</td>
+                <td>{{pack.network}}</td>
+                <td>{{pack.amount}}</td>
+                <th><b>
+                    <select placeholder="5days">
+                      <option value="5days" selected>5days</option>
+                      <option value="10days">10days</option>
+                      <option value="20days">20days</option>
+                    </select></b>
+                </th>
+                <th><b>
+                    <span class="badge badge-success" (click)="show1()">
+                      <i class="fa fa-shopping-cart center"></i>
+                    </span></b>
+                </th>
               </tr>
+
+
+
             </tbody>
           </table>
           <nav>

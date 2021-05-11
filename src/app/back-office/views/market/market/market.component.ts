@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { interval, Subscription } from 'rxjs';
+import { Pack } from '../../../../shared/entity/pack';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
+import { PackService } from '../../../../shared/service/pack/pack.service';
 
 
 @Component({
@@ -15,12 +17,15 @@ export class MarketComponent implements OnInit {
   close: boolean;
   open: boolean;
   hh: number;
+  posts: any;
   private updateSubscription: Subscription;
   href: string;
   @ViewChild('secondModal') public secondModal: ModalDirective;
   @ViewChild('firstModal') public firstModal: ModalDirective;
 
-  constructor(private router: Router, private modalService: BsModalService) {
+  constructor(private router: Router,
+    private modalService: BsModalService,
+    private packService: PackService) {
   }
 
   ngOnInit() {
@@ -36,10 +41,13 @@ export class MarketComponent implements OnInit {
           // this.market(this.hh);
         };
       });
+    this.packService.packList.subscribe((packages: Map<String, Pack>) => {
+      this.posts = this.packService.getPackList();
+    });
   }
 
   market(hh) {
-    if (hh == 11 || hh == 13 || hh == 15 || hh == 17) {
+      if(hh == 11 || hh == 13 || hh == 15 || hh == 17) {
       this.close = true;
       return this.router.navigate(['market/open']);
     } else {
@@ -58,7 +66,7 @@ export class MarketComponent implements OnInit {
     this.firstModal.show();
   }
 
-  ok() {}
+  ok() { }
 
   OnDestroy(): void {
     this.open = false;
