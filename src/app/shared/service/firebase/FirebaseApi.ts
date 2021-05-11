@@ -115,6 +115,7 @@ export class FirebaseApi {
           // doc.forEach(element => {
           //   r.push(element.val());
           // });
+          
           action.description="Successful fetching information";
           action.result=doc.val();
           resolve(action);
