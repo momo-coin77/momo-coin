@@ -41,8 +41,9 @@ export class RegisterComponent implements OnInit {
             'network': ['', Validators.required],
             'sponsorshipId': [''],
             'phone': ['', [
-                Validators.minLength(5),
-                Validators.pattern("^6[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}$")]],
+                Validators.minLength(9),
+                Validators.maxLength(9),
+                Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]],
             'password': ['', [Validators.required, Validators.minLength(6)]],
             'password2': ['', Validators.required],
             'email': ['', [Validators.required, Validators.email]],
@@ -93,6 +94,7 @@ export class RegisterComponent implements OnInit {
             this.authService.signInNewUser(user)
             .then((result) => {
                     this.router.navigate(['login']);
+                    // tslint:disable-next-line:max-line-length
                     this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully');
                     this.waitingRegistration = false;
                     this.submitted = false;
@@ -100,6 +102,7 @@ export class RegisterComponent implements OnInit {
                 })
                 .catch((error) => {
                     this.waitingRegistration = false;
+                    // tslint:disable-next-line:max-line-length
                     this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
                     this.submitted = false;
                 });

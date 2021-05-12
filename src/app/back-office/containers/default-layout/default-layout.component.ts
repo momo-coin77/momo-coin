@@ -38,9 +38,11 @@ export class DefaultLayoutComponent implements OnInit {
   ngOnInit(): void {
     // this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
   }
+
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }
+  
   logOut() {
       this.autService.signOut();
       this.router.navigate(['/login']);

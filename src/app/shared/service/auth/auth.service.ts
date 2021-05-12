@@ -44,7 +44,7 @@ export class AuthService {
             isLoggedIn: true,
             user: userN
           });
-          if(emitEvent) this.eventService.loginEvent.next(userN);
+          if(emitEvent) { this.eventService.loginEvent.next(userN); }
           resolve(action)
         })
         .catch(result => {

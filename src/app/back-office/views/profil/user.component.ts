@@ -22,11 +22,9 @@ export class UserComponent implements OnInit {
   // user: any[];
   // users: any[];
   user: User = new User();
-  userEmail: String = "";
-  firstName: String = "";
-  lastName: String = "";
-  name = "";
-  userAddress = '';
+  email: String = "";
+  name: String = "";
+  network = '';
   userCity: String = '';
   userCountry: String = '';
   userZip = '';
