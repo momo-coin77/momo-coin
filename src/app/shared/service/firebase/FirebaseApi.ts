@@ -184,7 +184,6 @@ export class FirebaseApi {
         .then((userCredential) => {
           result.description = 'Authentification successful';
           result.result = userCredential;
-          console.log(userCredential);
           resolve(result);
         })
         .catch((error) => {
@@ -226,16 +225,16 @@ export class FirebaseApi {
   handleApiError(result: ResultStatut) {
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_WRONG_PASSWORD:
-        result.message = 'Email ou mot de passe incorrect';
+        result.message = 'Incorrect email or password';
         break;
       case FireBaseConstant.AUTH_WEAK_PASSWORD:
-        result.message = 'Mot de passe doit avoir au moins 6 carracteres'
+        result.message = 'Password must have at least 6 characters'
         break;
       case FireBaseConstant.AUTH_EMAIL_ALREADY_USE:
-        result.message = 'Email déjà utiliser par un autre utilisateur';
+        result.message = 'Email already used by another user';
         break;
       case FireBaseConstant.NET_NETWORK_FAIL:
-        result.message = 'Hors connexion. Veuillez verifier votre connectivité réseau';
+        result.message = 'Offline. Please check your network connectivity';
         break;
     };
   }

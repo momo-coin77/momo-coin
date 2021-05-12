@@ -69,10 +69,10 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.name = this.registerForm.controls.name?.value;
-        user.email = this.registerForm.controls.email?.value;
-        user.password = this.registerForm.controls.password?.value;
-        user.country = this.registerForm.controls.country?.value;
+        user.name = this.registerForm.controls.name.value;
+        user.email = this.registerForm.controls.email.value;
+        user.password = this.registerForm.controls.password.value;
+        user.country = this.registerForm.controls.country.value;
 
         user.city = this.registerForm.controls.city.value;
         user.phone = `${this.registerForm.controls.phone.value}`;

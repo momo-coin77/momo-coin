@@ -4,6 +4,7 @@ import { User } from '../../entity/user';
 import { ResultStatut } from '../firebase/resultstatut';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { EntityID } from '../../entity/EntityID';
+import { EventService } from '../event/event.service';
 // import { AuthService } from '../auth/auth.service';
 
 
@@ -18,11 +19,32 @@ export class UserService {
 
 
   constructor(
+    private firebaseApi: FirebaseApi,
+    private eventService:EventService
+  ) { 
 
-    private firebaseApi: FirebaseApi
-  ) { }
+    this.eventService.loginEvent.subscribe((user:User)=>{
+      this.newUserHandler();
+    })
+  }
 
-
+  newUserHandler():Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.getFirebaseDatabase()
+      .ref("users")
+      .on('child_added',(snapshot)=>{
+        let user:User =new User();
+        user.hydrate( snapshot.val());        
+        if(!this.listUser.has(user.id.toString())) 
+        {
+          this.listUser.set(user.id.toString(),user);
+          this.usersSubject.next(this.listUser)
+          console.log(snapshot.val(),this.listUser)
+        }
+      })
+    })
+  }
   getListUser(): User[] {
     let r: User[] = [];
     this.listUser.forEach((value: User) => r.push(value));
