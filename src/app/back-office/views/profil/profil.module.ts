@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 // Alert Component
 import { AlertModule } from 'ngx-bootstrap/alert';
-import { UserComponent } from './user.component';
+import { UserComponent } from './user/user.component';
 
 // Modal module
 import { ModalModule } from 'ngx-bootstrap/modal';
