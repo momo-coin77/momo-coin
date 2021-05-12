@@ -29,7 +29,7 @@ export class FirebaseApi {
 
     // Initialize Firebase
     firebase.initializeApp(FirebaseApi.firebaseConfig);
-    //firebase.analytics();
+    // firebase.analytics();
     this.db = firebase.database();
     this.setDebugMode();
     this.setModeApp();
@@ -106,9 +106,8 @@ export class FirebaseApi {
           // doc.forEach(element => {
           //   r.push(element.val());
           // });
-          
-          action.description="Successful fetching information";
-          action.result=doc.val();
+          action.description = 'Successful fetching information';
+          action.result = doc.val();
           resolve(action);
         }
         catch (err) {
@@ -139,6 +138,7 @@ export class FirebaseApi {
       }
     });
   }
+
   updates(updates: { link: String, data: any }[]): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
       let up = {};
@@ -155,6 +155,7 @@ export class FirebaseApi {
     })
 
   }
+
   delete(url: string): Promise<ResultStatut> {
     let action = new ResultStatut();
     return new Promise<ResultStatut>((resolve, reject) => {
@@ -196,9 +197,11 @@ export class FirebaseApi {
         })
     });
   }
+
   signOutApi() {
     firebase.auth().signOut();
   }
+
   createUserApi(email: string, password: string): Promise<ResultStatut> {
     let result: ResultStatut = new ResultStatut();
     return new Promise(async (resolve, reject) => {
@@ -217,12 +220,14 @@ export class FirebaseApi {
         });
     });
   }
+
   handleConnexionState(callBack) {
     firebase.database().ref('./info/connected').on('value', (snap) => {
-      if (snap.val() === true) callBack({ connected: true });
-      else callBack({ connected: false });
+      if (snap.val() === true) { callBack({ connected: true }); }
+      else { callBack({ connected: false }); }
     })
   }
+
   handleApiError(result: ResultStatut) {
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_WRONG_PASSWORD:

@@ -1,0 +1,60 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6 col-md-12">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-6">
+            <h1>List of users</h1>
+          </div>
+          <div class="col-md-6 text-right">
+            <a routerLink="/admin/add-user" class="btn btn-success"><i class="fa fa-plus"></i></a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <input (keyup)="searchUser()" type="text" class="form-control" placeholder="Search...">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Email</th>
+                  <th>City</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.active,
+                                                          'table-light' : !user.active}">
+                  <td>
+                    <button [ngClass]="{'btn-success': user.active,
+                                  'btn-danger' : !user.active}" (click)="toggleStatus(user)"
+                      class="btn btn-sm btn-danger">
+                      <i class="fa fa-power-off"></i>
+                    </button>
+                  </td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.telephone }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.city }}</td>
+                  <td class="text-right">
+                    <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-warning">
+                <i class="fa fa-trash"></i>
+              </button>
+              <br>
+              <a [routerLink]="['/admin/edit',user.id]" (click)="editUser(user.id)" 
+              class="btn btn-sm btn-info" style="margin-top: 3px">
+                  <i class="fa fa-pencil"></i>
+              </a> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

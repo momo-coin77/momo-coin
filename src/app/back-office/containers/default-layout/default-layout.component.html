@@ -59,9 +59,10 @@
           <font size=3 style=""><strong>10 AM - 12 AM / 06 PM - 08 PM</strong></font>
         </p>
       </div>
-      <div id="div_horloge"></div>
       <div class="right">
-        <p><strong>{{today | date:'fullDate'}} </strong></p>
+        <p>{{today | date:'fullDate'}}</p>
+        <font size=3 style=""><strong><div id="div_horloge" class="col-md-12 text-right"></div></strong></font>
+        <br>
       </div>
       <router-outlet></router-outlet>
     </div><!-- /.container-fluid -->

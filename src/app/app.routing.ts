@@ -97,10 +97,10 @@ export const routes: Routes = [
         path: 'history',
         loadChildren: () => import('./back-office/views/history/history.module').then(m => m.HistoryModule)
       },
-      // {
-      //   path: 'chat',
-      //   loadChildren: () => import('./back-office/views/chat/chat.module').then(m => m.ChatModule)
-      // },
+      {
+        path: 'admin',
+        loadChildren: () => import('./back-office/views/admin/admin.module').then(m => m.AdminModule)
+      },
     ]
   },
   {

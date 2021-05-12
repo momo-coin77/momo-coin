@@ -110,6 +110,8 @@ import { DetailService } from './shared/service/back-office/detail.service';
 // const config: SocketIoConfig = { url: 'http://localhost:8090', options: {} };
  import { environment } from '../environments/environment';
 import { EventService } from './shared/service/event/event.service';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   imports: [
@@ -176,6 +178,8 @@ import { EventService } from './shared/service/event/event.service';
     MatSortModule,
     MatPaginatorModule,
     MatNativeDateModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   declarations: [
     AppComponent,

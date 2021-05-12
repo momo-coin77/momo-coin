@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { interval, Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import { MarketService } from '../../../../shared/service/market/market.service'
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 import { PackService } from '../../../../shared/service/pack/pack.service';
 import { UserService } from '../../../../shared/service/user/user.service';
+import * as _ from 'lodash';
 
 
 @Component({
@@ -17,22 +18,27 @@ import { UserService } from '../../../../shared/service/user/user.service';
   styleUrls: ['./market.component.scss']
 })
 
-@Pipe({ name: 'convertFrom24To12Format' })
-export class MarketComponent implements OnInit, PipeTransform {
+export class MarketComponent implements OnInit {
   close: boolean;
   open: boolean;
-  hh: number;
-  packs: { user: User, pack: Pack }[] = [];
-  private updateSubscription: Subscription;
   href: string;
+  hh: number;
+  searchPacks : Pack[] = [];
+  search = '';
+  packs : Pack[] = [];
+  // packs: { user: User, pack: Pack }[] = [];
+
+
+  private updateSubscription: Subscription;
   @ViewChild('secondModal') public secondModal: ModalDirective;
   @ViewChild('firstModal') public firstModal: ModalDirective;
 
   constructor(private router: Router,
     private modalService: BsModalService,
-    // private packService: PackService
+    private packService: PackService,
     private userService: UserService,
-    private marketService: MarketService
+    private marketService: MarketService,
+    private notification: NotificationService
   ) {
     this.marketService.marketTime();
     this.calculDate();
@@ -56,15 +62,16 @@ export class MarketComponent implements OnInit, PipeTransform {
       });
   }
 
-  transform(time: any): any {
-    let hour = (time.split(':'))[0]
-    let min = (time.split(':'))[1]
-    let part = hour > 12 ? 'pm' : 'am';
-    min = (min + '').length == 1 ? `0${min}` : min;
-    hour = hour > 12 ? hour - 12 : hour;
-    hour = (hour + '').length == 1 ? `0${hour}` : hour;
-    return `${hour}:${min} ${part}`
+  getPacks(){
+    this.packService.getPackList();
+    return (pack: Pack[]) => this.searchPacks=this.packs=pack
   }
+
+  searchPack() {
+    this.searchPacks =
+     // tslint:disable-next-line:max-line-length
+     _.filter(this.packs, (pack) => _.includes(pack.email, this.search) || _.includes(pack.firstName, this.search) || _.includes(pack.lastName, this.search))
+   }
 
   show2() {
     console.log('teste pop');
@@ -74,6 +81,10 @@ export class MarketComponent implements OnInit, PipeTransform {
   show1() {
     console.log('teste modal');
     this.firstModal.show();
+  }
+
+  showNote(){
+    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br> message error');
   }
 
   ok() { }
