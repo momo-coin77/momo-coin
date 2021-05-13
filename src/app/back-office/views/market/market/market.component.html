@@ -20,10 +20,7 @@
 
               <!-- Données Dynamique -->
               <tr *ngFor="let pack of packs">
-                <td>
-                  <span class="badge badge-secondary">New</span>
-                  {{pack.user.network}}
-                </td>
+                <td>{{pack.user.network}}</td>
                 <td>{{pack.pack.amount}}</td>
                 <th><b>
                     <select placeholder="5days">
