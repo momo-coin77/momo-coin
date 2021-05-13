@@ -40,8 +40,8 @@
                                         placeholder="MTN Mobile Money"
                                         class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.network.errors }">
-                                        <option value="momo" selected>MTN Mobile Money</option>
-                                        <option value="om">Orange Money</option>
+                                        <option value="MTN Money" selected>MTN Mobile Money</option>
+                                        <option value="Orange Money">Orange Money</option>
                                     </select>
                                     <div *ngIf="submitted && f.network.errors"
                                         class="invalid-feedback text-danger">
@@ -84,9 +84,9 @@
                                         <label for="country">Country</label>
                                         <select id="country" formControlName="country" class="form-control"
                                             [ngClass]="{ 'is-invalid': submitted && f.country.errors }">
-                                            <option value="gameroon" selected>Cameroon</option>
-                                            <option value="gabon">Gabon</option>
-                                            <option value="eG">Equatorial Guinea</option>
+                                            <option value="Cameroon" selected>Cameroon</option>
+                                            <!-- <option value="Gabon">Gabon</option>
+                                            <option value="Guinee">Equatorial Guinea</option> -->
                                         </select>
                                         <div *ngIf="submitted && f.country.errors"
                                             class="invalid-feedback text-danger">
