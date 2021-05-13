@@ -1,107 +1,41 @@
-<div class="animated fadeIn">
-    <hr size="3px">
-    <h3 class="text-center mx-4" style="color: rgba(87, 60, 20, 0.968);">Your purchases</h3>
-    <hr size="3px">
-    <div class="row">
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        12000 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>5 days</b><br>
-                    sale day: 20/05/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
-                </div>
+<hr size="3px">
+<h3 class="text-center mx-4" style="color: rgba(87, 60, 20, 0.968);">Your purchases</h3>
+<hr size="3px">
+<div class="row" *ngIf="packs.length>0">
+    <div *ngFor="let pack of packs" class="col-sm-3 order-xl-1">
+        <div class="card">
+            <div class="card-header linear-gradient">
+                <h3 class="text-center mx-4 mb-2">
+                    {{ pack.pack.amount }} MCoins</h3>
+            </div>
+            <div class="card-body text-center">
+                purchase day: {{ pack.pack.payDate }} <br>
+                <b>{{ pack.pack.plan }} days</b><br>
+                sale day: {{ pack.pack.saleDate }}
+            </div>
+            <div class="card-footer">
+                <h3 class="text-center mx-4 mb-2">
+                    Working ...</h3>
             </div>
         </div>
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        5000 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>10 days</b><br>
-                    sale day: 20/06/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        2000 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>20 days</b><br>
-                    sale day: 30/06/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        6500 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>5 days</b><br>
-                    sale day: 20/06/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        45000 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>5 days</b><br>
-                    sale day: 20/06/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-3 order-xl-1">
-            <div class="card">
-                <div class="card-header linear-gradient">
-                    <h3 class="text-center mx-4 mb-2">
-                        1000 Coins</h3>
-                </div>
-                <div class="card-body text-center">
-                    purchase day: 20/06/2021 <br>
-                    <b>5 days</b><br>
-                    sale day: 20/06/2021
-                </div>
-                <div class="card-footer">
-                    <h3 class="text-center mx-4 mb-2">
-                        Work...</h3>
+    </div>
+</div>
+<div *ngIf="packs.length==0">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-sm-6 col-md-12">
+                <div class="card">
+                    <div class="card-body text-center linear-gradient2">
+                        No packs on market ?
+                        <br><app-spinner></app-spinner>
+                        <h3 id="blink" class="mx-4 mb-2" style="color: #000;">Invest in new packages on the market..</h3><br>
+                        <br><br>
+                        <h3 class="text-center mx-4 mb-2">
+                            <a routerLink="/market/open" style="color: black;">
+                                <i class="fa fa-arrow-left"></i> Go to market
+                            </a>
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>

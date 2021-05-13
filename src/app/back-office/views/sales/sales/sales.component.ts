@@ -32,16 +32,4 @@ export class SalesComponent implements OnInit {
     })
   }
 
-  deletePack(id) {
-    // this.packService.deletePack(id)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
-  }
-
-  // searchPack() {
-  //   this.searchPacks = _.filter(this.packs, (pack) => _.includes(pack.pack.idOwner, this.search) ||
-  //     _.includes(pack.pack.amount, this.search) ||
-  //     _.includes(pack.pack.status, this.search));
-  // }
-
 }
