@@ -255,9 +255,8 @@ export class PackService {
         return list;
     }
 
-
-
     ///////////////
+    
     _deletePack(id) {
         return this.packCollection.doc(id).delete();
     }
