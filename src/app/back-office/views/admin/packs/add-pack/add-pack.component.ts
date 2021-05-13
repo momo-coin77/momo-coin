@@ -52,7 +52,7 @@ export class AddPackComponent implements OnInit {
     this.userService.getUserById(idOwner)
     .then((result:ResultStatut)=>{
       let pack:Pack=new Pack();
-      pack.amount=this.form.value.amount;
+      pack.amount=+this.form.value.amount;
       pack.state=this.form.value.packState;
       pack.saleDate=this.form.value.saleDate;
       pack.idBuyer.setId(" ");

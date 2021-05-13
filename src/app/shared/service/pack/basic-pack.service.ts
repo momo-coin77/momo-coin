@@ -37,7 +37,6 @@ export class BasicPackService {
             {
                 this.packs.set(pack.id.toString(),pack);
                 this.packList.next(this.packs)
-                console.log("pack ",pack)
             }
         })
     }

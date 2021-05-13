@@ -39,6 +39,7 @@ export class DefaultLayoutComponent implements OnInit {
   ngOnInit(): void {
     // this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
     this.autService.currentUserSubject.subscribe((user:User)=>{
+      if(!user) return
       this.userName=user.name;
     })
   }
