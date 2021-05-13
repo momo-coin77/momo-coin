@@ -11,24 +11,23 @@ import { NotificationService } from '../../../../../shared/service/notification/
 })
 export class ListsPackComponent implements OnInit {
 
-  packs: {waitResponse:boolean,pack:Pack}[] = [];
+  packs: { waitResponse: boolean, pack: Pack }[] = [];
   search = '';
-  searchPacks: {waitResponse:boolean,pack:Pack}[] = [];
+  searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor(private packService: BasicPackService,private notifService:NotificationService) { }
+  constructor(private packService: BasicPackService, private notifService: NotificationService) { }
 
   ngOnInit() {
     this.getPacks();
   }
 
   getPacks() {
-    this.packService.packList.subscribe((packs:Map<string,Pack>)=>
-    {
-      this.packs= Array.from(packs.values()).map((pack)=>{
-        return {waitResponse:false,pack}
-      })
+    this.packService.packList.subscribe((packs: Map<string, Pack>) => {
+      this.packs = Array.from(packs.values()).map((pack) => {
+        return { waitResponse: false, pack };
+      });
       this.searchPack();
-    })
+    });
   }
 
   deletePack(id) {
@@ -38,21 +37,21 @@ export class ListsPackComponent implements OnInit {
   }
 
   changeStatusMarket(pack) {
-    pack.waitResponse=true;
+    pack.waitResponse = true;
     this.packService.changeStatusMarket(pack.pack)
-    .then((result)=>{
-      pack.waitResponse=false;
-      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>The market status of the pack has been updated to '${pack.pack.status}'`);
-    })
-    .catch((error)=>{
-      pack.waitResponse=false;
-      this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
-    })
+      .then((result) => {
+        pack.waitResponse = false;
+        this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>The market status of the pack has been updated to '${pack.pack.status}'`);
+      })
+      .catch((error) => {
+        pack.waitResponse = false;
+        this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>' + error.message);
+      });
   }
   searchPack() {
-    this.searchPacks = _.filter(this.packs, (pack) => _.includes(pack.pack.idOwner, this.search) || 
-        _.includes(pack.pack.amount, this.search) || 
-        _.includes(pack.pack.status, this.search));
+    this.searchPacks = _.filter(this.packs, (pack) => _.includes(pack.pack.idOwner, this.search) ||
+      _.includes(pack.pack.amount, this.search) ||
+      _.includes(pack.pack.state, this.search));
   }
 
 }

@@ -24,7 +24,6 @@ export class BasicPackService {
               this.newPackHandler();  
             })
         }
-    
     newPackHandler()
     {
         this.firebaseApi
