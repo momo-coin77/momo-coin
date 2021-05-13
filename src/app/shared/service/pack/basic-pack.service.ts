@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { User } from "firebase";
 import { BehaviorSubject } from "rxjs";
-import { Pack } from "../../entity/pack";
+import { Pack, PackState } from "../../entity/pack";
 import { AuthService } from "../auth/auth.service";
 import { EventService } from "../event/event.service";
 import { FirebaseApi } from "../firebase/FirebaseApi";
@@ -19,13 +19,47 @@ export class BasicPackService {
     constructor(private firebaseApi:FirebaseApi,
         private eventService:EventService
         ){
-            this.eventService.loginAdminEvent.subscribe((log)=>{
-                if(!log) return;
-                this.firebaseApi.getFirebaseDatabase().ref("pack")
-                .on()
+            this.eventService.loginEvent.subscribe((log)=>{
+            //   if(!log) return;
+              this.newPackHandler();  
             })
         }
-
+    
+    newPackHandler()
+    {
+        this.firebaseApi
+        .getFirebaseDatabase()
+        .ref("packs")
+        .on('child_added',(snapshot)=>{
+            let pack:Pack=new Pack();
+            pack.hydrate(snapshot.val())   
+            if(!this.packs.has(pack.id.toString())) 
+            {
+                this.packs.set(pack.id.toString(),pack);
+                this.packList.next(this.packs)
+                console.log("pack ",pack)
+            }
+        })
+    }
+    changeStatusMarket(pack:Pack):Promise<ResultStatut>
+    {
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            let nstatus=PackState.ON_MARKET==pack.state?PackState.ON_MARKET:PackState.NOT_ON_MARKET;
+            this.firebaseApi.updates([{
+                link:`packs/${pack.id.toString()}/state`,
+                data:nstatus
+              }])
+              .then((result)=>{
+                this.packList.getValue().get(pack.id.toString()).state = nstatus;
+                resolve(result)
+              })
+              .catch((error)=>{
+                this.firebaseApi.handleApiError(error)
+                reject(error);
+              })
+        })
+    }
+    
     addPack(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve, reject) => {

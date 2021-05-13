@@ -28,30 +28,30 @@
                   <th></th>
                 </tr>
               </thead>
-<<<<<<< refs/remotes/origin/main
               <tbody *ngIf="searchUsers.length>0">
-                  <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.status.active,
-                  'table-light' : !user.status.active}">
+                  <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.user.status=='active',
+                  'table-danger' : user.user.status!='active'}">
                     <td>
-                      <button [ngClass]="{'btn-success': user.status.active,
-                      'btn-danger' : !user.status.active}" (click)="changeStatus(user)"
+                      <button [ngClass]="{'b-danger': user.user.status=='active',
+                      'b-success' : user.user.status!='active'}" (click)="changeStatus(user)"
                       class="btn btn-sm btn-danger">
-                      <i *ngIf="!waitResponse" class="fa fa-power-off"></i>
-                      <app-spinner *ngIf="waitResponse" ></app-spinner>
+                      <i *ngIf="!user.waitResponse" class="fa fa-power-off"></i>
+                      <app-spinner *ngIf="user.waitResponse" ></app-spinner>
                       </button>                    
                       </td>
-                      <td>{{ user.name }}</td>
-                      <td>{{ user.phone }}</td>
-                      <td>{{ user.email }}</td>
-                      <td>{{ user.city }}</td>
+                      <td>{{ user.user.name }}</td>
+                      <td>{{ user.user.phone }}</td>
+                      <td>{{ user.user.email }}</td>
+                      <td>{{ user.user.city }}</td>
                       <td class="text-right">
-                      <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-warning">
-                      <i class="fa fa-trash"></i>
-                      </button> -->
+                        <button (click)="deleteUser(user.user.id)" class="btn btn-danger"
+                        style="background-color: rgb(167, 148, 148) !important;">
+                        <i class="fa fa-trash-o"></i>
+                      </button>
                       <br>
-                      <a [routerLink]="['/admin/edit-user',user.id]" (click)="editUser(user.id)" 
-                      class="btn btn-sm btn-info" style="margin-top: 3px">
-                      <i class="fa fa-pencil"></i>
+                      <a [routerLink]="['/admin/edit',user.user.id]" (click)="editUser(user.user.id)" class="btn btn-info"
+                        style="background-color: rgb(39, 111, 235) !important;">
+                        <i class="fa fa-pencil" style="color: rgb(245, 245, 250) !important;"></i>
                       </a>
                     </td>
                   </tr>
@@ -60,33 +60,6 @@
                 <tr >
                   <td colspan="6">
                     <div class="d-flex justify-content-center"><app-spinner></app-spinner></div>
-=======
-              <tbody>
-                <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.status,
-                                                          'table-danger' : !user.status}">
-
-                  <td>
-                    <button [ngClass]="{'b-success': user.status,
-                                  'b-danger' : !user.status}" (click)="changeStatus(user)"
-                      class="btn btn-sm btn-danger">
-                      <i class="fa fa-power-off"></i>
-                    </button>
-                  </td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.phone }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.city }}</td>
-                  <td class="text-right">
-                    <button (click)="deleteUser(user.id)" class="btn btn-danger"
-                      style="background-color: red !important;">
-                      <i class="fa fa-trash-o"></i>
-                    </button>
-                    <br>
-                    <a [routerLink]="['/admin/edit',user.id]" (click)="editUser(user.id)" class="btn btn-info"
-                      style="background-color: rgb(39, 111, 235) !important;">
-                      <i class="fa fa-pencil" style="color: rgb(245, 245, 250) !important;"></i>
-                    </a>
->>>>>>> Auto stash before rebase of "origin/main"
                   </td>
                 </tr>
               </tbody>

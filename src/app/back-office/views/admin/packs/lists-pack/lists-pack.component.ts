@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Pack } from '../../../../../shared/entity/pack';
 import * as _ from 'lodash';
 import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.service';
+import { NotificationService } from '../../../../../shared/service/notification/notification.service';
 
 @Component({
   selector: 'app-lists-pack',
@@ -10,19 +11,24 @@ import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.
 })
 export class ListsPackComponent implements OnInit {
 
-  packs: Pack[] = [];
+  packs: {waitResponse:boolean,pack:Pack}[] = [];
   search = '';
-  searchPacks: Pack[] = [];
+  searchPacks: {waitResponse:boolean,pack:Pack}[] = [];
 
-  constructor(private packService: BasicPackService) { }
+  constructor(private packService: BasicPackService,private notifService:NotificationService) { }
 
   ngOnInit() {
     this.getPacks();
   }
 
   getPacks() {
-    // this.packService.getPacks();
-    // return ((pack: Pack[]) => this.searchPacks = this.packs = pack);
+    this.packService.packList.subscribe((packs:Map<string,Pack>)=>
+    {
+      this.packs= Array.from(packs.values()).map((pack)=>{
+        return {waitResponse:false,pack}
+      })
+      this.searchPack();
+    })
   }
 
   deletePack(id) {
@@ -31,16 +37,22 @@ export class ListsPackComponent implements OnInit {
     //   .catch((err) => console.log(err));
   }
 
-  changeStatus(pack) {
-
-    // this.packService.changeStatus({ active: !pack.active }, pack.id)
-    //   .then((resp) => console.log(resp))
-    //   .catch((err) => console.error(err));
+  changeStatusMarket(pack) {
+    pack.waitResponse=true;
+    this.packService.changeStatusMarket(pack.pack)
+    .then((result)=>{
+      pack.waitResponse=false;
+      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>The market status of the pack has been updated to '${pack.pack.status}'`);
+    })
+    .catch((error)=>{
+      pack.waitResponse=false;
+      this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+    })
   }
   searchPack() {
-    this.searchPacks =
-      // tslint:disable-next-line:max-line-length
-      _.filter(this.packs, (pack) => _.includes(pack.idOwner, this.search) || _.includes(pack.amount, this.search) || _.includes(pack.status, this.search));
+    this.searchPacks = _.filter(this.packs, (pack) => _.includes(pack.pack.idOwner, this.search) || 
+        _.includes(pack.pack.amount, this.search) || 
+        _.includes(pack.pack.status, this.search));
   }
 
 }

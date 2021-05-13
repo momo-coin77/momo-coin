@@ -11,9 +11,9 @@ import { UserService } from '../../../../../shared/service/user/user.service';
 })
 export class ListsUserComponent implements OnInit {
   userStatus: boolean;
-  users: User[] = [];
+  users: {waitResponse:boolean,user:User}[] = [];
   search = '';
-  searchUsers: User[] = [];
+  searchUsers: {waitResponse:boolean,user:User}[] = [];
   waitResponse:boolean=false;
 
   constructor(private userService: UserService,private notifService:NotificationService) { }
@@ -24,28 +24,29 @@ export class ListsUserComponent implements OnInit {
 
   getUser() {
     this.userService.usersSubject.subscribe((mapUser:Map<string,User>)=>{
-      this.users = Array.from(mapUser.values())
+      this.users = Array.from(mapUser.values()).map((user)=>{
+        return {waitResponse:false,user}
+      })
       this.searchUser();
     })
   }
 
   changeStatus(user) {
-    this.waitResponse=true;
-    this.userService.changeStatus(user)
+    user.waitResponse=true;
+    this.userService.changeStatus(user.user)
     .then((result)=>{
-      console.log('staus' + user.status);
-      this.waitResponse=false;
-      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.status}'`);
+      user.waitResponse=false;
+      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.user.status}'`);
     })
     .catch((error)=>{
-      this.waitResponse=false;
+      user.waitResponse=false;
       this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
     })
   }
 
   searchUser() {
     this.searchUsers =
-      _.filter(this.users, (user) => _.includes(user.email, this.search) || _.includes(user.name, this.search) || _.includes(user.phone, this.search))
+      _.filter(this.users, (user) => _.includes(user.user.email, this.search) || _.includes(user.user.name, this.search) || _.includes(user.user.phone, this.search))
   }
 
   deleteUser(id) {

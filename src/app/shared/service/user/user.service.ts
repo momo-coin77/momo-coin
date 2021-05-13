@@ -40,7 +40,6 @@ export class UserService {
         {
           this.listUser.set(user.id.toString(),user);
           this.usersSubject.next(this.listUser)
-          console.log(snapshot.val(),this.listUser)
         }
       })
     })

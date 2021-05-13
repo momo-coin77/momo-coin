@@ -42,6 +42,15 @@ export class Pack extends Entity {
     idBuyer: EntityID = new EntityID();
     state: PackState = PackState.NOT_ON_MARKET;
 
+    getBuyState()
+    {
+        switch(this.buyState)
+        {
+            case PackBuyState.ON_WAITING_BUYER:
+                return "Waiting for buyer"
+        }
+        return "";
+    }
     hydrate(entity: Record<string | number, any>): void {
         for (const key of Object.keys(entity)) {
             if (Reflect.has(this, key)) {
