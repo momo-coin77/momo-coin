@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { Pack, PackState } from '../../entity/pack';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
@@ -38,6 +38,23 @@ export class MarketService {
     return this.packs.pipe(
       map((p)=> Array.from(p.values())),
       map((pos: Pack[])=> pos.sort((a:Pack,b:Pack)=> a.amount<=b.amount?0:1))
+    )
+  }
+
+  getMyOrderedPackOnMarket()
+  {
+    return this.packs.pipe(
+      map((p)=> Array.from(p.values())),
+      switchMap((p:Pack[])=> from(p)),
+      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString())
+    )
+  }
+  getMyOrderdPackNotInMarket()
+  {
+    return this.packs.pipe(
+      map((p)=> Array.from(p.values())),
+      switchMap((p:Pack[])=> from(p)),
+      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString())
     )
   }
 
