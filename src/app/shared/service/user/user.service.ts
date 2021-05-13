@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../../entity/user';
+import { User, UserAccountState } from '../../entity/user';
 import { ResultStatut } from '../firebase/resultstatut';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { EntityID } from '../../entity/EntityID';
@@ -59,7 +59,11 @@ export class UserService {
   // recuperer les informations d'un utilisateur
   getUserById(id: EntityID): Promise<ResultStatut> {
     return new Promise<any>((resolve, reject) => {
-      if (this.listUser.has(id.toString())) { return resolve(this.listUser.get(id.toString())); }
+      if (this.listUser.has(id.toString())) { 
+        let result:ResultStatut=new ResultStatut();
+        result.result=this.listUser.get(id.toString());
+        return resolve(result); 
+      }
       this.firebaseApi.fetchOnce(`users/${id.toString()}`)
         .then((result: ResultStatut) => {
           let user: User = new User();
@@ -67,6 +71,7 @@ export class UserService {
           this.listUser.set(user.id.toString(), user);
           this.usersSubject.next(this.listUser);
           result.result = user;
+          
           resolve(result);
         })
         .catch((error) => {
@@ -91,7 +96,23 @@ export class UserService {
     });
   }
 
-  chabgeStatus(data, id) {
+  changeStatus(user:User):Promise<ResultStatut>
+  {
+    let nstatus=UserAccountState.ACTIVE==user.status?UserAccountState.DESACTIVE:UserAccountState.ACTIVE;
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.updates([{
+        link:`users/${user.id.toString()}/status`,
+        data:nstatus
+      }])
+      .then((result)=>{
+        this.usersSubject.getValue().get(user.id.toString()).status=nstatus;
+        resolve(result)
+      })
+      .catch((error)=>{
+        this.firebaseApi.handleApiError(error)
+        reject(error);
+      })
+    })
   }
 
 }

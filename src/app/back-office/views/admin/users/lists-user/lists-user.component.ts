@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { User } from '../../../../../shared/entity/user';
+import { NotificationService } from '../../../../../shared/service/notification/notification.service';
 import { UserService } from '../../../../../shared/service/user/user.service';
 
 @Component({
@@ -13,26 +14,38 @@ export class ListsUserComponent implements OnInit {
   users: User[] = [];
   search = '';
   searchUsers: User[] = [];
+  waitResponse:boolean=false;
 
-  constructor(private userServicee: UserService) { }
+  constructor(private userService: UserService,private notifService:NotificationService) { }
 
   ngOnInit() {
     this.getUser();
   }
 
   getUser() {
-    this.userServicee.getListUser();
-    return (user: User[]) => { this.searchUsers = this.users = user; };
+    this.userService.usersSubject.subscribe((mapUser:Map<string,User>)=>{
+      this.users = Array.from(mapUser.values())
+      this.searchUser();
+    })
   }
 
-  chabgeStatus(user) {
-    this.userServicee.chabgeStatus({ active: !user.active }, user.id);
+  changeStatus(user) {
+    this.waitResponse=true;
+    this.userService.changeStatus(user)
+    .then((result)=>{
+      this.waitResponse=false;
+      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.status}'`);
+    })
+    .catch((error)=>{
+      this.waitResponse=false;
+      this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+    })
   }
 
-  searchClient() {
+  searchUser() {
     this.searchUsers =
       // tslint:disable-next-line:max-line-length
-      _.filter(this.users, (user) => _.includes(user.email, this.search) || _.includes(user.firstName, this.search) || _.includes(user.lastName, this.search))
+      _.filter(this.users, (user) => _.includes(user.email, this.search) || _.includes(user.name, this.search) || _.includes(user.phone, this.search))
   }
 
   deleteUser(id) {

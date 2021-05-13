@@ -39,10 +39,12 @@ export class AuthService {
           userN.email = result.result.user.email;
           userN.photoUrl = result.result.user.photoUrl || "";
           userN.id.setId(result.result.user.uid);
-
+          return this.userService.getUserById(userN.id)          
+        })
+        .then((result)=>{
           this.localStorageService.setUserData({
             isLoggedIn: true,
-            user: userN
+            user: result.result
           });
           if(emitEvent) { this.eventService.loginEvent.next(userN); }
           resolve(action)

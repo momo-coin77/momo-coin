@@ -30,13 +30,13 @@
                                                           'table-light' : !user.active}">
                   <td>
                     <button [ngClass]="{'btn-success': user.active,
-                                  'btn-danger' : !user.active}" (click)="toggleStatus(user)"
+                                  'btn-danger' : !user.active}" (click)="changeStatus(user)"
                       class="btn btn-sm btn-danger">
                       <i class="fa fa-power-off"></i>
                     </button>
                   </td>
                   <td>{{ user.name }}</td>
-                  <td>{{ user.telephone }}</td>
+                  <td>{{ user.phone }}</td>
                   <td>{{ user.email }}</td>
                   <td>{{ user.city }}</td>
                   <td class="text-right">

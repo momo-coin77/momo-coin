@@ -185,6 +185,7 @@ export class FirebaseApi {
         .then((userCredential) => {
           result.description = 'Authentification successful';
           result.result = userCredential;
+          // console.log("Credential ",userCredential.user)
           resolve(result);
         })
         .catch((error) => {
