@@ -81,10 +81,11 @@ export class AuthService {
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
-      console.log("user ",user.toString())
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
-        .then(() => this.userService.addUser(user))
+        .then(() => {
+          return this.userService.addUser(user)
+        })
         .then(() => {
           this.signOut();
           resolve(new ResultStatut());

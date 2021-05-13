@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, from } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, reduce, scan, switchMap } from 'rxjs/operators';
 import { Pack, PackState } from '../../entity/pack';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
@@ -26,10 +26,10 @@ export class MarketService {
       let ref = this.firebaseApi.getFirebaseDatabase()
         .ref('packs')        
         .limitToLast(200)
-        .orderByChild("state")
-        .equalTo(PackState.ON_MARKET)
         .on('child_added', (snapshot) => this.newPackFromMarket(snapshot))
         
+
+        // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
     })
   }
 
@@ -46,7 +46,12 @@ export class MarketService {
     return this.packs.pipe(
       map((p)=> Array.from(p.values())),
       switchMap((p:Pack[])=> from(p)),
-      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString())
+      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p:Pack)=> p.state==PackState.ON_MARKET),
+      scan( (packList:Pack[],currPack:Pack)=> {
+        packList.push(currPack)
+        return packList;
+      },[] )
     )
   }
   getMyOrderdPackNotInMarket()
@@ -54,13 +59,18 @@ export class MarketService {
     return this.packs.pipe(
       map((p)=> Array.from(p.values())),
       switchMap((p:Pack[])=> from(p)),
-      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString())
+      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p:Pack)=> p.state==PackState.NOT_ON_MARKET),
+      scan( (packList:Pack[],currPack:Pack)=> {
+        packList.push(currPack)
+        return packList;
+      },[] )
     )
   }
 
   newPackFromMarket(pack: any) {
     let pck: Pack = new Pack();
-    console.log("data on market ",pack.val())
+    // console.log("data on market ",pack.val())
     pck.hydrate(pack.val());
     if (this.listPack.has(pck.id.toString())) { this.listPack.delete(pck.id.toString()); }
     
