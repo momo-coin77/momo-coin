@@ -11,6 +11,7 @@ import { MarketRoutingModule } from './market-routing.module';
 import { WaitComponent } from './wait/wait.component';
 import { MarketPlaceComponent } from './market-place.component';
 import { ConfirmPackComponent } from './confirm-pack/confirm-pack.component';
+import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { ConfirmPackComponent } from './confirm-pack/confirm-pack.component';
     MarketRoutingModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
+    SpinnerModule
   ],
   declarations: [
     MarketComponent,

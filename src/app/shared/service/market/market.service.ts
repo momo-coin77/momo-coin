@@ -26,7 +26,7 @@ export class MarketService {
       let ref = this.firebaseApi.getFirebaseDatabase()
         .ref('packs')        
         .limitToLast(200)
-        .on('child_added', (snapshot) => this.newPackFromMarket(snapshot))
+        .on('value', (snapshot) => this.newPackFromMarket(snapshot))
         
 
         // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
@@ -37,48 +37,39 @@ export class MarketService {
   {
     return this.packs.pipe(
       switchMap((p)=> from(Array.from(p.values()))),
-      scan( (packList:Pack[],currPack:Pack)=> {
-        packList.push(currPack)
-        packList.sort((a:Pack,b:Pack)=> a.amount<=b.amount?0:1)
-        console.log("arr ",packList)
-        return packList;
-      },[]),
-    )
+    );
   }
 
   getMyOrderedPackOnMarket()
   {
     return this.getOrderMarket().pipe(
-      switchMap((p:Pack[])=> from(p)),
       filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p:Pack)=> p.state==PackState.ON_MARKET),
-      scan( (packList:Pack[],currPack:Pack)=> {
-        packList.push(currPack)
-        return packList;
-      },[] )
+      filter((p:Pack)=> p.state==PackState.ON_MARKET)
     )
   }
   getMyOrderdPackNotInMarket()
   {
     return this.getOrderMarket().pipe(
-      switchMap((p:Pack[])=> from(p)),
       filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p:Pack)=> p.state==PackState.NOT_ON_MARKET),
-      scan( (packList:Pack[],currPack:Pack)=> {
-        packList.push(currPack)
-        return packList;
-      },[] )
+      filter((p:Pack)=> p.state==PackState.NOT_ON_MARKET)
     )
   }
 
-  newPackFromMarket(pack: any) {
-    let pck: Pack = new Pack();
-    // console.log("data on market ",pack.val())
-    pck.hydrate(pack.val());
-    if (this.listPack.has(pck.id.toString())) { this.listPack.delete(pck.id.toString()); }
-    // console.log("comsqdf ",pck)
-    this.listPack.set(pck.id.toString(), pck);
-    console.log("paclmaket ",this.listPack)
+  newPackFromMarket(packs: any) {
+    let packList:Pack[]=[];
+    let oplist=packs.val();
+    for(let pkey in oplist)
+    {
+      let pck: Pack = new Pack();
+      pck.hydrate(oplist[pkey]); 
+      packList.push(pck)     
+    }
+    packList.sort((a:Pack,b:Pack)=> a.amount>b.amount?0:1);
+
+    packList.forEach((pack:Pack)=> {
+      if (this.listPack.has(pack.id.toString())) return;
+      this.listPack.set(pack.id.toString(), pack);
+    })
     this.packs.next(this.listPack);
   }
 
@@ -94,7 +85,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 14 || hh == 15 || hh == 16 || hh == 17) {
+      if (hh == 17 || hh == 20 || hh == 19 || hh == 18) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

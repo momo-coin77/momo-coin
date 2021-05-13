@@ -51,22 +51,15 @@ export class MarketComponent implements OnInit {
           return this.marketService.marketTime();
       });
 
-      this.marketService.getOrderMarket().subscribe((packs:[]) => {
-        // waitResponse
-        this.packs=[]
-        packs.forEach((pack:Pack)=>{
-          this.userService.getUserById(pack.idOwner)
+      this.marketService.getOrderMarket().subscribe((pack:Pack) => {
+        this.userService.getUserById(pack.idOwner)
           .then((result:ResultStatut)=>{
-            console.log("sjdflmqdjfqm ",pack)
             this.packs.push({
               waitResponse:false,
               pack,
               user:result.result
             })
           })
-        })
-        // console.log(this.packs)
-        // this.searchPack();
       })
   }
 

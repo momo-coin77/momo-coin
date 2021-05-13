@@ -16,14 +16,14 @@
                 <th><b></b></th>
               </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="packs.length>0">
 
               <!-- Données Dynamique -->
               <tr *ngFor="let pack of packs">
                 <td>
                   <span class="badge badge-secondary">New</span>
+                  {{pack.user.network}}
                 </td>
-                <td>{{pack.user.network}}</td>
                 <td>{{pack.pack.amount}}</td>
                 <th><b>
                     <select placeholder="5days">
@@ -41,6 +41,14 @@
 
 
 
+            </tbody>
+
+            <tbody *ngIf="packs.length==0">
+              <tr >
+                <td colspan="6">
+                  <div class="d-flex justify-content-center"><app-spinner></app-spinner></div>
+                </td>
+              </tr>
             </tbody>
           </table>
           <nav>

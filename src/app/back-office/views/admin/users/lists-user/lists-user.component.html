@@ -28,7 +28,7 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody *ngIf="searchUsers.length>0">
+              <tbody >
                   <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.user.status=='active',
                   'table-danger' : user.user.status!='active'}">
                     <td>
@@ -55,7 +55,7 @@
                       </a>
                     </td>
                   </tr>
-              </tbody>
+              </tbody> 
               <tbody *ngIf="searchUsers.length==0">
                 <tr >
                   <td colspan="6">
