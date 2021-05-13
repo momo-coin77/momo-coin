@@ -241,6 +241,8 @@ export class FirebaseApi {
         break;
       case FireBaseConstant.NET_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
+      case FireBaseConstant.DESACTIVED_ACCOUNT:
+        result.message="Account Disabled. Contacted the administrator for a reactivation"
         break;
     };
   }

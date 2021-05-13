@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/service/user/user.service';
 import { MustMatch } from '../../shared/service/_helpers/must-match.validator';
@@ -34,19 +34,16 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
-            'name': ['', Validators.required],
-            'user_agree': [false, Validators.requiredTrue],
-            'country': ['', Validators.required],
-            'city': ['', Validators.required],
-            'network': ['', Validators.required],
-            'sponsorshipId': [''],
-            'phone': ['', [
-                Validators.minLength(9),
-                Validators.maxLength(9),
-                Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]],
-            'password': ['', [Validators.required, Validators.minLength(6)]],
-            'password2': ['', Validators.required],
-            'email': ['', [Validators.required, Validators.email]],
+            'name': new FormControl('', [Validators.required]),
+            'user_agree': new FormControl(false, [Validators.requiredTrue]),
+            'country': new FormControl('', [Validators.required]),
+            'city': new FormControl('', [Validators.required]),
+            'network': new FormControl('', [Validators.required]),
+            'sponsorshipId': new FormControl(''),
+            'phone': new FormControl('', [Validators.minLength(9),Validators.maxLength(9),Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]),
+            'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
+            'password2': new FormControl('', [Validators.required]),
+            'email': new FormControl('', [Validators.required, Validators.email]),
 
         }, {
             validator: MustMatch('password', 'password2')
@@ -69,15 +66,15 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.name = this.registerForm.controls.name.value;
-        user.email = this.registerForm.controls.email.value;
-        user.password = this.registerForm.controls.password.value;
-        user.country = this.registerForm.controls.country.value;
+        user.name = this.registerForm.value.name;
+        user.email = this.registerForm.value.email;
+        user.password = this.registerForm.value.password;
+        user.country = this.registerForm.value.country;
 
-        user.city = this.registerForm.controls.city.value;
-        user.phone = `${this.registerForm.controls.phone.value}`;
-        user.sponsorshipId=this.registerForm.controls.sponsorshipId.value;
-        user.network = this.registerForm.controls.network.value;
+        user.city = this.registerForm.value.city;
+        user.phone = `${this.registerForm.value.phone}`;
+        user.sponsorshipId=this.registerForm.value.sponsorshipId;
+        user.network = this.registerForm.value.network;
         user.user_agree=true;
         return user;
     }

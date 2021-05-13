@@ -1,7 +1,8 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { User } from '../../entity/user';
+import { User, UserAccountState } from '../../entity/user';
 import { EventService } from '../event/event.service';
+import { FireBaseConstant } from '../firebase/firebase-constant';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { UserLocalStorageData, UserlocalstorageService } from '../localstorage/userlocalstorage.service';
@@ -39,16 +40,31 @@ export class AuthService {
           userN.email = result.result.user.email;
           userN.photoUrl = result.result.user.photoUrl || "";
           userN.id.setId(result.result.user.uid);
-          return this.userService.getUserById(userN.id)          
+          if(emitEvent)
+          {
+            return this.userService.getUserById(userN.id)                
+          }    
+          return Promise.resolve(action)
         })
-        .then((result)=>{
+        .then((result)=>{              
+          if(emitEvent)
+          {
+            if(result.result.status==UserAccountState.DESACTIVE)
+            {
+              console.log("Userd  ",result.result)
+              result.apiCode=FireBaseConstant.DESACTIVED_ACCOUNT;
+              result.result=null;
+              this.firebaseApi.handleApiError(result);
+              return reject(result);
+            }
+            this.eventService.loginEvent.next(userN);
+          }
+          resolve(action)  
           this.localStorageService.setUserData({
             isLoggedIn: true,
             user: result.result
-          });
-          if(emitEvent) { this.eventService.loginEvent.next(userN); }
-          resolve(action)
-        })
+          });              
+        })         
         .catch(result => {
           this.firebaseApi.handleApiError(result);
           reject(result);
@@ -65,6 +81,7 @@ export class AuthService {
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
+      console.log("user ",user.toString())
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
         .then(() => this.userService.addUser(user))

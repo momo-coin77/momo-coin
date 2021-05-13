@@ -59,11 +59,11 @@ export class UserService {
   // recuperer les informations d'un utilisateur
   getUserById(id: EntityID): Promise<ResultStatut> {
     return new Promise<any>((resolve, reject) => {
-      if (this.listUser.has(id.toString())) { 
-        let result:ResultStatut=new ResultStatut();
-        result.result=this.listUser.get(id.toString());
-        return resolve(result); 
-      }
+      // if (this.listUser.has(id.toString())) { 
+      //   let result:ResultStatut=new ResultStatut();
+      //   result.result=this.listUser.get(id.toString());
+      //   return resolve(result); 
+      // }
       this.firebaseApi.fetchOnce(`users/${id.toString()}`)
         .then((result: ResultStatut) => {
           let user: User = new User();
@@ -84,6 +84,7 @@ export class UserService {
   addUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
       if (this.listUser.has(user.id.toString())) { return resolve(new ResultStatut()); }
+      console.log("User ",user.toString())
       this.firebaseApi.set(`users/${user.id.toString()}`, user.toString())
         .then((result) => {
           this.listUser.set(user.id.toString(), user);
