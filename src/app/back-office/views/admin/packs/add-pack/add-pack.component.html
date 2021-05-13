@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-md-6">
+      <h1>New Client</h1>
+    </div>
+    <div class="col-md-6 text-right">
+      <a routerLink="/" class="btn btn-link">
+        <i class="fa fa-arrow-left"></i> Back to list
+      </a>
+    </div>
+  </div>
+  
+<div class="row">
+  <div class="col-md-8 mx-auto">
+    <form (submit)="addPack()">
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input name="amount" id="amount" type="text" class="form-control"
+          [ngClass]="{'is-invalid': submitted && f.amount.errors }">
+        <div *ngIf="submitted && f.amount.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.amount.errors.required">amount is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="nextAmount">Next amount</label>
+        <input name="nextAmount" id="nextAmount" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.NextAmount.errors }">
+        <div *ngIf="submitted && f.NextAmount.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.NextAmount.errors.required">NextAmount is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="payDate">Pay date</label>
+        <input name="payDate" id="payDate" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.payDate.errors }">
+        <div *ngIf="submitted && f.payDate.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.payDate.errors.required">payDate is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="saleDate">sale date</label>
+        <input name="saleDate" required id="saleDate" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.name.errors }">
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.name.errors.required">name is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="plan">Plan</label>
+        <input name="plan" [ngClass]="{'is-invalid': pack.plan.touched && pack.plan.invalid}" required
+          id="plan" type="number" class="form-control" [ngClass]="{'is-invalid': submitted && f.plan.errors }">
+          <div *ngIf="submitted && f.plan.errors" class="invalid-feedback text-danger">
+            <div *ngIf="f.plan.errors.required">plan is required</div>
+          </div>
+      </div>
+      <div class="form-group">
+        <label for="idOwner"> ID Owner </label>
+        <input name="idOwner" required id="idOwner" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.idOwner.errors }">
+        <div *ngIf="submitted && f.idOwner.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.idOwner.errors.required">idOwner is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="buyState"> Buy State </label>
+        <input name="buyState" required id="buyState" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.buyState.errors }">
+        <div *ngIf="submitted && f.buyState.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.buyState.errors.required">buyState is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="idBuyer"> ID Buyer </label>
+        <input name="idBuyer" required id="idBuyer" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.idBuyer.errors }">
+        <div *ngIf="submitted && f.idBuyer.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.idBuyer.errors.required">idBuyer is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="state"> State</label>
+        <input name="state" required id="state" type="text" class="form-control" [ngClass]="{'is-invalid': submitted && f.state.errors }">
+        <div *ngIf="submitted && f.state.errors" class="invalid-feedback text-danger">
+          <div *ngIf="f.state.errors.required">name is required</div>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-block"><i class="fa fa-send"></i></button>
+  </form>
+    </div>
+  </div>

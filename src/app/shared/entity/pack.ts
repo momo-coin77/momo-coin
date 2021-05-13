@@ -37,7 +37,6 @@ export class Pack extends Entity {
     payDate: string = ''; // date de l'achat
     saleDate: string = '' // date de mise sur le marché (new Date()).toISOString();
     plan: number; // plan de l'achat ( 5 pour 5 jour, 10 pour 10 jours ...)
-    emailVerified: boolean;
     idOwner: EntityID = new EntityID();
     buyState: PackBuyState = PackBuyState.ON_WAITING_BUYER;
     idBuyer: EntityID = new EntityID();
@@ -46,10 +45,10 @@ export class Pack extends Entity {
     hydrate(entity: Record<string | number, any>): void {
         for (const key of Object.keys(entity)) {
             if (Reflect.has(this, key)) {
-                if (key == 'id') {this.id.setId(entity.id); }
-                else if (key == 'idOwner') {this.idOwner.setId(entity.idOwner); }
-                else if (key == 'idBuyer') {this.idBuyer.setId(entity.idBuyer); }
-                else {Reflect.set(this, key, entity[key]); }
+                if (key == 'id') { this.id.setId(entity.id); }
+                else if (key == 'idOwner') { this.idOwner.setId(entity.idOwner); }
+                else if (key == 'idBuyer') { this.idBuyer.setId(entity.idBuyer); }
+                else { Reflect.set(this, key, entity[key]); }
             }
         }
     }
@@ -58,8 +57,8 @@ export class Pack extends Entity {
         let r = {};
         for (const k of Object.keys(this)) {
             if (k == 'id') { r[k] = this.id.toString(); }
-            else if (k == 'idOwner') {r[k] = this.idOwner.toString();}
-            else if (k == 'idBuyer') {r[k] = this.idBuyer.toString(); }
+            else if (k == 'idOwner') { r[k] = this.idOwner.toString(); }
+            else if (k == 'idBuyer') { r[k] = this.idBuyer.toString(); }
             else { r[k] = Reflect.get(this, k); }
         }
         return r;

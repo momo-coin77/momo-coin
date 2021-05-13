@@ -20,6 +20,7 @@ import { ListsUserComponent } from './users/lists-user/lists-user.component';
   declarations: [
     ListsUserComponent,
     AddUserComponent
+    
   ]
 })
 export class AdminModule { }

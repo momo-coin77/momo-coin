@@ -1,13 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../../../../shared/service/user/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../../shared/entity/user';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
-import { NotificationService } from '../../../../shared/service/notification/notification.service';
-// import { AuthService } from 'app/shared/services/auth.service';
-// import { UserService } from 'app/shared/services/user.service';
-// import { User } from 'app/shared/services/user';
 
 @Component({
   selector: 'app-user',
@@ -27,8 +22,6 @@ export class UserComponent implements OnInit {
   message: string = '\<b>Error\</b>\<br>this action not permited!';
 
   constructor(
-    private formBuilder: FormBuilder,
-    private userData: UserService,
     private authService: AuthService,
     public router: Router,
     public ngZone: NgZone) {
