@@ -41,9 +41,11 @@
             </tbody>
 
             <tbody *ngIf="packs.length==0">
-              <tr >
+              <tr>
                 <td colspan="6">
-                  <div class="d-flex justify-content-center"><app-spinner></app-spinner></div>
+                  <div class="d-flex justify-content-center">
+                    <app-spinner></app-spinner>
+                  </div>
                 </td>
               </tr>
             </tbody>
@@ -68,63 +70,52 @@
 </div>
 
 <div bsModal #firstModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true" aria-hidden="true">
-  <div role="document">
-    <div class="card card-profile shadow">
-      <div class="row">
-        <div class="card-header">
-          <button type="button" class="close" (click)="firstModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button><!-- Package Details-->
-          <h4 class="mb-2 text-center title-form"><b> <u>WARNING !! </u></b></h4>
-          <!-- row-item-->
-          <br>
-          <div class="form-row mb-2">
-            <div class="col">
-              <b>Are you sure you want to buy this pack ?</b>
-            </div>
-          </div>
-          <!-- row-item-->
-          <div class="text-center">By clicking on Pay you will have 5 hours to make the payment to the number indicated.
-            After this time, your account will be automatically suspended.</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" (click)="firstModal.hide()"
-              style="background-color: red !important;">Cancel</button>
-            <button type="button" class="btn btn-success" style="background-color: green !important;"
-              (click)="firstModal.hide();show2()">Pay</button>
-          </div>
-        </div>
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b> WARNING !! </b></h4>
+        <button type="button" class="close" (click)="firstModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button><!-- Package Details-->
       </div>
+      <div class="modal-body">
+        <b>Are you sure you want to buy this pack ?</b>
+        <br>Country: <b>Cameroon</b>
+        <br>Network: <b>MTN Money</b>
+        <br>Amount: <b>2 000 FCFA</b>
+        <div class="text-left">By clicking on Pay you will have 5 hours to make the payment to the number indicated.
+          After this time, your account will be automatically suspended.</div>
+
+      </div>
+      <button type="button" class="btn btn-danger" (click)="firstModal.hide()"
+        style="background-color: red !important;">Cancel</button>
+      <button type="button" class="btn btn-success" style="background-color: green !important;"
+        (click)="firstModal.hide();show2()">Pay</button>
     </div>
   </div>
 </div>
 
 <div bsModal #secondModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true" aria-hidden="true">
-  <div role="document">
-    <div class="card card-profile shadow">
-      <div class="row">
-        <div class="card-header">
-          <button type="button" class="close" (click)="secondModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button><!-- Package Details-->
-          <h4 class="mb-2 text-center title-form"><b> <u>WARNING !! </u></b></h4>
-          <!-- row-item-->
-          <br>
-          <div class="form-row mb-2">
-            <div class="col">
-              <b>Are you sure you want to buy this pack ?</b>
-            </div>
-          </div>
-          <!-- row-item-->
-          <div class="text-center">By clicking on Pay you will have 5 hours to make the payment to the number indicated.
-            After this time, your account will be automatically suspended.</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success" style="background-color: green !important;"
-              (click)="secondModal.hide();ok()">Pay</button>
-          </div>
-        </div>
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b> payment details </b></h4>
+        <button type="button" class="close" (click)="secondModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div class="modal-body">
+        <br class="text-center">Network: <b>MTN Money</b>
+        <br>Phone: <b>669955484</b>
+        <br>Name: <b>User Name</b>
+        <br>Amount: <b>2 000 FCFA</b>
+        <div class="text-left">Contacted the beneficiary for confirmation of payment.</div>
+
+      </div>
+      <button type="button" class="btn btn-success" style="background-color: green !important;"
+        (click)="secondModal.hide();ok()">Paid</button>
     </div>
   </div>
 </div>
