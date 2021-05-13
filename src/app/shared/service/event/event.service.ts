@@ -6,4 +6,5 @@ import { User } from '../../entity/user';
 export class EventService {
   loginEvent = new BehaviorSubject<User>(null);
   logoutEvent = new BehaviorSubject<boolean>(false);
+  loginAdminEvent = new BehaviorSubject<boolean>(false);
 }
