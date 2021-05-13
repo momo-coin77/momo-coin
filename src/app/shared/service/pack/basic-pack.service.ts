@@ -1,11 +1,16 @@
 import { Injectable } from "@angular/core";
 import { User } from "firebase";
 import { BehaviorSubject } from "rxjs";
-import { Pack, PackState } from "../../entity/pack";
+import { Message } from "../../entity/chat";
+import { EntityID } from "../../entity/EntityID";
+import { Pack, PackBuyState, PackGain, PackState } from "../../entity/pack";
 import { AuthService } from "../auth/auth.service";
 import { EventService } from "../event/event.service";
 import { FirebaseApi } from "../firebase/FirebaseApi";
 import { ResultStatut } from "../firebase/resultstatut";
+import { PlanService } from "../opperations/plan.service";
+import { UserHistoryService } from "../user-history/user-history.service";
+import { UserNotificationService } from "../user-notification/user-notification.service";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +22,11 @@ export class BasicPackService {
     currentUser:User;
 
     constructor(private firebaseApi:FirebaseApi,
-        private eventService:EventService
+        private eventService:EventService,
+        private authService:AuthService,
+        private planService:PlanService,
+        private userNotificationService:UserNotificationService,
+        private userHistoryService:UserHistoryService
         ){
             this.eventService.loginEvent.subscribe((log)=>{
             //   if(!log) return;
@@ -76,6 +85,139 @@ export class BasicPackService {
                 this.firebaseApi.handleApiError(error);
                 reject(error);
             })
+        })
+    }
+
+    //Etape 1
+    //L'acheteur envoi la demande d'achat en faisant le depos
+    BuyAPack(pack: Pack,gain:PackGain): Promise<ResultStatut> {
+        return new Promise<ResultStatut>((resolve, reject) => {
+            if (pack.state != PackState.ON_MARKET) {
+                let result: ResultStatut = new ResultStatut();
+                result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
+                result.message = 'Pack is not on market';
+                reject(result);
+            }
+            if (pack.buyState != PackBuyState.ON_WAITING_BUYER) {
+                let result: ResultStatut = new ResultStatut();
+                result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
+                result.message = 'The pack do not wait for buyer\'s payment';
+                reject(result);
+            }
+
+            pack.state=PackState.NOT_ON_MARKET;
+            pack.buyState = PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT;
+            pack.idBuyer.setId(this.authService.currentUserSubject.getValue().id.toString())
+            this.firebaseApi.updates([
+                {
+                    link: `packs/${pack.id.toString()}/state`,
+                    data: pack.state,
+                },
+                {
+                    link: `packs/${pack.id.toString()}/buyState`,
+                    data: pack.buyState,
+                },
+                {
+                    link: `packs/${pack.id.toString()}/wantedGain`,
+                    data: gain,
+                },
+                {
+                    link: `packs/${pack.id.toString()}/idBuyer`,
+                    data: this.authService.currentUserSubject.getValue().id.toString(),
+                },
+            ])
+            .then((result) => {
+                
+                let message: Message = new Message();
+                message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
+                message.to.setId(pack.idOwner.toString())
+                message.date = (new Date()).toISOString();
+                message.content = 'the payment of the pack has been made by the buyer. Please confirm';
+                message.idPack = pack.id;
+                return this.userNotificationService.sendNotification(message)
+            })
+            .then((result) => resolve(result))
+            .catch((error) => {
+                this.firebaseApi.handleApiError(error);
+                reject(error);
+            })
+
+        })
+    }
+    
+    confirmPaiementBySeller(pack: Pack, idBuyer: EntityID): Promise<ResultStatut> {
+        return new Promise<ResultStatut>((resolve, reject) => {
+            if (pack.state == PackState.ON_MARKET) {
+                let result: ResultStatut = new ResultStatut();
+                result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
+                result.message = 'Pack is already on market';
+                reject(result);
+            }
+            if (pack.buyState != PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT) {
+                let result: ResultStatut = new ResultStatut();
+                result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
+                result.message = 'The pack is not awaiting confirmation by the seller';
+                reject(result);
+            }
+            
+            pack.buyState = PackBuyState.ON_END_SEL;
+            pack.state= PackState.NOT_ON_MARKET;
+            pack.saleDate=(new Date()).toISOString();
+            pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
+            this.firebaseApi.updates([
+                {
+                    link: `packs/${pack.id.toString()}/buyState`,
+                    data: pack.buyState
+                },
+                {
+                    link: `packs/${pack.id.toString()}/state`,
+                    data: pack.state
+                },
+                {
+                    link: `packs/${pack.id.toString()}/saleDate`,
+                    data: pack.saleDate
+                },
+                {
+                    link: `packs/${pack.id.toString()}/nextAmount`,
+                    data: pack.nextAmount
+                },
+            ])
+                .then((result) => {
+                    let newPack:Pack = Object.assign(Object.create(Object.getPrototypeOf(pack)),pack)
+                    newPack.amount=newPack.nextAmount;
+                    newPack.nextAmount=0;
+                    newPack.payDate=newPack.saleDate;
+                    let dateForSelle=new Date(newPack.payDate);
+                    dateForSelle.setDate(dateForSelle.getDate()+newPack.wantedGain.jour)
+                    newPack.saleDate=dateForSelle.toISOString();
+                    newPack.buyState=PackBuyState.ON_WAITING_BUYER;
+                    newPack.plan=newPack.wantedGain.jour
+                    newPack.wantedGain={};
+                    newPack.idOwner.setId(newPack.idBuyer.toString());
+                    newPack.idBuyer.setId(" ");
+
+                    return this.firebaseApi.updates([
+                        {
+                            link: `packs/${pack.id}`,
+                            data: newPack.toString()
+                        },
+                    ])
+                })
+                .then((result) => {
+                    let message: Message = new Message();
+                    message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
+                    message.to.setId(pack.idOwner.toString())
+                    message.date = (new Date()).toISOString();
+                    message.content = 'the payment of the pack has been made by the buyer';
+                    message.idPack = pack.id;
+                    return this.userNotificationService.sendNotification(message)
+                })
+                .then((result) => resolve(result))
+                .catch((error) => {
+                    this.firebaseApi.handleApiError(error);
+                    reject(error);
+                })
+
         })
     }
 }

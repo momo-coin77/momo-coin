@@ -14,17 +14,17 @@ export enum PackBuyState {
     ON_END_SEL = 'on_end_sel'
 }
 
-export class PackGain {
-    pourcent: number = 0;
-    jour: number = 0;
+export interface PackGain {
+    pourcent?: number;
+    jour?: number;
 }
 
-export class Pack5Gain extends PackGain {
+export class Pack5Gain implements PackGain {
     pourcent: number = 20;
     jour: number = 5;
 }
 
-export class Pack10Gain extends PackGain {
+export class Pack10Gain implements PackGain {
     pourcent: number = 45;
     jour: number = 10;
 }
@@ -41,6 +41,7 @@ export class Pack extends Entity {
     buyState: PackBuyState = PackBuyState.ON_WAITING_BUYER;
     idBuyer: EntityID = new EntityID();
     state: PackState = PackState.NOT_ON_MARKET;
+    wantedGain : PackGain={pourcent:0,jour:0};
 
     getBuyState()
     {
@@ -57,6 +58,13 @@ export class Pack extends Entity {
                 if (key == 'id') { this.id.setId(entity.id); }
                 else if (key == 'idOwner') { this.idOwner.setId(entity.idOwner); }
                 else if (key == 'idBuyer') { this.idBuyer.setId(entity.idBuyer); }
+                else if(key == "wantedGain") 
+                {
+                    let r={};
+                    if(entity[key].pourcent) r["pourcent"]=entity[key].pourcent;
+                    if(entity[key].jour) r["jour"]=entity[key].jour;
+                    this.wantedGain=r;
+                }
                 else { Reflect.set(this, key, entity[key]); }
             }
         }
@@ -68,6 +76,7 @@ export class Pack extends Entity {
             if (k == 'id') { r[k] = this.id.toString(); }
             else if (k == 'idOwner') { r[k] = this.idOwner.toString(); }
             else if (k == 'idBuyer') { r[k] = this.idBuyer.toString(); }
+            else if(k == 'wantedGain ') r[k]={pourcent:this.wantedGain.pourcent,jour:this.wantedGain.jour}
             else { r[k] = Reflect.get(this, k); }
         }
         return r;
