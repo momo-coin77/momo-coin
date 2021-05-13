@@ -36,15 +36,19 @@ export class MarketService {
   getOrderMarket()
   {
     return this.packs.pipe(
-      map((p)=> Array.from(p.values())),
-      map((pos: Pack[])=> pos.sort((a:Pack,b:Pack)=> a.amount<=b.amount?0:1))
+      switchMap((p)=> from(Array.from(p.values()))),
+      scan( (packList:Pack[],currPack:Pack)=> {
+        packList.push(currPack)
+        packList.sort((a:Pack,b:Pack)=> a.amount<=b.amount?0:1)
+        console.log("arr ",packList)
+        return packList;
+      },[]),
     )
   }
 
   getMyOrderedPackOnMarket()
   {
-    return this.packs.pipe(
-      map((p)=> Array.from(p.values())),
+    return this.getOrderMarket().pipe(
       switchMap((p:Pack[])=> from(p)),
       filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
       filter((p:Pack)=> p.state==PackState.ON_MARKET),
@@ -56,8 +60,7 @@ export class MarketService {
   }
   getMyOrderdPackNotInMarket()
   {
-    return this.packs.pipe(
-      map((p)=> Array.from(p.values())),
+    return this.getOrderMarket().pipe(
       switchMap((p:Pack[])=> from(p)),
       filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
       filter((p:Pack)=> p.state==PackState.NOT_ON_MARKET),
@@ -73,8 +76,9 @@ export class MarketService {
     // console.log("data on market ",pack.val())
     pck.hydrate(pack.val());
     if (this.listPack.has(pck.id.toString())) { this.listPack.delete(pck.id.toString()); }
-    
+    // console.log("comsqdf ",pck)
     this.listPack.set(pck.id.toString(), pck);
+    console.log("paclmaket ",this.listPack)
     this.packs.next(this.listPack);
   }
 

@@ -10,6 +10,7 @@ import { NotificationService } from '../../../../shared/service/notification/not
 import { PackService } from '../../../../shared/service/pack/pack.service';
 import { UserService } from '../../../../shared/service/user/user.service';
 import * as _ from 'lodash';
+import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class MarketComponent implements OnInit {
   hh: number;
   searchPacks : Pack[] = [];
   search = '';
-  packs: { waitResponse: boolean, pack: Pack }[] = [];
+  packs: { waitResponse: boolean, pack: Pack,user:User }[] = [];
   // packs: { user: User, pack: Pack }[] = [];
 
 
@@ -35,7 +36,7 @@ export class MarketComponent implements OnInit {
 
   constructor(private router: Router,
     private modalService: BsModalService,
-    private packService: PackService,
+    private packService: BasicPackService,
     private userService: UserService,
     private marketService: MarketService,
     private notification: NotificationService
@@ -50,17 +51,27 @@ export class MarketComponent implements OnInit {
           return this.marketService.marketTime();
       });
 
-      this.packService.packList.subscribe((packs: Map<string, Pack>) => {
-        this.packs = Array.from(packs.values()).map((pack) => {
-          return { waitResponse: false, pack }
+      this.marketService.getOrderMarket().subscribe((packs:[]) => {
+        // waitResponse
+        this.packs=[]
+        packs.forEach((pack:Pack)=>{
+          this.userService.getUserById(pack.idOwner)
+          .then((result:ResultStatut)=>{
+            console.log("sjdflmqdjfqm ",pack)
+            this.packs.push({
+              waitResponse:false,
+              pack,
+              user:result.result
+            })
+          })
         })
-        console.log(this.packs)
+        // console.log(this.packs)
         // this.searchPack();
       })
   }
 
   getPacks(){
-    this.packService.getPackList();
+    // this.packService.getPackList();
     // return (pack: Pack[]) => this.searchPacks = this.packs = pack
   }
 

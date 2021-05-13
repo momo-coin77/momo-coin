@@ -115,9 +115,16 @@ export class UserService {
     })
   }
 
-  updateUser()
+  updateUser(user:User):Promise<ResultStatut>
   {
-    
+    return new Promise<ResultStatut>((resolve, reject)=>{
+      this.firebaseApi.update(`users/${user.id.toString()}`,user.toString())
+      .then((result:ResultStatut)=>resolve(result))
+      .catch((error:ResultStatut)=>{
+        this.firebaseApi.handleApiError(error);
+        reject(error);
+      })
+    })
   }
 
 }

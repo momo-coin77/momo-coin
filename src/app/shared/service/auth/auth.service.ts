@@ -84,6 +84,9 @@ export class AuthService {
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
         .then(() => {
+          return this.firebaseApi.updateUser({
+            name:user.name
+          })
           return this.userService.addUser(user)
         })
         .then(() => {

@@ -202,6 +202,22 @@ export class FirebaseApi {
     firebase.auth().signOut();
   }
 
+  updateUser(user:Record<string,any>):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      let r={}
+      if(user.hasOwnProperty("name")) r['displayName'] = user.name;
+      if(user.hasOwnProperty("photoUrl")) r['photoURL']=user.photoUrl
+      this.db.currentUser.updateProfile(r)
+      .then(()=>resolve(new ResultStatut()))
+      .catch((error)=>{
+        let result:ResultStatut = new ResultStatut();
+        result.apiCode=error.error;
+        result.message=error.getMessage();
+      })
+    })
+  }
+
   createUserApi(email: string, password: string): Promise<ResultStatut> {
     let result: ResultStatut = new ResultStatut();
     return new Promise(async (resolve, reject) => {
