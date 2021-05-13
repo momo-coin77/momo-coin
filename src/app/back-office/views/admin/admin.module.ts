@@ -4,7 +4,11 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { AdminRoutingModule } from './admin-routing.module';
+import { AddPackComponent } from './packs/add-pack/add-pack.component';
+import { EditPackComponent } from './packs/edit-pack/edit-pack.component';
+import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
 import { AddUserComponent } from './users/add-user/add-user.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
 
@@ -15,11 +19,15 @@ import { ListsUserComponent } from './users/lists-user/lists-user.component';
     AlertModule.forRoot(),
     ModalModule.forRoot(),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SpinnerModule
   ],
   declarations: [
     ListsUserComponent,
-    AddUserComponent
+    AddUserComponent,
+    AddPackComponent,
+    ListsPackComponent,
+    EditPackComponent
     
   ]
 })

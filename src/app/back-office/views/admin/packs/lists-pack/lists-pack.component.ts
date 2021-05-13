@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PackService } from '../../../../../shared/service/pack/pack.service';
 import { Pack } from '../../../../../shared/entity/pack';
 import * as _ from 'lodash';
+import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.service';
 
 @Component({
   selector: 'app-lists-pack',
@@ -14,28 +14,28 @@ export class ListsPackComponent implements OnInit {
   search = '';
   searchPacks: Pack[] = [];
 
-  constructor(private packService: PackService) { }
+  constructor(private packService: BasicPackService) { }
 
   ngOnInit() {
     this.getPacks();
   }
 
-  getpacks() {
-    this.packService.getPacks();
-    return ((pack: Pack[]) => this.searchPacks = this.packs = pack);
+  getPacks() {
+    // this.packService.getPacks();
+    // return ((pack: Pack[]) => this.searchPacks = this.packs = pack);
   }
 
   deletePack(id) {
-    this.packService.deletePack(id)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    // this.packService.deletePack(id)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   }
 
   changeStatus(pack) {
 
-    this.packService.changeStatus({ active: !pack.active }, pack.id)
-      .then((resp) => console.log(resp))
-      .catch((err) => console.error(err));
+    // this.packService.changeStatus({ active: !pack.active }, pack.id)
+    //   .then((resp) => console.log(resp))
+    //   .catch((err) => console.error(err));
   }
   searchPack() {
     this.searchPacks =

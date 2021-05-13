@@ -7,7 +7,7 @@ import { PackService } from '../../../../../shared/service/pack/pack.service';
 @Component({
   selector: 'app-edit-pack',
   templateUrl: './edit-pack.component.html',
-  styleUrls: ['./edit-pack.component.css']
+  styleUrls: ['./edit-pack.component.scss']
 })
 export class EditPackComponent implements OnInit {
 
@@ -21,16 +21,16 @@ export class EditPackComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.packService.getPack(this.id)
-      .subscribe((pack: Pack) => this.pack = pack);
+    // this.packService.getPack(this.id)
+    //   .subscribe((pack: Pack) => this.pack = pack);
   }
 
   updatePack(form) {
     if (form.valid) {
-      this.pack.id = this.id;
-      this.packService.updatePack(this.pack)
-        .then(() => this.router.navigate(['/admin/list-pack']))
-        .catch((err) => console.error(err));
+      // this.pack.id = this.id;
+      // this.packService.updatePack(this.pack)
+      //   .then(() => this.router.navigate(['/admin/list-pack']))
+      //   .catch((err) => console.error(err));
     }
   }
 }

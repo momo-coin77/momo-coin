@@ -44,7 +44,6 @@ export class ListsUserComponent implements OnInit {
 
   searchUser() {
     this.searchUsers =
-      // tslint:disable-next-line:max-line-length
       _.filter(this.users, (user) => _.includes(user.email, this.search) || _.includes(user.name, this.search) || _.includes(user.phone, this.search))
   }
 

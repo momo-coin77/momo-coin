@@ -1,48 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { PackService } from '../../../../../shared/service/pack/pack.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Pack, PackState } from '../../../../../shared/entity/pack';
+import { UserService } from '../../../../../shared/service/user/user.service';
+import { EntityID } from '../../../../../shared/entity/EntityID';
+import { ResultStatut } from '../../../../../shared/service/firebase/resultstatut';
+import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.service';
+import { NotificationService } from '../../../../../shared/service/notification/notification.service';
 // import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-pack',
   templateUrl: './add-pack.component.html',
-  styleUrls: ['./add-pack.component.css']
+  styleUrls: ['./add-pack.component.scss']
 })
 export class AddPackComponent implements OnInit {
 
+  form:FormGroup;
+  submitted:boolean=false;
+  packStates: {text:String,value:PackState}[]=[
+    {text:"Sur le marché",value:PackState.ON_MARKET},
+    {text:"Pas sur le marché" , value:PackState.NOT_ON_MARKET}
+  ]; 
+
+  waitResponse:boolean=false;
+
   constructor(
-    private packService: PackService,
+    private packService: BasicPackService,
+    private userService:UserService,
+    private notificationService:NotificationService,
     private router: Router) { }
 
   ngOnInit() {
+    this.form=new FormGroup({
+      amount:new FormControl("",[Validators.required]),
+      packState:new FormControl(this.packStates[0].value),
+      saleDate:new FormControl(""),
+      idOwner:new FormControl("",[Validators.required,Validators.minLength(20)]),
+    });
   }
 
-  addPack(form) {
-    if (form.valid) {
-      this.packService.addPackack(form.value)
-        .then(() => this.router.navigate(['/admin/list-pack']))
-        .catch((error) => console.error(error));
-    } else {
-      // Swal({
-      //   title: 'Form invalid',
-      //   text: 'please re-enter your information',
-      //   type: 'warning',
-      //   showCancelButton: true,
-      //   confirmButtonText: 'Continue',
-      //   cancelButtonText: 'Cancel'
-      // }).then((result) => {
-      //   if (result.value) {
-      //     Swal(
-      //       'Done ! ',
-      //     );
-      //   } else if (result.dismiss === Swal.DismissReason.cancel) {
-      //     Swal(
-      //       'Cancelled',
-
-      //     );
-      //   }
-      // });
-      alert('Form invalid !');
-    }
+  addPack() {//
+    this.submitted=true;
+    if(this.form.invalid) return;
+    this.waitResponse=true;
+    this.userService.getListUser()
+    let idOwner:EntityID=new EntityID();
+    idOwner.setId(this.form.value.idOwner);
+    
+    this.userService.getUserById(idOwner)
+    .then((result:ResultStatut)=>{
+      let pack:Pack=new Pack();
+      pack.amount=this.form.value.amount;
+      pack.state=this.form.value.packState;
+      pack.saleDate=this.form.value.saleDate;
+      pack.idBuyer.setId(" ");
+      pack.idOwner=idOwner;
+      return this.packService.addPack(pack)
+    })
+    .then((result)=> {
+      this.waitResponse=false;
+      this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The pack has been successfully added to the list of packs for this user');
+      this.form.reset();
+      this.submitted=false;
+    })
+    .catch((error:ResultStatut)=>{
+      this.waitResponse=false;
+      this.notificationService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+      
+    })
+      
+    
   }
 }

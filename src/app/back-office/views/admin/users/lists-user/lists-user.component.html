@@ -25,29 +25,37 @@
                   <th></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.active,
-                                                          'table-light' : !user.active}">
-                  <td>
-                    <button [ngClass]="{'btn-success': user.active,
-                                  'btn-danger' : !user.active}" (click)="changeStatus(user)"
+              <tbody *ngIf="searchUsers.length>0">
+                  <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.status.active,
+                  'table-light' : !user.status.active}">
+                    <td>
+                      <button [ngClass]="{'btn-success': user.status.active,
+                      'btn-danger' : !user.status.active}" (click)="changeStatus(user)"
                       class="btn btn-sm btn-danger">
-                      <i class="fa fa-power-off"></i>
-                    </button>
-                  </td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.phone }}</td>
-                  <td>{{ user.email }}</td>
-                  <td>{{ user.city }}</td>
-                  <td class="text-right">
-                    <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-warning">
-                <i class="fa fa-trash"></i>
-              </button>
-              <br>
-              <a [routerLink]="['/admin/edit',user.id]" (click)="editUser(user.id)" 
-              class="btn btn-sm btn-info" style="margin-top: 3px">
-                  <i class="fa fa-pencil"></i>
-              </a> -->
+                      <i *ngIf="!waitResponse" class="fa fa-power-off"></i>
+                      <app-spinner *ngIf="waitResponse" ></app-spinner>
+                      </button>                    
+                      </td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.phone }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.city }}</td>
+                      <td class="text-right">
+                      <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-warning">
+                      <i class="fa fa-trash"></i>
+                      </button> -->
+                      <br>
+                      <a [routerLink]="['/admin/edit-user',user.id]" (click)="editUser(user.id)" 
+                      class="btn btn-sm btn-info" style="margin-top: 3px">
+                      <i class="fa fa-pencil"></i>
+                      </a>
+                    </td>
+                  </tr>
+              </tbody>
+              <tbody *ngIf="searchUsers.length==0">
+                <tr >
+                  <td colspan="6">
+                    <div class="d-flex justify-content-center"><app-spinner></app-spinner></div>
                   </td>
                 </tr>
               </tbody>

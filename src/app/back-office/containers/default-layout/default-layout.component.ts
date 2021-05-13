@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
 import { AuthService } from '../../../shared/service/auth/auth.service';
+import { User } from '../../../shared/entity/user';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 declare var $: any;
@@ -37,6 +38,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     // this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
+    this.autService.currentUserSubject.subscribe((user:User)=>{
+      this.userName=user.name;
+    })
   }
 
   toggleMinimize(e) {
