@@ -10,7 +10,7 @@ import { UserService } from '../../../../../shared/service/user/user.service';
   styleUrls: ['./lists-user.component.scss'],
 })
 export class ListsUserComponent implements OnInit {
-
+  userStatus: boolean;
   users: User[] = [];
   search = '';
   searchUsers: User[] = [];
@@ -33,6 +33,7 @@ export class ListsUserComponent implements OnInit {
     this.waitResponse=true;
     this.userService.changeStatus(user)
     .then((result)=>{
+      console.log('staus' + user.status);
       this.waitResponse=false;
       this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.status}'`);
     })

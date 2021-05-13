@@ -2,15 +2,18 @@
   <div class="row">
     <div class="col-sm-6 col-md-12">
       <div class="card">
-        <div class="row">
-          <div class="col-md-6">
+        <div class="card-header linear-gradient">
+          <h3 class="text-center mx-4 mb-2">
             <h1>List of users</h1>
-          </div>
-          <div class="col-md-6 text-right">
-            <a routerLink="/admin/add-user" class="btn btn-success"><i class="fa fa-plus"></i></a>
-          </div>
+          </h3>
         </div>
+        <div class="col-md-6 text-right">
+          <a routerLink="/admin/add-user" style="background-color: rgb(34, 142, 12) !important;"
+            class="btn btn-success"><i class="fa fa-plus"></i></a>
+        </div>
+      </div>
 
+      <div class="card-body linear-gradient2">
         <div class="row">
           <div class="col-md-12">
             <input (keyup)="searchUser()" type="text" class="form-control" placeholder="Search...">
@@ -25,6 +28,7 @@
                   <th></th>
                 </tr>
               </thead>
+<<<<<<< refs/remotes/origin/main
               <tbody *ngIf="searchUsers.length>0">
                   <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.status.active,
                   'table-light' : !user.status.active}">
@@ -56,6 +60,33 @@
                 <tr >
                   <td colspan="6">
                     <div class="d-flex justify-content-center"><app-spinner></app-spinner></div>
+=======
+              <tbody>
+                <tr *ngFor="let user of searchUsers" [ngClass]="{'table-success': user.status,
+                                                          'table-danger' : !user.status}">
+
+                  <td>
+                    <button [ngClass]="{'b-success': user.status,
+                                  'b-danger' : !user.status}" (click)="changeStatus(user)"
+                      class="btn btn-sm btn-danger">
+                      <i class="fa fa-power-off"></i>
+                    </button>
+                  </td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>{{ user.email }}</td>
+                  <td>{{ user.city }}</td>
+                  <td class="text-right">
+                    <button (click)="deleteUser(user.id)" class="btn btn-danger"
+                      style="background-color: red !important;">
+                      <i class="fa fa-trash-o"></i>
+                    </button>
+                    <br>
+                    <a [routerLink]="['/admin/edit',user.id]" (click)="editUser(user.id)" class="btn btn-info"
+                      style="background-color: rgb(39, 111, 235) !important;">
+                      <i class="fa fa-pencil" style="color: rgb(245, 245, 250) !important;"></i>
+                    </a>
+>>>>>>> Auto stash before rebase of "origin/main"
                   </td>
                 </tr>
               </tbody>

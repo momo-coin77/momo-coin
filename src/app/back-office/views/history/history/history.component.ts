@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
+import { PlanService } from '../../../../shared/service/opperations/plan.service';
 
 
 @Component({
@@ -10,7 +11,10 @@ import { NotificationService } from '../../../../shared/service/notification/not
 export class HistoryComponent implements OnInit {
 
 
-  constructor(private notification: NotificationService) { }
+  constructor(private notification: NotificationService,
+              private calcul: PlanService) { 
+                console.log(calcul.calculePlan(150000, 5))
+              }
 
   ngOnInit() {
   }

@@ -106,7 +106,7 @@ export class UserService {
         data:nstatus
       }])
       .then((result)=>{
-        this.usersSubject.getValue().get(user.id.toString()).status=nstatus;
+        this.usersSubject.getValue().get(user.id.toString()).status = nstatus;
         resolve(result)
       })
       .catch((error)=>{

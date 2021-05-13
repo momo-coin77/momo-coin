@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateSubscription = interval(15000).subscribe(
+    this.updateSubscription = interval(8000).subscribe(
       (val) => {
         this.activeUser = this.randomNumber(10);
       });

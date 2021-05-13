@@ -1,3 +1,4 @@
+<<<<<<< refs/remotes/origin/main
 <div class="row">
     <div class="col-md-6">
       <h1>List of Pack</h1>
@@ -7,57 +8,75 @@
     </div>
   </div>
  
+=======
+<div class="animated fadeIn">
+>>>>>>> Auto stash before rebase of "origin/main"
   <div class="row">
-    <div class="col-md-12">
-        <input (keyup)="searchPack()" [(ngModel)]="search" type="text" class="form-control" placeholder="Search...">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Amount</th>
-            <th>Next Amount</th>
-            <th>payDate</th>
-            <th>saleDate</th>
-            <th>buyState</th>
-            <th>plan</th>
-            <th>idOwner</th>
-            <th>idBuyer</th>
-            <th>state</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let pack of searchPack" [ngClass]="{'table-success': pack.active,
+    <div class="col-sm-6 col-md-12">
+      <div class="card">
+        <div class="row">
+          <div class="col-md-6">
+            <h1>List of Pack</h1>
+          </div>
+          <div class="col-md-6 text-right">
+            <a routerLink="/add" class="btn btn-success"><i class="fa fa-plus"></i></a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <input (keyup)="searchPack()" [(ngModel)]="search" type="text" class="form-control" placeholder="Search...">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Amount</th>
+                  <th>Next Amount</th>
+                  <th>payDate</th>
+                  <th>saleDate</th>
+                  <th>buyState</th>
+                  <th>plan</th>
+                  <th>idOwner</th>
+                  <th>idBuyer</th>
+                  <th>state</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pack of searchPack" [ngClass]="{'table-success': pack.active,
                                                           'table-light' : !pack.active}">
-            <td>
-              <button [ngClass]="{'btn-success': pack.active,
-                                  'btn-danger' : !pack.active}"
-                      (click)="chabgeStatus(pack)"  
+                  <td>
+                    <button [ngClass]="{'btn-success': pack.active,
+                                  'btn-danger' : !pack.active}" (click)="chabgeStatus(pack)"
                       class="btn btn-sm btn-danger">
-                <i class="fa fa-power-off"></i>
-              </button>
-            </td>
-            <td>{{ pack.amount }}</td>
-            <td>{{ pack.nextAmount }}</td>
-            <td>{{ pack.payDate }}</td>
-            <td>{{ pack.saleDate }}</td>
-            <td>{{ pack.buyState }}</td>
-            <td>{{ pack.plan }}</td>
-            <td>{{ pack.idOwner }}</td>
-            <td>{{ pack.idBuyer }}</td>
-            <td>{{ pack.state }}</td>
-            <td class="text-right">
-              <button (click)="deletePack(pack.id)" class="btn btn-sm btn-warning">
-                <i class="fa fa-trash"></i>
-              </button>
-              <br>
-              <a [routerLink]="['/edit',pack.id]" (click)="editpack(pack.id)" 
-              class="btn btn-sm btn-info" style="margin-top: 3px">
-                  <i class="fa fa-pencil"></i>
-              </a>
-          </td>
-          </tr>
-        </tbody>
-      </table>
+                      <i class="fa fa-power-off"></i>
+                    </button>
+                  </td>
+                  <td>{{ pack.amount }}</td>
+                  <td>{{ pack.nextAmount }}</td>
+                  <td>{{ pack.payDate }}</td>
+                  <td>{{ pack.saleDate }}</td>
+                  <td>{{ pack.buyState }}</td>
+                  <td>{{ pack.plan }}</td>
+                  <td>{{ pack.idOwner }}</td>
+                  <td>{{ pack.idBuyer }}</td>
+                  <td>{{ pack.state }}</td>
+                  <td class="text-right">
+                    <button (click)="deletePack(pack.id)" class="btn btn-sm btn-warning">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                    <br>
+                    <a [routerLink]="['/edit',pack.id]" (click)="editpack(pack.id)" class="btn btn-sm btn-info"
+                      style="margin-top: 3px">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>
