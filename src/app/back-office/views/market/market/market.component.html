@@ -18,56 +18,8 @@
             </thead>
             <tbody>
 
-              
-              <!-- Données Statique -->
-              <tr>
-                <th><b>MTN</b></th>
-                <th><b>500000 MC</b></th>
-                <th><b>
-                    <select placeholder="5days">
-                      <option value="5days" selected>5days</option>
-                      <option value="10days">10days</option>
-                      <option value="20days">20days</option>
-                    </select></b>
-                </th>
-                <th><b>
-                    <span class="badge badge-success" (click)="show1()">
-                      <i class="fa fa-shopping-cart center"></i>
-                    </span></b>
-                </th>
-              </tr>
-              <tr>
-                <th><b>Orange</b></th>
-                <th><b>13500 MC</b></th>
-                <th><b>
-                    <select placeholder="5days">
-                      <option value="5days" selected>5days</option>
-                      <option value="10days">10days</option>
-                      <option value="20days">20days</option>
-                    </select>
-                  </b></th>
-                <th><b>
-                    <span class="badge badge-success"><i class="fa fa-shopping-cart center"></i></span></b></th>
-              </tr>
-              <tr>
-                <th><b>MTN</b></th>
-                <th><b>25000 MC</b></th>
-                <th><b>
-                    <select placeholder="5days">
-                      <option value="5days" selected>5days</option>
-                      <option value="10days">10days</option>
-                      <option value="20days">20days</option>
-                    </select>
-                  </b></th>
-                <th><b>
-                    <span class="badge badge-success">
-                      <i class="fa fa-shopping-cart center"></i>
-                    </span></b>
-                </th>
-              </tr>
-
               <!-- Données Dynamique -->
-              <tr *ngFor="let pack of posts">
+              <tr *ngFor="let pack of packs">
                 <td>
                   <span class="badge badge-secondary">New</span>
                 </td>

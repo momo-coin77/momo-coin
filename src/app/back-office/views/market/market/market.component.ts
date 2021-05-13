@@ -1,4 +1,4 @@
-import { Component, OnInit, Pipe, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { interval, Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ export class MarketComponent implements OnInit {
   hh: number;
   searchPacks : Pack[] = [];
   search = '';
-  packs : Pack[] = [];
+  packs: { waitResponse: boolean, pack: Pack }[] = [];
   // packs: { user: User, pack: Pack }[] = [];
 
 
@@ -50,21 +50,18 @@ export class MarketComponent implements OnInit {
           return this.marketService.marketTime();
       });
 
-    this.marketService.getPackList()
-      .subscribe((pack: Pack) => {
-        // this.userService.getUserById(pack.idOwner)
-        //   .then((result: ResultStatut) => {
-        //     this.packs.push({ user: result.result, pack })
-        //   })
-        // }),
-        // this.packService.packList.subscribe((packages: Map<String, Pack>) => {
-        //   this.posts = this.packService.getPackList();
-      });
+      this.packService.packList.subscribe((packs: Map<string, Pack>) => {
+        this.packs = Array.from(packs.values()).map((pack) => {
+          return { waitResponse: false, pack }
+        })
+        console.log(this.packs)
+        // this.searchPack();
+      })
   }
 
   getPacks(){
     this.packService.getPackList();
-    return (pack: Pack[]) => this.searchPacks=this.packs=pack
+    // return (pack: Pack[]) => this.searchPacks = this.packs = pack
   }
 
   searchPack() {
@@ -96,5 +93,4 @@ export class MarketComponent implements OnInit {
     this.open = false;
     this.close = false;
   }
-
 }
