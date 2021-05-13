@@ -29,8 +29,8 @@ export class MarketService {
         .orderByChild("state")
         .equalTo(PackState.ON_MARKET)
         .on('child_added', (snapshot) => this.newPackFromMarket(snapshot))
-        
-    })
+
+    });
   }
 
   getOrderMarket()
@@ -80,7 +80,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 12 || hh == 11 || hh == 18 || hh == 19) {
+      if (hh == 14 || hh == 15 || hh == 16 || hh == 17) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);
