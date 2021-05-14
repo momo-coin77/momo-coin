@@ -117,6 +117,7 @@ import { SpinnerModule } from './shared/components/spinner/spinner.module';
 
 @NgModule({
   imports: [
+    SpinnerModule,
     BrowserModule,
     BrowserAnimationsModule,
     // SocketIoModule.forRoot(config),

@@ -91,6 +91,7 @@ export class BasicPackService {
             .then((result:ResultStatut)=>{
                 if(!result.result)
                 {
+                    console.log("Dara pas ",result.result,idPack)
                     result.apiCode=FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
                     result.message="Data not found";
                     return reject(result);
@@ -158,7 +159,7 @@ export class BasicPackService {
             pack.nextAmount = this.planService.calculePlan(pack.amount,gain.jour);
             this.firebaseApi.updates([
                 {
-                    link: `packs/${pack.id.toString()}`,
+                    link: `packs/${pack.id.toString()}/`,
                     data: pack.toString(),
                 },
             ])

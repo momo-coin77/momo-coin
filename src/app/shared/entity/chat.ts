@@ -23,7 +23,7 @@ export class Message extends Entity
                 if (key == "id") this.id.setId(entity.id)
                 else if(key=="from") this.from.setId(entity.idOwner)
                 else if(key=="to") this.to.setId(entity.idBuyer)
-                else if(key=="idPack") this.to.setId(entity.idPack)
+                else if(key=="idPack") this.idPack.setId(entity.idPack)
                 else Reflect.set(this, key, entity[key]);
             }
         }

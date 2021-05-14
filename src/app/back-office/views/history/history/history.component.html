@@ -18,29 +18,13 @@
             </thead>
             <tbody>
               <tr>
-                <th><b>500000 MC</b></th>
-                <th><b>15/05/2021 </b></th>
-                <th><b>
-                    <span class="badge badge-success">Paid</span></b></th>
               </tr>
-              <tr>
-                <th><b>13500 MC</b></th>
-                <th><b>15/05/2021 </b></th>
-                <th><b>
-                    <span class="badge badge-success">Paid</span></b></th>
-              </tr>
-              <tr>
-                <th><b>25000 MC</b></th>
-                <th><b>15/05/2021 </b></th>
-                <th><b>
-                    <span class="badge badge-success">Paid</span></b></th>
-              </tr>
-              <tr *ngFor="let v of listVehicle">
-                <td>
-                  <span class="badge badge-success">Active</span>
+              <tr *ngFor="let history of listVehicle">
+                <th><b>{{history.amount}}</b></th>
+                <td><b>{{history.nextAmount}}</b></td>
+                <td><b>{{history.saleDate}}</b></td>
+                <th><b><span class="badge badge-success">Paid</span></b></th>
                 </td>
-                <td>{{v.field_type}}</td>
-                <td>{{v.field_marque}}</td>
               </tr>
             </tbody>
           </table>
