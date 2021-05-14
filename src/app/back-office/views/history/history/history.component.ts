@@ -15,7 +15,7 @@ export class HistoryComponent implements OnInit {
 
 
   constructor(private notification: NotificationService,
-              private history: UserHistoryService) { 
+              private history: UserHistoryService) {
                 
               }
 

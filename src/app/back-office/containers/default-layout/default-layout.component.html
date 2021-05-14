@@ -51,11 +51,9 @@
         </p>
       </div>
       <div class="right">
-        <p>{{today | date:'fullDate'}}</p>
-        <p> <strong> GMT + 1</strong></p>
-        <font size=3 style=""><strong class="col-md-8 text-center">
-            <div id="div_horloge"></div>
-          </strong></font>
+        <p>{{today | date:'fullDate'}}</p><strong class="text-right">
+            <div id="div_horloge" style="size: 15 !important;"></div>
+          </strong>
         <br>
       </div>
       <router-outlet></router-outlet>
@@ -80,7 +78,7 @@
   </app-aside>
 </div>
 <app-footer style="background-color: white;">
-  <span class="ml-auto">&copy; {{year | date: 'yyyy'}} <a target="_blank" href="https://MoMo coin.com"
+  <span class="ml-auto">&copy; {{year | date: 'yyyy'}} <a href="#"
       style="color: #b48f30;"><strong>MoMo-Coin.</strong></a></span>
 </app-footer>
 
