@@ -33,23 +33,22 @@ export class Pack10Gain extends PackGain {
 export class Pack extends Entity {
 
     amount: number = 0; // montant du pack
+    bonusAmount: number = 0;
     nextAmount: number = 0; // montant a obtenir apres mise sur le marché
     payDate: string = ''; // date de l'achat
-    saleDate: string = '' // date de mise sur le marché (new Date()).toISOString();
+    saleDate: string = ''; // date de mise sur le marché (new Date()).toISOString();
     plan: number; // plan de l'achat ( 5 pour 5 jour, 10 pour 10 jours ...)
     idOwner: EntityID = new EntityID();
     buyState: PackBuyState = PackBuyState.ON_WAITING_BUYER;
     idBuyer: EntityID = new EntityID();
     state: PackState = PackState.NOT_ON_MARKET;
 
-    getBuyState()
-    {
-        switch(this.buyState)
-        {
+    getBuyState() {
+        switch (this.buyState) {
             case PackBuyState.ON_WAITING_BUYER:
-                return "Waiting for buyer"
+                return 'Waiting for buyer';
         }
-        return "";
+        return '';
     }
     hydrate(entity: Record<string | number, any>): void {
         for (const key of Object.keys(entity)) {

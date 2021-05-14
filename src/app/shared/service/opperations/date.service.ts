@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   })
 export class DateService {
 
-  calculeDate(plan: number, bayDate: Date): Date {
+  calculeDate(plan: number, bayDate: Date) {
 
   }
 }

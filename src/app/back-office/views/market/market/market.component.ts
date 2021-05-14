@@ -24,9 +24,10 @@ export class MarketComponent implements OnInit {
   open: boolean;
   href: string;
   hh: number;
-  searchPacks : Pack[] = [];
+  searchPacks: Pack[] = [];
+  date: Date;
   search = '';
-  packs: { waitResponse: boolean, pack: Pack,user:User }[] = [];
+  packs: { waitResponse: boolean, pack: Pack, user: User }[] = [];
   // packs: { user: User, pack: Pack }[] = [];
 
 
@@ -48,31 +49,31 @@ export class MarketComponent implements OnInit {
   ngOnInit() {
     this.updateSubscription = interval(3000).subscribe(
       (val) => {
-          return this.marketService.marketTime();
+        return this.marketService.marketTime();
       });
 
-      this.marketService.getOrderMarket().subscribe((pack:Pack) => {
-        this.userService.getUserById(pack.idOwner)
-          .then((result:ResultStatut)=>{
-            this.packs.push({
-              waitResponse:false,
-              pack,
-              user:result.result
-            })
-          })
-      })
+    this.marketService.getOrderMarket().subscribe((pack: Pack) => {
+      this.userService.getUserById(pack.idOwner)
+        .then((result: ResultStatut) => {
+          this.packs.push({
+            waitResponse: false,
+            pack,
+            user: result.result
+          });
+        });
+    });
   }
 
-  getPacks(){
+  getPacks() {
     // this.packService.getPackList();
     // return (pack: Pack[]) => this.searchPacks = this.packs = pack
   }
 
   searchPack() {
     this.searchPacks =
-     // tslint:disable-next-line:max-line-length
-     _.filter(this.packs, (pack) => _.includes(pack.email, this.search) || _.includes(pack.firstName, this.search) || _.includes(pack.lastName, this.search))
-   }
+      // tslint:disable-next-line:max-line-length
+      _.filter(this.packs, (pack) => _.includes(pack.email, this.search) || _.includes(pack.firstName, this.search) || _.includes(pack.lastName, this.search))
+  }
 
   show2() {
     console.log('teste pop');
@@ -84,7 +85,7 @@ export class MarketComponent implements OnInit {
     this.firstModal.show();
   }
 
-  showNote(){
+  showNote() {
     this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br> message error');
   }
 

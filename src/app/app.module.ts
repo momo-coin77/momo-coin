@@ -112,6 +112,7 @@ import { DetailService } from './shared/service/back-office/detail.service';
 import { EventService } from './shared/service/event/event.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
@@ -180,6 +181,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    ModalModule.forRoot()
   ],
   declarations: [
     AppComponent,
