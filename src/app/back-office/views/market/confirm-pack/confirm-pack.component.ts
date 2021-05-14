@@ -11,6 +11,7 @@ export class ConfirmPackComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
   pop() {
     // setTimeout(() =>{
       console.log("teste pop");

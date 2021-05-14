@@ -8,6 +8,7 @@ import { AuthService } from "../auth/auth.service";
 import { EventService } from "../event/event.service";
 import { FirebaseApi } from "../firebase/FirebaseApi";
 import { ResultStatut } from "../firebase/resultstatut";
+import { MarketService } from "../market/market.service";
 import { MembershipService } from "../opperations/Membership.service";
 import { PlanService } from "../opperations/plan.service";
 import { UserHistoryService } from "../user-history/user-history.service";
@@ -30,7 +31,8 @@ export class BasicPackService {
         private userNotificationService:UserNotificationService,
         private userHistoryService:UserHistoryService,
         private memberShipService:MembershipService,
-        private userService:UserService
+        private userService:UserService,
+        private marketService:MarketService
         ){
             this.eventService.loginEvent.subscribe((log)=>{
             //   if(!log) return;
@@ -70,7 +72,36 @@ export class BasicPackService {
               })
         })
     }
-    
+    getPackById(idPack:EntityID):Promise<ResultStatut>
+    {
+        let result=new ResultStatut()
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            if(this.marketService.packs.getValue().has(idPack.toString()))
+            {
+                result.result=this.marketService.packs.getValue().get(idPack.toString())
+                return resolve(result);
+            }
+            if(this.packList.getValue().has(idPack.toString())) 
+            {
+                result.result=this.packList.getValue().get(idPack.toString())
+                return resolve(result);
+            }
+            this.firebaseApi.fetchOnce(`packs/${idPack.toString()}`)
+            .then((result:ResultStatut)=>{
+                let pack=new Pack();
+                console.log("Pack",result.result,idPack)
+                pack.hydrate(result.result);
+                this.packs.set(pack.id.toString(),pack);
+                this.packList.next(this.packs);
+                result.result=pack;
+                resolve(result);
+            })
+            .catch((error:ResultStatut)=>{
+                this.firebaseApi.handleApiError(error);
+                reject(error);
+            })
+        })
+    }
     addPack(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve, reject) => {

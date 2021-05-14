@@ -2,23 +2,15 @@
   [navbarBrandFull]="{src: 'assets/img/logo.png', width: 70, height: 50, alt: 'MoMo coin Logo'}"
   [navbarBrandMinimized]="{src: 'assets/img/logo.png', width: 30, height: 30, alt: 'MoMo coin Logo'}"
   [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
-  <ul class="nav navbar-nav d-md-down-none">
-    <li class="nav-item px-3">
-      <a class="nav-link" style="font-family: 'Times New Roman', Times, serif; color: black;"
-        [routerLink]="['/profil']">{{userName}}</a>
-    </li>
-  </ul>
   <ul class="nav navbar-nav ml-auto">
-    <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="" [routerLink]="['/dashboard']"><i class="icon-bell"></i></a>
-    </li>
-    <li class="nav-item d-md-down-none">
-      <strong><a class="nav-link" [routerLink]="['/wallet/deposit']">|| {{balence}} {{currency}}</a></strong>
-    </li>
+      <i class="icon-bell"></i><span *ngIf="notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
+      <!-- <span *ngIf="!notif" class="badge badge-pill badge-info">{{unreadMessageList.length}}</span> -->
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
+
         <a class="dropdown-item" [routerLink]="['/profil']"><i class="fa fa-user"></i> Profile</a>
-        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting</a>
+        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Setting </a>
         <div class="divider"></div>
         <a class="dropdown-item" (onclick)="logOut()"><i class="fa fa-lock"></i> Logout</a>
       </div>
@@ -61,7 +53,9 @@
       <div class="right">
         <p>{{today | date:'fullDate'}}</p>
         <p> <strong> GMT + 1</strong></p>
-        <font size=3 style=""><strong class="col-md-8 text-center"><div id="div_horloge"></div> </strong></font>
+        <font size=3 style=""><strong class="col-md-8 text-center">
+            <div id="div_horloge"></div>
+          </strong></font>
         <br>
       </div>
       <router-outlet></router-outlet>
@@ -70,73 +64,17 @@
   <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
     <tabset>
       <tab>
-        <ng-template tabHeading><i class="icon-list"></i></ng-template>
-      </tab>
-      <tab>
-        
+            <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">
+              Unread ({{unreadMessageList.length}})
+            </div>
 
-        
-        <ng-template tabHeading><i class="icon-bell"></i></ng-template>
-        <div class="list-group list-group-accent">
-
-          <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
-            <tabset style="align-items: right;">
-              <tab>
-                <ng-template tabHeading><i class="fas fa-car"></i></ng-template>
-                <div class="list-group list-group-accent">
-                  <div
-                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-                    Unread ({{unreadMessageList.length}})
-                  </div>
-
-                    <div *ngFor="let projet of unreadMessageList" 
-                      data-toggle="modal"
-                      (click)="showModal(projet)"
-                      class="list-group-item list-group-item-accent-warning list-group-item-divider">
-                      <div><strong> {{projet.content}} <i class="fa fa-check" style="color: green !important;"></i></strong></div>
-                      <div>
-
-                      </div>
-                    </div>
-
-                    <!-- <app-detail #modalDetail></app-detail> -->
-                  <!-- <div *ngFor="let msg of unreadMessageList"
-                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                    <div (click)="open(content,msg)">
-                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
-                    </div>
-                    <div>
-                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
-                      <font style="color: green !important;">{{msg.content.to_city}}</font>
-                    </div>
-                  </div> -->
-
-                </div>
-              </tab>
-              <tab>
-                <ng-template tabHeading><i class="fas fa-bus"></i></ng-template>
-                <div class="list-group list-group-accent">
-                  <div
-                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
-                    Unread ({{unreadMessageList.length}})</div>
-                  <div *ngFor="let msg of unreadMessageList"
-                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
-                    <div (click)="open(content,msg)">
-                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
-                    </div>
-                    <div>
-                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
-                      <font style="color: green !important;">{{msg.content.to_city}}</font>
-                    </div>
-                  </div>
-                </div>
-              </tab>
-            </tabset>
-          </app-aside>
-        </div>
-
-
-        
+            <div *ngFor="let projet of unreadMessageList" data-toggle="modal" (click)="showModal(projet)"
+              class="list-group-item list-group-item-accent-warning list-group-item-divider">
+              <div>
+                <i class="fas fa-money-bill"></i> 
+                A request to purchase payment for your <strong> {{projet.pack.amount}} MC</strong> pack has been made.
+              </div>
+            </div>
       </tab>
     </tabset>
   </app-aside>

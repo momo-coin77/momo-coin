@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pack } from '../../../../shared/entity/pack';
+import { MarketService } from '../../../../shared/service/market/market.service';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 
@@ -15,17 +16,16 @@ export class PurchasesComponent implements OnInit {
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor(private packService: BasicPackService, private notifService: NotificationService) { }
+  constructor( private myPack: MarketService, private notifService: NotificationService) { }
 
   ngOnInit() {
     this.getPacks();
   }
 
   getPacks() {
-    this.packService.packList.subscribe((packs: Map<string, Pack>) => {
-      this.packs = Array.from(packs.values()).map((pack) => {
-        return { waitResponse: false, pack }
-      })
+    this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
+      this.packs.push({ waitResponse: false, pack})
+
       console.log(this.packs)
       // this.searchPack();
     })
