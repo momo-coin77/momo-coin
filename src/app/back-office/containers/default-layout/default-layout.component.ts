@@ -7,7 +7,7 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
 import { AuthService } from '../../../shared/service/auth/auth.service';
 import { User } from '../../../shared/entity/user';
-import { ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 import { Pack } from '../../../shared/entity/pack';
 import { UserNotificationService } from '../../../shared/service/user-notification/user-notification.service';
 import { BasicPackService } from '../../../shared/service/pack/basic-pack.service';
@@ -26,8 +26,9 @@ export class DefaultLayoutComponent implements OnInit {
 
   public sidebarMinimized = false;
   public navItems = navItems;
-  waitingPackageInformation = true;
-  selectedPackage = null;
+  waitResponse = false;
+  selectedPack:Pack= new Pack();
+  selectedUser:User=new User();
   errorFindingPackageMessage = '';
   unreadMessageList: {pack:Pack,message:Message}[] = [];
   public userName: String = '';
@@ -41,6 +42,8 @@ export class DefaultLayoutComponent implements OnInit {
   constructor(
     private autService: AuthService, // firebase auth
     private router: Router,
+    private bsModal:BsModalService,
+    private userService:UserService,
     private userNotif: UserNotificationService,
     private notification: NotificationService,
     private packService: BasicPackService) {
@@ -63,14 +66,24 @@ export class DefaultLayoutComponent implements OnInit {
     this.sidebarMinimized = e;
   }
 
-  show() {
-    console.log('teste pop');
-    this.confirmPayment.show();
+  confirmMessage() {
+    this.waitResponse=true;
+    this.packService.confirmPaiementBySeller(this.selectedPack)
+    .then((result:ResultStatut)=>{
+      this.waitResponse=false;
+      this.confirmPayment.hide()
+      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
+    })
+    .catch((error)=>{
+      this.confirmPayment.hide();
+      setTimeout(()=>this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'+error.message),200)
+      this.waitResponse=false;
+    })
   }
 
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => { 
-      console.log("Message ",list)
+      // console.log("Message ",list)
       this.unreadMessageList=[];
       if (this.unreadMessageList.length > 0) this.notif = true;
       else this.notif = false; 
@@ -89,9 +102,24 @@ export class DefaultLayoutComponent implements OnInit {
     this.router.navigate(['/login']);
     this.notification.showNotification('top', 'center', 'success', '', '\<b>You are out !\</b>');
   }
-  showModal(projet)
+  showModal(message:Message)
   {
-
+    // console.log('teste pop');
+    this.confirmPayment.show();
+    this.packService.getPackById(message.idPack)
+    .then((result:ResultStatut)=>{
+      this.selectedPack=result.result;
+      return this.userService.getUserById(this.selectedPack.idBuyer)
+    })
+    .then((result)=>{
+      this.selectedUser=result.result;
+      this.waitResponse=false;
+    })
+    .catch((error)=>{
+      this.confirmPayment.hide();
+      setTimeout(()=>this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'+error.message),200)
+      this.waitResponse=false;
+    })
   }
 
 }

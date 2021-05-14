@@ -181,7 +181,7 @@ export class BasicPackService {
         })
     }
 
-    confirmPaiementBySeller(pack: Pack, idBuyer: EntityID): Promise<ResultStatut> {
+    confirmPaiementBySeller(pack: Pack): Promise<ResultStatut> {
         return new Promise<ResultStatut>((resolve, reject) => {
             if (pack.state == PackState.ON_MARKET) {
                 let result: ResultStatut = new ResultStatut();

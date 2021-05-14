@@ -96,15 +96,20 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="text-left">A request to purchase payment for your 2000MC pack has been made.</p>
-        <br>Name: <b>The user name</b>
-        <br>Amount: <b>2 000 FCFA</b>
-        <div class="text-left">Confirm payment if completed. If not close.</div>
+        <div *ngIf="!waitResponse">
+          <p class="text-left">A request to purchase payment for your {{selectedPack.amount}}MC pack has been made.</p>
+            <br>Name: <b>{{selectedUser.name}}</b>
+            <br>Amount: <b> {{selectedPack.amount}} FCFA</b>
+            <div class="text-left">Confirm payment if completed. If not close.</div>
+        </div>
+        <app-spinner *ngIf="waitResponse"></app-spinner>
       </div>
-      <button type="button" class="btn btn-danger" (click)="firstModal.hide()"
+        
+      <button *ngIf="!waitResponse" type="button" class="btn btn-danger" (click)="confirmPayment.hide()"
         style="background-color: rgb(96, 104, 121) !important;">Close</button>
-      <button type="button" class="btn btn-success" style="background-color: green !important;"
-        (click)="confirmPayment.hide();confirm()">Confirm</button>
+      <button *ngIf="!waitResponse" type="button" class="btn btn-success" style="background-color: green !important;"
+        (click)="confirm()">Confirm</button>
+        
     </div>
   </div>
 </div>

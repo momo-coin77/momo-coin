@@ -29,7 +29,7 @@ export class UserNotificationService {
         .ref(`notifications/${user.id.toString()}`)
         .orderByChild('read')
         .equalTo(MessageReadState.UNREAD)
-        .on('child_added', (snapshot) => this.newNotification(snapshot.val()))
+        .on('value', (snapshot) => this.newNotifications(snapshot.val()))
     });
 
     this.eventService.loginEvent.subscribe((user: User) => {
@@ -37,19 +37,37 @@ export class UserNotificationService {
       this.firebaseApi.getFirebaseDatabase()
         .ref(`notifications/${user.id.toString()}`)
         .equalTo(MessageReadState.UNREAD, 'read')
-        .on('child_added', (snapshot) => this.newNotification(snapshot.val()))
+        .on('child_changed', (snapshot) => this.newNotification(snapshot.val()))
     });
   }
-
-  newNotification(msg: Record<string, any>) {
-    if (!msg) { return null; }
-    let message: Message = new Message();
+  
+  newNotification(msg:Record<string, any>)
+  {
+    let message:Message=new Message();
     message.hydrate(msg);
-    this.listNotifications.push(message);
+    let pos= this.listNotifications.findIndex((m:Message)=>m.idPack.toString()==message.idPack.toString())
+    if(pos<0) this.listNotifications.push(message)
+    else
+    {
+      this.listNotifications.push(message);
+      this.listNotifications=this.listNotifications.reverse();
+    }
     this.notifications.next(this.listNotifications);
-    // tslint:disable-next-line:max-line-length
-    this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
   }
+
+  newNotifications(msg: Record<string, any>) {
+    if (!msg) { return null; }
+
+    for(let okey in msg)
+    {
+      let message: Message = new Message();
+      message.hydrate(msg[okey]);
+      this.listNotifications.push(message);
+      this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
+    }
+    this.notifications.next(this.listNotifications);
+  }
+
   sendNotification(message: Message): Promise<ResultStatut> {
     return this.firebaseApi.set(`notifications/${message.to.toString()}/${message.id}`, message.toString());
   }
