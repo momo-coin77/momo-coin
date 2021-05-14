@@ -88,7 +88,7 @@ export class AuthService {
           user.dateCreation=(new Date()).toISOString();
           return this.userService.addUser(user)
         })
-        .then(()=> this.dateToUpdateService.addMaxUserDate(user))
+        .then(()=> this.dateToUpdateService.addMaxUserDate(user.id))
         .then(() => {
           this.signOut();
           resolve(new ResultStatut());
