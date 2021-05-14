@@ -139,7 +139,7 @@ export class MarketComponent implements OnInit,OnDestroy {
 
   }
   ngOnDestroy(): void {
-    this.dataMarketSubscription.unsubscribe()
+    // this.dataMarketSubscription.unsubscribe()
   }
   OnDestroy(): void {
     this.open = false;

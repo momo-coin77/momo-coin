@@ -27,7 +27,6 @@ export class UserService {
       this.newUserHandler();
     })
   }
-
   newUserHandler():Promise<ResultStatut>
   {
     return new Promise<ResultStatut>((resolve,reject)=>{
@@ -96,6 +95,11 @@ export class UserService {
     });
   }
 
+  changeStatusUsingId(idUser:EntityID):Promise<ResultStatut>
+  {
+      return this.getUserById(idUser)
+      .then((result:ResultStatut)=>this.changeStatus(result.result.id))
+  }
   changeStatus(user:User):Promise<ResultStatut>
   {
     let nstatus=UserAccountState.ACTIVE==user.status?UserAccountState.DESACTIVE:UserAccountState.ACTIVE;

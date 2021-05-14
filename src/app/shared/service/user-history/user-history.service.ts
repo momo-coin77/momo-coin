@@ -36,6 +36,7 @@ export class UserHistoryService {
     {
         this.firebaseApi.fetch(`history/${user.id.toString()}`)
         .then((result:ResultStatut)=> {
+          if(!result.result) return
             let pack=new Pack();
             pack.hydrate(result.result);
             result.result=pack;

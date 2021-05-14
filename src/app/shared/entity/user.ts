@@ -21,4 +21,5 @@ export class User extends Entity {
     network: String = '';
     user_agree: boolean = true;
     bonus:number=0;
+    dateCreation:string="";
 }
