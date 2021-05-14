@@ -25,7 +25,8 @@ export class MarketComponent implements OnInit,OnDestroy {
   open: boolean;
   href: string;
   hh: number;
-  searchPacks : Pack[] = [];
+  searchPacks: Pack[] = [];
+  date: Date;
   search = '';
   packs: { waitResponse: boolean, pack: Pack,user:User, selectForm:FormControl }[] = [];
   listPacks:Map<string,boolean>=new Map<string,boolean>(); 
@@ -57,7 +58,7 @@ export class MarketComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.updateSubscription = interval(3000).subscribe(
       (val) => {
-          return this.marketService.marketTime();
+        return this.marketService.marketTime();
       });
 
       this.dataMarketSubscription=this.marketService.getOtherOrderedPackOnMarket().subscribe((pack:Pack) => {
@@ -119,7 +120,7 @@ export class MarketComponent implements OnInit,OnDestroy {
     this.firstModal.show();
   }
 
-  showNote(){
+  showNote() {
     this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br> message error');
   }
 

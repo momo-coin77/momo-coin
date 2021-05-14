@@ -9,13 +9,12 @@
     </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
-    <!-- <li class="nav-item d-md-down-none">
-      <a class="nav-link" href="" [routerLink]="['/dashboard']"><i class="icon-bell"></i><span
-          class="badge badge-pill badge-danger">0</span></a>
-    </li> -->
-    <!-- <li class="nav-item d-md-down-none">
+    <li class="nav-item d-md-down-none">
+      <a class="nav-link" href="" [routerLink]="['/dashboard']"><i class="icon-bell"></i></a>
+    </li>
+    <li class="nav-item d-md-down-none">
       <strong><a class="nav-link" [routerLink]="['/wallet/deposit']">|| {{balence}} {{currency}}</a></strong>
-    </li> -->
+    </li>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <a class="dropdown-item" [routerLink]="['/profil']"><i class="fa fa-user"></i> Profile</a>
@@ -74,7 +73,77 @@
         <ng-template tabHeading><i class="icon-list"></i></ng-template>
       </tab>
       <tab>
+        
+
+        
         <ng-template tabHeading><i class="icon-bell"></i></ng-template>
+        <div class="list-group list-group-accent">
+
+          <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
+            <tabset style="align-items: right;">
+              <tab>
+                <ng-template tabHeading><i class="fas fa-car"></i></ng-template>
+                <div class="list-group list-group-accent">
+                  <div
+                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+                    Unread ({{unreadNotif.length}})
+                  </div>
+
+                    <div *ngFor="let projet of unreadNotif" 
+                      data-toggle="modal"
+                      (click)="showModal(projet)"
+                      class="list-group-item list-group-item-accent-warning list-group-item-divider">
+                      <div><strong> {{projet.date}} <i class="fa fa-check" style="color: green !important;"></i></strong></div>
+                      <div>
+                        <div>
+                          <font style="color:#20a8d8 !important;">{{projet.from.city}} </font><strong> - </strong>
+                          <font style="color: green !important;">{{projet.to.city}}</font>
+                        </div>
+                        <small class="text-muted mr-3" style="color:#20a8d8 !important;">
+                          <i class="icon-location-pin"></i>  {{projet.date_departure.length || "Undefined" }}</small>
+                        <small class="text-muted" style="color: green !important;">
+                          <i class="icon-location-pin"></i>  {{projet.date_arrival}}</small>
+                      </div>
+                    </div>
+
+                    <app-detail #modalDetail></app-detail>
+                  <!-- <div *ngFor="let msg of unreadMessageList"
+                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
+                    <div (click)="open(content,msg)">
+                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
+                    </div>
+                    <div>
+                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
+                      <font style="color: green !important;">{{msg.content.to_city}}</font>
+                    </div>
+                  </div> -->
+
+                </div>
+              </tab>
+              <tab>
+                <ng-template tabHeading><i class="fas fa-bus"></i></ng-template>
+                <div class="list-group list-group-accent">
+                  <div
+                    class="list-group-item list-group-item-accent-secondary bg-light text-center font-weight-bold text-muted text-uppercase small">
+                    Unread ({{unreadMessageList.length}})</div>
+                  <div *ngFor="let msg of unreadMessageList"
+                    class="list-group-item list-group-item-accent-primary list-group-item-divider">
+                    <div (click)="open(content,msg)">
+                      <strong> {{msg.content.title}} </strong> <small>{{msg.content.text}}</small>
+                    </div>
+                    <div>
+                      <font style="color:#20a8d8 !important;">{{msg.content.from_city}} </font><strong> - </strong>
+                      <font style="color: green !important;">{{msg.content.to_city}}</font>
+                    </div>
+                  </div>
+                </div>
+              </tab>
+            </tabset>
+          </app-aside>
+        </div>
+
+
+        
       </tab>
     </tabset>
   </app-aside>
@@ -83,3 +152,28 @@
   <span class="ml-auto">&copy; {{year | date: 'yyyy'}} <a target="_blank" href="https://MoMo coin.com"
       style="color: #b48f30;"><strong>MoMo-Coin.</strong></a></span>
 </app-footer>
+
+
+<div bsModal #confirmPayment="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b> payment details </b></h4>
+        <button type="button" class="close" (click)="confirmPayment.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="text-left">A request to purchase payment for your 2000MC pack has been made.</p>
+        <br>Name: <b>The user name</b>
+        <br>Amount: <b>2 000 FCFA</b>
+        <div class="text-left">Confirm payment if completed. If not close.</div>
+      </div>
+      <button type="button" class="btn btn-danger" (click)="firstModal.hide()"
+        style="background-color: rgb(96, 104, 121) !important;">Close</button>
+      <button type="button" class="btn btn-success" style="background-color: green !important;"
+        (click)="confirmPayment.hide();confirm()">Confirm</button>
+    </div>
+  </div>
+</div>
