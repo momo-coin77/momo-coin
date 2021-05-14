@@ -43,17 +43,27 @@ export class DataStateUpdateService {
         id.setId(key);
         if(after<now) 
         {
-          this.userService.changeStatusUsingId(id)
-          // this.userService.
+          this.deleteMaxUserDate(id);
+          this.userService
+          .getUserById(id)
+          .then((result:ResultStatut)=>{
+            
+            if(result.result) this.userService.changeStatusUsingId(id)
+          });
         }
       }
       // console.log(data.val())
     })
   }
-  addMaxUserDate(user:User):Promise<ResultStatut>
+  addMaxUserDate(id:EntityID):Promise<ResultStatut>
   {
     let date:Date=new Date();
     date.setDate(date.getDate()+5)
-    return this.firebaseApi.set(`toupdate/account/${user.id.toString()}`,{dateMax:date.toISOString()})
+    return this.firebaseApi.set(`toupdate/account/${id.toString()}`,{dateMax:date.toISOString()})
+  }
+
+  deleteMaxUserDate(id:EntityID):Promise<ResultStatut>
+  {
+    return this.firebaseApi.delete(`toupdate/account/${id.toString()}`)
   }
 }
