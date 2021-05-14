@@ -12,6 +12,7 @@ import { WaitComponent } from './wait/wait.component';
 import { MarketPlaceComponent } from './market-place.component';
 import { ConfirmPackComponent } from './confirm-pack/confirm-pack.component';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -19,7 +20,9 @@ import { SpinnerModule } from '../../../shared/components/spinner/spinner.module
     MarketRoutingModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),
-    SpinnerModule
+    SpinnerModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     MarketComponent,

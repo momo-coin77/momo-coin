@@ -23,14 +23,12 @@
                 <td> {{pack.user.network}} </td>
                 <td>{{pack.pack.amount}}</td>
                 <th><b>
-                    <select placeholder="5days">
-                      <option value="5days" selected>5days</option>
-                      <option value="10days">10days</option>
-                      <option value="20days">20days</option>
+                    <select  [formControl]="pack.selectForm" placeholder="5days">
+                      <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
                     </select></b>
                 </th>
                 <th><b>
-                    <span class="badge badge-success" (click)="show1()">
+                    <span class="badge badge-success" (click)="show1(pack)">
                       <i class="fa fa-shopping-cart center"></i>
                     </span></b>
                 </th>
@@ -80,10 +78,12 @@
         </button><!-- Package Details-->
       </div>
       <div class="modal-body">
-        <b>Are you sure you want to buy this pack ?</b>
-        <br>Country: <b>Cameroon</b>
-        <br>Network: <b>MTN Money</b>
-        <br>Amount: <b>2 000 FCFA</b>
+        <div *ngIf="hasCurrentPack">
+          <b>Are you sure you want to buy this pack ?</b>
+          <br>Country: <b>{{currentPack.user.country}}</b>
+          <br>Network: <b>{{currentPack.user.network}}</b>
+          <br>Amount: <b>{{currentPack.pack.amount}}</b>
+        </div>
         <div class="text-left">By clicking on Pay you will have 5 hours to make the payment to the number indicated.
           After this time, your account will be automatically suspended.</div>
 
@@ -107,10 +107,13 @@
         </button>
       </div>
       <div class="modal-body">
-        <br class="text-center">Network: <b>MTN Money</b>
-        <br>Phone: <b>669955484</b>
-        <br>Name: <b>User Name</b>
-        <br>Amount: <b>2 000 FCFA</b>
+        <div *ngIf="hasCurrentPack">
+          <br class="text-center">Network: <b>{{currentPack.user.network}}</b>
+          <br>Phone: <b>{{currentPack.user.phone}}</b>
+          <br>Name: <b>{{currentPack.user.name  || 'User Name'}}</b>
+          <br>Amount: <b>{{currentPack.pack.amount}}FCFA</b>
+        </div>
+        
         <div class="text-left">Contacted the beneficiary for confirmation of payment.</div>
 
       </div>

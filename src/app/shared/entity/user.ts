@@ -20,4 +20,5 @@ export class User extends Entity {
     photoUrl: String = '';
     network: String = '';
     user_agree: boolean = true;
+    bonus:number=0;
 }

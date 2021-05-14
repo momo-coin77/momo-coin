@@ -83,7 +83,7 @@ export class UserService {
   addUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
       if (this.listUser.has(user.id.toString())) { return resolve(new ResultStatut()); }
-      console.log("User ",user.toString())
+      // console.log("User ",user.toString())
       this.firebaseApi.set(`users/${user.id.toString()}`, user.toString())
         .then((result) => {
           this.listUser.set(user.id.toString(), user);

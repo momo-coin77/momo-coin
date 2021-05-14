@@ -23,11 +23,14 @@ export class MarketService {
     this.eventService.loginEvent.subscribe((user) => {
       // if (!user) return;
       //cette requete ne doit ce faire que si le marché est ouvert
-      let ref = this.firebaseApi.getFirebaseDatabase()
+      this.firebaseApi.getFirebaseDatabase()
         .ref('packs')        
         .limitToLast(200)
         .on('value', (snapshot) => this.newPackFromMarket(snapshot))
-        
+      
+      this.firebaseApi.getFirebaseDatabase()
+      .ref('packs')
+      .on('child_changed',(snapshot)=>this.updatePackFromMarket(snapshot))       
 
         // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
     })
@@ -38,6 +41,13 @@ export class MarketService {
     return this.packs.pipe(
       switchMap((p)=> from(Array.from(p.values()))),
     );
+  }
+  getOtherOrderedPackOnMarket()
+  {
+    return this.getOrderMarket().pipe(
+      filter((p:Pack)=> p.idOwner.toString()!=this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p:Pack)=> p.state==PackState.ON_MARKET),
+    )
   }
 
   getMyOrderedPackOnMarket()
@@ -55,6 +65,14 @@ export class MarketService {
     )
   }
 
+  updatePackFromMarket(packs: any){
+    console.log("Upadated ",packs.val())
+    let pack:Pack=new Pack();
+    pack.hydrate(packs.val());
+
+    this.listPack.set(pack.id.toString(),pack);
+    this.packs.next(this.listPack);
+  }
   newPackFromMarket(packs: any) {
     let packList:Pack[]=[];
     let oplist=packs.val();
@@ -85,7 +103,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 17 || hh == 20 || hh == 19 || hh == 18) {
+      if (hh == 5 || hh == 6 || hh == 7 || hh == 8) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

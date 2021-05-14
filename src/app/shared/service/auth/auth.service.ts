@@ -51,7 +51,6 @@ export class AuthService {
           {
             if(result.result.status==UserAccountState.DESACTIVE)
             {
-              console.log("Userd  ",result.result)
               result.apiCode=FireBaseConstant.DESACTIVED_ACCOUNT;
               result.result=null;
               this.firebaseApi.handleApiError(result);
@@ -84,9 +83,9 @@ export class AuthService {
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
         .then(() => {
-          return this.firebaseApi.updateUser({
-            name:user.name
-          })
+          // return this.firebaseApi.updateUser({
+          //   name:user.name
+          // })
           return this.userService.addUser(user)
         })
         .then(() => {

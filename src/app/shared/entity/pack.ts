@@ -18,15 +18,10 @@ export interface PackGain {
     pourcent?: number;
     jour?: number;
 }
-
-export class Pack5Gain implements PackGain {
-    pourcent: number = 20;
-    jour: number = 5;
-}
-
-export class Pack10Gain implements PackGain {
-    pourcent: number = 45;
-    jour: number = 10;
+export const gainConfig={
+    "5":20,
+    "10":45,
+    "20":65
 }
 
 // pack representation
@@ -42,6 +37,7 @@ export class Pack extends Entity {
     idBuyer: EntityID = new EntityID();
     state: PackState = PackState.NOT_ON_MARKET;
     wantedGain : PackGain={pourcent:0,jour:0};
+    maxPayDate:String="";
 
     getBuyState()
     {
