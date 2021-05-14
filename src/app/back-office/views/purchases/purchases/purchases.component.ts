@@ -26,8 +26,6 @@ export class PurchasesComponent implements OnInit {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
       this.packs.push({ waitResponse: false, pack})
 
-      console.log(this.packs)
-      // this.searchPack();
     })
   }
 }
