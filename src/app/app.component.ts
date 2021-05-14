@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
+import { UserNotificationService } from './shared/service/user-notification/user-notification.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { UserlocalstorageService } from './shared/service/localstorage/userlocal
 export class AppComponent implements OnInit {
   title = 'karryngo';
   constructor(
-    private router: Router,) { }
+    private router: Router,
+    private userNotification:UserNotificationService) { }
 
   ngOnInit() {
     this.router.events.subscribe((evt) => {

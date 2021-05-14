@@ -6,6 +6,7 @@ declare var $: any;
   providedIn: 'root'
 })
 export class NotificationService {
+    
 
     showNotification(from, align, colortype, icon, text) {
 

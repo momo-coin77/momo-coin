@@ -66,7 +66,7 @@ export class MarketService {
   }
 
   updatePackFromMarket(packs: any){
-    console.log("Upadated ",packs.val())
+    // console.log("Upadated ",packs.val())
     let pack:Pack=new Pack();
     pack.hydrate(packs.val());
 
@@ -103,7 +103,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 5 || hh == 6 || hh == 7 || hh == 8) {
+      if (hh == 8 || hh == 11 || hh == 10 || hh == 9) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);
