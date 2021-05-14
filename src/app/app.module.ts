@@ -113,6 +113,7 @@ import { EventService } from './shared/service/event/event.service';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { SpinnerModule } from './shared/components/spinner/spinner.module';
 
 @NgModule({
   imports: [
@@ -181,7 +182,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     MatNativeDateModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    SpinnerModule
   ],
   declarations: [
     AppComponent,
