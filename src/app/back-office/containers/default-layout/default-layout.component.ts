@@ -27,8 +27,7 @@ export class DefaultLayoutComponent implements OnInit {
   waitingPackageInformation = true;
   selectedPackage = null;
   errorFindingPackageMessage = '';
-  unreadNotif: Message[] = [];
-  // tslint:disable-next-line:max-line-length
+  unreadMessageList: Message[] = [];
   public userName: String = '';
   closeResult = '';
 
@@ -50,7 +49,7 @@ export class DefaultLayoutComponent implements OnInit {
       if (!user) { return this.userName = user.name; }
     });
 
-    this.userNotif.notifications.subscribe((list) => { this.unreadNotif = list});
+    this.userNotif.notifications.subscribe((list:Message[]) => { this.unreadMessageList=list.slice()});
   }
 
   toggleMinimize(e) {
