@@ -12,13 +12,13 @@ import { MarketService } from '../../../../shared/service/market/market.service'
 })
 
 export class SalesComponent implements OnInit {
-  private myPack: MarketService
+  
 
   packs: { waitResponse: boolean, pack: Pack }[] = [];
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor(private packService: BasicPackService, private notifService: NotificationService) { }
+  constructor(private myPack: MarketService,private packService: BasicPackService, private notifService: NotificationService) { }
 
   ngOnInit() {
     this.getPacks();

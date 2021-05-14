@@ -61,7 +61,7 @@ export class MarketComponent implements OnInit,OnDestroy {
         return this.marketService.marketTime();
       });
 
-      this.dataMarketSubscription=this.marketService.getOtherOrderedPackOnMarket().subscribe((pack:Pack) => {
+      this.dataMarketSubscription=this.marketService.getAllPackInMarket().subscribe((pack:Pack) => {
         this.userService.getUserById(pack.idOwner)
           .then((result:ResultStatut)=>{
             if(!this.listPacks.has(pack.id.toString().toString()))

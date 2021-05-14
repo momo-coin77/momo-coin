@@ -93,10 +93,10 @@ export class BasicPackService {
                 {
                     result.apiCode=FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
                     result.message="Data not found";
-                    reject(result);
+                    return reject(result);
                 }
                 let pack=new Pack();
-                console.log("Pack",result.result,idPack)
+                // console.log("Pack",result.result,idPack)
                 pack.hydrate(result.result);
                 this.packs.set(pack.id.toString(),pack);
                 this.packList.next(this.packs);

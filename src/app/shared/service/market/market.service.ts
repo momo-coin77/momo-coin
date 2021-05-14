@@ -42,6 +42,12 @@ export class MarketService {
       switchMap((p)=> from(Array.from(p.values()))),
     );
   }
+  getAllPackInMarket()
+  {
+    return this.getOrderMarket().pipe(
+      filter((p:Pack)=> p.state==PackState.ON_MARKET),
+    )
+  }
   getOtherOrderedPackOnMarket()
   {
     return this.getOrderMarket().pipe(
@@ -89,6 +95,7 @@ export class MarketService {
       this.listPack.set(pack.id.toString(), pack);
     })
     this.packs.next(this.listPack);
+    // console.log("list pack ",this.listPack)
   }
 
   getPackList() {
@@ -103,7 +110,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 13 || hh == 14 || hh == 15 || hh == 16) {
+      if (hh == 16 || hh == 17 || hh == 18 || hh == 18) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

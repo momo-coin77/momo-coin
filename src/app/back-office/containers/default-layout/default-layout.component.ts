@@ -70,16 +70,17 @@ export class DefaultLayoutComponent implements OnInit {
 
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => { 
-      this.unreadMessageList=[];
-      if (this.unreadMessageList.length > 0) this.notif = true;
-      else this.notif = false; 
+      console.log("Message ",list)
+      // this.unreadMessageList=[];
+      // if (this.unreadMessageList.length > 0) this.notif = true;
+      // else this.notif = false; 
 
-      list.forEach((message:Message)=>{
-        this.packService.getPackById(message.idPack)
-        .then((result:ResultStatut)=>{
-          this.unreadMessageList.push({pack:result.result,message});
-        })
-      })
+      // list.forEach((message:Message)=>{
+      //   this.packService.getPackById(message.idPack)
+      //   .then((result:ResultStatut)=>{
+      //     this.unreadMessageList.push({pack:result.result,message});
+      //   })
+      // })
     });
     
   }
