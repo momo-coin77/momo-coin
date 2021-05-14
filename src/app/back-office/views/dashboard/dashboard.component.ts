@@ -11,7 +11,7 @@ import { interval, Subscription } from 'rxjs';
 export class DashboardComponent implements OnInit {
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
-  stockholders: number = 37;  // valeur fictive du nombre total d'utilisateurs. créé la
+  stockholders: number = 27;  // valeur fictive du nombre total d'utilisateurs. créé la
   // fonctionnalité dans les service (utilisable par la suite dans admin) mais laisser ici fictif.
   balence: number = 0; // somme de toutes les montants de chaqueq pack avec son id
   bonusBalence: number = 0; // Bonus de pa
@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
     // let kk = Math.floor((Math.random() * k) + 1);
     // let cc = Math.floor((Math.random() * c) + 1);
     let d = new Date();
-    let val = 30
+    let val = 10
     let hh = d.getHours();
     if (hh > 21) {
       val = 10;

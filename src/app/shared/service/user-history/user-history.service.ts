@@ -41,6 +41,7 @@ export class UserHistoryService {
             pack.hydrate(result.result);
             result.result=pack;
             this.historyList.push(pack);
+            this.history.next(this.historyList)
         }) 
     }
     findPack(packId:EntityID):Promise<ResultStatut>

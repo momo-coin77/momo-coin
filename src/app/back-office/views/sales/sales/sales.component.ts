@@ -18,7 +18,7 @@ export class SalesComponent implements OnInit {
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor(private myPack: MarketService,private packService: BasicPackService, private notifService: NotificationService) { }
+  constructor(private myPack: MarketService, private packService: BasicPackService, private notifService: NotificationService) { }
 
   ngOnInit() {
     this.getPacks();
