@@ -56,7 +56,22 @@ export class UserNotificationService {
     }
     this.notifications.next(this.listNotifications);
   }
-
+  deleteNotification(message:Message):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
+      .then((result)=>{
+        let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
+        if(pos>-1)
+        {
+          this.listNotifications.splice(pos,1);
+          this.notifications.next(this.listNotifications);
+          resolve(result);
+        }
+      })
+      .catch((error)=>reject(error))
+    })
+  }
   newNotifications(msg: Record<string, any>) {
     if (!msg) { return null; }
 

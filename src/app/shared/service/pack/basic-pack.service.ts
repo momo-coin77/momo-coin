@@ -182,7 +182,7 @@ export class BasicPackService {
         })
     }
 
-    confirmPaiementBySeller(pack: Pack): Promise<ResultStatut> {
+    confirmPaiementBySeller(pack: Pack,msg:Message): Promise<ResultStatut> {
         return new Promise<ResultStatut>((resolve, reject) => {
             if (pack.state == PackState.ON_MARKET) {
                 let result: ResultStatut = new ResultStatut();
@@ -202,20 +202,22 @@ export class BasicPackService {
             pack.saleDate=(new Date()).toISOString();
             pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
             
-            let newPack:Pack = Object.assign(Object.create(Object.getPrototypeOf(pack)),pack)
-            newPack.amount=newPack.nextAmount;
-            newPack.nextAmount=0;
-            newPack.payDate=newPack.saleDate;
-            let dateForSelle=new Date(newPack.payDate);
-            dateForSelle.setDate(dateForSelle.getDate()+newPack.wantedGain.jour)
+            let newPack:Pack = new Pack();
+            newPack.id.setId(pack.id.toString())
+            newPack.amount=pack.nextAmount;
+            newPack.payDate=pack.saleDate;
+            // console.log("Wainted gain ",pack.payDate,pack.wantedGain)
+            let dateForSelle=new Date(newPack.payDate);            
+            dateForSelle.setDate(dateForSelle.getDate()+pack.wantedGain.jour)
             newPack.saleDate=dateForSelle.toISOString();
             newPack.buyState=PackBuyState.ON_WAITING_BUYER;
-            newPack.plan=newPack.wantedGain.jour
-            newPack.wantedGain={};
-            newPack.idOwner.setId(newPack.idBuyer.toString());
+            newPack.plan=pack.wantedGain.jour
+            newPack.wantedGain={jour:0,pourcent:0};
+            newPack.idOwner.setId(pack.idBuyer.toString());
             newPack.idBuyer.setId(" ");
-
-            return this.firebaseApi.updates([
+            // console.log("New PAck ", newPack.toString(),pack.toString())
+            
+            this.firebaseApi.updates([
                 {
                     link: `packs/${pack.id.toString()}`,
                     data: newPack.toString()
@@ -225,27 +227,33 @@ export class BasicPackService {
                     data: pack.toString()
                 },     
 
-            ])
-                
+            ])                
             .then((result)=> this.userService.getUserById(pack.idBuyer))
             .then((result)=> {
+                console.log("Result member ",result.result)
                 result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
-                return this.firebaseApi.updates([
-                    {
-                        link:`users/${result.result.sponsorshipId}/bonus`,
-                        data:result.result.bonus
-                    }
-                ])
+                if(result.result.sponsorshipId && result.result.sponsorshipId.length>0) 
+                {
+                    return this.firebaseApi.updates([
+                        {
+                            link:`users/${result.result.sponsorshipId}/bonus`,
+                            data:result.result.bonus
+                        }
+                    ])
+                }
+                else return Promise.resolve(new ResultStatut())
             })
-            .then((result) => {
-                let message: Message = new Message();
-                message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
-                message.to.setId(pack.idOwner.toString())
-                message.date = (new Date()).toISOString();
-                message.content = 'the payment of the pack has been made by the buyer';
-                message.idPack = pack.id;
-                return this.userNotificationService.sendNotification(message)
-            })
+            .then((result)=> this.userNotificationService.deleteNotification(msg))
+            // .then((result) => {
+            //     let message: Message = new Message();
+            //     message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
+            //     message.to.setId(newPack.idOwner.toString())
+            //     message.date = (new Date()).toISOString();
+            //     message.content = 'the payment of the pack has been confirmed by the seller';
+            //     message.idPack = pack.id;
+            //     return this.userNotificationService.sendNotification(message)
+            // })
+            .then((result)=> resolve(result))
             .catch((error) => {
                 this.firebaseApi.handleApiError(error);
                 reject(error);

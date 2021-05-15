@@ -260,6 +260,9 @@ export class FirebaseApi {
       case FireBaseConstant.DESACTIVED_ACCOUNT:
         result.message="Account Disabled. Contacted the administrator for a reactivation"
         break;
+      default:
+        result.message="Unknow error. please contact administrator";
+        break
     };
   }
 }

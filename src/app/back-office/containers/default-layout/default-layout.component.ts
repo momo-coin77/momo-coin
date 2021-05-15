@@ -66,7 +66,7 @@ export class DefaultLayoutComponent implements OnInit {
 
   confirmMessage() {
     this.waitResponse=true;
-    this.packService.confirmPaiementBySeller(this.selectedPack)
+    this.packService.confirmPaiementBySeller(this.selectedPack,this.selectedMessage)
     .then((result:ResultStatut)=>{
       this.waitResponse=false;
       this.confirmPayment.hide()
