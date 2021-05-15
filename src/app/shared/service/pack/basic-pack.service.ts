@@ -40,6 +40,26 @@ export class BasicPackService {
               this.newPackHandler();  
             })
         }
+    changePackStatus(idPack:EntityID)
+    {
+        let nstatus=PackState.ON_MARKET;
+        return new Promise<ResultStatut>((resolve,reject)=>{
+        this.firebaseApi.updates([{
+            link:`pack/${idPack.toString()}/state`,
+            data:nstatus
+        }])
+        .then((result)=>{
+            if(this.packList.getValue().has(idPack.toString()))
+                this.packList.getValue().get(idPack.toString()).state = nstatus;
+            resolve(result)
+        })
+        .catch((error)=>{
+            this.firebaseApi.handleApiError(error)
+            reject(error);
+        })
+        })
+    }
+
     newPackHandler()
     {
         this.firebaseApi

@@ -60,7 +60,7 @@ export class AuthService {
             }
             this.eventService.loginEvent.next(userN);
           }
-          resolve(action)  
+          resolve(action)
           this.localStorageService.setUserData({
             isLoggedIn: true,
             user: result.result
@@ -82,6 +82,23 @@ export class AuthService {
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
+      if(user.sponsorshipId && user.sponsorshipId.length >0)
+      {
+        this.firebaseApi
+        .getFirebaseDatabase()
+        .ref("users")
+        .orderByChild("mySponship")
+        .equalTo(user.sponsorshipId)
+        .once('value',(data)=> {
+          if(!data)
+          {
+            let result:ResultStatut=new ResultStatut();
+            result.apiCode=FireBaseConstant.DATABASE_UNKNOW_ERROR,
+            result.message="Could not find then sponsorship id user";
+            return reject(result)
+          }
+        })
+      }
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
         .then(() =>  {

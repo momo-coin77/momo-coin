@@ -4,6 +4,7 @@ import { User } from '../../entity/user';
 import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
+import { BasicPackService } from '../pack/basic-pack.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -14,7 +15,8 @@ export class DataStateUpdateService {
   constructor(
     private firebaseApi:FirebaseApi,
     private eventService:EventService,
-    private userService:UserService
+    private userService:UserService,
+    private packService:BasicPackService
     ) { 
       // this.eventService.loginEvent.subscribe((user:User)=>{
         this.updateAccountMarket();
@@ -24,12 +26,28 @@ export class DataStateUpdateService {
 
   async updateAccountMarket()
   {
-    
+    this.firebaseApi
+    .getFirebaseDatabase()
+    .ref("toupdate/account/market")
+    .once("value", (data)=>{
+      let kdata = data.val();
+      for(let key in kdata)
+      {
+        let id:EntityID=new EntityID();
+        id.setId(key);
+        let now=new Date();
+        let after=new Date(kdata[key]);        
+        if(after<=now) 
+        {
+          this.deleteMaxPackDate(id);
+          this.packService.changePackStatus(id);
+        }        
+      }
+    })
   }
 
   async updateAccountToBlocque()
   {
-    let requete:{link:string,data:any}[]=[];
     this.firebaseApi
     .getFirebaseDatabase()
     .ref("toupdate/account")
@@ -43,16 +61,18 @@ export class DataStateUpdateService {
         id.setId(key);
         if(after<now) 
         {
-          this.deleteMaxUserDate(id);
-          this.userService
-          .getUserById(id)
-          .then((result:ResultStatut)=>{
-            
-            if(result.result) this.userService.changeStatusUsingId(id)
-          });
+          this.firebaseApi
+          .getFirebaseDatabase()
+          .ref("packs")
+          .orderByChild("idOwner")
+          .limitToLast(1)
+          .equalTo(kdata)
+          .once("value",(dataPack)=>{
+            if(dataPack.val()) this.deleteMaxUserDate(id);
+            else this.userService.changeStatusUsingId(id)
+          })
         }
       }
-      // console.log(data.val())
     })
   }
   addMaxUserDate(id:EntityID):Promise<ResultStatut>
@@ -65,5 +85,9 @@ export class DataStateUpdateService {
   deleteMaxUserDate(id:EntityID):Promise<ResultStatut>
   {
     return this.firebaseApi.delete(`toupdate/account/${id.toString()}`)
+  }
+  deleteMaxPackDate(id:EntityID):Promise<ResultStatut>
+  {
+    return this.firebaseApi.delete(`toupdate/market/${id.toString()}`)
   }
 }
