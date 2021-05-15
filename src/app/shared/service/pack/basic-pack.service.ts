@@ -115,10 +115,6 @@ export class BasicPackService {
         return new Promise<ResultStatut>((resolve, reject) => {
             this.firebaseApi.updates([
                 {
-                    link: `users/${pack.idOwner.toString()}/packs/${pack.id}`,
-                    data: true
-                },
-                {
                     link: `packs/${pack.id}`,
                     data: pack.toString()
                 }
@@ -230,7 +226,6 @@ export class BasicPackService {
             ])                
             .then((result)=> this.userService.getUserById(pack.idBuyer))
             .then((result)=> {
-                console.log("Result member ",result.result)
                 result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
                 if(result.result.sponsorshipId && result.result.sponsorshipId.length>0) 
                 {

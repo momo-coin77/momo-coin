@@ -56,6 +56,15 @@ export class UserNotificationService {
     }
     this.notifications.next(this.listNotifications);
   }
+  marskAskRead(message:Message):Promise<ResultStatut>
+  {
+    return this.firebaseApi.updates([
+      {
+        link:`notifications/${message.to.toString()}/${message.id.toString()}/read`,
+        data:MessageReadState.READ
+      }
+    ]);
+  }
   deleteNotification(message:Message):Promise<ResultStatut>
   {
     return new Promise<ResultStatut>((resolve,reject)=>{
@@ -65,7 +74,7 @@ export class UserNotificationService {
         if(pos>-1)
         {
           this.listNotifications.splice(pos,1);
-          this.notifications.next(this.listNotifications);
+          // this.notifications.next(this.listNotifications);
           resolve(result);
         }
       })
@@ -81,12 +90,12 @@ export class UserNotificationService {
       message.hydrate(msg[okey]);
 
       this.listNotifications.push(message);
-      this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
+      // this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
     }
     this.notifications.next(this.listNotifications);
   }
 
   sendNotification(message: Message): Promise<ResultStatut> {
-    return this.firebaseApi.set(`notifications/${message.to.toString()}/${message.id}`, message.toString());
+    return this.firebaseApi.set(`notifications/${message.to.toString()}/${message.id.toString()}`, message.toString());
   }
 }
