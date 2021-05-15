@@ -4,7 +4,7 @@
   [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav ml-auto">
       <i class="icon-bell"></i><span *ngIf="notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
-      <!-- <span *ngIf="!notif" class="badge badge-pill badge-info">{{unreadMessageList.length}}</span> -->
+      <span *ngIf="!notif" class="badge badge-pill badge-info">{{unreadMessageList.length}}</span>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>

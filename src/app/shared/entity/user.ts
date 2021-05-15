@@ -5,7 +5,6 @@ export enum UserAccountState {
     DESACTIVE = 'desactive'
 }
 
-
 export class User extends Entity {
     email: string = '';
     password: string = '';

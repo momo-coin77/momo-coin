@@ -26,14 +26,13 @@ export class MarketService {
       this.firebaseApi.getFirebaseDatabase()
         .ref('packs')        
         .limitToLast(200)
-        .on('value', (snapshot) => this.newPackFromMarket(snapshot))
-      
+        .on('value', (snapshot) => this.newPackFromMarket(snapshot)),
       this.firebaseApi.getFirebaseDatabase()
       .ref('packs')
-      .on('child_changed',(snapshot)=>this.updatePackFromMarket(snapshot))       
+      .on('child_changed',(snapshot)=>this.updatePackFromMarket(snapshot));
 
         // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
-    })
+    });
   }
 
   getOrderMarket()
@@ -110,12 +109,12 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 16 || hh == 17 || hh == 18 || hh == 18) {
+      if (hh == 10 || hh == 11 || hh == 18 || hh == 19) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);
       }
-    };
+    }
   }
 
 }
