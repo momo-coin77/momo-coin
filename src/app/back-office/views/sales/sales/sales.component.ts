@@ -28,7 +28,7 @@ export class SalesComponent implements OnInit {
     this.myPack.getMyOrderedPackOnMarket().subscribe((pack: Pack) => {
       this.packs.push({ waitResponse: false, pack})
 
-    })
+    });
   }
 
 }
