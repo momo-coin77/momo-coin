@@ -29,6 +29,7 @@ export class DefaultLayoutComponent implements OnInit {
   waitResponse = false;
   selectedPack:Pack= new Pack();
   selectedUser:User=new User();
+  selectedMessage:Message=new Message()
   errorFindingPackageMessage = '';
   unreadMessageList: {pack:Pack,message:Message}[] = [];
   public userName: String = '';
@@ -56,10 +57,7 @@ export class DefaultLayoutComponent implements OnInit {
     this.autService.currentUserSubject.subscribe((user: User) => {
       if (!user) { return this.userName = user.name; }
     });
-    this.myfunc();
-
-    
-    
+    this.myfunc();    
   }
 
   toggleMinimize(e) {
@@ -91,9 +89,13 @@ export class DefaultLayoutComponent implements OnInit {
       list.forEach((message:Message)=>{
         this.packService.getPackById(message.idPack)
         .then((result:ResultStatut)=>{
-          this.unreadMessageList.push({pack:result.result,message});
+
+          let pos=this.unreadMessageList.findIndex((infos:{pack:Pack,message:Message})=>infos.pack.id.toString()==message.idPack.toString())
+          if(pos>=0)  this.unreadMessageList.splice(pos,1)
+          this.unreadMessageList.push({pack:result.result,message});       
         })
       })
+      this.unreadMessageList.reverse();
     });
   }
 
@@ -102,15 +104,13 @@ export class DefaultLayoutComponent implements OnInit {
     this.router.navigate(['/login']);
     this.notification.showNotification('top', 'center', 'success', '', '\<b>You are out !\</b>');
   }
-  showModal(message:Message)
+  showModal(info:{pack:Pack, message:Message})
   {
     // console.log('teste pop');
     this.confirmPayment.show();
-    this.packService.getPackById(message.idPack)
-    .then((result:ResultStatut)=>{
-      this.selectedPack=result.result;
-      return this.userService.getUserById(this.selectedPack.idBuyer)
-    })
+    this.selectedPack=info.pack;
+    this.selectedMessage=info.message;
+    this.userService.getUserById(this.selectedPack.idBuyer)
     .then((result)=>{
       this.selectedUser=result.result;
       this.waitResponse=false;

@@ -35,12 +35,13 @@ export class UserNotificationService {
     this.eventService.loginEvent.subscribe((user: User) => {
       if (!user) { return; }
       this.firebaseApi.getFirebaseDatabase()
-        .ref(`notifications/${user.id.toString()}`)
-        .equalTo(MessageReadState.UNREAD, 'read')
+      .ref(`notifications/${user.id.toString()}`)
+      .orderByChild('read')
+      .equalTo(MessageReadState.UNREAD)
         .on('child_changed', (snapshot) => this.newNotification(snapshot.val()))
     });
   }
-  
+
   newNotification(msg:Record<string, any>)
   {
     let message:Message=new Message();
@@ -49,8 +50,9 @@ export class UserNotificationService {
     if(pos<0) this.listNotifications.push(message)
     else
     {
+      this.listNotifications.slice(pos,1);
       this.listNotifications.push(message);
-      this.listNotifications=this.listNotifications.reverse();
+      this.listNotifications.reverse();
     }
     this.notifications.next(this.listNotifications);
   }
@@ -62,6 +64,7 @@ export class UserNotificationService {
     {
       let message: Message = new Message();
       message.hydrate(msg[okey]);
+
       this.listNotifications.push(message);
       this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
     }
