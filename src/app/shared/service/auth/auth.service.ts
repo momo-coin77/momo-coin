@@ -78,8 +78,7 @@ export class AuthService {
     this.localStorageService.clearData();
     this.eventService.logoutEvent.next(true);
   }
-
-
+  
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi.createUserApi(user.email, user.password)

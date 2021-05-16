@@ -12,14 +12,17 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group">
-                  <label><b> Name</b></label>
-                  <input type="text" class="form-control" placeholder="Name" value="{{id}}">
+                  <div (click)="copyMessage(id);idCopied()" popover="Id copied">
+                  <label for="id"><b> Id </b> <sub> Click once to copy</sub></label>
+                    <input type="text" class="form-control" placeholder="Your Id Your will be generated soon."
+                      value="{{id}}" disabled>
+                  </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label><b>Email</b></label>
-                  <input type="text" class="form-control" placeholder="Email" value="{{email}}">
+                  <input type="text" class="form-control" placeholder="Email" value="{{email}}" disabled>
                 </div>
               </div>
             </div>
@@ -27,13 +30,13 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label><b>Network</b></label>
-                  <input type="text" class="form-control" placeholder="Network" value="{{network}}">
+                  <input type="text" class="form-control" placeholder="Network" value="{{network}}" disabled>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <label><b>Phone</b></label>
-                  <input type="number" class="form-control" placeholder="Phone number" value="{{phone}}">
+                  <input type="number" class="form-control" placeholder="Phone number" value="{{phone}}" disabled>
                 </div>
               </div>
             </div>
@@ -52,12 +55,13 @@
               </div>
               <div class="col-md-4">
                 <div class="form-group">
-                  <label><b>Sponsorship ID</b></label>
-                  <input type="number" class="form-control" placeholder="Sponsorship ID" value="{{sponsorshipId}}">
+                  <label><b>Sponsor ID</b></label>
+                  <input type="number" class="form-control" placeholder="No sponsorship" value="{{sponsorshipId}}">
                 </div>
               </div>
             </div><br>
-            <p>For security reasons, we reserve the right to change information to the administrator only. To change your information, please contact him at contact.momo.cion@gmail.com with your current address.</p>
+            <p>For security reasons, we reserve the right to change information to the administrator only. To change
+              your information, please contact him at contact.momo.cion@gmail.com with your current address.</p>
             <div class="clearfix"></div>
           </form>
         </div>
