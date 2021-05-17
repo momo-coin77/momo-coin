@@ -111,7 +111,7 @@ export class BasicPackService {
             .then((result:ResultStatut)=>{
                 if(!result.result)
                 {
-                    console.log("Dara pas ",result.result,idPack)
+                    // console.log("Dara pas ",result.result,idPack)
                     result.apiCode=FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
                     result.message="Data not found";
                     return reject(result);
@@ -245,13 +245,20 @@ export class BasicPackService {
 
             ])                
             .then((result)=> this.userService.getUserById(pack.idBuyer))
-            .then((result)=> {
-                result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
-                if(result.result.sponsorshipId && result.result.sponsorshipId.length>0) 
+            .then((result)=> {                
+                if(result.result.parentSponsorShipId.toString()!='') 
                 {
+                    return this.userService.getUserBySponsorId(result.result.parentSponsorShipId)                    
+                }
+                else return Promise.resolve(new ResultStatut())
+            })
+            .then((result)=>{
+                if(result.result!=null)
+                {
+                    result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
                     return this.firebaseApi.updates([
                         {
-                            link:`users/${result.result.sponsorshipId}/bonus`,
+                            link:`users/${result.result.sponsorshipId.toString()}/bonus`,
                             data:result.result.bonus
                         }
                     ])

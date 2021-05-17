@@ -82,13 +82,13 @@ export class AuthService {
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
-      if(user.sponsorshipId && user.sponsorshipId.length >0)
+      if(user.mySponsorShipId && user.mySponsorShipId!=null)
       {
         this.firebaseApi
         .getFirebaseDatabase()
         .ref("users")
-        .orderByChild("mySponship")
-        .equalTo(user.sponsorshipId)
+        .orderByChild("mySponsorShipId")
+        .equalTo(user.mySponsorShipId.toString())
         .once('value',(data)=> {
           if(!data)
           {

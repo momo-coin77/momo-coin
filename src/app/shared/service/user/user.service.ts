@@ -5,6 +5,8 @@ import { ResultStatut } from '../firebase/resultstatut';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { EntityID } from '../../entity/EntityID';
 import { EventService } from '../event/event.service';
+import { FireBaseConstant } from '../firebase/firebase-constant';
+import { SponsorID } from '../../entity/sponsorid';
 // import { AuthService } from '../auth/auth.service';
 
 
@@ -78,7 +80,33 @@ export class UserService {
         });
     });
   }
-
+  getUserBySponsorId(sponsorID:SponsorID):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve, reject)=>{
+      this.firebaseApi
+      .getFirebaseDatabase()
+      .ref("users")
+      .orderByChild("mySponsorShipId")
+      .equalTo(sponsorID.toString())
+      .once("value",(data)=>{
+        let result:ResultStatut=new ResultStatut();
+        
+        if(!data.val())
+        {
+          result.apiCode=FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
+          result.message="user not found";
+          return reject(result);
+        }
+        for(let okey in data.val())
+        {
+          let user:User=new User();
+          user.hydrate(data.val()[okey])
+          result.result=user;
+          return resolve(result)
+        }        
+      })
+    })
+  }
   addUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
       if (this.listUser.has(user.id.toString())) { return resolve(new ResultStatut()); }

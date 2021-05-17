@@ -6,6 +6,7 @@ import { MustMatch } from '../../shared/service/_helpers/must-match.validator';
 import { NotificationService } from '../../shared/service/notification/notification.service';
 import { User } from '../../shared/entity/user';
 import { AuthService } from '../../shared/service/auth/auth.service';
+import { SponsorID } from '../../shared/entity/sponsorid';
 
 
 @Component({
@@ -73,7 +74,8 @@ export class RegisterComponent implements OnInit {
 
         user.city = this.registerForm.value.city;
         user.phone = `${this.registerForm.value.phone}`;
-        user.sponsorshipId=this.registerForm.value.sponsorshipId;
+        user.mySponsorShipId.setId(SponsorID.generateId(user).toString());
+        user.parentSponsorShipId.setId(this.registerForm.value.sponsorshipId)
         user.network = this.registerForm.value.network;
         user.user_agree=true;
         return user;
