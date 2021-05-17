@@ -17,7 +17,7 @@ import { AppComponent } from './app.component';
 // Import containers
 import { DefaultLayoutComponent } from './back-office/containers';
 import { LoginComponent } from './front-office/login/login.component';
-import { RegisterComponent } from './front-office/register/register.component';
+// import { RegisterComponent } from './front-office/registration/register.component';
 
 
 import {
@@ -114,6 +114,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpinnerModule } from './shared/components/spinner/spinner.module';
+import { RegistrationComponent } from './front-office/registration/registration.component';
+import { RegistrationModule } from './front-office/registration/registration.module';
 
 @NgModule({
   imports: [
@@ -184,13 +186,13 @@ import { SpinnerModule } from './shared/components/spinner/spinner.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ModalModule.forRoot(),
-    SpinnerModule
+    SpinnerModule,
   ],
   declarations: [
     AppComponent,
     DefaultLayoutComponent,
     LoginComponent,
-    RegisterComponent,
+    // RegisterComponent,
     NavBarComponent,
     FooterComponent,
     FullIntroComponent,
@@ -202,6 +204,7 @@ import { SpinnerModule } from './shared/components/spinner/spinner.module';
     TermsAndConditionsComponent,
     HowDoesItWorkComponent,
     BlankPageComponent,
+    RegistrationComponent
   ],
   providers: [
     {

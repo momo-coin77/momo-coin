@@ -18,7 +18,9 @@ export class SalesComponent implements OnInit {
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor(private myPack: MarketService, private packService: BasicPackService, private notifService: NotificationService) { }
+  constructor(private myPack: MarketService,
+    private packService: BasicPackService,
+    private notifService: NotificationService) { }
 
   ngOnInit() {
     this.getPacks();
@@ -26,7 +28,7 @@ export class SalesComponent implements OnInit {
 
   getPacks() {
     this.myPack.getMyOrderedPackOnMarket().subscribe((pack: Pack) => {
-      this.packs.push({ waitResponse: false, pack})
+      this.packs.push({ waitResponse: false, pack});
 
     });
   }

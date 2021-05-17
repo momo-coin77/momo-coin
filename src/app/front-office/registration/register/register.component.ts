@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../shared/service/user/user.service';
-import { MustMatch } from '../../shared/service/_helpers/must-match.validator';
-import { NotificationService } from '../../shared/service/notification/notification.service';
-import { User } from '../../shared/entity/user';
-import { AuthService } from '../../shared/service/auth/auth.service';
-import { SponsorID } from '../../shared/entity/sponsorid';
+import { SponsorID } from '../../../shared/entity/sponsorid';
+import { User } from '../../../shared/entity/user';
+import { AuthService } from '../../../shared/service/auth/auth.service';
+import { NotificationService } from '../../../shared/service/notification/notification.service';
+import { SponsorService } from '../../../shared/service/sponsoring/sponsoring.service';
+import { UserService } from '../../../shared/service/user/user.service';
+import { MustMatch } from '../../../shared/service/_helpers/must-match.validator';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class RegisterComponent implements OnInit {
     waitingRegistration: boolean = false;
     messageColor: String = '';
     user: any;
+    sponsorId: string;
     i = 0; // my variable to condition the number of execution of the submit at 01 time
 
     constructor(
@@ -30,7 +32,9 @@ export class RegisterComponent implements OnInit {
         private userService: UserService,
         private router: Router,
         private formLog: FormBuilder,
+        private sponsort: SponsorService,
         private notification: NotificationService) {
+        this.getSponsorId();
     }
 
     ngOnInit(): void {
@@ -41,7 +45,7 @@ export class RegisterComponent implements OnInit {
             'city': new FormControl('', [Validators.required]),
             'network': new FormControl('', [Validators.required]),
             'sponsorshipId': new FormControl(''),
-            'phone': new FormControl('', [Validators.minLength(9),Validators.maxLength(9),Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]),
+            'phone': new FormControl('', [Validators.minLength(9), Validators.maxLength(9), Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]),
             'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
             'password2': new FormControl('', [Validators.required]),
             'email': new FormControl('', [Validators.required, Validators.email]),
@@ -65,6 +69,10 @@ export class RegisterComponent implements OnInit {
 
     /////
 
+    getSponsorId() {
+        this.sponsorId = this.sponsort.getSponsorId();
+    }
+
     setFormData(): User {
         let user: User = new User();
         user.name = this.registerForm.value.name;
@@ -77,7 +85,7 @@ export class RegisterComponent implements OnInit {
         user.mySponsorShipId.setId(SponsorID.generateId(user).toString());
         user.parentSponsorShipId.setId(this.registerForm.value.sponsorshipId)
         user.network = this.registerForm.value.network;
-        user.user_agree=true;
+        user.user_agree = true;
         return user;
     }
 
@@ -89,22 +97,22 @@ export class RegisterComponent implements OnInit {
             return;
         }
         this.waitingRegistration = true;
-            let user: User = this.setFormData();
-            this.authService.signInNewUser(user)
+        let user: User = this.setFormData();
+        this.authService.signInNewUser(user)
             .then((result) => {
-                    this.router.navigate(['login']);
-                    // tslint:disable-next-line:max-line-length
-                    this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully');
-                    this.waitingRegistration = false;
-                    this.submitted = false;
+                this.router.navigate(['login']);
+                // tslint:disable-next-line:max-line-length
+                this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully');
+                this.waitingRegistration = false;
+                this.submitted = false;
 
-                })
-                .catch((error) => {
-                    this.waitingRegistration = false;
-                    // tslint:disable-next-line:max-line-length
-                    this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
-                    this.submitted = false;
-                });
+            })
+            .catch((error) => {
+                this.waitingRegistration = false;
+                // tslint:disable-next-line:max-line-length
+                this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>' + error.message);
+                this.submitted = false;
+            });
 
     }
 

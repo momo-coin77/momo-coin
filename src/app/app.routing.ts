@@ -10,7 +10,7 @@ import { RequestsComponent } from './front-office/requests/requests.component';
 import { AboutUsComponent } from './front-office/about-us/about-us.component';
 import { ForgotPasswordComponent } from './front-office/forgot-password/forgot-password.component';
 import { LoginComponent } from './front-office/login/login.component';
-import { RegisterComponent } from './front-office/register/register.component';
+// import { RegisterComponent } from './front-office/registration/register.component';
 
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
@@ -19,6 +19,7 @@ import { TermsAndConditionsComponent } from './shared/components/terms-and-condi
 
 //// Back Office
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
+import { RegistrationComponent } from './front-office/registration/registration.component';
 
 export const routes: Routes = [
   {
@@ -55,18 +56,6 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'register',
-    component: RegisterComponent,
-  },
-  {
-    path: 'signup',
-    component: RegisterComponent,
-  },
-  {
-    path: 'registration',
-    component: RegisterComponent,
-  },
-  {
     path: '',
     component: DefaultLayoutComponent,
     data: {
@@ -100,6 +89,27 @@ export const routes: Routes = [
       {
         path: 'admin',
         loadChildren: () => import('./back-office/views/admin/admin.module').then(m => m.AdminModule)
+      },
+    ]
+  },
+  {
+    path: '',
+    component: RegistrationComponent,
+    data: {
+      title: 'Registration'
+    },
+    children: [
+      {
+        path: 'registration',
+        loadChildren: () => import('./front-office/registration/registration.module').then(m => m.RegistrationModule)
+      },
+      {
+        path: 'register',
+        loadChildren: () => import('./front-office/registration/registration.module').then(m => m.RegistrationModule)
+      },
+      {
+        path: 'signup',
+        loadChildren: () => import('./front-office/registration/registration.module').then(m => m.RegistrationModule)
       },
     ]
   },

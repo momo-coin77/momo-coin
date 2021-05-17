@@ -16,7 +16,7 @@ export class MarketService {
   packs: BehaviorSubject<Map<String, Pack>> = new BehaviorSubject<Map<String, Pack>>(this.listPack)
   constructor(
     private authService: AuthService,
-    private eventService:EventService,
+    private eventService: EventService,
     private firebaseApi: FirebaseApi,
     private router: Router) {
 
@@ -24,75 +24,71 @@ export class MarketService {
       // if (!user) return;
       //cette requete ne doit ce faire que si le marché est ouvert
       this.firebaseApi.getFirebaseDatabase()
-        .ref('packs')        
+        .ref('packs')
         .limitToLast(200)
         .on('value', (snapshot) => this.newPackFromMarket(snapshot)),
-      this.firebaseApi.getFirebaseDatabase()
-      .ref('packs')
-      .on('child_changed',(snapshot)=>this.updatePackFromMarket(snapshot));
+        this.firebaseApi.getFirebaseDatabase()
+          .ref('packs')
+          .on('child_changed', (snapshot) => this.updatePackFromMarket(snapshot));
 
-        // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
+      // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
     });
   }
 
-  getOrderMarket()
-  {
+  getOrderMarket() {
     return this.packs.pipe(
-      switchMap((p)=> from(Array.from(p.values()))),
+      switchMap((p) => from(Array.from(p.values()))),
     );
   }
-  getAllPackInMarket()
-  {
+  getAllPackInMarket() {
     return this.getOrderMarket().pipe(
-      filter((p:Pack)=> p.state==PackState.ON_MARKET),
+      filter((p: Pack) => p.state == PackState.ON_MARKET),
     )
   }
-  getOtherOrderedPackOnMarket()
-  {
+  getOtherOrderedPackOnMarket() {
     return this.getOrderMarket().pipe(
-      filter((p:Pack)=> p.idOwner.toString()!=this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p:Pack)=> p.state==PackState.ON_MARKET),
-    )
-  }
-
-  getMyOrderedPackOnMarket()
-  {
-    return this.getOrderMarket().pipe(
-      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p:Pack)=> p.state==PackState.ON_MARKET)
-    )
-  }
-  getMyOrderdPackNotInMarket()
-  {
-    return this.getOrderMarket().pipe(
-      filter((p:Pack)=> p.idOwner.toString()==this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p:Pack)=> p.state==PackState.NOT_ON_MARKET)
+      filter((p: Pack) => p.idOwner.toString() != this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) => p.state == PackState.ON_MARKET),
     )
   }
 
-  updatePackFromMarket(packs: any){
+  getMyOrderedPackOnMarket() {
+    return this.getOrderMarket().pipe(
+      filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) => p.state == PackState.ON_MARKET)
+    )
+  }
+  getMyOrderdPackNotInMarket() {
+    return this.getOrderMarket().pipe(
+      filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) => p.state == PackState.NOT_ON_MARKET)
+    )
+  }
+
+  updatePackFromMarket(packs: any) {
     // console.log("Upadated ",packs.val())
-    let pack:Pack=new Pack();
+    let pack: Pack = new Pack();
     pack.hydrate(packs.val());
 
-    this.listPack.set(pack.id.toString(),pack);
+    this.listPack.set(pack.id.toString(), pack);
     this.packs.next(this.listPack);
   }
-  newPackFromMarket(packs: any) {
-    let packList:Pack[]=[];
-    let oplist=packs.val();
-    for(let pkey in oplist)
-    {
-      let pck: Pack = new Pack();
-      pck.hydrate(oplist[pkey]); 
-      packList.push(pck)     
-    }
-    packList.sort((a:Pack,b:Pack)=> a.amount>b.amount?0:1);
 
-    packList.forEach((pack:Pack)=> {
-      if (this.listPack.has(pack.id.toString())) return;
+  newPackFromMarket(packs: any) {
+    let packList: Pack[] = [];
+    let oplist = packs.val();
+    for (let pkey in oplist) {
+      let pck: Pack = new Pack();
+      pck.hydrate(oplist[pkey]);
+      packList.push(pck);
+    }
+
+    packList.sort((a: Pack, b: Pack) => a.amount > b.amount ? 0 : 1);
+
+    packList.forEach((pack: Pack) => {
+      if (this.listPack.has(pack.id.toString())) { return; }
       this.listPack.set(pack.id.toString(), pack);
-    })
+    });
     this.packs.next(this.listPack);
     // console.log("list pack ",this.listPack)
   }
@@ -109,7 +105,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 18 || hh == 16 || hh == 15 || hh == 17) {
+      if (hh == 10 || hh == 11 || hh == 18 || hh == 19) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

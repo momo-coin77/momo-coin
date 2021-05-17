@@ -12,22 +12,23 @@ import { UserHistoryService } from '../../../../shared/service/user-history/user
 })
 
 export class HistoryComponent implements OnInit {
+  packs: { waitResponse: boolean, pack: Pack }[] = [];
 
 
   constructor(private notification: NotificationService,
-              private history: UserHistoryService) {
-                
-              }
+    private history: UserHistoryService) {
+      this. getPacksHistory();
+
+  }
 
   ngOnInit() {
   }
 
-  getPacksHistory()
-  {
-    this.history.history.subscribe((pack: Pack[]) => { 
-      
-    })
-    ;
+  getPacksHistory() {
+    this.history.history.subscribe((pack: Pack[]) => {
+      console.log('history pack: ', pack);
+
+    });
   }
 
   showNotification(from, align, colortype, icon, text) {
