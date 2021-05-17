@@ -15,7 +15,7 @@
                   <div (click)="copyMessage(id);idCopied()" popover="Id copied">
                   <label for="id"><b> Id </b> <sub> Click once to copy</sub></label>
                     <input type="text" class="form-control" placeholder="Your Id Your will be generated soon."
-                      value="{{id}}" disabled>
+                      value="localhost:4200/#/register/{{id}}" disabled>
                   </div>
                 </div>
               </div>
@@ -44,19 +44,19 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label><b>Country</b></label>
-                  <input type="text" class="form-control" placeholder="Country" value="{{country}}">
+                  <input type="text" class="form-control" placeholder="Country" value="{{country}}" disabled>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label><b>City</b></label>
-                  <input type="text" class="form-control" placeholder="City" value="{{userCity}}">
+                  <input type="text" class="form-control" placeholder="City" value="{{userCity}}" disabled>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label><b>Sponsor ID</b></label>
-                  <input type="number" class="form-control" placeholder="No sponsorship" value="{{sponsorshipId}}">
+                  <input type="number" class="form-control" placeholder="No sponsorship" value="{{sponsorshipId}}" disabled>
                 </div>
               </div>
             </div><br>

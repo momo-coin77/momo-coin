@@ -36,6 +36,11 @@ export const navItems: INavData[] = [
     icon: 'fa fa-barcode'
   },
   {
+    name: 'History',
+    url: '/history',
+    icon: 'fa fa-history'
+  },
+  {
     name: 'Forum',
     url: '/chat',
     icon: 'fa fa-comments',

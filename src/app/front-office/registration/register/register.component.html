@@ -1,5 +1,3 @@
-<app-nav-bar></app-nav-bar>
-
 <div class="imag">
     <div class="container" style="margin-top: 70px;">
         <div class="row">
@@ -19,16 +17,14 @@
                                     <input type="text" id="name" formControlName="name"
                                         placeholder="Enter you First name" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
-                                    <div *ngIf="submitted && f.name.errors"
-                                        class="invalid-feedback text-danger">
+                                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback text-danger">
                                         <div *ngIf="f.name.errors.required">First name is required</div>
                                     </div>
                                 </div>
                                 <div class="mb-4 col-md-6">
                                     <label for="email">Email</label>
-                                    <input type="text" id="email" formControlName="email"
-                                        placeholder="Enter you Email" class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                    <input type="text" id="email" formControlName="email" placeholder="Enter you Email"
+                                        class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                                     <div *ngIf="submitted && f.email.errors" class="invalid-feedback text-danger"
                                         [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
                                         <div *ngIf="f.email.errors.required">Email is required</div>
@@ -36,15 +32,13 @@
                                 </div>
                                 <div class="mb-4 col-md-6">
                                     <label for="network">Account type</label>
-                                    <select id="network" formControlName="network"
-                                        placeholder="MTN Mobile Money"
+                                    <select id="network" formControlName="network" placeholder="MTN Mobile Money"
                                         class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.network.errors }">
                                         <option value="MTN Money" selected>MTN Mobile Money</option>
                                         <option value="Orange Money">Orange Money</option>
                                     </select>
-                                    <div *ngIf="submitted && f.network.errors"
-                                        class="invalid-feedback text-danger">
+                                    <div *ngIf="submitted && f.network.errors" class="invalid-feedback text-danger">
                                         <div *ngIf="f.network.errors.required">Type is required</div>
                                     </div>
                                 </div>
@@ -63,8 +57,7 @@
                                     <input type="password" id="password" formControlName="password"
                                         placeholder="Enter your password" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
-                                    <div *ngIf="submitted && f.password.errors"
-                                        class="invalid-feedback text-danger">
+                                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback text-danger">
                                         <div *ngIf="f.password.errors.required">Password is required</div>
                                     </div>
                                 </div>
@@ -73,8 +66,7 @@
                                     <input type="password" id="password2" formControlName="password2"
                                         placeholder="Confirm your password" class="form-control"
                                         [ngClass]="{ 'is-invalid': submitted && f.password2.errors }">
-                                    <div *ngIf="submitted && f.password2.errors"
-                                        class="invalid-feedback text-danger">
+                                    <div *ngIf="submitted && f.password2.errors" class="invalid-feedback text-danger">
                                         <div *ngIf="f.password2.errors.required">Confirmation is required</div>
                                         <div *ngIf="f.password2.errors.mustMatch">Passwords must match</div>
                                     </div>
@@ -88,30 +80,27 @@
                                             <!-- <option value="Gabon">Gabon</option>
                                             <option value="Guinee">Equatorial Guinea</option> -->
                                         </select>
-                                        <div *ngIf="submitted && f.country.errors"
-                                            class="invalid-feedback text-danger">
+                                        <div *ngIf="submitted && f.country.errors" class="invalid-feedback text-danger">
                                             <div *ngIf="f.country.errors.required">Country is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="city">City</label>
-                                        <input type="text" id="city" formControlName="city"
-                                            class="form-control" placeholder="Enter you City"
+                                        <input type="text" id="city" formControlName="city" class="form-control"
+                                            placeholder="Enter you City"
                                             [ngClass]="{ 'is-invalid': submitted && f.city.errors }">
-                                        <div *ngIf="submitted && f.city.errors"
-                                            class="invalid-feedback text-danger">
+                                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback text-danger">
                                             <div *ngIf="f.city.errors.required">City is required</div>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="sponsorshipId">Sponsor ID</label>
-                                        <input type="text" id="sponsorshipId" formControlName="sponsorshipId"
+                                        <input *ngIf="!sponsorId" type="text" id="sponsorshipId" formControlName="sponsorshipId"
                                             placeholder="Enter you Last name" class="form-control"
-                                            [ngClass]="{ 'is-invalid': submitted && f.sponsorshipId.errors }">
-                                        <div *ngIf="submitted && f.sponsorshipId.errors"
-                                            class="invalid-feedback text-danger">
-                                            <div *ngIf="f.sponsorshipId.errors.required">Sponsorship ID is required</div>
-                                        </div>
+                                            value="{{sponsorId}}">
+                                        <input *ngIf="sponsorId" type="text" id="sponsorshipId" formControlName="sponsorshipId"
+                                            placeholder="Enter you Last name" class="form-control"
+                                            value="{{sponsorId}}" disabled>
                                     </div>
                                 </div>
                             </div><br>
@@ -141,7 +130,8 @@
                             <app-progress-indeterminate *ngIf="waitingRegistration"></app-progress-indeterminate>
                             <span class="pull-right">
                                 <button type="submit" *ngIf="!waitingRegistration"
-                                    class="Register registermodal-submit btn btn-warning" value="Register">Register</button>
+                                    class="Register registermodal-submit btn btn-warning"
+                                    value="Register">Register</button>
                             </span>
                             <div *ngIf="!waitingRegistration && submitted" class="row red"><span
                                     class="col-12 text-center">Please make sure that the information is correct.</span>
@@ -176,5 +166,3 @@
         </div>
     </div>
 </div>
-
-<app-front-footer></app-front-footer>

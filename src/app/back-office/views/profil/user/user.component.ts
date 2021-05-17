@@ -36,7 +36,7 @@ export class UserComponent implements OnInit {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = val;
+    selBox.value = 'localhost:4200/#/register/' + val;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
@@ -51,7 +51,7 @@ export class UserComponent implements OnInit {
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;
-      this.id = this.authService.currentUserSubject.getValue().id.toString()
+      this.id = this.authService.currentUserSubject.getValue().id.toString();
       this.country = user.country;
       this.city = user.city;
     });
