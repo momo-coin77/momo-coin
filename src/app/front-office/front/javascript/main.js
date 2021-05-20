@@ -755,7 +755,7 @@
                 if ( $().easyPieChart ) {
                     $(this).easyPieChart({
                         lineWidth: $(this).data('width'),
-                        barColor: '#eab702',
+                        barColor: '#ed993f',
                         trackColor: '#ebebeb',
                         scaleColor: false,
                         animate: 3000,

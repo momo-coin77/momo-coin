@@ -30,13 +30,14 @@ export class UserComponent implements OnInit {
     public notif: NotificationService) {
 
   }
-  copyMessage(val: string){
+
+  copyMessage(val: string) {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = 'localhost:4200/#/register/' + val;
+    selBox.value = 'localhost:4200/#/register/' + val; // a remplacer par le lien https de la page registration de MC
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();

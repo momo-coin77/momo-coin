@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+<!--<![endif]-->
+
 <head>
     <!-- Basic Page Needs -->
     <meta charset="utf-8">
@@ -13,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Bootstrap  -->
-    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css" >
+    <link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.css">
 
     <!-- Theme Style -->
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
@@ -23,8 +26,8 @@
 
     <!-- Colors -->
     <link rel="stylesheet" type="text/css" href="stylesheets/colors/color1.css" id="colors">
-	
-	<!-- Animation Style -->
+
+    <!-- Animation Style -->
     <link rel="stylesheet" type="text/css" href="stylesheets/animate.css">
 
     <!-- Favicon and touch icons  -->
@@ -32,299 +35,743 @@
     <link href="icon/apple-touch-icon-32-precomposed.png" rel="apple-touch-icon-precomposed">
     <link href="images/logo_m.png" rel="shortcut icon">
 
+    <style>
+        section {
+            /* height: 100vh;  */
+            /* box-sizing: border-box; */
+            /* display: flex; */
+            /* align-items: center; */
+            /* justify-content: center; */
+            /* text-align: center;  */
+            /* flex-direction: column; */
+            /* padding: 2vw; */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            /* font-size: 4vw;  */
+        }
+
+        section:first-of-type {
+            text-transform: uppercase;
+            /* font-size: 7vw; */
+        }
+
+        scroll-container {
+            display: block;
+            width: 350px;
+            height: 200px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        }
+
+        section:first-of-type,
+        section.pop {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+        }
+
+        section:nth-of-type(even) {
+            background: #fff;
+        }
+
+        section:nth-of-type(1) {
+            background-image: url(./images/5.jpeg);
+        }
+
+        section:nth-of-type(2) {
+            background-image: url();
+        }
+
+        section:nth-of-type(3) {
+            background-image: url();
+        }
+
+        section:nth-of-type(4) {
+            background-image: url(./images/6.jpeg);
+        }
+
+        section:nth-of-type(5) {
+            background-image: url(./images/6.jpeg);
+        }
+
+        section:nth-of-type(6) {
+            background-image: url(./images/4.jpeg);
+        }
+
+
+        /* TOP BANNER */
+
+        /* For mobile phones: */
+        @media only screen and (max-width: 414px) and (orientation : portrait) {
+            .tp-banner-container {
+                background-size: cover;
+                width: 1500px;
+                height: 100%;
+            }
+        }
+
+        @media only screen and (max-width: 736px) and (orientation : landscape) {
+            .tp-banner-container {
+                background-size: cover !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+        }
+
+        /* For tablets: */
+        @media only screen and (min-width: 533px) and (orientation : portrait) {
+            .tp-banner-container {
+                background-size: cover !important;
+            }
+        }
+
+        @media only screen and (min-width: 800px) and (orientation : landscape) {
+            .tp-banner-container {
+                background-size: cover !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+        }
+
+        /* For desktop: */
+        @media only screen and (min-width: 1024px) and (min-height: 768px) {
+            .tp-banner-container {
+                background-size: cover !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+        }
+
+        @media only screen and (min-width: 1280px) and (min-height: 720px) {
+            .tp-banner {
+                background-size: cover;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        @media only screen and (min-width: 1440px) and (min-height: 900px) {
+            .tp-banner {
+                background-size: cover;
+            }
+        }
+
+        @media only screen and (min-width: 1920px) and (min-height: 1080px) {
+            .tp-banner {
+                background-size: cover;
+            }
+        }
+
+        @media only screen and (min-width: 1920px) and (min-height: 1200px) {
+            .tp-banner {
+                background-size: cover;
+            }
+        }
+    </style>
     <!--[if lt IE 9]>
         <script src="javascript/html5shiv.js"></script>
         <script src="javascript/respond.min.js"></script>
     <![endif]-->
-</head>                                 
-<body class="header_sticky">   
+</head>
+
+<body class="header_sticky" style="background-color: rgb(216, 215, 215);">
     <!-- Preloader -->
     <section class="loading-overlay">
         <div class="Loading-Page">
             <h2 class="loader">Loading</h2>
         </div>
-    </section>   
+    </section>
     <!-- Boxed -->
     <div class="boxed">
+        <header id="header" class="header clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="header-wrap clearfix">
+                        <div class="col-md-4">
+                            <div id="logo" class="logo">
+                                <a href="#" rel="home">
+                                    <img src="images/logo.png" alt="image">
+                                </a>
+                            </div>
+                            <div class="btn-menu">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="col-md-8 pos-static">
+                            <div class="nav-wrap has-megamenu pull-right">
+                                <nav id="mainnav" class="mainnav">
+                                    <ul class="menu">
+                                        <li><a href="index.html#home" class="scrollto wow fadeInUp delay-5s ">Home</a>
+                                        </li>
+                                        <li><a href="index.html#marketTimes">Market Times</a></li>
+                                        <li><a href="index.html#questions">Question?</a></li>
+                                        <span></span>
+                                        <span></span>
+                                        <li><a href="https://2mocoin.000webhostapp.com/#/login"><span class="h5"
+                                                    style="color: #ed993f!important;"><strong>Sign-In</strong></span></a>
+                                        </li>
+                                        </li>
+                                        <li class="has-mega-menu">
+                                            <a class="has-mega"
+                                                href="https://2mocoin.000webhostapp.com/#/register"><span class="h5"
+                                                    style="color: #ed993f!important;"><strong>Sign-Up</strong></span></a>
+                                        </li>
+                                    </ul><!-- /.menu -->
+                                </nav><!-- /.mainnav -->
+                            </div><!-- /.nav-wrap -->
+                        </div>
+                    </div><!-- /.header-inner -->
+                </div><!-- /.row -->
+            </div>
+        </header><!-- /.header -->
 
-    <!-- Header -->            
-    <header id="header" class="header clearfix">
-        <div class="container">
-            <div class="row">                 
-                <div class="header-wrap clearfix">
-                    <div class="col-md-4">
-                        <div id="logo" class="logo">
-                            <a href="#" rel="home">
-                                <img src="images/logo.png" alt="image">
+        <!-- Slider -->
+        <div class="tp-banner-container" id="home">
+            <div class="tp-banner">
+                <ul>
+                    <li data-transition="random-static" data-slotamount="7" data-masterspeed="1000"
+                        data-saveperformance="on">
+                        <img src="images/slides/1.jpg" alt="slider-image" />
+                        <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000"
+                            data-start="1000" data-easing="Power3.easeInOut">
+                            Welcome to Mobile Money <br>Coin
+                        </div>
+                        <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000"
+                            data-start="1500" data-easing="Power3.easeInOut">
+                            A digital investment <br>company
+                        </div>
+                        <div style="background: #ed993f !important"
+                            class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370"
+                            data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a> &nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+
+                        <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000"
+                            data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+                    </li>
+
+                    <li data-transition="random-static" data-slotamount="7" data-masterspeed="1000"
+                        data-saveperformance="on">
+                        <img src="images/1.jpeg" alt="slider-image" />
+                        <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000"
+                            data-start="1000" data-easing="Power3.easeInOut">
+                            Invest your money <br>safely
+                        </div>
+                        <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000"
+                            data-start="1500" data-easing="Power3.easeInOut">
+                            We make your work and you earn the benefits<br>
+                        </div>
+                        <div style="background: #ed993f !important"
+                            class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370"
+                            data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+
+                        <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000"
+                            data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+                    </li>
+
+                    <li data-transition="slidedown" data-slotamount="7" data-masterspeed="1000"
+                        data-saveperformance="on">
+                        <img src="images/6.jpeg" alt="slider-image" />
+                        <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000"
+                            data-start="1000" data-easing="Power3.easeInOut">
+                            Create your account <br>for free
+                        </div>
+                        <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000"
+                            data-start="1500" data-easing="Power3.easeInOut">
+                            Access our platform and earn <br>money
+                        </div>
+                        <div style="background: #ed993f !important"
+                            class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370"
+                            data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+
+                        <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000"
+                            data-start="2000" data-easing="Power3.easeInOut"><a
+                                href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                                class="fa fa-chevron-right"></i></div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="flat-row mail-chimp" style="background-color: #ed993f!important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="text">
+                            <h3>Want to stay connected?</h3>
+                            <p>Download the application now and get easier access to MobileMoney Coin.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="subscribe">
+                            <a href="./apk/MoMo-coin_1_1.apk.zip">
+                                <input type="button" class="submit" value="Download">
+                                <input type="button" class="submit" value="For android system" disabled
+                                    style="background-color: white; color: black;">
                             </a>
-                        </div><!-- /.logo -->
-                        <div class="btn-menu">
-                            <span></span>
-                        </div><!-- //mobile menu button -->
+                        </div>
                     </div>
-                    <div class="col-md-8 pos-static">
-                        <div class="nav-wrap has-megamenu pull-right">                            
-                            <nav id="mainnav" class="mainnav">
-                                <ul class="menu"> 
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="https://2mocoin.000webhostapp.com/#/login">How It Works</a></li>
-                                    <span></span>.
-                                    <span></span>
-                                    <li><a href="https://2mocoin.000webhostapp.com/#/login"><span class="h5" style="color: #fecd0b!important;"><strong>Sign-In</strong></span></a></li>
-                                    </li>   
-                                    <li class="has-mega-menu">
-                                        <a class="has-mega" href="https://2mocoin.000webhostapp.com/#/register"><span class="h5" style="color: #fecd0b!important;"><strong>Sign-Up</strong></span></a>
-                                    </li>                 
-                                </ul><!-- /.menu -->
-                            </nav><!-- /.mainnav -->  
-                        </div><!-- /.nav-wrap -->
-                    </div>                      
-                </div><!-- /.header-inner -->                 
-            </div><!-- /.row -->
+                </div>
+            </div><!-- /.container -->
         </div>
-    </header><!-- /.header -->
 
-    <!-- Slider -->
-    <div class="tp-banner-container" id="home">
-        <div class="tp-banner" >
-            <ul>
-                <li data-transition="random-static" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on">
-                    <img src="images/slides/1.jpg" alt="slider-image" />
-                    <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000" data-start="1000" data-easing="Power3.easeInOut">
-                        Welcome  to  Mobile Money <br>Coin
-                    </div>  
-                    <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000" data-start="1500" data-easing="Power3.easeInOut">
-                        A digital investment <br>company
-                    </div>    
-                    <div class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a> &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
 
-                    <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
-                </li>
 
-                <li data-transition="random-static" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on">
-                    <img src="images/slides/2.jpg" alt="slider-image" />
-                    <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000" data-start="1000" data-easing="Power3.easeInOut">
-                        Invest your money  <br>safely          
-                    </div>  
-                    <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000" data-start="1500" data-easing="Power3.easeInOut"> 
-                        We make your work and you earn the benefits<br>
-                    </div>    
-                    <div class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
+        <section class="main-content page-single page-about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="post-wrap">
+                            <div class="about-content-text">
+                                <h4 class="about-content-title">WELCOME TO MoMo-Coin</h4>
 
-                    <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
-                </li>
+                                <p><strong>The standard Lorem Ipsum passage, used since the 1500s</strong></p>
 
-                <li data-transition="slidedown" data-slotamount="7" data-masterspeed="1000" data-saveperformance="on">
-                    <img src="images/slides/3.jpg" alt="slider-image" />
-                    <div class="tp-caption sfl title-slide center" data-x="40" data-y="100" data-speed="1000" data-start="1000" data-easing="Power3.easeInOut">
-                        Create your account <br>for free
-                    </div>  
-                    <div class="tp-caption sfr desc-slide center" data-x="40" data-y="240" data-speed="1000" data-start="1500" data-easing="Power3.easeInOut">
-                        Access our platform and earn <br>money
-                    </div>    
-                    <div class="tp-caption sfl flat-button-slider bg-button-slider-32bfc0" data-x="40" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/login">Sign-In</a>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
+                                <p>sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
+                                    porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
+                                    velit, sed quia non numquam eius modi tempora incidunt</p>
 
-                    <div class="tp-caption sfr flat-button-slider" data-x="225" data-y="370" data-speed="1000" data-start="2000" data-easing="Power3.easeInOut"><a href="https://2mocoin.000webhostapp.com/#/register">Sign-Up</a>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-right"></i></div>
-                </li>
-            </ul>
-        </div>
-    </div> 
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
+                                    tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+                                    eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+                                    takimata sanctus est Lorem ipsum dolor sit amet. At vero eos et accusam et justo duo
+                                    dolores et ea rebum.</p>
 
-    <!-- Offer -->
-    <section class="flat-row what-we-do offer" id="services">        
-        <div class="container">            
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="flat-iconbox-carosuel-wrap">
-                        <div class="flat-iconbox-carosuel" data-item="3" data-nav="false" 
-                        data-dots="false" data-auto="false">                           
-                            <div class="iconbox-item">
-                                <div class="iconbox left style2">   
-                                    <img src="images/services/1.jpg" alt="serives"> 
-                                    <div class="box-content">
-                                        <div class="box-title">
-                                            <a href="https://2mocoin.000webhostapp.com/#/login">Investment Gains</a>
-                                        </div> 
-                                        Invest money by buying our shares and benefit from a percentage of earnings according to your package.
-                                    </div>
-                                    
-                                </div><!-- /.iconbox -->
-                            </div><!-- /.iconbox-item -->
+                                <p>But I must explain to you how all this mistaken idea of denouncing pleasure and
+                                    praising pain was born and I will give you a complete account of the system, and
+                                    expound the actual teachings of the great explorer of the truth, the master-builder
+                                    of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it
+                                    is pleasure, but because those who do not know how to pursue pleasure rationally
+                                    encounter consequences that are extremely painful. Nor again is there anyone who
+                                    loves or pursues or desires to obtain pain of itself, because it is pain, but
+                                    because occasionally circumstances occur in which toil and pain can procure him some
+                                    great pleasure.</p>
 
-                             <div class="iconbox-item">
-                                <div class="iconbox left style2">   
-                                    <img src="images/services/2.jpg" alt="serives"> 
-                                    <div class="box-content">
-                                        <div class="box-title">
-                                            <a href="https://2mocoin.000webhostapp.com/#/login">Sponsorship Gains</a>
+                                <p>On the other hand, we denounce with righteous indignation and dislike men who are so
+                                    beguiled and demoralized by the charms of pleasure of the moment, so blinded by
+                                    desire,</p>
+                            </div>
+
+                            <div class="about-content-text item-column clearfix">
+                                <div class="item-two-column">
+                                    <h4 class="about-content-title">WHY CHOISE US ? </h4>
+                                    <p>Our clients tell us we are unique for a variety of important reasons including:
+                                    </p>
+                                    <ul class="flat-list style1">
+                                        <li>We are PASSIONATE about the stock market</li>
+                                        <li>We are HONEST & DEPENDABLE</li>
+                                        <li>We are CREATIVE</li>
+                                        <li>QUALITY COMMITMENT</li>
+                                        <li>The benefits generated are shared</li>
+                                        <li>Trades are made by a EXPERIENCED and EXPERT team</li>
+                                    </ul>
+                                </div>
+
+                                <div class="item-two-column">
+                                    <div class="empty-space height40"></div>
+                                    <div class="flat-tabs v1" data-effect="fadeIn">
+                                        <ul class="menu-tab">
+                                            <li class="active"><a href="#">Quality</a></li>
+                                            <li><a href="#">Service</a></li>
+                                            <li><a href="#">Results</a></li>
+                                        </ul><!-- /.menu-tab -->
+                                        <div class="content-tab">
+                                            <div class="content-inner">
+                                                <img src="images/5.jpeg" alt="images">
+                                            </div>
+                                            <div class="content-inner">
+                                                <img src="images/5.jpeg" alt="images">
+
+                                            </div>
+                                            <div class="content-inner">
+                                                <img src="images/5.jpeg" alt="images">
+
+                                            </div>
+                                        </div><!-- /.content-tab -->
+                                    </div><!-- /.roll-tabs -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section>
+
+
+        <!-- Offer -->
+        <section class="flat-row what-we-do offer" id="services"  style="background-color: #b3b3b3;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="flat-iconbox-carosuel-wrap">
+                            <div class="flat-iconbox-carosuel" data-item="3" data-nav="false" data-dots="false"
+                                data-auto="false">
+                                <div class="iconbox-item">
+                                    <div class="iconbox left style2">
+                                        <img src="images/services/1.jpg" alt="serives">
+                                        <div class="box-content">
+                                            <div class="box-title">
+                                                <a href="https://2mocoin.000webhostapp.com/#/login">Investment Gains</a>
+                                            </div>
+                                            Invest money by buying our shares and benefit from a percentage of earnings
+                                            according to your package.
                                         </div>
-                                        Share your referral code and earn 10% on all stock purchases by your affiliates.
+
+                                    </div><!-- /.iconbox -->
+                                </div><!-- /.iconbox-item -->
+
+                                <div class="iconbox-item">
+                                    <div class="iconbox left style2">
+                                        <img src="images/services/2.jpg" alt="serives">
+                                        <div class="box-content">
+                                            <div class="box-title">
+                                                <a href="https://2mocoin.000webhostapp.com/#/login">Sponsorship
+                                                    Gains</a>
+                                            </div>
+                                            Share your referral code and earn 10% on all stock purchases by your
+                                            affiliates.
+                                        </div>
+
+                                    </div><!-- /.iconbox -->
+                                </div><!-- /.iconbox-item -->
+
+                                <div class="iconbox-item">
+                                    <div class="iconbox left style2">
+                                        <img src="images/services/3.jpg" alt="serives">
+                                        <div class="box-content">
+                                            <div class="box-title">
+                                                <a href="https://2mocoin.000webhostapp.com/#/login">Bonus Gains</a>
+                                            </div>
+                                            Earn bonuses each month based on your sales.
+                                        </div>
+
+                                    </div><!-- /.iconbox -->
+                                </div><!-- /.iconbox-item -->
+
+                            </div>
+                        </div><!-- /.flat-iconbox-carosuel-wrap -->
+                    </div>
+                </div>
+            </div><!-- /.container -->
+        </section>
+
+        <!-- About -->
+        <section class="flat-row about background-color" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-section style3">
+                            <h1 class="title">WHAT WE OFFER</h1>
+                        </div>
+                    </div><!-- /.col-md-12 -->
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="iconbox  left square">
+                            <div class="box-header">
+                                <i class="fa fa-bar-chart-o"></i>
+                                <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">5 days =>
+                                        20%</a></div>
+                            </div>
+                            <div class="box-content">
+                                You get 20% of your investment back after 5 days.
+                            </div>
+
+                        </div>
+                    </div><!-- /.col-md-4 -->
+
+
+                    <div class="col-md-4">
+                        <div class="iconbox  left square">
+                            <div class="box-header">
+                                <i class="fa fa-line-chart"></i>
+                                <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">10 days =>
+                                        45%</a></div>
+                            </div>
+                            <div class="box-content">
+                                You get 45% of your investment back after 10 days.
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-4 -->
+
+                    <div class="col-md-4">
+                        <div class="iconbox  left square">
+                            <div class="box-header">
+                                <i class="fa fa-bank"></i>
+                                <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">20 days =>
+                                        110%</a></div>
+                            </div>
+                            <div class="box-content">
+                                You get 110% of your investment back after 20 days.
+                            </div>
+
+                        </div><!-- /.iconbox -->
+                    </div><!-- /.col-md-4 -->
+                </div>
+            </div><!-- /.container -->
+        </section>
+
+
+        <!-- Portfolio -->
+        <section class="flat-row" id="marketTimes">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-section style2 style3">
+                            <h1 class="title" style="background-color: black;">MARKET TIMES</h1>
+                        </div>
+                        <div class="loaders">
+                            <div class="container">
+                                <div class="row loaders_container">
+                                    <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
+
                                     </div>
-                                    
-                                </div><!-- /.iconbox -->
-                            </div><!-- /.iconbox-item -->
-
-                             <div class="iconbox-item">
-                                <div class="iconbox left style2">   
-                                    <img src="images/services/3.jpg" alt="serives"> 
-                                    <div class="box-content">
-                                        <div class="box-title">
-                                            <a href="https://2mocoin.000webhostapp.com/#/login">Bonus Gains</a>
-                                        </div> 
-                                        Earn bonuses each month based on your sales.
+                                    <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
                                     </div>
-                                    
-                                </div><!-- /.iconbox -->
-                            </div><!-- /.iconbox-item -->                 
-                            
-                        </div>
-                    </div><!-- /.flat-iconbox-carosuel-wrap -->
-                </div>
-            </div>  
-        </div><!-- /.container -->   
-    </section>  
+                                    <div class="col-lg-2 col-md-4 col-sm-6 loader_col"
+                                        style="color: white; text-align: center !important;">
+                                        <span class="h3" style="background-color: black;">10 AM - 12 AM</span></td>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 loader_col"
+                                        style="color: white; text-align: center !important;">
+                                        <span class="h3" style="background-color: black;">06 PM - 08 PM</span></td>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
 
-    <!-- About -->
-    <section class="flat-row about background-color" id="about" >
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="title-section style3">
-                        <h1 class="title">WHAT WE OFFER</h1>                                  
-                    </div>
-                </div><!-- /.col-md-12 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-12 -->
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="iconbox  left square">                    
-                        <div class="box-header">
-                            <i class="fa fa-bar-chart-o"></i>                             
-                            <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">5 days => 20%</a></div>
+        </section>
+
+
+
+        <!-- Counter -->
+        <div class="flat-row" style="background-color: #b3b3b3;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-section style3">
+                            <h1 class="title">OUR STATISTICS
+                            </h1>
                         </div>
-                        <div class="box-content">
-                            You get 20% of your investment back after 5 days.
+                    </div><!-- /.col-md-12 -->
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="flat-skillbar style1">
+                            <div class="flat-progress-circle" data-width="20" data-size="170" data-percent="91"
+                                data-waypoint-active="yes">
+                                <div class="inner-circle">
+                                    <span><span></span>%</span>
+                                </div>
+                            </div>
+                            <div class="title" style="color: black;">
+                                Happy Clients
+                            </div>
                         </div>
-                        
+                    </div> <br>
+                    <div class="col-md-3">
+                        <div class="flat-counter color-theme">
+                            <div class="content-counter ">
+                                <div class="count-circle">
+                                    <span class="count-circle-sub">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                </div>
+                                <div class="numb-count" data-to="34" data-speed="5000" data-waypoint-active="yes">34
+                                </div>
+                                <div class="name-count">Shareholder</div>
+                            </div>
+                        </div><!-- /.flat-counter -->
                     </div>
-                </div><!-- /.col-md-4 -->
-
-
-                <div class="col-md-4">
-                    <div class="iconbox  left square">                    
-                        <div class="box-header">
-                            <i class="fa fa-line-chart"></i>                           
-                            <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">10 days => 45%</a></div>
-                        </div>
-                        <div class="box-content">
-                            You get 45% of your investment back after 10 days.
-                        </div>
+                    <div class="col-md-3">
+                        <div class="flat-counter color-theme">
+                            <div class="content-counter">
+                                <div class="count-circle">
+                                    <span class="count-circle-sub">
+                                        <i class="fa fa-download"></i>
+                                    </span>
+                                </div>
+                                <div class="numb-count" data-to="21" data-speed="5000" data-waypoint-active="yes">21
+                                </div>
+                                <div class="name-count">Download</div>
+                            </div>
+                        </div><!-- /.flat-counter -->
                     </div>
-                </div><!-- /.col-md-4 -->
-
-                <div class="col-md-4">                    
-                    <div class="iconbox  left square">                    
-                        <div class="box-header">
-                            <i class="fa fa-bank"></i>                     
-                            <div class="box-title"><a href="https://2mocoin.000webhostapp.com/#/login">20 days => 110%</a></div>
-                        </div>
-                        <div class="box-content">
-                            You get 110% of your investment back after 20 days.
-                        </div>
-                        
-                    </div><!-- /.iconbox -->
-                </div><!-- /.col-md-4 -->               
-            </div>      
-        </div><!-- /.container -->   
-    </section>    
-
-    <!-- Portfolio -->
-    <section class="flat-row portfolio-style2" id="work">  
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="title-section style2 style3">
-                        <h1 class="title">Market Hours</h1>                                  
-                    </div>
-                    <div class="loaders">
-                        <div class="container">
-                            <div class="row loaders_container">
-                                <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
-                                    <!-- Loader -->
+                    <div class="col-md-3">
+                        <div class="flat-skillbar style1">
+                            <div class="flat-progress-circle" data-width="20" data-size="170" data-percent="85"
+                                data-waypoint-active="yes">
+                                <div class="inner-circle">
+                                    <span><span></span>%</span>
                                 </div>
-                                <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
-                                </div>
-                                <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
-                                    <!-- Loader --><span class="h3" style="color: white;">10 AM - 12 AM</span></td>
-                                    <div class="loader" data-perc="0.93"></div>
-                                </div>
-                                <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
-                                    <!-- Loader --><span class="h3" style="color: white;">07 PM - 08 PM</span></td>
-                                    <div class="loader" data-perc="0.93"></div>
-                                </div>
-                                <div class="col-lg-2 col-md-4 col-sm-6 loader_col">
-                                    <!-- Loader -->
-                                </div>
+                            </div>
+                            <div class="title" style="color: black;">
+                                Re-investors
                             </div>
                         </div>
                     </div>
-                </div><!-- /.col-md-12 -->
-            </div>
-        </div> 
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.flat-row -->
 
-    </section>     
-      
-    <!-- Mail Chimp -->
-    <section class="flat-row mail-chimp" style="background-color: #ce9927!important;">        
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-7">
-                    <div class="text">
-                        <h3>Want to stay connected?</h3>
-                        <p>Download the application now and get easier access to MobileMoney Coin.</p>
+        <section class="main-content page-single page-about" id="questions">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title-section style3">
+                            <h1 class="title" style="background-color: blanchedalmond;">QUESTIONS ?
+                            </h1>
+                        </div>
+                    </div><!-- /.col-md-12 -->
+                </div>
+                <div class="row">
+                    <div class="page-content">
+                        <div class="post-wrap">
+                            <div class="flat-accordion style">
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">How many account can i have?</h6>
+                                    <div class="toggle-content">
+                                        <p>Each user is entitled to as many accounts as they have a mobile money wallet.</p>
+                                    </div>
+                                </div><!-- /toggle -->
+
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">How many bids can i make?</h6>
+                                    <div class="toggle-content">
+                                        <p>Your account allows you to bid on as many packs as you wish.</p>
+                                    </div>
+                                </div><!-- /toggle -->
+
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">What do I gain by buying your stocks?</h6>
+                                    <div class="toggle-content">
+                                        <p>When you buy a stock pack, depending on the plan you choose, you will receive a percentage on top of your investment.
+                                            <br>20% in 5 days
+                                            <br>45% in 10 days
+                                            <br>110% in 20 days
+                                        </p>
+                                    </div>
+                                </div><!-- /toggle -->
+
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">What happens if I pay and the seller fails to approve me on time?</h6>
+                                    <div class="toggle-content">
+                                        <p>Make a report to the administration with the necessary screenshots to attest to the transaction. The management will take steps to verify the transaction at the operator's premises and take the necessary measures.</p>
+                                    </div>
+                                </div><!-- /toggle -->
+
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">What happens if I bid and fail to pay?</h6>
+                                    <div class="toggle-content">
+                                        <p>You have 5 hours to make the payment. If you do not, your account will be automatically blocked in the system with all your coins.</p>
+                                    </div>
+                                </div><!-- /toggle -->
+
+                                <div class="flat-toggle">
+                                    <h6 class="toggle-title dep">How to contact a manager?</h6>
+                                    <div class="toggle-content">
+                                        <p>Once you have registered you will have access to the social networking groups. In each group there are managers who address your concerns.
+                                            <br> You also have a manager contact email address.</p>
+                                    </div>
+                                </div><!-- /toggle -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="page-sidebar">
+                        <div class="sidebar">
+                            <div class="brochure" style="background-color: white !important;">
+                                <h3>Our Brochure</h3>
+                                <p>View our 2016 financial prospectus brochure for an easy to read guide on all of the
+                                    services offered.</p>
+                                <p class="flat-button radius"><a href="#"><i class="fa fa-file-pdf-o"></i> Download .PDF</a></p>
+                                <p class="flat-button radius"><a href="#"><i class="fa fa-android"></i> AndroidApp .APK</a></p>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </section>
+
+
+        <!-- Mail Chimp -->
+        <div class="flat-row mail-chimp" style="background-color: #ed993f!important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="text">
+                            <h3>Want to stay connected?</h3>
+                            <p>Download the application now and get easier access to MobileMoney Coin.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="subscribe">
+                            <a href="./apk/MoMo-coin_1_1.apk.zip">
+                                <input type="button" class="submit" value="Download">
+                                <input type="button" class="submit" value="For android system" disabled
+                                    style="background-color: white; color: black;">
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-5">
-                    <div class="subscribe">
-                            <input type="button" class="submit" value="Download">
-                            <input type="button" class="submit" value="For android system" disabled style="background-color: white; color: black;">
-                    </div>
+            </div><!-- /.container -->
+        </div>
+
+        <!-- Testimonial -->
+        <section class="flat-row" id="goodToKnow" style="color: white !important;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6" style="background-color: black !important;">
+                        <div class="title-section">
+                            <h1 class="title" style="color: white !important; background-color: black;">Good to know
+                            </h1>
+                        </div>
+
+                        <div class="flat-testimonials" data-item="1" data-nav="false" data-dots="false"
+                            data-auto="false">
+                            <div class="testimonials">
+                                <div class="avatar">
+                                    <img src="images/testimonial/6.png" alt="images">
+                                </div>
+                                <div class="message">
+                                    <div class="name"><span style="color: white !important; background-color: black;">
+                                            Claude Michelet</span></div>
+                                    <div class="position" style="color: white !important; background-color: black;">May
+                                        1994</div>
+                                    <blockquote class="whisper"
+                                        style="color: white !important; background-color: black;">"The individual is
+                                        made to take his freedom, to invest
+                                        it, to rise, to accomplish himself according to his ideas and his capacity to
+                                        criticize."</blockquote>
+                                </div>
+                            </div>
+
+                            <div class="testimonials">
+                            </div>
+                        </div><!-- /.flat-testimonials-->
+                    </div><!-- /.col-md-6 -->
                 </div>
-            </div> 
-        </div><!-- /.container -->   
-    </section>
-
-    <!-- Testimonial -->
-    <section class="flat-row" id="testimonials">        
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="title-section">
-                        <h1 class="title">Good to know</h1>                                  
-                    </div>
-
-                    <div class="flat-testimonials" data-item="1" data-nav="false" data-dots="false" data-auto="false">
-                        <div class="testimonials">  
-                            <div class="avatar">     
-                                <img src="images/testimonial/6.png" alt="images">
-                            </div>
-                            <div class="message">
-                                <div class="name"><span> Claude Michelet</span></div>
-                                <div class="position">May 1994</div>
-                                <blockquote class="whisper">"The individual is made to take his freedom, to invest it, to rise, to accomplish himself according to his ideas and his capacity to criticize."</blockquote>
-                            </div>
-                        </div>  
-
-                        <div class="testimonials">  
-                        </div>                                                  
-                    </div><!-- /.flat-testimonials-->
-                </div><!-- /.col-md-6 -->                              
-            </div>      
-        </div><!-- /.container -->
-    </section>    
+            </div><!-- /.container -->
+        </section>
 
 
-    <!-- Footer -->
-    <!-- <footer class="footer" style="background-color: black !important;">
+        <!-- Footer -->
+        <!-- <footer class="footer" style="background-color: black !important;">
         <div class="footer-widgets">
             <div class="container">
                 <div class="row"> 
@@ -387,53 +834,60 @@
 
     </footer> -->
 
-    <!-- Bottom -->
-    <div class="bottom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="copyright pull-left"> 
-                        <p>© Copyright <a href="#"><strong> momo-coin</strong></a> 2021. All Rights Reserved.
-                        </p>
-                    </div>                   
-                </div><!-- /.col-md-6 -->              
-            </div><!-- /.row -->
-        </div><!-- /.container -->
+        <!-- Bottom -->
+        <div class="bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="copyright pull-left">
+                            <p>© Copyright <a href="#"><strong> momo-coin</strong></a> 2021. All Rights Reserved.
+                            </p>
+                        </div>
+                    </div><!-- /.col-md-6 -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+
+        <!-- Go Top -->
+        <a class="go-top">
+            <i class="fa fa-angle-up" style="color: #c6863d;"></i>
+        </a>
+
     </div>
 
-    <!-- Go Top -->
-    <a class="go-top">
-        <i class="fa fa-angle-up" style="color: #c6863d;"></i>
-    </a>   
-
-    </div>
-    
     <!-- Javascript -->
-<!-- JS, Popper.js, and jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
-<script src="javascript//jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/parallax-js-master/parallax.min.js"></script>
-<script src="javascript//custom.js"></script>
+    <script src="javascript//jquery-3.2.1.min.js"></script>
+    <script src="styles/bootstrap4/popper.js"></script>
+    <script src="styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="plugins/easing/easing.js"></script>
+    <script src="plugins/parallax-js-master/parallax.min.js"></script>
+    <script src="javascript//custom.js"></script>
+
 
 
     <script type="text/javascript" src="javascript/jquery.min.js"></script>
-    <script type="text/javascript" src="javascript/bootstrap.min.js"></script> 
-    <script type="text/javascript" src="javascript/jquery.easing.js"></script> 
-    <script type="text/javascript" src="javascript/imagesloaded.min.js"></script> 
+    <script type="text/javascript" src="javascript/bootstrap.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery.easing.js"></script>
+    <script type="text/javascript" src="javascript/imagesloaded.min.js"></script>
     <script type="text/javascript" src="javascript/jquery.isotope.min.js"></script>
-    <script type="text/javascript" src="javascript/jquery-waypoints.js"></script> 
-    <script type="text/javascript" src="javascript/jquery.magnific-popup.min.js"></script>   
+    <script type="text/javascript" src="javascript/jquery-waypoints.js"></script>
+    <script type="text/javascript" src="javascript/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="javascript/jquery.cookie.js"></script>
-    <script type="text/javascript" src="javascript/jquery.fitvids.js"></script> 
+    <script type="text/javascript" src="javascript/jquery.fitvids.js"></script>
     <script type="text/javascript" src="javascript/parallax.js"></script>
-    <script type="text/javascript" src="javascript/smoothscroll.js"></script>   
+    <script type="text/javascript" src="javascript/smoothscroll.js"></script>
     <script type="text/javascript" src="javascript/jquery.flexslider-min.js"></script>
     <script type="text/javascript" src="javascript/owl.carousel.js"></script>
     <script type="text/javascript" src="javascript/jquery-validate.js"></script>
@@ -441,10 +895,42 @@
     <script type="text/javascript" src="javascript/gmap3.min.js"></script>
     <script type="text/javascript" src="javascript/main.js"></script>
 
+
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="javascript/jquery.easing.js"></script>
+    <script type="text/javascript" src="javascript/jquery-countTo.js"></script>
+    <script type="text/javascript" src="javascript/jquery-waypoints.js"></script>
+    <script type="text/javascript" src="javascript/jquery.easypiechart.min.js"></script>
+    <script type="text/javascript" src="javascript/jquery.fitvids.js"></script>
+
     <!-- Revolution Slider -->
     <script type="text/javascript" src="javascript/jquery.themepunch.tools.min.js"></script>
     <script type="text/javascript" src="javascript/jquery.themepunch.revolution.min.js"></script>
     <script type="text/javascript" src="javascript/slider.js"></script>
 
+
+    <!-- jQuery -->
+    <!-- SmoothScroll -->
+    <script type="text/javascript" src="assets/smoothscroll/smoothscroll.js"></script>
+    <!-- Bootstrap -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="js/waypoints.min.js"></script>
+    <!-- classie.js -->
+    <script src="js/classie.js"></script>
+    <!-- FlexSlider -->
+    <script src="assets/flexslider/jquery.flexslider.js"></script>
+    <!-- Modernizr -->
+    <script src="js/modernizr.js"></script>
+    <!-- Text Rotator -->
+    <script src="assets/textrotator/jquery.simple-text-rotator.js"></script>
+    <!-- Lightbox.js -->
+    <script src="assets/lightbox/js/lightbox.min.js"></script>
+    <!-- Google Maps -->
+    <!-- Theme JavaScript Core -->
+    <script src="js/main.js"></script>
+    <script src="js/script.js"></script>
 </body>
+
 </html>

@@ -218,7 +218,7 @@ padding:0px;
 
 .tp-caption.middle_yellow {
 position:absolute;
-color:rgb(251,213,114);
+color:#ed993f;
 font-weight:600;
 font-size:50px;
 line-height:50px;
@@ -231,7 +231,7 @@ white-space:nowrap;
 
 .tp-caption.huge_thin_yellow {
 	position:absolute;
-color:rgb(251,213,114);
+color:#ed993f;
 font-weight:300;
 font-size:90px;
 line-height:90px;
@@ -2531,15 +2531,15 @@ zoom: 1;
 }
 
 .flat-button-slider.bg-button-slider-32bfc0 {
-	background-color: #eab702;
+	background-color: #ed993f;
 }
 
 .flat-button-slider.bg-button-slider-32bfc0:hover {
-	background-color: #eab702;
+	background-color: #ed993f;
 }
 
 .flat-button-slider:hover {
-	background-color: #eab702;
+	background-color: #ed993f;
 }
 
 .flat-button-slider:hover a {

@@ -32,7 +32,7 @@
     font-weight: 600;
     display: inline-block;
     line-height: 1;
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
     cursor: pointer;    
     -webkit-transition: all ease .238s;
@@ -58,9 +58,9 @@
 }
 
 .flat-button.border {
-    border: 2px solid #eab702;
+    border: 2px solid #ed993f;
     background-color: transparent;
-    color: #eab702;
+    color: #ed993f;
     border-radius: 3px;
 }
 
@@ -91,7 +91,7 @@
     background-color: transparent;
     padding: 15px 42px;
     border-radius: 50px;
-    border-color: #eab702;
+    border-color: #ed993f;
     border-style: solid;
     border-width: 2px;
     font-weight: 700;
@@ -148,7 +148,7 @@
 }
 
 .button-color.theme {
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
 }
 
@@ -192,7 +192,7 @@
 
 .flat-row.mail-chimp {
     padding: 35px 0;
-    background-color: #eab702;
+    background-color: #ed993f;
     overflow: hidden;
 }
 
@@ -299,7 +299,7 @@
     bottom: -28px;
     width: 15px;
     height: 10px;
-    background-color: #eab702;
+    background-color: #ed993f;
 }
 
 .title-section .title:after {
@@ -377,7 +377,7 @@
 .requestform label.error {
     font-size: 12px;
     font-style: italic;
-    color: #eab702;
+    color: #ed993f;
 }
 
 .requestform select {
@@ -423,7 +423,7 @@
     font-weight: 600;
     display: inline-block;
     line-height: 1;
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
     cursor: pointer;
     text-transform: uppercase; 
@@ -475,7 +475,7 @@
 .iconbox .box-redmore {
     font-size: 12px;
     font-weight: 700;
-    color: #eab702;
+    color: #ed993f;
     margin-top: 15px;
     display: block;
     position: relative;
@@ -565,7 +565,7 @@
     position: absolute;
     left: 0;
     top: -10px;
-    background-color: #eab702;
+    background-color: #ed993f;
 }
 
 .iconbox.style2 .box-content .box-title a {
@@ -573,7 +573,7 @@
 }
 
 .iconbox.style2 .box-content .box-title a:hover {
-    color: #eab702;
+    color: #ed993f;
 }
 
 .iconbox.style2:hover .box-content {
@@ -587,7 +587,7 @@
 /* Style 3 */
 .iconbox.style3 img {
     margin-bottom: 20px;
-    border-bottom: 3px solid #eab702;
+    border-bottom: 3px solid #ed993f;
 }
 
 /* Circle */
@@ -595,7 +595,7 @@
     width: 40px;
     height: 40px; 
     line-height: 40px;   
-    background-color: #eab702;    
+    background-color: #ed993f;    
     border-radius: 100px;    
     padding: 0;
     font-size: 17px;
@@ -617,7 +617,7 @@
     width: 106px;
     height: 106px; 
     line-height: 106px;   
-    background-color: #eab702;
+    background-color: #ed993f;
     border: 4px solid #fff;
     border-radius: 100px;    
     padding: 0;
@@ -631,13 +631,13 @@
 
 .iconbox.circle.lagre:hover .box-header i {
     background-color: #333;
-    border: 4px solid #eab702;
+    border: 4px solid #ed993f;
 }
 
 
 /* Square */
 .iconbox.square .box-header i {
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
     font-size: 28px;
 }
@@ -679,7 +679,7 @@
     height: 37px;
     line-height: 37px;
     border-radius: 3px;
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
     padding: 0;
     text-align: center;
@@ -712,7 +712,7 @@
     display: inline-block;
     min-width: 100px;
     text-align: center;
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
 }    
 
@@ -727,7 +727,7 @@
     height: 50px;
     line-height: 50px;
     border-radius: 3px;
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
     padding: 0;
     text-align: center;
@@ -783,9 +783,9 @@
 }
 
 .iconbox.center-circle-style1 .box-redmore:hover {
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
-    border: 1px solid #eab702;
+    border: 1px solid #ed993f;
 }
 
 /* center-circle-style2 */
@@ -800,7 +800,7 @@
     left: 50%;
     margin-left: -50px;
     top: -50px;
-    background-color: #eab702;
+    background-color: #ed993f;
     border: 5px solid #fff;
     width: 100px;
     height: 100px;
@@ -812,7 +812,7 @@
 .iconbox.circle.lagre.center-circle-style2:hover .box-header i {
     background-color: #333;
     color: #fff;
-    border: 5px solid #eab702;
+    border: 5px solid #ed993f;
 }
 
 .iconbox.center-circle-style2 .box-redmore {    
@@ -823,7 +823,7 @@
 }
 
 .iconbox.center-circle-style2 .box-redmore:hover {
-    color: #eab702;
+    color: #ed993f;
 }
 
 /* Flat-iconbox-carosuel
@@ -906,7 +906,7 @@
     position: absolute;
     top: -30px;
     left: 30px;
-    background: #eab702;
+    background: #ed993f;
     width: 60px;
     height: 5px;
     z-index: 10;
@@ -960,14 +960,14 @@
 }
 
 .blog-carosuel.owl-theme .owl-dots .owl-dot:hover span {
-    background-color: #eab702;
+    background-color: #ed993f;
 }
 
 .blog-carosuel.owl-theme .owl-dots .owl-dot.active span::before {
     content: "";
     width: 18px;
     height: 18px;
-    border: 2px solid #eab702;
+    border: 2px solid #ed993f;
     position: absolute;
     top: -5px;
     left: -5px;
@@ -1013,7 +1013,7 @@
     letter-spacing: 0.2px;
     font-size: 14px;
     font-weight: 600;
-    color: #eab702;
+    color: #ed993f;
 }
 
 .blog-shortcode.style1 article .content-post .read-more a:hover,
@@ -1027,7 +1027,7 @@
     top: 0;
     font-family: "fontAwesome";
     content: "";
-    color: #eab702;
+    color: #ed993f;
     content: "\f054";
     font-size: 12px;
 }
@@ -1192,7 +1192,7 @@
 }
 
 .mail-chimp input[type="submit"]:hover {
-    color: #eab702;
+    color: #ed993f;
 }
 
 /* Flat portfolio
@@ -1245,7 +1245,7 @@ ul.portfolio-filter.style1 > li:first-child {
 }
 
 ul.portfolio-filter.style1 > li.active a {
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
 }
 
@@ -1264,7 +1264,7 @@ ul.portfolio-filter.style1 > li a {
 }
 
 ul.portfolio-filter.style1 > li a:hover {
-   color: #eab702;     
+   color: #ed993f;     
 }
 
 .flat-portfolio .portfolio-details {
@@ -1332,7 +1332,7 @@ ul.portfolio-filter.style1 > li a:hover {
 .flat-portfolio .item .overlay {
     background-color: rgba(40, 40, 40, 0.9);
     bottom: 10px;
-    color: #eab702;
+    color: #ed993f;
     height: inherit;
     left: 10px;
     opacity: 0;
@@ -1407,7 +1407,7 @@ ul.portfolio-filter.style1 > li a:hover {
     z-index: 99;
     left: 36px;
     bottom: 20px; 
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
     font-size: 13px;
     padding: 9px 19px 10px;
@@ -1499,7 +1499,7 @@ ul.portfolio-filter.style1 > li a:hover {
     position: absolute;
     top: 6px;
     left: 0;
-    background: #eab702;
+    background: #ed993f;
 }
 
 #flat-testimonials-flexslider .testimonial-author .author-name {
@@ -1511,7 +1511,7 @@ ul.portfolio-filter.style1 > li a:hover {
 }
 
 #flat-testimonials-flexslider .testimonial-author .author-name span {
-    color: #eab702;
+    color: #ed993f;
 }
 
 #flat-testimonials-carousel ul li {
@@ -1528,11 +1528,11 @@ ul.portfolio-filter.style1 > li a:hover {
 }
 
 #flat-testimonials-carousel ul li:first-child img {
-    border: 2px solid #eab702;     
+    border: 2px solid #ed993f;     
 }
 
 #flat-testimonials-carousel ul img:hover {
-    border: 2px solid #eab702;
+    border: 2px solid #ed993f;
 }
     
 /* Flat-client
@@ -1579,7 +1579,7 @@ ul.portfolio-filter.style1 > li a:hover {
     display: block;
     width: 40px;
     height: 40px;
-    background-color: #eab702;
+    background-color: #ed993f;
     text-align: center;
     line-height: 40px;
     color: #fff;
@@ -1688,7 +1688,7 @@ ul.portfolio-filter.style1 > li a:hover {
     opacity: 1;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
 }
 
@@ -1745,7 +1745,7 @@ ul.portfolio-filter.style1 > li a:hover {
 }
 
 .flat-team.style4 ul.social li a:hover {
-    color: #eab702;
+    color: #ed993f;
 }
 
 .flat-team.style4 .avatar .overlay {
@@ -1837,7 +1837,7 @@ ul.portfolio-filter.style1 > li a:hover {
     opacity: 1;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
 }
 
@@ -1887,7 +1887,7 @@ ul.portfolio-filter.style1 > li a:hover {
     position: absolute;
     top: 0;
     left: 20px;
-    background: #eab702;
+    background: #ed993f;
     width: 60px;
     height: 5px;
     z-index: 10;
@@ -2028,7 +2028,7 @@ ul.portfolio-filter.style1 > li a:hover {
 }
 
 .testimonials.style2 blockquote:before {
-    color: #eab702;
+    color: #ed993f;
     display: block !important;
     left: -20px;
     top: 0;
@@ -2087,7 +2087,7 @@ ul.portfolio-filter.style1 > li a:hover {
 
 .testimonials.style3 .message {
     margin-bottom: 20px;
-    background: #eab702;
+    background: #ed993f;
     border-radius: 10px;
     border: 0;
     color: #fff;   
@@ -2117,7 +2117,7 @@ ul.portfolio-filter.style1 > li a:hover {
     bottom: -20px;
     border-style: solid;
     border-width: 10px 10px 10px 10px;
-    border-color: #eab702 transparent transparent transparent;    
+    border-color: #ed993f transparent transparent transparent;    
     z-index: 998;   
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
     filter: alpha(opacity=0);
@@ -2282,7 +2282,7 @@ ul.flat-list li:before {
     top: 5px;
     width: 15px;
     height: 15px;
-    border: 2px solid #eab702;
+    border: 2px solid #ed993f;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
@@ -2297,7 +2297,7 @@ ul.flat-list li:after {
     top: 10px;
     width: 5px;
     height: 5px;
-    background-color: #eab702;
+    background-color: #ed993f;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
@@ -2313,7 +2313,7 @@ ul.flat-list.style2 li:before {
     top: 5px;
     width: 15px;
     height: 15px;
-    border: 1px solid #eab702;
+    border: 1px solid #ed993f;
     -webkit-border-radius: 100%;
     -moz-border-radius: 100%;
     -ms-border-radius: 100%;
@@ -2326,7 +2326,7 @@ ul.flat-list.style2 li:after {
     content: "\f00c";
     width: 0;
     height: 0;
-    color: #eab702;
+    color: #ed993f;
     left: 3px;
     top: 1px;
     font-size: 9px;
@@ -2372,7 +2372,7 @@ ul.flat-list.use-icon li:after {
     position: absolute;
     left: 0;
     top: 0;
-    background: #f1c40f;
+    background: #ed993f;
     font-family: "fontAwesome";
     content: ""; 
     color: #323232; 
@@ -2394,12 +2394,12 @@ ul.flat-list.use-icon li:after {
 }
 
 .flat-accordion .toggle-title.active {
-    background: #f1c40f;
+    background: #ed993f;
 }
 
 .flat-accordion .toggle-title.active:before {
     background: #323232;
-    color: #eab702;
+    color: #ed993f;
 }
 
 .flat-accordion .toggle-content {
@@ -2506,7 +2506,7 @@ ul.flat-list.use-icon li:after {
 }
 
 .flat-accordion.style2 .toggle-title span {
-    background: #eab702;
+    background: #ed993f;
     width: 40px;
     height: 40px;
     left: 0;
@@ -2619,7 +2619,7 @@ ul.flat-list.use-icon li:after {
 }
 
 .flat-accordion.style3 .toggle-title span {
-    background: #eab702;
+    background: #ed993f;
     width: 40px;
     height: 40px;
     left: 0;
@@ -2710,9 +2710,9 @@ ul.flat-list.use-icon li:after {
 }
 
 .flat-accordion.style5 .toggle-title.active {
-    background: #eab702;
+    background: #ed993f;
     color: #fff;
-    border: 1px solid #eab702;
+    border: 1px solid #ed993f;
 }
 
 .flat-accordion.style5 .toggle-content {
@@ -2772,7 +2772,7 @@ ul.flat-list.use-icon li:after {
     background: #FFF;
     border-left-color: #c2c2c2;
     border-right-color: #c2c2c2;
-    border-top: 3px solid #eab702;
+    border-top: 3px solid #ed993f;
     color: #CCC;    
 }
 
@@ -2831,7 +2831,7 @@ ul.flat-list.use-icon li:after {
 }
 
 .flat-tabs.v1 ul.menu-tab li.active {
-    background: #eab702;
+    background: #ed993f;
     color: #fff;        
 }
 
@@ -2894,7 +2894,7 @@ h4.title-contact-info {
 
 .flat-contact-info li i {
     font-size: 20px;
-    color: #eab702;
+    color: #ed993f;
     margin-right: 15px;
 }
 
@@ -2921,7 +2921,7 @@ h4.title-contact-info {
     width: 100px;
     height: 100px;
     line-height: 100px;
-    background-color: #eab702;
+    background-color: #ed993f;
     border: 4px solid #f7f7f7;
     border-radius: 100px;
     padding: 0;
@@ -3013,7 +3013,7 @@ h4.title-contact-info {
 }
 
 .flat-progress .progress-animate {
-    background-color: #eab702;
+    background-color: #ed993f;
     height: 10px;
     width: 0;   
 }
@@ -3073,27 +3073,27 @@ h4.title-contact-info {
 .flat-progress.style1 .progress-animate {
     height: 20px;
     border-radius: 5px;
-    background: #eab702;
-    background: -moz-linear-gradient(left, #eab702 0%, #feb800 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#eab702), color-stop(100%,#feda59));
-    background: -webkit-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: -o-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: -ms-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: linear-gradient(to right, #eab702 0%,#feda59 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#eab702", endColorstr="#feda59",GradientType=1 );
+    background: #ed993f;
+    background: -moz-linear-gradient(left, #ed993f 0%, #feb800 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ed993f), color-stop(100%,#feda59));
+    background: -webkit-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: -o-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: -ms-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: linear-gradient(to right, #ed993f 0%,#feda59 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed993f", endColorstr="#feda59",GradientType=1 );
 }
 
 /* Style 2 */
 .flat-progress.style1 .progress-animate {
     height: 15px;   
-    background: #eab702;
-    background: -moz-linear-gradient(left, #eab702 0%, #feb800 100%);
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#eab702), color-stop(100%,#feda59));
-    background: -webkit-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: -o-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: -ms-linear-gradient(left, #eab702 0%,#feda59 100%);
-    background: linear-gradient(to right, #eab702 0%,#feda59 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#eab702", endColorstr="#feda59",GradientType=1 );
+    background: #ed993f;
+    background: -moz-linear-gradient(left, #ed993f 0%, #feb800 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ed993f), color-stop(100%,#feda59));
+    background: -webkit-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: -o-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: -ms-linear-gradient(left, #ed993f 0%,#feda59 100%);
+    background: linear-gradient(to right, #ed993f 0%,#feda59 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed993f", endColorstr="#feda59",GradientType=1 );
 }
 
 /* Style 3 */
@@ -3274,12 +3274,12 @@ h4.title-contact-info {
 /* Style 1 */
 .flat-price-table.style1 .price-title { 
     letter-spacing: 3px;
-    background: #eab702;    
+    background: #ed993f;    
     color: #fff;
 }
 
 .flat-price-table.style1 .price-buynow {        
-    background: #eab702;       
+    background: #ed993f;       
     color: #fff;
 }
 
@@ -3290,7 +3290,7 @@ h4.title-contact-info {
 
 /* Style 2 */
 .flat-price-table.style2 .price {
-    background: #eab702;
+    background: #ed993f;
 }
 
 .flat-price-table.style2 .price p,
@@ -3301,7 +3301,7 @@ h4.title-contact-info {
 
 .flat-price-table.style2 .price-buynow {
     display: inline-block;
-    background: #eab702;
+    background: #ed993f;
     padding: 15px 17px;
     color: #fff;
     margin: 10px 0;
@@ -3409,7 +3409,7 @@ h4.title-contact-info {
 
 .flat-price .cta.highlight .button {   
     display: inline-block;
-    background-color: #eab702;
+    background-color: #ed993f;
     color: #fff;
     background-image: none;
     height: 45px;
@@ -3432,7 +3432,7 @@ h4.title-contact-info {
 }
 
 .flat-price .price.highlight {
-    background-color: #eab702;
+    background-color: #ed993f;
 }
 
 /* Pricing table
@@ -3490,7 +3490,7 @@ table tr.style1 {
 }
 
 .flat-title span {
-    color: #eab702;
+    color: #ed993f;
 }
 
 .flat-title.color-white {
@@ -3523,7 +3523,7 @@ table tr.style1 {
 }
 
 .flat-iconlist .flat-iconlist-icon i {
-    color: #eab702;
+    color: #ed993f;
     display: inline-block;
     font-size: 26px;
     line-height: 48px;
