@@ -140,7 +140,10 @@ export class BasicPackService {
                     data: pack.toString()
                 }
             ])
-            .then((result: ResultStatut) => resolve(result))
+            .then((result: ResultStatut) => {
+                this.eventService.addPackEvent.next(pack);
+                return resolve(result);
+            })
             .catch((error) => {
                 this.firebaseApi.handleApiError(error);
                 reject(error);
@@ -245,7 +248,10 @@ export class BasicPackService {
                 },     
 
             ])                
-            .then((result)=> this.userService.getUserById(pack.idBuyer))
+            .then((result)=> {
+                this.eventService.addPackEvent.next(newPack);
+                return this.userService.getUserById(pack.idBuyer);
+            })
             .then((result)=>{
                 if(result.result.parentSponsorShipId.toString()!='') 
                 {

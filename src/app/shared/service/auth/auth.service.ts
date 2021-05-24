@@ -100,7 +100,7 @@ export class AuthService {
         .then(() => this.signIn(user,false))
         .then(() =>  {
           user.dateCreation=(new Date()).toISOString();
-          this.eventService.registerNewUser.next(user);
+          this.eventService.registerNewUserEvent.next(user);
           return this.userService.addUser(user)
         })
         .then(() => {

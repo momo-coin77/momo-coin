@@ -124,7 +124,7 @@ export class UserService {
 
   changeStatusUsingId(idUser: EntityID): Promise<ResultStatut> {
     return this.getUserById(idUser)
-      .then((result: ResultStatut) => this.changeStatus(result.result.id))
+      .then((result: ResultStatut) => this.changeStatus(result.result))
   }
 
   changeStatus(user: User): Promise<ResultStatut> {
