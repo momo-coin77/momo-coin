@@ -46,7 +46,7 @@ export class BasicPackService {
         let nstatus=PackState.ON_MARKET;
         return new Promise<ResultStatut>((resolve,reject)=>{
         this.firebaseApi.updates([{
-            link:`pack/${idPack.toString()}/state`,
+            link:`packs/${idPack.toString()}/state`,
             data:nstatus
         }])
         .then((result)=>{

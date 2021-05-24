@@ -20,7 +20,7 @@ export class DataStateUpdateService {
     private packService: BasicPackService
   ) {
     // this.eventService.loginEvent.subscribe((user:User)=>{
-    this.updateAccountMarket();
+    this.updatePackMarket();
     this.updateAccountToBlocque();
     // console.log("Test update")
     // })
@@ -34,12 +34,13 @@ export class DataStateUpdateService {
     })
   }
 
-  async updateAccountMarket() {
+  async updatePackMarket() {
     this.firebaseApi
       .getFirebaseDatabase()
-      .ref('toupdate/account/market')
+      .ref('toupdate/market')
       .once('value', (data) => {
         let kdata = data.val();
+        console.log("pack to update ",kdata)
         for (let key in kdata) {
           let id: EntityID = new EntityID();
           id.setId(key);

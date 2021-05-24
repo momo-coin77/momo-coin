@@ -51,8 +51,8 @@ export class UserNotificationService {
     else
     {
       this.listNotifications.slice(pos,1);
-      this.listNotifications.push(message);
-      this.listNotifications.reverse();
+      // this.listNotifications.push(message);
+      // this.listNotifications.reverse();
     }
     this.notifications.next(this.listNotifications);
   }
@@ -71,12 +71,12 @@ export class UserNotificationService {
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
         let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
-        if(pos>-1)
-        {
-          this.listNotifications.splice(pos,1);
-          // this.notifications.next(this.listNotifications);
-          resolve(result);
-        }
+        // if(pos>-1)
+        // {
+        //   this.listNotifications.splice(pos,1);
+        //   this.notifications.next(this.listNotifications);          
+        // }
+        resolve(result);
       })
       .catch((error)=>reject(error))
     })
