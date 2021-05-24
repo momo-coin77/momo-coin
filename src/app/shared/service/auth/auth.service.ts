@@ -1,7 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User, UserAccountState } from '../../entity/user';
-import { DataStateUpdateService } from '../data-state-update/data-state-update.service';
 import { EventService } from '../event/event.service';
 import { FireBaseConstant } from '../firebase/firebase-constant';
 import { FirebaseApi } from '../firebase/FirebaseApi';
@@ -23,7 +22,6 @@ export class AuthService {
   constructor(private firebaseApi: FirebaseApi,
     private localStorageService: UserlocalstorageService,
     private eventService:EventService,
-    private dateToUpdateService:DataStateUpdateService,
     private userService: UserService) {
     this.localStorageService.dataUser.subscribe((userData: UserLocalStorageData) => {
       this.isLoggedIn = userData.isLoggedIn;
@@ -102,9 +100,9 @@ export class AuthService {
         .then(() => this.signIn(user,false))
         .then(() =>  {
           user.dateCreation=(new Date()).toISOString();
+          this.eventService.registerNewUser.next(user);
           return this.userService.addUser(user)
         })
-        .then(()=> this.dateToUpdateService.addMaxUserDate(user.id))
         .then(() => {
           this.signOut();
           resolve(new ResultStatut());

@@ -37,6 +37,7 @@ export class BasicPackService {
         ){
             this.eventService.loginEvent.subscribe((log)=>{
             //   if(!log) return;
+            
               this.newPackHandler();  
             })
         }
@@ -245,12 +246,16 @@ export class BasicPackService {
 
             ])                
             .then((result)=> this.userService.getUserById(pack.idBuyer))
-            .then((result)=> {                
+            .then((result)=>{
                 if(result.result.parentSponsorShipId.toString()!='') 
                 {
                     return this.userService.getUserBySponsorId(result.result.parentSponsorShipId)                    
                 }
-                else return Promise.resolve(new ResultStatut())
+                else 
+                {
+                    result.result=null;
+                    return Promise.resolve(result)
+                }
             })
             .then((result)=>{
                 if(result.result!=null)

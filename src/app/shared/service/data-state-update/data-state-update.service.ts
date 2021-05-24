@@ -4,7 +4,7 @@ import { User } from '../../entity/user';
 import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
-// import { BasicPackService } from '../pack/basic-pack.service';
+import { BasicPackService } from '../pack/basic-pack.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -16,12 +16,16 @@ export class DataStateUpdateService {
     private firebaseApi: FirebaseApi,
     private eventService: EventService,
     private userService: UserService,
-    // // private packService: BasicPackService
+    private packService: BasicPackService
   ) {
     // this.eventService.loginEvent.subscribe((user:User)=>{
     this.updateAccountMarket();
     this.updateAccountToBlocque();
     // })
+    this.eventService.registerNewUser.subscribe((user:User)=>{
+      if(!user) return;
+      this.addMaxUserDate(user.id)
+    })
   }
 
   async updateAccountMarket() {
@@ -37,7 +41,7 @@ export class DataStateUpdateService {
           let after = new Date(kdata[key]);
           if (after <= now) {
             this.deleteMaxPackDate(id);
-            // this.packService.changePackStatus(id);
+            this.packService.changePackStatus(id);
           }
         }
       })
