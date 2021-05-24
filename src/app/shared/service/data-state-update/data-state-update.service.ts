@@ -22,7 +22,7 @@ export class DataStateUpdateService {
     // this.eventService.loginEvent.subscribe((user:User)=>{
     this.updateAccountMarket();
     this.updateAccountToBlocque();
-    console.log("Test update")
+    // console.log("Test update")
     // })
     this.eventService.registerNewUserEvent.subscribe((user:User)=>{
       if(!user) return;

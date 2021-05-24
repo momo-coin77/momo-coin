@@ -17,11 +17,10 @@ export class HistoryComponent implements OnInit {
 
   constructor(private notification: NotificationService,
     private history: UserHistoryService) {
-      this. getPacksHistory();
-
   }
 
   ngOnInit() {
+    this. getPacksHistory();
   }
 
   getPacksHistory() {
