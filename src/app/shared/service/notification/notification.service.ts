@@ -6,16 +6,18 @@ declare var $: any;
   providedIn: 'root'
 })
 export class NotificationService {
-    
 
-    showNotification(from, align, colortype, icon, text) {
 
+    showNotification(from, align, colortype, icon, text, time?) {
+        if (!time) {
+            time = 3000;
+        }
         $.notify({
             icon: icon,
             message: text
         }, {
             type: colortype,
-            timer: 2000,
+            timer: time,
             placement: {
                 from: from,
                 align: align
