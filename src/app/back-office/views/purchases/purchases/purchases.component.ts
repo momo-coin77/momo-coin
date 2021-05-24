@@ -16,18 +16,18 @@ export class PurchasesComponent implements OnInit {
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor( private myPack: MarketService, private notifService: NotificationService) { }
+  constructor( private myPack: MarketService) { }
 
   ngOnInit() {
-    this.getPacks();
+    this.getPurchasePacks();
   }
 
-  getPacks() {
+  getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
-      this.packs.push({ waitResponse: false, pack})
+      this.packs.push({ waitResponse: false, pack});
 
-      console.log(this.packs)
+      console.log('Purchase packs list', this.packs);
       // this.searchPack();
-    })
+    });
   }
 }

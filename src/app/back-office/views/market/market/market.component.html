@@ -27,14 +27,14 @@
                       <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
                     </select></b>
                 </th>
-                <th *ngIf="currentPack.user.phone == currentUserPhone"><b>
-                    <span class="badge badge-success" (click)="show1(pack)">
-                      <i class="fa fa-shopping-cart center"></i>
+                <th *ngIf="pack.user.phone == currentUserPhone"><b>
+                    <span class="badge badge-info">
+                      Yours
                     </span></b>
                 </th>
-                <th *ngIf="currentPack.user.phone != currentUserPhone"><b>
+                <th *ngIf="pack.user.phone != currentUserPhone"><b>
                     <span class="badge badge-success" (click)="show1(pack)">
-                      <i class="fa fa-shopping-cart center"></i>
+                      <i class="fa fa-shopping-cart center"></i>Buy
                     </span></b>
                 </th>
               </tr>

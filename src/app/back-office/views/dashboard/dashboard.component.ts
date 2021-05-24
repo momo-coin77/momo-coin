@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { interval, Subscription } from 'rxjs';
+import { MarketService } from '../../../shared/service/market/market.service';
+import { Pack } from '../../../shared/entity/pack';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -16,8 +18,14 @@ export class DashboardComponent implements OnInit {
   balence: number = 0; // somme de toutes les montants de chaqueq pack avec son id
   bonusBalence: number = 0; // Bonus de pa
   saleBalence: number = 0;
+  listPurchasePacks: Map<string, boolean> = new Map<string, boolean>();
+  listSalePacks: Map<string, boolean> = new Map<string, boolean>();
+  numPurchasePack: number = 0;
+  numSalePack: number = 0;
 
-  constructor() {
+  constructor(private myPack: MarketService) {
+    this.getPurchasePacks();
+    this.getSalePacks();
   }
 
   randomNumber(m?: number, k?: number, c?: number) {
@@ -28,7 +36,7 @@ export class DashboardComponent implements OnInit {
     // let kk = Math.floor((Math.random() * k) + 1);
     // let cc = Math.floor((Math.random() * c) + 1);
     let d = new Date();
-    let val = 10
+    let val = 10;
     let hh = d.getHours();
     if (hh > 21) {
       val = 10;
@@ -46,5 +54,25 @@ export class DashboardComponent implements OnInit {
       (val) => {
         this.activeUser = this.randomNumber(10);
       });
+    this.getPurchasePacks();
+    this.getSalePacks();
+  }
+
+  getPurchasePacks() {
+    this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
+      if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
+        this.listPurchasePacks.set(pack.id.toString().toString(), true);
+        this.numPurchasePack++;
+      }
+    });
+  }
+
+  getSalePacks() {
+    this.myPack.getMyOrderedPackOnMarket().subscribe((pack: Pack) => {
+      if (!this.listSalePacks.has(pack.id.toString().toString())) {
+        this.listSalePacks.set(pack.id.toString().toString(), true);
+        this.numSalePack++;
+      }
+    });
   }
 }
