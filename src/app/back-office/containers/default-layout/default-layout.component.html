@@ -4,7 +4,7 @@
   [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav ml-auto">
       <i class="icon-bell"></i><span *ngIf="notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
-      <span *ngIf="!notif" class="badge badge-pill badge-info">{{unreadMessageList.length}}</span>
+      <span *ngIf="!notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
@@ -56,7 +56,9 @@
           </strong>
         <br>
       </div>
+
       <router-outlet></router-outlet>
+      
     </div><!-- /.container-fluid -->
   </main>
   <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
@@ -79,7 +81,7 @@
 </div>
 <app-footer style="background-color: white;">
   <span class="ml-auto">&copy; {{year | date: 'yyyy'}} <a href="#"
-      style="color: #b48f30;"><strong>MoMo-Coin.</strong></a></span>
+      style="color: #ed993f;"><strong>MoMo-Coin.</strong></a></span>
 </app-footer>
 
 

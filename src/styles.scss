@@ -20,12 +20,11 @@ body { margin: 0;
       background: linear-gradient(to right, #ed993f, white);
     }
     .linear-gradient2 {
-      background: linear-gradient(to top, #e7d09f, white);
+      background: linear-gradient(to top, #ed993f, white);
     }
     .linear-gradient3 {
       background: linear-gradient(to top, #ed993f, white);
     }
-    
     
     textarea:focus,
     select:focus,
@@ -57,6 +56,7 @@ body { margin: 0;
   transition: 0.3s;
   font-size: 17px;
 }
+
 .center-div {
   margin: 0 auto;
   width: 100px; 
@@ -93,7 +93,7 @@ body { margin: 0;
     }
     .sidebar .nav-link:hover {
       color: white !important;
-      background: #d8ad20 !important;
+      background: #ed993f !important;
     }
     .sidebar .nav-link:active {
       color: white !important;
@@ -122,7 +122,6 @@ body { margin: 0;
 .sidebar .nav-link .nav-icon:active{
   color: white !important;
 }
-
 .navbar {
   // background-color: black;
 }
@@ -135,11 +134,9 @@ body { margin: 0;
 .nav-link-mr {
   margin-right: 7%;
 }
-
 .bottom-footer {
   background-color: rgb(24, 23, 23);
 }
-
 .card-index {
   color: rgba(0, 0, 0, 0.5)!important;
 }

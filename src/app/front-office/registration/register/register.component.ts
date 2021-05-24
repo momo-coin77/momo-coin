@@ -45,7 +45,7 @@ export class RegisterComponent implements OnInit {
             'city': new FormControl('', [Validators.required]),
             'network': new FormControl('', [Validators.required]),
             'sponsorshipId': new FormControl(''),
-            'phone': new FormControl('', [Validators.minLength(9), Validators.maxLength(9), Validators.pattern("^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$")]),
+            'phone': new FormControl('', [Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^6[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}$')]),
             'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
             'password2': new FormControl('', [Validators.required]),
             'email': new FormControl('', [Validators.required, Validators.email]),

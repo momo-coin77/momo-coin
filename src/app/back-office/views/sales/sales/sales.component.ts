@@ -12,7 +12,7 @@ import { MarketService } from '../../../../shared/service/market/market.service'
 })
 
 export class SalesComponent implements OnInit {
-  
+
 
   packs: { waitResponse: boolean, pack: Pack }[] = [];
   search = '';

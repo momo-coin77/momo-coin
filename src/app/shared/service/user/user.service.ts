@@ -22,29 +22,29 @@ export class UserService {
 
   constructor(
     private firebaseApi: FirebaseApi,
-    private eventService:EventService
-  ) { 
+    private eventService: EventService
+  ) {
 
-    this.eventService.loginEvent.subscribe((user:User)=>{
+    this.eventService.loginEvent.subscribe((user: User) => {
       this.newUserHandler();
-    })
+    });
   }
-  newUserHandler():Promise<ResultStatut>
-  {
-    return new Promise<ResultStatut>((resolve,reject)=>{
+
+  newUserHandler(): Promise<ResultStatut> {
+    return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi.getFirebaseDatabase()
-      .ref("users")
-      .on('child_added',(snapshot)=>{
-        let user:User =new User();
-        user.hydrate( snapshot.val());        
-        if(!this.listUser.has(user.id.toString())) 
-        {
-          this.listUser.set(user.id.toString(),user);
-          this.usersSubject.next(this.listUser)
-        }
-      })
-    })
+        .ref('users')
+        .on('child_added', (snapshot) => {
+          let user: User = new User();
+          user.hydrate(snapshot.val());
+          if (!this.listUser.has(user.id.toString())) {
+            this.listUser.set(user.id.toString(), user);
+            this.usersSubject.next(this.listUser);
+          }
+        });
+    });
   }
+
   getListUser(): User[] {
     let r: User[] = [];
     this.listUser.forEach((value: User) => r.push(value));
@@ -59,10 +59,10 @@ export class UserService {
   // recuperer les informations d'un utilisateur
   getUserById(id: EntityID): Promise<ResultStatut> {
     return new Promise<any>((resolve, reject) => {
-      if (this.listUser.has(id.toString())) { 
-        let result:ResultStatut=new ResultStatut();
-        result.result=this.listUser.get(id.toString());
-        return resolve(result); 
+      if (this.listUser.has(id.toString())) {
+        let result: ResultStatut = new ResultStatut();
+        result.result = this.listUser.get(id.toString());
+        return resolve(result);
       }
       this.firebaseApi.fetchOnce(`users/${id.toString()}`)
         .then((result: ResultStatut) => {
@@ -71,7 +71,7 @@ export class UserService {
           this.listUser.set(user.id.toString(), user);
           this.usersSubject.next(this.listUser);
           result.result = user;
-          
+
           resolve(result);
         })
         .catch((error) => {
@@ -80,33 +80,32 @@ export class UserService {
         });
     });
   }
-  getUserBySponsorId(sponsorID:SponsorID):Promise<ResultStatut>
-  {
-    return new Promise<ResultStatut>((resolve, reject)=>{
+
+  getUserBySponsorId(sponsorID: SponsorID): Promise<ResultStatut> {
+    return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi
-      .getFirebaseDatabase()
-      .ref("users")
-      .orderByChild("mySponsorShipId")
-      .equalTo(sponsorID.toString())
-      .once("value",(data)=>{
-        let result:ResultStatut=new ResultStatut();
-        
-        if(!data.val())
-        {
-          result.apiCode=FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
-          result.message="user not found";
-          return reject(result);
-        }
-        for(let okey in data.val())
-        {
-          let user:User=new User();
-          user.hydrate(data.val()[okey])
-          result.result=user;
-          return resolve(result)
-        }        
-      })
-    })
+        .getFirebaseDatabase()
+        .ref('users')
+        .orderByChild('mySponsorShipId')
+        .equalTo(sponsorID.toString())
+        .once('value', (data) => {
+          let result: ResultStatut = new ResultStatut();
+
+          if (!data.val()) {
+            result.apiCode = FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
+            result.message = 'user not found';
+            return reject(result);
+          }
+          for (let okey in data.val()) {
+            let user: User = new User();
+            user.hydrate(data.val()[okey])
+            result.result = user;
+            return resolve(result)
+          }
+        });
+    });
   }
+
   addUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
       if (this.listUser.has(user.id.toString())) { return resolve(new ResultStatut()); }
@@ -123,40 +122,38 @@ export class UserService {
     });
   }
 
-  changeStatusUsingId(idUser:EntityID):Promise<ResultStatut>
-  {
-      return this.getUserById(idUser)
-      .then((result:ResultStatut)=>this.changeStatus(result.result.id))
-  }
-  changeStatus(user:User):Promise<ResultStatut>
-  {
-    let nstatus=UserAccountState.ACTIVE==user.status?UserAccountState.DESACTIVE:UserAccountState.ACTIVE;
-    return new Promise<ResultStatut>((resolve,reject)=>{
-      this.firebaseApi.updates([{
-        link:`users/${user.id.toString()}/status`,
-        data:nstatus
-      }])
-      .then((result)=>{
-        this.usersSubject.getValue().get(user.id.toString()).status = nstatus;
-        resolve(result)
-      })
-      .catch((error)=>{
-        this.firebaseApi.handleApiError(error)
-        reject(error);
-      })
-    })
+  changeStatusUsingId(idUser: EntityID): Promise<ResultStatut> {
+    return this.getUserById(idUser)
+      .then((result: ResultStatut) => this.changeStatus(result.result.id))
   }
 
-  updateUser(user:User):Promise<ResultStatut>
-  {
-    return new Promise<ResultStatut>((resolve, reject)=>{
-      this.firebaseApi.update(`users/${user.id.toString()}`,user.toString())
-      .then((result:ResultStatut)=>resolve(result))
-      .catch((error:ResultStatut)=>{
-        this.firebaseApi.handleApiError(error);
-        reject(error);
-      })
-    })
+  changeStatus(user: User): Promise<ResultStatut> {
+    let nstatus = UserAccountState.ACTIVE == user.status ? UserAccountState.DESACTIVE : UserAccountState.ACTIVE;
+    return new Promise<ResultStatut>((resolve, reject) => {
+      this.firebaseApi.updates([{
+        link: `users/${user.id.toString()}/status`,
+        data: nstatus
+      }])
+        .then((result) => {
+          this.usersSubject.getValue().get(user.id.toString()).status = nstatus;
+          resolve(result);
+        })
+        .catch((error) => {
+          this.firebaseApi.handleApiError(error);
+          reject(error);
+        });
+    });
+  }
+
+  updateUser(user: User): Promise<ResultStatut> {
+    return new Promise<ResultStatut>((resolve, reject) => {
+      this.firebaseApi.update(`users/${user.id.toString()}`, user.toString())
+        .then((result: ResultStatut) => resolve(result))
+        .catch((error: ResultStatut) => {
+          this.firebaseApi.handleApiError(error);
+          reject(error);
+        });
+    });
   }
 
 }
