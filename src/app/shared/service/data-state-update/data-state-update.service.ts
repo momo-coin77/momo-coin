@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityID } from '../../entity/EntityID';
-import { Pack } from '../../entity/pack';
+import { Pack, PackBuyState } from '../../entity/pack';
 import { User } from '../../entity/user';
 import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
@@ -60,13 +60,35 @@ export class DataStateUpdateService {
       .getPackById(id)
       .then((result:ResultStatut)=>{
         this.userService.changeStatusUsingId(result.result.idBuyer);
+
+        this.firebaseApi.updates([
+          {
+            link:`packs/${id.toString()}/idBuyer`,
+            data: ""
+          },
+          {
+            link:`packs/${id.toString()}/buyState`,
+            data: PackBuyState.ON_WAITING_BUYER
+          },
+          {
+            link:`packs/${id.toString()}/plan`,
+            data: 0
+          },
+          {
+            link:`packs/${id.toString()}/waintedGain`,
+            data: {
+              jour:0,
+              pourcent:0
+            }
+          }
+        ]);
+        
       })
     })
   }
   async updatePackMarket() {    
       this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
       {
-        console.log('Id, ',id.toString())
           this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
           this.packService.changePackStatus(id);
       })

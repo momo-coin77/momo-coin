@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Pack } from '../../entity/pack';
 import { User } from '../../entity/user';
-import { AuthService } from '../auth/auth.service';
+import { EventService } from '../event/event.service';
 import { MarketService } from '../market/market.service';
 
 @Injectable({
@@ -16,11 +16,12 @@ export class ProfilService {
 
   constructor(
     private marketService:MarketService,
-    private authService:AuthService
+    private eventService:EventService
   ) {
 
-    this.authService.currentUserSubject.subscribe((user:User)=>{
+    this.eventService.loginEvent.subscribe((user:User)=>{
       if(!user) return;
+      console.log("user ")
       this.balancedAccount+=user.bonus;
     })
     this.marketService
