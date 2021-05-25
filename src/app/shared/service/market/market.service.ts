@@ -44,7 +44,7 @@ export class MarketService {
   getMyOrderedPack()
   {
     return this.getOrderMarket().pipe(
-      filter((p: Pack) =>  p.idOwner.toString() != this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) =>  p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
     )
   }
 
