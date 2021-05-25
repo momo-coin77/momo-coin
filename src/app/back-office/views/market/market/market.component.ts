@@ -83,6 +83,7 @@ export class MarketComponent implements OnInit, OnDestroy {
               user: result.result,
               selectForm: new FormControl(this.gainList[0].key)
             });
+            this.searchPacks.push(pack);
             this.listPacks.set(pack.id.toString().toString(), true);
           }
         })
@@ -95,8 +96,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   searchPack() {
-    this.searchPacks =
-      _.filter(this.packs, (pack) => _.includes(pack.email, this.search) || _.includes(pack.firstName, this.search) || _.includes(pack.lastName, this.search))
+    this.searchPacks = _.filter(this.packs, (pack) => _.includes(pack.amount, this.search) || _.includes(pack.network, this.search))
   }
 
   show2() {

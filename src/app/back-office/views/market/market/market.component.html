@@ -7,6 +7,7 @@
             Available Packs</h3>
         </div>
         <div class="card-body linear-gradient2">
+          <!-- <input (keyup)="searchPack()" [(ngModel)]="search" type="text" class="form-control" placeholder="Search..."> -->
           <table class="table table-bordered table-striped table-sm">
             <thead>
               <tr>
@@ -113,17 +114,17 @@
       </div>
       <div class="modal-body">
         <div *ngIf="hasCurrentPack">
-          <br class="text-center">Network: <b>{{currentPack.user.network}}</b>
+          <br>Network: <b>{{currentPack.user.network}}</b>
           <br>Phone: <b>{{currentPack.user.phone}}</b>
-          <br>Name: <b>{{currentPack.user.name  || 'Not available'}}</b>
+          <br>Name: <b>{{currentPack.user.fullName  || 'Not available'}}</b>
           <br>Amount: <b>{{currentPack.pack.amount}}FCFA</b>
         </div>
         
-        <div class="text-left">Contacted the beneficiary for confirmation of payment.</div>
+        <div class="text-left">Contact the beneficiary and ask him to confirm the payment in the system.</div>
 
       </div>
       <button type="button" class="btn btn-success" style="background-color: green !important;"
-        (click)="secondModal.hide();ok()">Paid</button>
+        (click)="secondModal.hide();ok()">OK</button>
     </div>
   </div>
 </div>
