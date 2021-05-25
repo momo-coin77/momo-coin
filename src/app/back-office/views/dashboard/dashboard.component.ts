@@ -75,19 +75,21 @@ export class DashboardComponent implements OnInit {
       // console.log("Balance ",balance)
       this.balence=balance
     })
-    this.eventService
-    .newPackArrivedEvent
-    .subscribe((arrived:boolean)=>{
-      if(!arrived) return;
-      this.listPurchasePacks.clear();
-      this.listSalePacks.clear();
-      this.numPurchasePack=0;
-      this.numSalePack=0;
-    })
+    // this.eventService
+    // .newPackArrivedEvent
+    // .subscribe((arrived:boolean)=>{
+    //   if(!arrived) return;
+    //   console.log("Clear")
+    //   this.listPurchasePacks.clear();
+    //   this.listSalePacks.clear();
+    //   this.numPurchasePack=0;
+    //   this.numSalePack=0;
+    // })
   }
 
   getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
+      console.log("Arrived")
       if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
         this.listPurchasePacks.set(pack.id.toString().toString(), true);
         this.numPurchasePack++;
