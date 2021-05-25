@@ -17,12 +17,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr>no
-              </tr>
-              <tr *ngFor="let history of listVehicle">
-                <td><b>qsdfs {{history.amount}}</b></td>
-                <td><b>sdfsdf {{history.nextAmount}}</b></td>
-                <td><b>sdfsdf {{history.saleDate}}</b></td>
+              <tr *ngFor="let history of packs">
+                <td><b>{{history.amount}}</b></td>
+                <td><b>{{history.nextAmount}}</b></td>
+                <td><b>{{history.saleDate}}</b></td>
                 <td><b><span class="badge badge-success">Paid</span></b></td>
               </tr>
             </tbody>

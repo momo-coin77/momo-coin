@@ -21,7 +21,7 @@
               <!-- Données Dynamique -->
               <tr *ngFor="let pack of packs">
                 <td> {{pack.user.network}} </td>
-                <td>{{pack.pack.amount}}</td>
+                <td>{{pack.pack.amount}}MC</td>
                 <th><b>
                     <select  [formControl]="pack.selectForm" placeholder="5days">
                       <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
@@ -87,7 +87,7 @@
           <b>Are you sure you want to buy this pack ?</b>
           <br>Country: <b>{{currentPack.user.country}}</b>
           <br>Network: <b>{{currentPack.user.network}}</b>
-          <br>Amount: <b>{{currentPack.pack.amount}}</b>
+          <br>Amount: <b>{{currentPack.pack.amount}}FCFA</b>
         </div>
         <div class="text-left">By clicking on Pay you will have 5 hours to make the payment to the number indicated.
           After this time, your account will be automatically suspended.</div>

@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
-            'name': new FormControl('', [Validators.required]),
+            'userName': new FormControl('', [Validators.required]),
             'user_agree': new FormControl(false, [Validators.requiredTrue]),
             'country': new FormControl('', [Validators.required]),
             'city': new FormControl('', [Validators.required]),
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.name = this.registerForm.value.name;
+        user.name = this.registerForm.value.userName;
         user.email = this.registerForm.value.email;
         user.password = this.registerForm.value.password;
         user.country = this.registerForm.value.country;
