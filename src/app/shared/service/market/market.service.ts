@@ -20,8 +20,8 @@ export class MarketService {
     private firebaseApi: FirebaseApi,
     private router: Router) {
 
-    this.eventService.loginEvent.subscribe((user) => {
-      if (!user) return;
+    // this.eventService.loginEvent.subscribe((user) => {
+    //   if (!user) return;
       //cette requete ne doit ce faire que si le marché est ouvert
       this.firebaseApi.getFirebaseDatabase()
         .ref('packs')
@@ -32,7 +32,7 @@ export class MarketService {
           .on('child_changed', (snapshot) => this.updatePackFromMarket(snapshot));
 
       // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
-    });
+    // });
   }
 
   getOrderMarket() {
@@ -112,7 +112,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 14 || hh == 15 || hh == 16 || hh == 17) {
+      if (hh == 17 || hh == 18 || hh == 19 || hh == 20) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);
