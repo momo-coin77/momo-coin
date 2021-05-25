@@ -21,8 +21,8 @@ export class ProfilService {
 
     this.eventService.loginEvent.subscribe((user:User)=>{
       if(!user) return;
-      console.log("user ")
       this.balancedAccount+=user.bonus;
+      this.balancedAccountObservable.next(this.balancedAccount);
     })
     this.marketService
     .getMyOrderedPack()

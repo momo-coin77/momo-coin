@@ -56,7 +56,7 @@ export class AuthService {
               this.firebaseApi.handleApiError(result);
               return reject(result);
             }
-            this.eventService.loginEvent.next(userN);
+            this.eventService.loginEvent.next(result.result);
           }
           resolve(action)
           this.localStorageService.setUserData({
