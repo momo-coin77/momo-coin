@@ -46,30 +46,28 @@ export class MarketService {
     )
   }
   getOtherOrderedPackOnMarket() {
-    return this.getOrderMarket().pipe(
-      filter((p: Pack) => p.idOwner.toString() != this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p: Pack) => p.state == PackState.ON_MARKET),
+    return this.getAllPackInMarket().pipe(
+      filter((p: Pack) => p.idOwner.toString() != this.authService.currentUserSubject.getValue().id.toString())
     )
   }
 
   getMyOrderedPackOnMarket() {
-    return this.getOrderMarket().pipe(
+    return this.getAllPackInMarket().pipe(
       filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p: Pack) => p.state == PackState.ON_MARKET)
     )
   }
   getMyOrderdPackNotInMarket() {
     return this.getOrderMarket().pipe(
       filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p: Pack) => p.state == PackState.NOT_ON_MARKET)
+      filter((p: Pack) => p.state != PackState.NOT_ON_MARKET)
     )
   }
 
   updatePackFromMarket(packs: any) {
-    // console.log("Upadated ",packs.val())
+    console.log("Upadated ",packs.val())
     let pack: Pack = new Pack();
     pack.hydrate(packs.val());
-
+    
     this.listPack.set(pack.id.toString(), pack);
     this.packs.next(this.listPack);
   }

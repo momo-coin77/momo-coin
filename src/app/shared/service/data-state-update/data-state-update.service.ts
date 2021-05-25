@@ -22,85 +22,103 @@ export class DataStateUpdateService {
     // this.eventService.loginEvent.subscribe((user:User)=>{
     this.updatePackMarket();
     this.updateAccountToBlocque();
+    this.updatePackNotPaid();
     // console.log("Test update")
     // })
     this.eventService.registerNewUserEvent.subscribe((user:User)=>{
       if(!user) return;
-      this.addMaxUserDate(user.id)
+      let date: Date = new Date();
+      date.setDate(date.getDate() + 5)
+      this.addMaxDateTo(`toupdate/account/${user.id.toString()}`,date)
     })
+
     this.eventService.addPackEvent.subscribe((pack:Pack)=>{
       if(!pack) return;
-      this.addMaxPackDate(pack);
+      let date: Date = new Date();
+      date.setDate(date.getDate() + pack.plan);
+      this.addMaxDateTo(`toupdate/pack/market/${pack.id.toString()}`,date)
+    })
+
+    this.eventService.shouldPaidPackEvent.subscribe((pack:Pack)=>{
+      if(!pack) return;
+      let date: Date = new Date();
+      date.setDate(date.getHours() + 5)
+      this.addMaxDateTo(`toupdate/pack/waittopaid/${pack.id.toString()}`,date)
+    })
+
+    this.eventService.packPaidEvent.subscribe((pack:Pack)=>{
+      if(!pack) return;
+      this.firebaseApi.delete(`toupdate/pack/waittopaid/${pack.id.toString()}`);
     })
   }
 
-  async updatePackMarket() {
-    this.firebaseApi
-      .getFirebaseDatabase()
-      .ref('toupdate/market')
-      .once('value', (data) => {
-        let kdata = data.val();
-        console.log("pack to update ",kdata)
-        for (let key in kdata) {
-          let id: EntityID = new EntityID();
-          id.setId(key);
-          let now = new Date();
-          let after = new Date(kdata[key].dateMax);
-          if (after <= now) {
-            this.deleteMaxPackDate(id);
-            this.packService.changePackStatus(id);
-          }
-        }
+  async updatePackNotPaid()
+  {
+    this.findAndUpdate("toupdate/pack/waittopaid",(id:EntityID)=>{
+      this.deleteToUpdate(`toupdate/pack/waittopaid/${id.toString()}`);
+      this.packService
+      .getPackById(id)
+      .then((result:ResultStatut)=>{
+        this.userService.changeStatusUsingId(result.result.idBuyer);
+      })
+    })
+  }
+  async updatePackMarket() {    
+      this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
+      {
+          this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
+          this.packService.changePackStatus(id);
       })
   }
 
   async updateAccountToBlocque() {
+    this.findAndUpdate("toupdate/account",(id:EntityID)=>
+    {
+      this.firebaseApi
+        .getFirebaseDatabase()
+        .ref("packs")
+        .orderByChild("idOwner")
+        .limitToLast(1)
+        .equalTo(id.toString())
+        .once("value", (dataPack) => {
+          if (!dataPack.val()) {
+            // console.log("Data ",dataPack)
+            this.deleteToUpdate(`toupdate/account/${id.toString()}`);
+            this.userService.changeStatusUsingId(id)
+          }
+          // else 
+        })
+      })
+  }
+
+  findAndUpdate(url:String,updateFnct:(key:EntityID)=>void)
+  {
     this.firebaseApi
       .getFirebaseDatabase()
       .ref("toupdate/account")
-      .once("value", (data) => {
+      .once("value", (data) => 
+      {
         let kdata = data.val();
         // console.log("Data update",kdata)
-        for (let key in kdata) {
+        for (let key in kdata) 
+        {
           let now = new Date();
           let after = new Date(kdata[key].dateMax);
           let id: EntityID = new EntityID();
           id.setId(key);
           if (after < now) {
             // console.log("Data update",kdata)
-            this.firebaseApi
-              .getFirebaseDatabase()
-              .ref("packs")
-              .orderByChild("idOwner")
-              .limitToLast(1)
-              .equalTo(key)
-              .once("value", (dataPack) => {
-                if (!dataPack.val()) {
-                  // console.log("Data ",dataPack)
-                  this.deleteMaxUserDate(id);
-                  this.userService.changeStatusUsingId(id)
-                }
-                // else 
-              })
+            updateFnct(id)
           }
         }
-      })
+      });
   }
-  addMaxUserDate(id: EntityID): Promise<ResultStatut> {
-    let date: Date = new Date();
-    date.setDate(date.getDate() + 5)
-    return this.firebaseApi.set(`toupdate/account/${id.toString()}`, { dateMax: date.toISOString() })
-  }
-  addMaxPackDate(pack: Pack): Promise<ResultStatut> {
-    let date: Date = new Date();
-    date.setDate(date.getDate() + pack.plan)
-    return this.firebaseApi.set(`toupdate/market/${pack.id.toString()}`, { dateMax: date.toISOString() })
+  addMaxDateTo(url:string,dateMax:Date):Promise<ResultStatut> 
+  {
+    return this.firebaseApi.set(url, { dateMax: dateMax.toISOString() })
   }
 
-  deleteMaxUserDate(id: EntityID): Promise<ResultStatut> {
-    return this.firebaseApi.delete(`toupdate/account/${id.toString()}`)
-  }
-  deleteMaxPackDate(id: EntityID): Promise<ResultStatut> {
-    return this.firebaseApi.delete(`toupdate/market/${id.toString()}`)
+  deleteToUpdate(url:string): Promise<ResultStatut> {
+    return this.firebaseApi.delete(url)
   }
 }

@@ -184,7 +184,7 @@ export class BasicPackService {
                 },
             ])
             .then((result) => {
-                
+                this.eventService.shouldPaidPackEvent.next(pack);
                 let message: Message = new Message();
                 message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
                 message.to.setId(pack.idOwner.toString())
@@ -249,6 +249,7 @@ export class BasicPackService {
 
             ])                
             .then((result)=> {
+                this.eventService.packPaidEvent.next(newPack);
                 this.eventService.addPackEvent.next(newPack);
                 return this.userService.getUserById(pack.idBuyer);
             })
