@@ -57,7 +57,7 @@ export class UserComponent implements OnInit {
       this.id = user.mySponsorShipId.toString();  //this.authService.currentUserSubject.getValue().id.toString();
       this.country = user.country;
       this.city = user.city;
-      this.sponsorshipId=user.parentSponsorShipId.toString();
+      this.sponsorshipId = user.parentSponsorShipId.toString();
     });
   }
   idCopied(){
