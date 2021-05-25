@@ -261,6 +261,7 @@ export class BasicPackService {
                 }
             }) 
             .then((result)=>{
+                
                 if(result.result!=null)
                 {
                     result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
