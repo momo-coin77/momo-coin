@@ -59,7 +59,7 @@ export class MarketService {
   getMyOrderdPackNotInMarket() {
     return this.getOrderMarket().pipe(
       filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
-      filter((p: Pack) => p.state != PackState.NOT_ON_MARKET)
+      filter((p: Pack) => p.state == PackState.NOT_ON_MARKET)
     )
   }
 
@@ -103,7 +103,7 @@ export class MarketService {
     hh = hh;
     console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 5 || hh == 6 || hh == 7 || hh == 8) {
+      if (hh == 9 || hh == 10 || hh == 11 || hh == 12) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);
