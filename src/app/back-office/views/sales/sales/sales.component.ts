@@ -4,6 +4,7 @@ import { NotificationService } from '../../../../shared/service/notification/not
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 import * as _ from 'lodash';
 import { MarketService } from '../../../../shared/service/market/market.service';
+import { EventService } from '../../../../shared/service/event/event.service';
 
 
 @Component({
@@ -21,9 +22,16 @@ export class SalesComponent implements OnInit {
 
   constructor(private myPack: MarketService,
     private packService: BasicPackService,
+    private eventService:EventService,
     private notifService: NotificationService) { }
 
   ngOnInit() {
+    this.eventService.newPackArrivedEvent.subscribe((arrived:boolean)=>{
+      if(!arrived) return;
+      this.listSalePacks.clear();
+      this.packs=[];
+      this.searchPacks=[];
+    })
     this.getPacks();
   }
 

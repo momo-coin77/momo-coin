@@ -69,6 +69,7 @@ export class UserHistoryService {
     }
     addToHistory(pack:Pack):Promise<ResultStatut>
     {
+      console.log("Addhistor =y ", pack);
       return new Promise<ResultStatut>((resolve,reject)=>{
         this.firebaseApi.set(`history/${this.currentUser.id.toString()}/${pack.id.toString()}/`,pack.toString())
         .then((result:ResultStatut)=>{

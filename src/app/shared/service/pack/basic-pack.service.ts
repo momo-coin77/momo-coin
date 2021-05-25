@@ -241,13 +241,9 @@ export class BasicPackService {
                 {
                     link: `packs/${pack.id.toString()}`,
                     data: newPack.toString()
-                }, 
-                {
-                    link: `history/${pack.idOwner.toString()}`,
-                    data: pack.toString()
-                },     
-
-            ])                
+                } 
+            ])  
+            .then((result)=> this.userHistoryService.addToHistory(pack))              
             .then((result)=> {
                 this.eventService.packPaidEvent.next(newPack);
                 this.eventService.addPackEvent.next(newPack);

@@ -12,5 +12,5 @@ export class EventService {
   addPackEvent = new BehaviorSubject<Pack>(null)
   shouldPaidPackEvent = new BehaviorSubject<Pack>(null);
   packPaidEvent=new BehaviorSubject<Pack>(null);
-  
+  newPackArrivedEvent = new BehaviorSubject<boolean>(false);
 }

@@ -51,8 +51,8 @@ export class UserNotificationService {
     else
     {
       this.listNotifications.slice(pos,1);
-      this.listNotifications.push(message);
-      this.listNotifications.reverse();
+      // this.listNotifications.push(message);
+      // this.listNotifications.reverse();
     }
     this.notifications.next(this.listNotifications);
   }

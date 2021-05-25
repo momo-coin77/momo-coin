@@ -13,6 +13,7 @@ import * as _ from 'lodash';
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
+import { EventService } from '../../../../shared/service/event/event.service';
 
 
 @Component({
@@ -51,7 +52,8 @@ export class MarketComponent implements OnInit, OnDestroy {
     private packService: BasicPackService,
     private userService: UserService,
     private marketService: MarketService,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private eventService:EventService
   ) {
     this.marketService.marketTime();
     this.calculDate();
@@ -72,6 +74,13 @@ export class MarketComponent implements OnInit, OnDestroy {
       (val) => {
         return this.marketService.marketTime();
       });
+
+      this.eventService.newPackArrivedEvent.subscribe((arrived:boolean)=>{
+        if(!arrived) return;
+        this.listPacks.clear();
+        this.packs=[];
+        this.searchPacks=[];
+      })
 
     this.dataMarketSubscription = this.marketService.getAllPackInMarket().subscribe((pack: Pack) => {
       this.userService.getUserById(pack.idOwner)
@@ -100,7 +109,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   show2() {
-    console.log('teste pop');
+    // console.log('teste pop');
     this.secondModal.show();
     let gain: PackGain = {
       jour: +this.currentPack.selectForm.value,

@@ -7,6 +7,7 @@ import { Pack } from '../../../shared/entity/pack';
 import { AuthService } from '../../../shared/service/auth/auth.service';
 import { User } from '../../../shared/entity/user';
 import { ProfilService } from '../../../shared/service/profil/profil.service';
+import { EventService } from '../../../shared/service/event/event.service';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -30,6 +31,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private myPack: MarketService,
     private authService: AuthService,
+    private eventService:EventService,
     private profilService:ProfilService) {
     this.getPurchasePacks();
     this.getSalePacks();
@@ -70,8 +72,17 @@ export class DashboardComponent implements OnInit {
     this.getSalePacks();
 
     this.profilService.balancedAccountObservable.subscribe((balance:number)=>{
-      console.log("Balance ",balance)
+      // console.log("Balance ",balance)
       this.balence=balance
+    })
+    this.eventService
+    .newPackArrivedEvent
+    .subscribe((arrived:boolean)=>{
+      if(!arrived) return;
+      this.listPurchasePacks.clear();
+      this.listSalePacks.clear();
+      this.numPurchasePack=0;
+      this.numSalePack=0;
     })
   }
 

@@ -21,7 +21,7 @@ export class MarketService {
     private router: Router) {
 
     this.eventService.loginEvent.subscribe((user) => {
-      // if (!user) return;
+      if (!user) return;
       //cette requete ne doit ce faire que si le marché est ouvert
       this.firebaseApi.getFirebaseDatabase()
         .ref('packs')
@@ -72,11 +72,11 @@ export class MarketService {
   }
 
   updatePackFromMarket(packs: any) {
-    console.log("Upadated ",packs.val())
     let pack: Pack = new Pack();
     pack.hydrate(packs.val());
-    
+    if(this.listPack.has(pack.id.toString())) this.listPack.delete(pack.id.toString());
     this.listPack.set(pack.id.toString(), pack);
+    this.eventService.newPackArrivedEvent.next(true);
     this.packs.next(this.listPack);
   }
 
@@ -95,6 +95,7 @@ export class MarketService {
       if (this.listPack.has(pack.id.toString())) { return; }
       this.listPack.set(pack.id.toString(), pack);
     });
+    this.eventService.newPackArrivedEvent.next(true);
     this.packs.next(this.listPack);
     // console.log("list pack ",this.listPack)
   }
