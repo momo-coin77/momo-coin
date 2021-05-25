@@ -40,6 +40,14 @@ export class MarketService {
       switchMap((p) => from(Array.from(p.values()))),
     );
   }
+
+  getMyOrderedPack()
+  {
+    return this.getOrderMarket().pipe(
+      filter((p: Pack) =>  p.idOwner.toString() != this.authService.currentUserSubject.getValue().id.toString()),
+    )
+  }
+
   getAllPackInMarket() {
     return this.getOrderMarket().pipe(
       filter((p: Pack) => p.state == PackState.ON_MARKET),
