@@ -18,6 +18,7 @@ export class UserComponent implements OnInit {
   email: String = '';
   network: String = '';
   phone: string = '';
+  bonus: number = 0;
   country: String = '';
   city: String = '';
   message: string = '\<b>Error\</b>\<br>this action not permited!';
@@ -49,15 +50,14 @@ export class UserComponent implements OnInit {
   ngOnInit() {
 
     this.authService.currentUserSubject.subscribe((user: User) => {
-      this.name = user.name;
+      this.name = user.userName;
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;
-      this.id = user.mySponsorShipId.toString()   //this.authService.currentUserSubject.getValue().id.toString();
+      this.id = user.mySponsorShipId.toString();  //this.authService.currentUserSubject.getValue().id.toString();
       this.country = user.country;
       this.city = user.city;
       this.sponsorshipId=user.parentSponsorShipId.toString();
-      console.log("user ",user)
     });
   }
   idCopied(){

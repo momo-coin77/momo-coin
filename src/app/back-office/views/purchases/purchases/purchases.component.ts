@@ -13,10 +13,12 @@ import { BasicPackService } from '../../../../shared/service/pack/basic-pack.ser
 export class PurchasesComponent implements OnInit {
 
   packs: { waitResponse: boolean, pack: Pack }[] = [];
+  listPurchasePacks: Map<string, boolean> = new Map<string, boolean>();
+
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
 
-  constructor( private myPack: MarketService) { }
+  constructor(private myPack: MarketService) { }
 
   ngOnInit() {
     this.getPurchasePacks();
@@ -24,7 +26,10 @@ export class PurchasesComponent implements OnInit {
 
   getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
-      this.packs.push({ waitResponse: false, pack});
+      if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
+        this.listPurchasePacks.set(pack.id.toString().toString(), true);
+        this.packs.push({ waitResponse: false, pack });
+      }
 
       console.log('Purchase packs list', this.packs);
       // this.searchPack();

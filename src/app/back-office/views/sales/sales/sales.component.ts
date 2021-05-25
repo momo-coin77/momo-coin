@@ -17,6 +17,7 @@ export class SalesComponent implements OnInit {
   packs: { waitResponse: boolean, pack: Pack }[] = [];
   search = '';
   searchPacks: { waitResponse: boolean, pack: Pack }[] = [];
+  listSalePacks: Map<string, boolean> = new Map<string, boolean>();
 
   constructor(private myPack: MarketService,
     private packService: BasicPackService,
@@ -28,7 +29,10 @@ export class SalesComponent implements OnInit {
 
   getPacks() {
     this.myPack.getMyOrderedPackOnMarket().subscribe((pack: Pack) => {
-      this.packs.push({ waitResponse: false, pack});
+      if (!this.listSalePacks.has(pack.id.toString().toString())) {
+        this.listSalePacks.set(pack.id.toString().toString(), true);
+        this.packs.push({ waitResponse: false, pack});
+      }
 
     });
   }

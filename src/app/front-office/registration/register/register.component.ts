@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit(): void {
         this.registerForm = this.formBuilder.group({
-            'userName': new FormControl('', [Validators.required]),
+            'name': new FormControl('', [Validators.required]),
             'user_agree': new FormControl(false, [Validators.requiredTrue]),
             'country': new FormControl('', [Validators.required]),
             'city': new FormControl('', [Validators.required]),
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.name = this.registerForm.value.userName;
+        user.userName = this.registerForm.value.name;
         user.email = this.registerForm.value.email;
         user.password = this.registerForm.value.password;
         user.country = this.registerForm.value.country;
@@ -91,6 +91,7 @@ export class RegisterComponent implements OnInit {
 
     onSubmit(data) {
         this.submitted = true;
+        console.log('Reg form avant setform', this.registerForm);
 
         // stop here if form is invalid
         if (this.registerForm.invalid) {
@@ -98,6 +99,7 @@ export class RegisterComponent implements OnInit {
         }
         this.waitingRegistration = true;
         let user: User = this.setFormData();
+        console.log('data de setForm', user);
         this.authService.signInNewUser(user)
             .then((result) => {
                 this.router.navigate(['login']);

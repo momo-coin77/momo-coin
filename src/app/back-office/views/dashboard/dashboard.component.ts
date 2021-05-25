@@ -4,6 +4,8 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { interval, Subscription } from 'rxjs';
 import { MarketService } from '../../../shared/service/market/market.service';
 import { Pack } from '../../../shared/entity/pack';
+import { AuthService } from '../../../shared/service/auth/auth.service';
+import { User } from '../../../shared/entity/user';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -11,6 +13,7 @@ import { Pack } from '../../../shared/entity/pack';
 })
 
 export class DashboardComponent implements OnInit {
+  bonus: number = 0;
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
   stockholders: number = 27;  // valeur fictive du nombre total d'utilisateurs. créé la
@@ -23,7 +26,8 @@ export class DashboardComponent implements OnInit {
   numPurchasePack: number = 0;
   numSalePack: number = 0;
 
-  constructor(private myPack: MarketService) {
+  constructor(private myPack: MarketService,
+    private authService: AuthService) {
     this.getPurchasePacks();
     this.getSalePacks();
   }
@@ -54,6 +58,11 @@ export class DashboardComponent implements OnInit {
       (val) => {
         this.activeUser = this.randomNumber(10);
       });
+
+    this.authService.currentUserSubject.subscribe((user: User) => {
+      this.bonus = user.bonus;
+    });
+
     this.getPurchasePacks();
     this.getSalePacks();
   }
