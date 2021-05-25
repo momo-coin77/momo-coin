@@ -22,7 +22,7 @@
               <!-- Données Dynamique -->
               <tr *ngFor="let pack of packs">
                 <td> {{pack.user.network}} </td>
-                <td>{{pack.pack.amount}}MC</td>
+                <td>{{pack.pack.amount}} MC</td>
                 <th><b>
                     <select  [formControl]="pack.selectForm" placeholder="5days">
                       <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
