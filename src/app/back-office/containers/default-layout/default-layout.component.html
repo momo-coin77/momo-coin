@@ -3,8 +3,14 @@
   [navbarBrandMinimized]="{src: 'assets/img/logo.png', width: 30, height: 30, alt: 'MoMo coin Logo'}"
   [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
   <ul class="nav navbar-nav ml-auto">
-      <i class="icon-bell"></i><span *ngIf="notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
-      <span *ngIf="!notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
+    <div style="display: none;">
+      <div class="nav-item d-md-down-none" id="notifButton">
+        <a class="nav-link"  ><i class="icon-bell"></i><span
+            class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span></a>
+        </div>
+    </div>
+      <!-- <i class="icon-bell"></i><span *ngIf="notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>
+      <span *ngIf="!notif" class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span> -->
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <i class="icon-bell"></i><span class="badge badge-pill badge-danger">{{unreadMessageList.length}}</span>

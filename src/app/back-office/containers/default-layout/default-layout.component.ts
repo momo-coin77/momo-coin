@@ -1,4 +1,4 @@
-import { Component, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../shared/service/user/user.service';
 import { navItems } from '../../../_nav';
 import { Discussion, Message } from '../../../shared/entity/chat';
@@ -20,7 +20,7 @@ import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent implements OnInit {
+export class DefaultLayoutComponent implements OnInit,AfterViewInit {
 
   @ViewChild("confirmPayment") public confirmPayment: ModalDirective;
 
@@ -44,6 +44,7 @@ export class DefaultLayoutComponent implements OnInit {
     private autService: AuthService, // firebase auth
     private router: Router,
     private bsModal:BsModalService,
+    private dashbaord:ElementRef,
     private userService:UserService,
     private userNotif: UserNotificationService,
     private notification: NotificationService,
@@ -58,6 +59,18 @@ export class DefaultLayoutComponent implements OnInit {
       if (!user) { return this.userName = user.name; }
     });
     this.myfunc();    
+  }
+
+  ngAfterViewInit(): void {
+    let parent = this.dashbaord.nativeElement.querySelectorAll(".navbar-toggler")[2];
+    // console.log(parent.childNodes)
+    let notifButon =this.dashbaord.nativeElement.querySelector("#notifButton");
+    // parent.childNodes.forEach(element => {
+    //   parent.removeChild(element);
+    // });
+    parent.removeChild(parent.querySelector(".navbar-toggler-icon"))
+    parent.appendChild(notifButon)
+    // console.log("notif",notifButon)
   }
 
   toggleMinimize(e) {
