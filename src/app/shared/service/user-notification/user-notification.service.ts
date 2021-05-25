@@ -51,8 +51,8 @@ export class UserNotificationService {
     else
     {
       this.listNotifications.slice(pos,1);
-      // this.listNotifications.push(message);
-      // this.listNotifications.reverse();
+      this.listNotifications.push(message);
+      this.listNotifications.reverse();
     }
     this.notifications.next(this.listNotifications);
   }
@@ -67,15 +67,16 @@ export class UserNotificationService {
   }
   deleteNotification(message:Message):Promise<ResultStatut>
   {
+    console.log("Message ",message)
     return new Promise<ResultStatut>((resolve,reject)=>{
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
         let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
-        // if(pos>-1)
-        // {
-        //   this.listNotifications.splice(pos,1);
-        //   this.notifications.next(this.listNotifications);          
-        // }
+        if(pos>-1)
+        {
+          this.listNotifications.splice(pos,1);
+          this.notifications.next(this.listNotifications);          
+        }
         resolve(result);
       })
       .catch((error)=>reject(error))
@@ -96,6 +97,7 @@ export class UserNotificationService {
   }
 
   sendNotification(message: Message): Promise<ResultStatut> {
+    console.log("Message send ",message)
     return this.firebaseApi.set(`notifications/${message.to.toString()}/${message.id.toString()}`, message.toString());
   }
 }
