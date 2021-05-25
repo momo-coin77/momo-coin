@@ -26,22 +26,27 @@ export class UserHistoryService {
       
       this.authService.currentUserSubject.subscribe((user:User)=>{
         this.currentUser=user;
+        this.getPacksHistoryFromApi(this.authService.currentUserSubject.getValue());
       })
-      this.eventService.loginEvent.subscribe((user:User)=>{
-          if(!user) return;
-          this.getPacksHistoryFromApi(user);
-      })  
+      //this.eventService.loginEvent.subscribe((user:User)=>{
+      //    if(!user) return;
+          
+      //})  
     }
     getPacksHistoryFromApi(user:User)
     {
+      //console.log(user)
         this.firebaseApi.fetch(`history/${user.id.toString()}`)
         .then((result:ResultStatut)=> {
+          //console.log("History ",result.result)
           if(!result.result) return
+          for(let key in result.result)
+          {
             let pack=new Pack();
-            pack.hydrate(result.result);
-            result.result=pack;
+            pack.hydrate(result.result[key]);
             this.historyList.push(pack);
-            this.history.next(this.historyList)
+          }
+          this.history.next(this.historyList)
         }) 
     }
     findPack(packId:EntityID):Promise<ResultStatut>
