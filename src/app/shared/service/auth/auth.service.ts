@@ -19,7 +19,8 @@ export class AuthService {
   currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
 
 
-  constructor(private firebaseApi: FirebaseApi,
+  constructor(
+    private firebaseApi: FirebaseApi,
     private localStorageService: UserlocalstorageService,
     private eventService:EventService,
     private userService: UserService) {
@@ -99,6 +100,7 @@ export class AuthService {
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user,false))
         .then(() =>  {
+          this.SendVerificationMail();
           user.dateCreation=(new Date()).toISOString();
           this.eventService.registerNewUserEvent.next(user);
           return this.userService.addUser(user)
@@ -113,4 +115,10 @@ export class AuthService {
         })
     });
   }
+
+  // Send email verification when new user sign up
+  SendVerificationMail() {
+    return this.firebaseApi.user.sendEmailVerification();
+  }
+
 }

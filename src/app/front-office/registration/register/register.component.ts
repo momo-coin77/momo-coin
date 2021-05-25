@@ -104,7 +104,7 @@ export class RegisterComponent implements OnInit {
             .then((result) => {
                 this.router.navigate(['login']);
                 // tslint:disable-next-line:max-line-length
-                this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully! <br>');
+                this.notification.showNotification('top', 'center', 'success', '', '\<b>Success !\</b>\<br>Account created successfully! <br>Check your email to confirm your address. You have 2 hours to confirm whether your account will be deleted.', 10000);
                 this.waitingRegistration = false;
                 this.submitted = false;
 
