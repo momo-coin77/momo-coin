@@ -32,6 +32,11 @@ export class UserHistoryService {
       //    if(!user) return;
           
       //})  
+      this.eventService.logoutEvent.subscribe((logout:boolean)=>{
+        if(!logout) return;
+        this.historyList=[];
+        this.history.next(this.historyList)
+      })
     }
     getPacksHistoryFromApi(user:User)
     {
@@ -39,6 +44,7 @@ export class UserHistoryService {
         this.firebaseApi.fetch(`history/${user.id.toString()}`)
         .then((result:ResultStatut)=> {
           //console.log("History ",result.result)
+          this.historyList=[];
           if(!result.result) return
           for(let key in result.result)
           {

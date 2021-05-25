@@ -26,11 +26,13 @@ export class HistoryComponent implements OnInit {
 
   getPacksHistory() {
     this.history.history.subscribe((pack: Pack[]) => {
-      this.packs = pack.filter((p: Pack) => !this.listHistoryPacks.has(p.id.toString().toString()))
+      console.log("listory ",pack)
+      this.packs = pack
+      // .filter((p: Pack) => !this.listHistoryPacks.has(p.id.toString().toString()))
         .map((p: Pack) => {
           let npack = new Pack();
           npack.hydrate(p.toString());
-          this.listHistoryPacks.set(npack.id.toString().toString(), true);
+          // this.listHistoryPacks.set(npack.id.toString().toString(), true);
           npack.saleDate = (new Date(npack.saleDate)).toLocaleDateString();
           return npack;
         });
