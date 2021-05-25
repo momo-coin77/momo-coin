@@ -259,7 +259,7 @@ export class BasicPackService {
                     result.result=null;
                     return Promise.resolve(result)
                 }
-            })
+            }) 
             .then((result)=>{
                 if(result.result!=null)
                 {
