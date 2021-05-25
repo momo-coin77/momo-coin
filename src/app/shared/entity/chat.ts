@@ -21,8 +21,8 @@ export class Message extends Entity
         for (const key of Object.keys(entity)) {
             if (Reflect.has(this, key)) {
                 if (key == "id") this.id.setId(entity.id)
-                else if(key=="from") this.from.setId(entity.idOwner)
-                else if(key=="to") this.to.setId(entity.idBuyer)
+                else if(key=="from") this.from.setId(entity.from)
+                else if(key=="to") this.to.setId(entity.to)
                 else if(key=="idPack") this.idPack.setId(entity.idPack)
                 else Reflect.set(this, key, entity[key]);
             }

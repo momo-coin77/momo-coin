@@ -22,6 +22,7 @@ export class UserComponent implements OnInit {
   city: String = '';
   message: string = '\<b>Error\</b>\<br>this action not permited!';
   id: String;
+  sponsorshipId:String;
 
   constructor(
     private authService: AuthService,
@@ -52,9 +53,11 @@ export class UserComponent implements OnInit {
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;
-      this.id = this.authService.currentUserSubject.getValue().id.toString();
+      this.id = user.mySponsorShipId.toString()   //this.authService.currentUserSubject.getValue().id.toString();
       this.country = user.country;
       this.city = user.city;
+      this.sponsorshipId=user.parentSponsorShipId.toString();
+      console.log("user ",user)
     });
   }
   idCopied(){

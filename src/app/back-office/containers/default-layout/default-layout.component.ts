@@ -49,7 +49,7 @@ export class DefaultLayoutComponent implements OnInit {
     private notification: NotificationService,
     private packService: BasicPackService) {
 
-    this.myfunc();
+    // this.myfunc();
   }
 
   ngOnInit(): void {
