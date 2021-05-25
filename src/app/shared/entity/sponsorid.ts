@@ -18,7 +18,7 @@ export class SponsorID {
         let spon=user.userName.split(" ")
                         .map((name)=> name.charAt(0))
                         .reduce((preString:string,currString:string)=>(preString+currString).toLowerCase());
-        spon+=`${(new Date()).getMonth()+1}:${(new Date()).getFullYear()}`;
+        spon+=`${(new Date()).getUTCMilliseconds()}`;
         sponsorID.setId(spon);
         return sponsorID;
     }

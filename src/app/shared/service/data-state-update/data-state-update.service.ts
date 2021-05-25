@@ -66,6 +66,7 @@ export class DataStateUpdateService {
   async updatePackMarket() {    
       this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
       {
+        console.log('Id, ',id.toString())
           this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
           this.packService.changePackStatus(id);
       })
@@ -95,11 +96,11 @@ export class DataStateUpdateService {
   {
     this.firebaseApi
       .getFirebaseDatabase()
-      .ref("toupdate/account")
+      .ref(url)
       .once("value", (data) => 
       {
         let kdata = data.val();
-        // console.log("Data update",kdata)
+        // console.log("Data update",url,kdata)
         for (let key in kdata) 
         {
           let now = new Date();
