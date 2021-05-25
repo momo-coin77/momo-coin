@@ -74,6 +74,7 @@ export class RegisterComponent implements OnInit {
     }
 
     setFormData(): User {
+
         let user: User = new User();
         user.fullName = this.registerForm.value.name;
         user.email = this.registerForm.value.email;
@@ -83,7 +84,7 @@ export class RegisterComponent implements OnInit {
         user.city = this.registerForm.value.city;
         user.phone = `${this.registerForm.value.phone}`;
         user.mySponsorShipId.setId(SponsorID.generateId(user).toString());
-        user.parentSponsorShipId.setId(this.registerForm.value.sponsorshipId);
+        user.parentSponsorShipId.setId(this.sponsorId);
         user.network = this.registerForm.value.network;
         user.user_agree = true;
         return user;

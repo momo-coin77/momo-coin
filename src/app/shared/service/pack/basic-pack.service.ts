@@ -171,7 +171,7 @@ export class BasicPackService {
             pack.state=PackState.NOT_ON_MARKET;
             pack.buyState = PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT;
             pack.idBuyer.setId(this.authService.currentUserSubject.getValue().id.toString())
-
+            console.log("PAck",this.authService.currentUserSubject.getValue().id.toString(), pack,pack.toString())
             let d:Date = new Date();
             d.setHours(d.getHours()+5);
             pack.maxPayDate=d.toISOString();
@@ -250,7 +250,9 @@ export class BasicPackService {
                 return this.userService.getUserById(pack.idBuyer);
             })
             .then((result)=>{
-                if(result.result.parentSponsorShipId.toString()!='') 
+                console.log("Here is a parentSponserHipId",result.result.parentSponsorShipId.toString())
+
+                if(result.result.parentSponsorShipId.toString()!="") 
                 {
                     return this.userService.getUserBySponsorId(result.result.parentSponsorShipId)                    
                 }
@@ -265,10 +267,10 @@ export class BasicPackService {
                 if(result.result!=null)
                 {
                     result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
-                    console.log("Bonus ",result.result.bonus)
+                    console.log("Bonus ",result.result)
                     return this.firebaseApi.updates([
                         {
-                            link:`users/${result.result.sponsorshipId.toString()}/bonus`,
+                            link:`users/${result.result.id.toString()}/bonus`,
                             data:result.result.bonus
                         }
                     ])

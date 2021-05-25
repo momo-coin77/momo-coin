@@ -46,11 +46,11 @@ export class UserNotificationService {
   {
     let message:Message=new Message();
     message.hydrate(msg);
-    let pos= this.listNotifications.findIndex((m:Message)=>m.idPack.toString()==message.idPack.toString())
+    let pos= this.listNotifications.findIndex((m:Message)=>m.id.toString()==message.id.toString())
     if(pos<0) this.listNotifications.push(message)
     else
     {
-      this.listNotifications.slice(pos,1);
+      this.listNotifications.splice(pos,1);
       // this.listNotifications.push(message);
       // this.listNotifications.reverse();
     }
@@ -71,7 +71,9 @@ export class UserNotificationService {
     return new Promise<ResultStatut>((resolve,reject)=>{
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
-        let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
+        
+        let pos=this.listNotifications.findIndex((msg:Message)=>message.id.toString()==msg.id.toString())
+        console.log("delete ",pos)
         if(pos>-1)
         {
           this.listNotifications.splice(pos,1);
