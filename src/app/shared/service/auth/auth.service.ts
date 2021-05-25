@@ -36,7 +36,7 @@ export class AuthService {
       this.firebaseApi.signInApi(userN.email, userN.password)
         .then(result => {
           // userN.password="";
-          userN.userName = result.result.user.displayName;
+          userN.name = result.result.user.displayName;
           userN.email = result.result.user.email;
           userN.photoUrl = result.result.user.photoUrl || "";
           userN.id.setId(result.result.user.uid);
