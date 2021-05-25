@@ -15,7 +15,7 @@ export class SponsorID {
      */
     static generateId(user:User): SponsorID {
         let sponsorID=new SponsorID();
-        let spon=user.userName.split(" ")
+        let spon=user.name.split(" ")
                         .map((name)=> name.charAt(0))
                         .reduce((preString:string,currString:string)=>(preString+currString).toLowerCase());
         spon+=`${(new Date()).getUTCMilliseconds()}`;

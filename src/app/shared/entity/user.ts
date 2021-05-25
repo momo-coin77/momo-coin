@@ -9,7 +9,8 @@ export enum UserAccountState {
 export class User extends Entity {
     email: string = '';
     password: string = '';
-    userName: string = '';
+    name: string = '';
+    fullName: string = '';
     nicNumber: string = ''; // CNI num
     emailVerified: boolean = false;
     phone: string = '';

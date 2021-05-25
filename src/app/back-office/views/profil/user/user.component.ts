@@ -50,7 +50,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
 
     this.authService.currentUserSubject.subscribe((user: User) => {
-      this.name = user.userName;
+      this.name = user.name;
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;

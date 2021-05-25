@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit {
 
     setFormData(): User {
         let user: User = new User();
-        user.userName = this.registerForm.value.name;
+        user.fullName = this.registerForm.value.name;
         user.email = this.registerForm.value.email;
         user.password = this.registerForm.value.password;
         user.country = this.registerForm.value.country;
@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit {
         return user;
     }
 
-    onSubmit(data) {
+    onSubmit() {
         this.submitted = true;
         console.log('Reg form avant setform', this.registerForm);
 
