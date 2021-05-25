@@ -23,13 +23,15 @@ export class UserComponent implements OnInit {
   city: String = '';
   message: string = '\<b>Error\</b>\<br>this action not permited!';
   id: String;
-  sponsorshipId:String;
+  parentSponsorShipId: String;
 
   constructor(
     private authService: AuthService,
     public router: Router,
     public ngZone: NgZone,
     public notif: NotificationService) {
+      this.setData();
+      console.log('parent sponsor id', this.parentSponsorShipId)
 
   }
 
@@ -48,18 +50,22 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setData();
+  }
 
+  setData(){
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.name = user.name;
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;
-      this.id = user.mySponsorShipId.toString();  //this.authService.currentUserSubject.getValue().id.toString();
-      this.country = user.country;
-      this.city = user.city;
-      this.sponsorshipId = user.parentSponsorShipId.toString();
+      this.id = user.mySponsorShipId.toString();
+      this.country = this.authService.currentUserSubject.getValue().country;
+      this.city = this.authService.currentUserSubject.getValue().city;
+      this.parentSponsorShipId = this.authService.currentUserSubject.getValue().parentSponsorShipId.toString();
     });
   }
+
   idCopied(){
     this.notif.showNotification('bottom', 'center', 'secondary', 'fa fa-check', '  Id copied');
 

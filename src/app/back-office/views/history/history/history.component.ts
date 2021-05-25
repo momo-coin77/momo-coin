@@ -12,7 +12,7 @@ import { UserHistoryService } from '../../../../shared/service/user-history/user
 })
 
 export class HistoryComponent implements OnInit {
-  packs:Pack[]= [];
+  packs: Pack[] = [];
   listHistoryPacks: Map<string, boolean> = new Map<string, boolean>();
   numHistoryPack: number = 0;
 
@@ -26,13 +26,14 @@ export class HistoryComponent implements OnInit {
 
   getPacksHistory() {
     this.history.history.subscribe((pack: Pack[]) => {
-      this.packs=pack.map((p:Pack)=>{
-        let npack=new Pack();
-        npack.hydrate(p.toString());
-        npack.saleDate=(new Date(npack.saleDate)).toLocaleDateString()
-        return npack;
-      });
-    console.log('list H', this.packs)
+      this.packs = pack.filter((p: Pack) => !this.listHistoryPacks.has(p.id.toString().toString()))
+        .map((p: Pack) => {
+          let npack = new Pack();
+          npack.hydrate(p.toString());
+          this.listHistoryPacks.set(npack.id.toString().toString(), true);
+          npack.saleDate = (new Date(npack.saleDate)).toLocaleDateString();
+          return npack;
+        });
     });
   }
 

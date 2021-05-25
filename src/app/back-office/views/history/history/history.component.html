@@ -10,7 +10,6 @@
           <table class="table table-bordered table-striped table-sm">
             <thead>
               <tr>
-                <th><b>Invest</b></th>
                 <th><b>Amount</b></th>
                 <th><b>Date</b></th>
                 <th><b>status</b></th>
@@ -19,7 +18,6 @@
             <tbody>
               <tr *ngFor="let history of packs">
                 <td><b>{{history.amount}}</b></td>
-                <td><b>{{history.nextAmount}}</b></td>
                 <td><b>{{history.saleDate}}</b></td>
                 <td><b><span class="badge badge-success">Paid</span></b></td>
               </tr>
