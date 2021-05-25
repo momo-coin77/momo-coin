@@ -264,6 +264,7 @@ export class BasicPackService {
                 if(result.result!=null)
                 {
                     result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
+                    console.log("Bonus ",result.result.bonus)
                     return this.firebaseApi.updates([
                         {
                             link:`users/${result.result.sponsorshipId.toString()}/bonus`,
