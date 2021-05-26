@@ -20,56 +20,59 @@ import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss']
 })
-export class DefaultLayoutComponent implements OnInit,AfterViewInit {
+export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
-  @ViewChild("confirmPayment") public confirmPayment: ModalDirective;
+  @ViewChild('confirmPayment') public confirmPayment: ModalDirective;
 
   public sidebarMinimized = false;
   public navItems = navItems;
   waitResponse = false;
-  selectedPack:Pack= new Pack();
-  selectedUser:User=new User();
-  selectedMessage:Message=new Message()
+  selectedPack: Pack = new Pack();
+  selectedUser: User = new User();
+  selectedMessage: Message = new Message()
   errorFindingPackageMessage = '';
-  unreadMessageList: {pack:Pack,message:Message}[] = [];
+  unreadMessageList: { pack: Pack, message: Message }[] = [];
   public userName: String = '';
   closeResult = '';
   notif: boolean;
   // To have a current year for copirygth
   year: Date = new Date();
+  fullName: string = '';
 
   today: number = Date.now();
 
   constructor(
-    private autService: AuthService, // firebase auth
+    private authService: AuthService, // firebase auth
     private router: Router,
-    private bsModal:BsModalService,
-    private dashbaord:ElementRef,
-    private userService:UserService,
+    private bsModal: BsModalService,
+    private dashbaord: ElementRef,
+    private userService: UserService,
     private userNotif: UserNotificationService,
     private notification: NotificationService,
     private packService: BasicPackService) {
+    this.fullName = this.authService.currentUserSubject.getValue().fullName;
 
     // this.myfunc();
   }
 
   ngOnInit(): void {
+    this.fullName = this.authService.currentUserSubject.getValue().fullName;
     // this.chatService.listMessageUnreadSubject.subscribe((listMessage) => this.unreadMessageList = listMessage);
-    this.autService.currentUserSubject.subscribe((user: User) => {
+    this.authService.currentUserSubject.subscribe((user: User) => {
       if (!user) { return this.userName = user.name; }
     });
-    this.myfunc();    
+    this.myfunc();
   }
 
   ngAfterViewInit(): void {
-    let parent = this.dashbaord.nativeElement.querySelectorAll(".navbar-toggler")[2];
+    let parent = this.dashbaord.nativeElement.querySelectorAll('.navbar-toggler')[2];
     // console.log(parent.childNodes)
-    let notifButon =this.dashbaord.nativeElement.querySelector("#notifButton");
+    let notifButon = this.dashbaord.nativeElement.querySelector('#notifButton');
     // parent.childNodes.forEach(element => {
     //   parent.removeChild(element);
     // });
-    parent.removeChild(parent.querySelector(".navbar-toggler-icon"))
-    parent.appendChild(notifButon)
+    parent.removeChild(parent.querySelector('.navbar-toggler-icon'));
+    parent.appendChild(notifButon);
     // console.log("notif",notifButon)
   }
 
@@ -78,62 +81,65 @@ export class DefaultLayoutComponent implements OnInit,AfterViewInit {
   }
 
   confirmMessage() {
-    this.waitResponse=true;
-    this.packService.confirmPaiementBySeller(this.selectedPack,this.selectedMessage)
-    .then((result:ResultStatut)=>{
-      this.waitResponse=false;
-      this.confirmPayment.hide()
-      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
-      this.router.navigate(["dashboard"])
-    })
-    .catch((error)=>{
-      this.confirmPayment.hide();
-      setTimeout(()=>this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'+error.message),200)
-      this.waitResponse=false;
-    })
+    this.waitResponse = true;
+    this.packService.confirmPaiementBySeller(this.selectedPack, this.selectedMessage)
+      .then((result: ResultStatut) => {
+        this.waitResponse = false;
+        this.confirmPayment.hide();
+        this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
+        this.router.navigate(['dashboard']);
+      })
+      .catch((error) => {
+        this.confirmPayment.hide();
+        // tslint:disable-next-line:max-line-length
+        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message), 200)
+        this.waitResponse = false;
+      })
   }
 
   myfunc() {
-    this.userNotif.notifications.subscribe((list: Message[]) => { 
+    this.userNotif.notifications.subscribe((list: Message[]) => {
       // console.log("Message ",list)
-      this.unreadMessageList=[];
-      if (this.unreadMessageList.length > 0) this.notif = true;
-      else this.notif = false; 
+      this.unreadMessageList = [];
+      if (this.unreadMessageList.length > 0) { this.notif = true; }
+      else { this.notif = false; }
 
-      list.forEach((message:Message)=>{
+      list.forEach((message: Message) => {
         this.packService.getPackById(message.idPack)
-        .then((result:ResultStatut)=>{
+          .then((result: ResultStatut) => {
 
-          let pos=this.unreadMessageList.findIndex((infos:{pack:Pack,message:Message})=>infos.pack.id.toString()==message.idPack.toString())
-          if(pos>=0)  this.unreadMessageList.splice(pos,1)
-          this.unreadMessageList.push({pack:result.result,message});       
-        })
+            // tslint:disable-next-line:triple-equals
+            // tslint:disable-next-line:max-line-length
+            let pos = this.unreadMessageList.findIndex((infos: { pack: Pack, message: Message }) => infos.pack.id.toString() == message.idPack.toString())
+            if (pos >= 0) { this.unreadMessageList.splice(pos, 1); }
+            this.unreadMessageList.push({ pack: result.result, message });
+          })
       })
       this.unreadMessageList.reverse();
     });
   }
 
   logOut() {
-    this.autService.signOut();
+    this.authService.signOut();
     this.router.navigate(['/login']);
     this.notification.showNotification('top', 'center', 'success', '', '\<b>You are out !\</b>');
   }
-  showModal(info:{pack:Pack, message:Message})
-  {
+  showModal(info: { pack: Pack, message: Message }) {
     // console.log('teste pop');
     this.confirmPayment.show();
-    this.selectedPack=info.pack;
-    this.selectedMessage=info.message;
+    this.selectedPack = info.pack;
+    this.selectedMessage = info.message;
     this.userService.getUserById(this.selectedPack.idBuyer)
-    .then((result)=>{
-      this.selectedUser=result.result;
-      this.waitResponse=false;
-    })
-    .catch((error)=>{
-      this.confirmPayment.hide();
-      setTimeout(()=>this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'+error.message),200)
-      this.waitResponse=false;
-    })
+      .then((result) => {
+        this.selectedUser = result.result;
+        this.waitResponse = false;
+      })
+      .catch((error) => {
+        this.confirmPayment.hide();
+        // tslint:disable-next-line:max-line-length
+        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message), 200)
+        this.waitResponse = false;
+      });
   }
 
 }
