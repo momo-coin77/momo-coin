@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
   listSalePacks: Map<string, boolean> = new Map<string, boolean>();
   numPurchasePack: number = 0;
   numSalePack: number = 0;
+  allSaleAmount: number = 0;
+  allPurchaseAmount: number = 0;
+  allAmount: number = 0;
 
   constructor(
     private myPack: MarketService,
@@ -92,17 +95,22 @@ export class DashboardComponent implements OnInit {
       console.log("Arrived")
       if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
         this.listPurchasePacks.set(pack.id.toString().toString(), true);
+        this.allAmount = this.allAmount + pack.amount;
         this.numPurchasePack++;
       }
+      // this.allAmount = this.allPurchaseAmount + this.allAmount;
     });
+    // console.log(this.allAmount)
   }
 
   getSalePacks() {
     this.myPack.getMyOrderedPackOnMarket().subscribe((pack: Pack) => {
       if (!this.listSalePacks.has(pack.id.toString().toString())) {
         this.listSalePacks.set(pack.id.toString().toString(), true);
+        this.allAmount = this.allAmount + pack.amount;
         this.numSalePack++;
       }
     });
+    // this.allAmount = this.allSaleAmount + this.allAmount;
   }
 }
