@@ -87,7 +87,8 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         this.waitResponse = false;
         this.confirmPayment.hide();
         this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
-        this.router.navigate(['dashboard']);
+        // this.router.navigate(['dashboard']);
+        // window.location.href="/#/dashboard";
       })
       .catch((error) => {
         this.confirmPayment.hide();

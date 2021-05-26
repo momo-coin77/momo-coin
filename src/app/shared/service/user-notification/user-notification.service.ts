@@ -30,10 +30,7 @@ export class UserNotificationService {
         .orderByChild('read')
         .equalTo(MessageReadState.UNREAD)
         .on('value', (snapshot) => this.newNotifications(snapshot.val()))
-    });
-
-    this.eventService.loginEvent.subscribe((user: User) => {
-      if (!user) { return; }
+    
       this.firebaseApi.getFirebaseDatabase()
       .ref(`notifications/${user.id.toString()}`)
       .orderByChild('read')
