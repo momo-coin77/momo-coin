@@ -26,7 +26,7 @@ export class HistoryComponent implements OnInit {
 
   getPacksHistory() {
     this.history.history.subscribe((pack: Pack[]) => {
-      console.log("listory ",pack)
+  // console.log("listory ",pack)
       this.packs = pack
       // .filter((p: Pack) => !this.listHistoryPacks.has(p.id.toString().toString()))
         .map((p: Pack) => {

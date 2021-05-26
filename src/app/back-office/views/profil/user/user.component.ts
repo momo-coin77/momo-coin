@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
     public ngZone: NgZone,
     public notif: NotificationService) {
       this.setData();
-      console.log('parent sponsor id', this.parentSponsorShipId)
+  // console.log('parent sponsor id', this.parentSponsorShipId)
 
   }
 

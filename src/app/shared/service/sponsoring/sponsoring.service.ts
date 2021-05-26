@@ -13,7 +13,7 @@ export class SponsorService {
     getSponsorId() {
         let href = this.router.url;
         let tab = href.split('/');
-        console.log(tab[2]);
+    // console.log(tab[2]);
         return tab[2];
     }
 }

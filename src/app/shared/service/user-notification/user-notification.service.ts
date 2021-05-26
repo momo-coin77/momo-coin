@@ -64,7 +64,7 @@ export class UserNotificationService {
   }
   deleteNotification(message:Message):Promise<ResultStatut>
   {
-    console.log("Message ",message)
+// console.log("Message ",message)
     return new Promise<ResultStatut>((resolve,reject)=>{
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
@@ -96,7 +96,7 @@ export class UserNotificationService {
   }
 
   sendNotification(message: Message): Promise<ResultStatut> {
-    console.log("Message send ",message)
+// console.log("Message send ",message)
     return this.firebaseApi.set(`notifications/${message.to.toString()}/${message.id.toString()}`, message.toString());
   }
 }

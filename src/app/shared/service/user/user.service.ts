@@ -48,7 +48,7 @@ export class UserService {
   getListUser(): User[] {
     let r: User[] = [];
     this.listUser.forEach((value: User) => r.push(value));
-    console.log('les user service ' + this.listUser);
+// console.log('les user service ' + this.listUser);
     return r;
   }
 
@@ -90,7 +90,7 @@ export class UserService {
         .equalTo(sponsorID.toString())
         .once('value', (data) => {
           let result: ResultStatut = new ResultStatut();
-          console.log("find by bonus ",data.val())
+      // console.log("find by bonus ",data.val())
           if (!data.val()) {
             result.apiCode = FireBaseConstant.STORAGE_OBJECT_NOT_FOUND;
             result.message = 'user not found';

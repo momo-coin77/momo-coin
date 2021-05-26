@@ -14,7 +14,7 @@ export class ConfirmPackComponent implements OnInit {
   
   pop() {
     // setTimeout(() =>{
-      console.log("teste pop");
+  // console.log("teste pop");
     return confirm("Press a button!");
   // }, 3000);
   }

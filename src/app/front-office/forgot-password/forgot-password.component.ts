@@ -42,7 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     onSubmitForm(event) {
-        console.log(event)
+    // console.log(event)
         // this.authen.sendForgottenMail(event.email);
     }
 

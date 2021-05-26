@@ -22,7 +22,7 @@ export class InputFileUploadComponent implements OnInit
   fileUpload(e) {
     this.documents = [];
     for (let file of e.target.files) {
-      console.log(file)
+  // console.log(file)
       let fileReader: FileReader = new FileReader();
       fileReader.readAsDataURL(file);
       fileReader.addEventListener('load', (e) => {

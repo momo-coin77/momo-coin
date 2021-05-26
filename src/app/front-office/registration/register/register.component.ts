@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
 
     onSubmit() {
         this.submitted = true;
-        console.log('Reg form avant setform', this.registerForm);
+    // console.log('Reg form avant setform', this.registerForm);
 
         // stop here if form is invalid
         if (this.registerForm.invalid) {
@@ -100,7 +100,7 @@ export class RegisterComponent implements OnInit {
         }
         this.waitingRegistration = true;
         let user: User = this.setFormData();
-        console.log('data de setForm', user);
+    // console.log('data de setForm', user);
         this.authService.signInNewUser(user)
             .then((result) => {
                 this.router.navigate(['login']);

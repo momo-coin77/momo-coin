@@ -110,7 +110,7 @@ export class MarketService {
     let d = new Date();
     let hh = d.getHours();
     hh = hh;
-    console.log(hh);
+// console.log(hh);
     if (tab[1] === 'market') {
       if (hh == 1 || hh == 2 || hh == 3 || hh == 0) {
         return this.router.navigate(['market/open']);

@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
       val = 5;
     }
     let number = val + mm;
-    console.log('random: ' + number);
+// console.log('random: ' + number);
     return number;
   }
 
@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
 
   getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
-      console.log("Arrived")
+  // console.log("Arrived")
       if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
         this.listPurchasePacks.set(pack.id.toString().toString(), true);
         this.allAmount = this.allAmount + pack.amount;

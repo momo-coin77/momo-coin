@@ -198,7 +198,7 @@ export class ProfileNormalUserComponent implements OnInit, AfterViewInit {
       this.allCountriesAndthierCities.push(data);
       citiesOfCountry = [];
     });
-    console.log(this.allCountriesAndthierCities); */
+// console.log(this.allCountriesAndthierCities); */
   }
 
   // add city in country

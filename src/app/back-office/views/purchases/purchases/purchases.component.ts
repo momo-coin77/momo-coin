@@ -31,7 +31,7 @@ export class PurchasesComponent implements OnInit {
         this.packs.push({ waitResponse: false, pack });
       }
 
-      console.log('Purchase packs list', this.packs);
+  // console.log('Purchase packs list', this.packs);
       // this.searchPack();
     });
   }

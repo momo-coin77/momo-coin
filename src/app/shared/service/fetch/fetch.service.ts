@@ -74,7 +74,7 @@ export class FetchService {
       this.db.ref(url).once('value')
         .then((doc) => {
           try {
-            console.log(doc);
+        // console.log(doc);
             action.result = {};
             doc.forEach(element => {
               // console.log("element ",element," key ",element.key);
@@ -96,12 +96,12 @@ export class FetchService {
 
 
   fetch(url: string): Promise<ActionStatut> {
-    console.log('fetch')
+// console.log('fetch')
     let action = new ActionStatut();
     return new Promise<ActionStatut>((resolve, reject) => {
       this.db.ref(url).on('value', (doc) => {
         try {
-          console.log('fetch', doc);
+      // console.log('fetch', doc);
           let r = [];
           doc.forEach(element => {
             r.push(element.val());

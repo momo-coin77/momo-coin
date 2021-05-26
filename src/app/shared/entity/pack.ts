@@ -90,6 +90,6 @@ export function packBuilder(entity: Record<string, any>): Pack {
     if (entity.options) {
         pck.hydrate(entity);
     }
-    console.log('Hydrated pack ', pck);
+// console.log('Hydrated pack ', pck);
     return pck;
 }

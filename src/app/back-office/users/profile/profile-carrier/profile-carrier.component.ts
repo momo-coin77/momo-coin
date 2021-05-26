@@ -172,7 +172,7 @@ export class ProfileCarrierComponent implements OnInit {
       this.allCountriesAndthierCities.push(data);
       citiesOfCountry = [];
     });
-    console.log(this.allCountriesAndthierCities); */
+// console.log(this.allCountriesAndthierCities); */
   }
 
   // add city in country
