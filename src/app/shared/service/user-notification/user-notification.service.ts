@@ -73,7 +73,7 @@ export class UserNotificationService {
       .then((result)=>{
         
         let pos=this.listNotifications.findIndex((msg:Message)=>message.id.toString()==msg.id.toString())
-        console.log("delete ",pos)
+        // console.log("delete ",pos)
         if(pos>-1)
         {
           this.listNotifications.splice(pos,1);
