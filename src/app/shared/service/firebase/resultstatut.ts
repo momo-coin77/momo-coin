@@ -16,5 +16,14 @@ export class ResultStatut {
     this.description = description;
     this.result = result;
   }
+  toString()
+  {
+    return {
+      code:this.code,
+      message:this.message,
+      description:this.description,
+      result:this.result,
+    }
+  }
 
 }

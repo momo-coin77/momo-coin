@@ -54,7 +54,7 @@ export class AuthService {
           if (emitEvent) {
             if (result.result.status == UserAccountState.DESACTIVE) {
               result.apiCode = FireBaseConstant.DESACTIVED_ACCOUNT;
-              result.result = null;
+              result.result = {};
               this.firebaseApi.handleApiError(result);
               return reject(result);
             }
@@ -81,7 +81,8 @@ export class AuthService {
 
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
-      if (user.mySponsorShipId && user.mySponsorShipId != null) {
+      if (user.parentSponsorShipId.toString() !="") {
+        
         this.firebaseApi
           .getFirebaseDatabase()
           .ref("users")
@@ -96,6 +97,7 @@ export class AuthService {
             }
           })
       }
+      
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user, false))
         .then(() => {

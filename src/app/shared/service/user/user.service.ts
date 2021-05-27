@@ -58,6 +58,7 @@ export class UserService {
 
   // recuperer les informations d'un utilisateur
   getUserById(id: EntityID): Promise<ResultStatut> {
+    console.log("id ",id)
     return new Promise<any>((resolve, reject) => {
       if (this.listUser.has(id.toString())) {
         let result: ResultStatut = new ResultStatut();
@@ -67,6 +68,7 @@ export class UserService {
       this.firebaseApi.fetchOnce(`users/${id.toString()}`)
         .then((result: ResultStatut) => {
           let user: User = new User();
+          console.log("result, ",result)
           user.hydrate(result.result);
           this.listUser.set(user.id.toString(), user);
           this.usersSubject.next(this.listUser);

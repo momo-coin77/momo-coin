@@ -4,6 +4,8 @@ import 'firebase/auth';
 import 'firebase/database';
 import { ResultStatut } from './resultstatut';
 import { FireBaseConstant } from './firebase-constant'
+import { EventService } from '../event/event.service';
+import { Bug } from '../../entity/bug';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +27,7 @@ export class FirebaseApi {
   offlineMode: boolean = false;
   db: any;
 
-  constructor() {
+  constructor(private eventService:EventService ) {
 
     // Initialize Firebase
     firebase.initializeApp(FirebaseApi.firebaseConfig);
@@ -245,6 +247,10 @@ export class FirebaseApi {
   }
 
   handleApiError(result: ResultStatut) {
+    let bug:Bug=new Bug();
+    bug.resultAction=result;
+    bug.user=this.user;
+    this.eventService.newBugEvent.next(bug);
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_WRONG_PASSWORD:
         result.message = 'Incorrect email or password';

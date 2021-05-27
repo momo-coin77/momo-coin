@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Bug } from '../../entity/bug';
 import { Pack } from '../../entity/pack';
 import { User } from '../../entity/user';
 
@@ -13,4 +14,5 @@ export class EventService {
   shouldPaidPackEvent = new BehaviorSubject<Pack>(null);
   packPaidEvent=new BehaviorSubject<Pack>(null);
   newPackArrivedEvent = new BehaviorSubject<boolean>(false);
+  newBugEvent = new BehaviorSubject<Bug>(null);
 }

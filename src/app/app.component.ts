@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DataStateUpdateService } from './shared/service/data-state-update/data-state-update.service';
 import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
+import { TrackBugService } from './shared/service/track-bug/track-bug.service';
 import { UserNotificationService } from './shared/service/user-notification/user-notification.service';
 
 
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private userNotification:UserNotificationService,
+    private trackBugService:TrackBugService,
     private updateDataUser:DataStateUpdateService) { }
 
   ngOnInit() {
