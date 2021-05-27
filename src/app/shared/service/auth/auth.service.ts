@@ -16,22 +16,24 @@ import { UserService } from '../user/user.service';
 export class AuthService {
   currentUser: User = new User();
   isLoggedIn: boolean = false;
+  isAdminer: boolean = false;
   currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
 
 
   constructor(
     private firebaseApi: FirebaseApi,
     private localStorageService: UserlocalstorageService,
-    private eventService:EventService,
+    private eventService: EventService,
     private userService: UserService) {
     this.localStorageService.dataUser.subscribe((userData: UserLocalStorageData) => {
       this.isLoggedIn = userData.isLoggedIn;
       this.currentUser = userData.user;
+      this.ifAdminer(this.currentUser.email);
       this.currentUserSubject.next(this.currentUser);
     });
   }
 
-  signIn(userN: User,emitEvent:boolean=true): Promise<ResultStatut> {
+  signIn(userN: User, emitEvent: boolean = true): Promise<ResultStatut> {
     let action = new ResultStatut();
     return new Promise<ResultStatut>((resolve, reject) => {
       this.firebaseApi.signInApi(userN.email, userN.password)
@@ -41,19 +43,18 @@ export class AuthService {
           userN.email = result.result.user.email;
           userN.photoUrl = result.result.user.photoUrl || "";
           userN.id.setId(result.result.user.uid);
-          if(emitEvent)
-          {
-            return this.userService.getUserById(userN.id)                
-          }    
+
+          this.ifAdminer(userN.email);
+          if (emitEvent) {
+            return this.userService.getUserById(userN.id)
+          }
           return Promise.resolve(action)
         })
-        .then((result)=>{              
-          if(emitEvent)
-          {
-            if(result.result.status==UserAccountState.DESACTIVE)
-            {
-              result.apiCode=FireBaseConstant.DESACTIVED_ACCOUNT;
-              result.result=null;
+        .then((result) => {
+          if (emitEvent) {
+            if (result.result.status == UserAccountState.DESACTIVE) {
+              result.apiCode = FireBaseConstant.DESACTIVED_ACCOUNT;
+              result.result = null;
               this.firebaseApi.handleApiError(result);
               return reject(result);
             }
@@ -63,8 +64,8 @@ export class AuthService {
           this.localStorageService.setUserData({
             isLoggedIn: true,
             user: result.result
-          });              
-        })         
+          });
+        })
         .catch(result => {
           this.firebaseApi.handleApiError(result);
           reject(result);
@@ -77,31 +78,29 @@ export class AuthService {
     this.localStorageService.clearData();
     this.eventService.logoutEvent.next(true);
   }
-  
+
   signInNewUser(user: User) {
     return new Promise<ResultStatut>((resolve, reject) => {
-      if(user.mySponsorShipId && user.mySponsorShipId!=null)
-      {
+      if (user.mySponsorShipId && user.mySponsorShipId != null) {
         this.firebaseApi
-        .getFirebaseDatabase()
-        .ref("users")
-        .orderByChild("mySponsorShipId")
-        .equalTo(user.mySponsorShipId.toString())
-        .once('value',(data)=> {
-          if(!data)
-          {
-            let result:ResultStatut=new ResultStatut();
-            result.apiCode=FireBaseConstant.DATABASE_UNKNOW_ERROR,
-            result.message="Could not find then sponsorship id user";
-            return reject(result)
-          }
-        })
+          .getFirebaseDatabase()
+          .ref("users")
+          .orderByChild("mySponsorShipId")
+          .equalTo(user.mySponsorShipId.toString())
+          .once('value', (data) => {
+            if (!data) {
+              let result: ResultStatut = new ResultStatut();
+              result.apiCode = FireBaseConstant.DATABASE_UNKNOW_ERROR,
+                result.message = "Could not find then sponsorship id user";
+              return reject(result)
+            }
+          })
       }
       this.firebaseApi.createUserApi(user.email, user.password)
-        .then(() => this.signIn(user,false))
-        .then(() =>  {
-          this.SendVerificationMail();
-          user.dateCreation=(new Date()).toISOString();
+        .then(() => this.signIn(user, false))
+        .then(() => {
+          // this.SendVerificationMail();
+          user.dateCreation = (new Date()).toISOString();
           this.eventService.registerNewUserEvent.next(user);
           return this.userService.addUser(user)
         })
@@ -117,8 +116,15 @@ export class AuthService {
   }
 
   // Send email verification when new user sign up
-  SendVerificationMail() {
-    return this.firebaseApi.user.sendEmailVerification();
-  }
+  
+  // SendVerificationMail() {
+  //   return this.firebaseApi.user.sendEmailVerification();
+  // }
 
+  ifAdminer(email: string) {
+    if (email == 'admin@gmail.com') {
+      this.isAdminer = true;
+
+    }
+  }
 }

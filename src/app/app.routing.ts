@@ -20,6 +20,7 @@ import { TermsAndConditionsComponent } from './shared/components/terms-and-condi
 //// Back Office
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
 import { RegistrationComponent } from './front-office/registration/registration.component';
+import { AuthGuard } from './shared/guard/auth.guard';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,7 @@ export const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
+    canActivate: [AuthGuard],
     data: {
       title: 'Home'
     },

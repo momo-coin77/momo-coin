@@ -7,7 +7,7 @@
             <h1>List of Pack</h1>
           </div>
           <div class="col-md-6 text-right">
-            <a routerLink="/add" class="btn btn-success"><i class="fa fa-plus"></i></a>
+            <a routerLink="/admin/add-pack" class="btn btn-success" style="background-color: green !important;"><i class="fa fa-plus"></i></a>
           </div>
         </div>
 
@@ -51,13 +51,13 @@
                   <td>{{ pack.pack.idBuyer }}</td>
                   <td>{{ pack.pack.state=='on_market'? 'On the market': 'On the market'}}</td>
                   <td class="text-right">
-                    <button (click)="deletePack(pack.pack.id)" class="btn btn-sm btn-warning">
-                      <i class="fa fa-trash"></i>
+                    <button (click)="deletePack(pack.pack.id)" class="btn btn-sm btn-warning" style="background-color: rgb(187, 64, 64) !important;">
+                      <i class="fa fa-trash-o" aria-hidden="true" style="color: cornsilk;"></i>
                     </button>
                     <br>
                     <a [routerLink]="['/edit',pack.pack.id]" (click)="editpack(pack.pack.id)" class="btn btn-sm btn-info"
-                      style="margin-top: 3px">
-                      <i class="fa fa-pencil"></i>
+                      style="background-color: rgb(0, 179, 255) !important;">
+                      <i class="fa fa-pencil" style="color: cornsilk;"></i>
                     </a>
                   </td>
                 </tr>
