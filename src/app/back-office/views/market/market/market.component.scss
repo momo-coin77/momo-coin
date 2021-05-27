@@ -5,7 +5,9 @@
   border: none;
   // background-color: #f1f1f1;
 }
-
+.buy:hover {
+  cursor: pointer;
+  }
 /* Style the tab content */
 .tabcontent {
   display: none;

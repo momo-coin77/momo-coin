@@ -116,6 +116,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpinnerModule } from './shared/components/spinner/spinner.module';
 import { RegistrationComponent } from './front-office/registration/registration.component';
 import { RegistrationModule } from './front-office/registration/registration.module';
+import { AuthGuard } from './back-office';
+import { AdminerGuard } from './shared/guard/adminer.guard';
 
 @NgModule({
   imports: [
@@ -211,6 +213,8 @@ import { RegistrationModule } from './front-office/registration/registration.mod
     provide: LocationStrategy,
     useClass: HashLocationStrategy,
   },
+  AuthGuard,
+  AdminerGuard,
   EventService,
   // UserService,
   // RealtimeService,

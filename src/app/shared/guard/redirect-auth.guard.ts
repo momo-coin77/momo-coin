@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { User } from '../entity/user';
 // import { AuthService } from '../service/auth/authentification.service';
 
 @Injectable({
@@ -14,7 +15,7 @@ export class RedirectAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return new Promise<boolean>((resolve, reject) => {
-      // let subs=this.authService.currentUserSubject.subscribe((user:Provider)=>{
+      // let subs=this.authService.currentUserSubject.subscribe((user:User)=>{
       // }
 
       // if(this.authService.isLoggedIn)
@@ -22,7 +23,7 @@ export class RedirectAuthGuard implements CanActivate {
       //   this.router.navigate(['dashboard']);
       //   return false;
       // }
-      return true;
+      // return true;
     });
   }
 }

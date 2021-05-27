@@ -95,9 +95,9 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label for="sponsorshipId">Sponsor ID</label>
-                                        <input *ngIf="!sponsorId" type="text" id="sponsorshipId" formControlName="sponsorshipId"
+                                        <input *ngIf="!sponsorId" type="text" id="sponsorshipId"
                                             placeholder="Enter you Last name" class="form-control"
-                                            value="{{sponsorId}}">
+                                            value="{{sponsorId}}" disabled>
                                         <input *ngIf="sponsorId" type="text" id="sponsorshipId" formControlName="sponsorshipId"
                                             placeholder="Enter you Last name" class="form-control"
                                             value="{{sponsorId}}" disabled>
@@ -113,8 +113,8 @@
                                         <!-- <input id="user_agree" formControlName="user_agree" class="checkbox-custom"
                                             name="checkbox-1" type="checkbox"> -->
                                         <label for="user_agree" class="checkbox-custom-label"> I confirm that i have
-                                            read, accepted and agreed to all the <a href="#"> Terms, Data
-                                                Policy </a>and <a href="#"> Cookie Policy</a>.</label><br>
+                                            read, accepted and agreed to all the <a href="/#/register"> Terms, Data
+                                                Policy </a>and <a href="/#/register"> Cookie Policy</a>.</label><br>
                                         <label class="switch switch-label switch-pill switch-warning">
                                             <input checked type="checkbox" class="switch-input" id="user_agree"
                                                 name="checkbox-1"
