@@ -7,6 +7,9 @@
       <a class="nav-link" style="font-family: 'Times New Roman', Times, serif; color: black;"
         [routerLink]="['/profil']">{{fullName}}</a>
     </li>
+    <li class="nav-item px-3" *ngIf="isAdmin">
+      <button class="btn btn-active" [routerLink]="['/admin']" style="background-color: #ed993f;">Admin Panel</button>
+    </li>
   </ul>
   <ul class="nav navbar-nav ml-auto">
     <div style="display: none;">

@@ -101,7 +101,7 @@ export class AuthService {
       this.firebaseApi.createUserApi(user.email, user.password)
         .then(() => this.signIn(user, false))
         .then(() => {
-          // this.SendVerificationMail();
+          this.SendVerificationMail();
           user.dateCreation = (new Date()).toISOString();
           this.eventService.registerNewUserEvent.next(user);
           return this.userService.addUser(user)
@@ -119,9 +119,9 @@ export class AuthService {
 
   // Send email verification when new user sign up
   
-  // SendVerificationMail() {
-  //   return this.firebaseApi.user.sendEmailVerification();
-  // }
+  SendVerificationMail() {
+    return this.firebaseApi.user.sendEmailVerification();
+  }
 
   ifAdminer(email: string) {
     if (email == 'admin@gmail.com') {

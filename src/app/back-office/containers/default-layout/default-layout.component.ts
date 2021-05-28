@@ -38,6 +38,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   // To have a current year for copirygth
   year: Date = new Date();
   fullName: string = '';
+  isAdmin: boolean = false;
 
   today: number = Date.now();
 
@@ -51,7 +52,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     private notification: NotificationService,
     private packService: BasicPackService) {
     this.fullName = this.authService.currentUserSubject.getValue().fullName;
-
+    if (this.authService.currentUserSubject.getValue().email == 'admin@gmail.com'){
+      this.isAdmin = true;
+    };
     // this.myfunc();
   }
 
@@ -142,5 +145,5 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         this.waitResponse = false;
       });
   }
-
+  
 }

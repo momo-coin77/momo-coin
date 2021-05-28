@@ -1,64 +1,71 @@
-<div class="row">
-  <div class="col-md-6">
-    <h1>Edit User</h1>
-  </div>
-  <div class="col-md-6 text-right">
-    <a routerLink="/admin/user-list" class="btn btn-link">
-      <i class="fa fa-arrow-left"></i> Back to list
-    </a>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-8 mx-auto">
-    <form #f="ngForm" (submit)="updateUser(f)">
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input [ngClass]="{'is-invalid': user.name.touched && user.name.invalid}" [(ngModel)]="user.name" name="name"
-          id="name" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="nicNumber">NIC Number</label>
-        <input [(ngModel)]="user.nicNumber" name="nicNumber" id="nicNumber" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="phone">Phone</label>
-        <input [ngClass]="{'is-invalid': user.phone.touched && user.phone.invalid}" [(ngModel)]="user.phone"
-          name="phone" id="phone" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input name="email" [ngClass]="{'is-invalid': user.email.touched && user.email.invalid}" required
-          [(ngModel)]="user.email" id="email" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input [(ngModel)]="user.password" name="password" id="password" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="emailVerified">emailVerified</label>
-        <input name="emailVerified" required [(ngModel)]="user.emailVerified" id="emailVerified" type="number"
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="country">Counrty</label>
-        <input [(ngModel)]="user.country" name="country" id="country" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="city">City</label>
-        <input [(ngModel)]="user.city" name="city" id="city" type="text" class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="sponsorshipId">Sponsorship Id</label>
-        <input [(ngModel)]="user.sponsorshipId" name="sponsorshipId" id="sponsorshipId" type="text"
-          class="form-control">
-      </div>
-      <div class="form-group">
-        <label for="status">Status</label>
-        <input [(ngModel)]="user.status" name="status" id="status" type="text" class="form-control">
+<div class="animated fadeIn">
+  <a routerLink="/admin" class="btn btn-link">
+    <i class="fa fa-arrow-left"></i> Back to menu
+  </a>
+  <div class="row">
+    <div class="col-sm-6 col-md-10">
+      <div class="card">
+        <div class="row linear-gradient2">
+          <div class="col-md-6 text-center">
+            <h1>Edit User</h1>
+          </div>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-warning btn-block"><i class="fa fa-pencil"></i><label>Update</label></button>
-    </form>
+      <div class="row">
+        <div class="col-md-8 mx-auto">
+          <form #f="ngForm" (submit)="updateUser(f)">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input [ngClass]="{'is-invalid': user.name.touched && user.name.invalid}" [(ngModel)]="user.name"
+                name="name" id="name" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="nicNumber">NIC Number</label>
+              <input [(ngModel)]="user.nicNumber" name="nicNumber" id="nicNumber" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone</label>
+              <input [ngClass]="{'is-invalid': user.phone.touched && user.phone.invalid}" [(ngModel)]="user.phone"
+                name="phone" id="phone" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input name="email" [ngClass]="{'is-invalid': user.email.touched && user.email.invalid}" required
+                [(ngModel)]="user.email" id="email" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input [(ngModel)]="user.password" name="password" id="password" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="emailVerified">emailVerified</label>
+              <input name="emailVerified" required [(ngModel)]="user.emailVerified" id="emailVerified" type="number"
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="country">Counrty</label>
+              <input [(ngModel)]="user.country" name="country" id="country" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input [(ngModel)]="user.city" name="city" id="city" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="sponsorshipId">Sponsorship Id</label>
+              <input [(ngModel)]="user.sponsorshipId" name="sponsorshipId" id="sponsorshipId" type="text"
+                class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="status">Status</label>
+              <input [(ngModel)]="user.status" name="status" id="status" type="text" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-warning btn-block"><i
+                class="fa fa-pencil"></i><label>Update</label></button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminerGuard } from '../../../shared/guard/adminer.guard';
+import { AdminComponent } from './admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { EditPackComponent } from './packs/edit-pack/edit-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
@@ -16,7 +17,16 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'list-user'
+                redirectTo: 'panel'
+            },
+            {
+                path: 'panel',
+                component: AdminComponent,
+                data: {
+                    title: 'Admin Panel'
+                }
+                // canActivate:[AuthGuard]
+
             },
             {
                 path: 'list-user',
