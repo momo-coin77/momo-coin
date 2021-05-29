@@ -6,37 +6,26 @@ export class Bug extends Entity
 {
     date:Date=new Date();
     user=null;
-    resultAction:ResultStatut;
-    stack:string="";
-    getStackTrace()
+    resultAction:ResultStatut=new ResultStatut();
+    error:Error;
+
+    constructor(result:ResultStatut,error:Error)
     {
-        function st2(f) {
-            return !f ? [] : 
-                st2(f.caller).concat([f.toString().split('(')[0].substring(9) + '(' + f.arguments.join(',') + ')']);
-        }
-        return st2(arguments.callee.caller);
+        super();
+        this.resultAction.hydrate(result.toString());
+        this.error = error;
     }
+
     toString(): Record<string | number, any> {
-        let r = {};
-        for (const k of Object.keys(this)) {
-            if (k == "id")  r[k]=this.id.toString()
-            else if(k=="date") r[k]=this.date.toISOString();
-            else if(k=="user") 
-            {
-                if(this.user==null) r[k]="UnAuthentificated user";
-                else r[k]=`${this.user.uid}, ${this.user.email}` 
-            }
-            else if(k=="resultAction") 
-            {
-                if(this.resultAction)
-                {
-                    r[k]=this.resultAction.toString();
-                }
-                else r[k]="Unknow action"
-            }
-            else if(k=="stack") r[k]=this.getStackTrace();
-            else r[k] = Reflect.get(this, k);
+        let user = this.user == null ? "UnAuthentificated user" : `${this.user.uid}, ${this.user.email}`;
+        
+        return {
+            id:this.id.toObject(),
+            date:(new Date()).toISOString(),
+            user,
+            resultAction:this.resultAction.toString(),
+            error:this.error.stack
         }
-        return r;
     }
 }
+

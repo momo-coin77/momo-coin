@@ -73,7 +73,7 @@ export class FirebaseApi {
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
-        action.description = 'Description of error: ' + err;
+        action.description = '' + err;
         reject(action);
       });
     });
@@ -90,7 +90,7 @@ export class FirebaseApi {
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
-        action.description = 'Description of error: ' + err;
+        action.description = '' + err;
         reject(action)
       });
     })
@@ -110,7 +110,7 @@ export class FirebaseApi {
             action.apiCode = err.code;
             action.code = ResultStatut.UNKNOW_ERROR;
             action.message = 'error';
-            action.description = `Description of error: ${err}`;
+            action.description = `${err}`;
             reject(action);
           }
         })
@@ -136,7 +136,7 @@ export class FirebaseApi {
           action.apiCode = err.code;
           action.code = ResultStatut.UNKNOW_ERROR;
           action.message = 'error';
-          action.description = `Description of error: ${err}`;
+          action.description = `${err}`;
           reject(action);
         }
       });
@@ -156,7 +156,7 @@ export class FirebaseApi {
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
-        action.description = `Description of error: ${err}`;
+        action.description = `${err}`;
         reject(action);
       }
     });
@@ -193,7 +193,7 @@ export class FirebaseApi {
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
-        action.description = `Description of error: ${err}`;
+        action.description = `${err}`;
         reject(action);
       }
     });
@@ -215,10 +215,11 @@ export class FirebaseApi {
         })
         .catch((error) => {
           // Bugsnag.notify(error)
+          console.log("Error ",error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = 'error';
-          result.description = `Description of error: ${error}`;
+          result.description = `${error}`;
           reject(result);
         })
     });
@@ -259,7 +260,7 @@ export class FirebaseApi {
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = `error: ${error.code}`;
-          result.description = `Description of error: ${error.message}`;
+          result.description = `${error.message}`;
           reject(result);
         });
     });
@@ -274,8 +275,12 @@ export class FirebaseApi {
 
   handleApiError(result: ResultStatut) {    
     switch (result.apiCode) {
-      case FireBaseConstant.AUTH_WRONG_PASSWORD:
-        result.message = 'Incorrect email or password';
+      case FireBaseConstant.AUTH_USER_NOT_FOUND:
+      case FireBaseConstant.AUTH_WRONG_PASSWORD:       
+        let b=new Bug(result,new Error());
+        this.eventService.newBugEvent.next(b); 
+        Bugsnag.notify(b.error)
+        result.message = 'Incorrect email or password';        
         break;
       case FireBaseConstant.AUTH_WEAK_PASSWORD:
         result.message = 'Password must have at least 6 characters'
@@ -289,11 +294,10 @@ export class FirebaseApi {
         result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.coin@gmail.com"
         break;
       default:
-        let error=new Error();
-        error.stack=result.bug.getStackTrace();
-        Bugsnag.notify(error);
-        result.message="Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";
-        this.eventService.newBugEvent.next(result.bug);
+      let bug=new Bug(result,new Error());
+      this.eventService.newBugEvent.next(bug); 
+      Bugsnag.notify(bug.error) 
+        result.message="Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";        
         break
     };
   }

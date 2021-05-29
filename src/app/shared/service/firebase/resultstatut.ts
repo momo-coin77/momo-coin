@@ -1,12 +1,12 @@
-import { Bug } from "../../entity/bug";
+import { Entity } from "../../entity/entity";
 
-export class ResultStatut {
+
+export class ResultStatut extends Entity {
   code: number;
   apiCode: any;
   result: any;
   message: string;
   description: string;
-  bug=new Bug();
   // tslint:disable-next-line:member-ordering
   static RESSOURCE_NOT_FOUND_ERROR = -1;
   static NETWORK_ERROR = -2;
@@ -14,19 +14,24 @@ export class ResultStatut {
   static INVALID_ARGUMENT_ERROR = -3;
   static SUCCESS = 0;
   constructor(code = ResultStatut.SUCCESS, message = 'success', description = '', result = null) {
+    super()
     this.code = code;
     this.message = message;
     this.description = description;
     this.result = result;
   }
+  hydrate(entity)
+  {
+    super.hydrate(entity)
+  }
   toString()
   {
     return {
       code:this.code,
+      apiCode:this.apiCode,
       message:this.message,
       description:this.description,
-      result:this.result,
-      bug:this.bug.toString()
+      result:this.result,      
     }
   }
 
