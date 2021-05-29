@@ -19,8 +19,8 @@ export class User extends Entity {
     mySponsorShipId: SponsorID = new SponsorID(); // id de parrainage
     parentSponsorShipId: SponsorID=new SponsorID(); //id de parent de parrainage
     status: UserAccountState = UserAccountState.ACTIVE; // statu du compte ( true pour actif, false pour désactivé )
-    photoUrl: String = '';
-    network: String = '';
+    photoUrl: string = '';
+    network: string = '';
     user_agree: boolean = true;
     bonus:number=0;
     dateCreation:string="";

@@ -232,6 +232,7 @@ export class FirebaseApi {
       this.db.currentUser.updateProfile(r)
       .then(()=>resolve(new ResultStatut()))
       .catch((error)=>{
+        Bugsnag.notify(error)
         let result:ResultStatut = new ResultStatut();
         result.apiCode=error.error;
         result.message=error.getMessage();
@@ -249,6 +250,7 @@ export class FirebaseApi {
           resolve(result);
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = `error: ${error.code}`;
@@ -283,10 +285,11 @@ export class FirebaseApi {
       case FireBaseConstant.NET_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
       case FireBaseConstant.DESACTIVED_ACCOUNT:
-        result.message="Account Disabled. Contacted the administrator for a reactivation"
+        result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.cion@gmail.com"
         break;
       default:
-        result.message="Unknow error. please contact administrator";
+        Bugsnag.notify(result.result)
+        result.message="Unknow error. please contact administrator <br> contact.momo.cion@gmail.com";
         break
     };
   }
