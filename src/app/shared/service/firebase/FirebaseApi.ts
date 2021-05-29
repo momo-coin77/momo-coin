@@ -6,6 +6,7 @@ import { ResultStatut } from './resultstatut';
 import { FireBaseConstant } from './firebase-constant'
 import { EventService } from '../event/event.service';
 import { Bug } from '../../entity/bug';
+import Bugsnag from '@bugsnag/js';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,7 @@ export class FirebaseApi {
         action.description = 'successful add new collection';
         resolve(action);
       }).catch((err) => {
+        Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -79,6 +81,7 @@ export class FirebaseApi {
         action.description = 'successful set new collection';
         resolve(action);
       }).catch((err) => {
+        Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -98,6 +101,7 @@ export class FirebaseApi {
             resolve(action);
           }
           catch (err) {
+            Bugsnag.notify(err)
             action.apiCode = err.code;
             action.code = ResultStatut.UNKNOW_ERROR;
             action.message = 'error';
@@ -123,6 +127,7 @@ export class FirebaseApi {
           resolve(action);
         }
         catch (err) {
+          Bugsnag.notify(err)
           action.apiCode = err.code;
           action.code = ResultStatut.UNKNOW_ERROR;
           action.message = 'error';
@@ -142,6 +147,7 @@ export class FirebaseApi {
         resolve(action);
       }
       catch (err) {
+        Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -158,6 +164,7 @@ export class FirebaseApi {
       updates.forEach((update) => up[update.link.toString()] = update.data);
       this.db.ref().update(up, (error) => {
         if (error) {
+          Bugsnag.notify(error)
           result.apiCode = error.error;
           result.message = error.message;
           return reject(result);
@@ -177,6 +184,7 @@ export class FirebaseApi {
         resolve(action);
       }
       catch (err) {
+        Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -201,6 +209,7 @@ export class FirebaseApi {
           resolve(result);
         })
         .catch((error) => {
+          Bugsnag.notify(error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = 'error';

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import Bugsnag from '@bugsnag/js';
 import { DataStateUpdateService } from './shared/service/data-state-update/data-state-update.service';
 import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 import { TrackBugService } from './shared/service/track-bug/track-bug.service';
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit {
     private updateDataUser:DataStateUpdateService) { }
 
   ngOnInit() {
+    //Bugsnag.notify(new Error('Test error'))
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;

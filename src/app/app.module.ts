@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NguiMapModule} from '@ngui/map';
@@ -119,7 +119,18 @@ import { RegistrationModule } from './front-office/registration/registration.mod
 import { AuthGuard } from './back-office';
 import { AdminerGuard } from './shared/guard/adminer.guard';
 
+// Import Bugsnag and the Angular integration
+import Bugsnag from '@bugsnag/js'
+import { BugsnagErrorHandler } from '@bugsnag/plugin-angular'
 
+
+// configure Bugsnag asap
+Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
+
+// create a factory which will return the Bugsnag error handler
+export function errorHandlerFactory() {
+  return new BugsnagErrorHandler()
+}
 
 @NgModule({
   imports: [
@@ -218,6 +229,8 @@ import { AdminerGuard } from './shared/guard/adminer.guard';
   AuthGuard,
   AdminerGuard,
   EventService,
+  { provide: ErrorHandler, 
+    useFactory: errorHandlerFactory } 
   // UserService,
   // RealtimeService,
   // ChatRealtimeService,
