@@ -7,6 +7,15 @@ export class Bug extends Entity
     date:Date=new Date();
     user=null;
     resultAction:ResultStatut;
+    stack:string="";
+    getStackTrace()
+    {
+        function st2(f) {
+            return !f ? [] : 
+                st2(f.caller).concat([f.toString().split('(')[0].substring(9) + '(' + f.arguments.join(',') + ')']);
+        }
+        return st2(arguments.callee.caller);
+    }
     toString(): Record<string | number, any> {
         let r = {};
         for (const k of Object.keys(this)) {
@@ -25,6 +34,7 @@ export class Bug extends Entity
                 }
                 else r[k]="Unknow action"
             }
+            else if(k=="stack") r[k]=this.getStackTrace();
             else r[k] = Reflect.get(this, k);
         }
         return r;

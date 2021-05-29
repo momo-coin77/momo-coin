@@ -265,11 +265,7 @@ export class FirebaseApi {
     })
   }
 
-  handleApiError(result: ResultStatut) {
-    let bug:Bug=new Bug();
-    bug.resultAction=result;
-    bug.user=this.user;
-    this.eventService.newBugEvent.next(bug);
+  handleApiError(result: ResultStatut) {    
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_WRONG_PASSWORD:
         result.message = 'Incorrect email or password';
@@ -287,6 +283,7 @@ export class FirebaseApi {
         break;
       default:
         result.message="Unknow error. please contact administrator";
+        this.eventService.newBugEvent.next(result.bug);
         break
     };
   }

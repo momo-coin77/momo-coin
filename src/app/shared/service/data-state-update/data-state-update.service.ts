@@ -42,7 +42,7 @@ export class DataStateUpdateService {
     this.eventService.shouldPaidPackEvent.subscribe((pack:Pack)=>{
       if(!pack) return;
       let date: Date = new Date();
-      date.setDate(date.getHours() + 5)
+      date.setHours(date.getHours() + 5)
       this.addMaxDateTo(`toupdate/pack/waittopaid/${pack.id.toString()}`,date)
     })
 
