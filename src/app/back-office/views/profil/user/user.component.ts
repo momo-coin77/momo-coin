@@ -53,7 +53,7 @@ export class UserComponent implements OnInit {
     this.setData();
   }
 
-  setData(){
+  setData() {
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.name = user.name;
       this.email = user.email;

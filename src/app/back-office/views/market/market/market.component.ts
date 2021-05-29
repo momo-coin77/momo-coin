@@ -148,11 +148,11 @@ export class MarketComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       // this.packs
       let state = this.resultOperation.okresult ? 'success' : 'danger';
-      this.notification.showNotification('top', 'center', state, 'pe-7s-close-circle', this.resultOperation.message);
+      this.notification.showNotification('top', 'center', state, 'pe-7s-close-circle', this.resultOperation.message, 5000);
     }, 100)
     setTimeout(() => {
-      this.router.navigate(['/market'])
-    }, 300)
+      this.router.navigate(['/market']);
+    }, 300);
   }
 
   calculDate() {

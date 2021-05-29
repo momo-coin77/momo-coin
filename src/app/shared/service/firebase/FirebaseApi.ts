@@ -15,6 +15,8 @@ export class FirebaseApi {
 
   static firebaseConfig: any = {
 
+    /////// dev database access
+
     apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
     authDomain: "momocoin-4d42f.firebaseapp.com",
     databaseURL: "https://momocoin-4d42f-default-rtdb.firebaseio.com",
@@ -23,6 +25,9 @@ export class FirebaseApi {
     messagingSenderId: "333841563981",
     appId: "1:333841563981:web:7ae9d993da9dff9b5eb704",
     measurementId: "G-BBYSGZECVV"
+
+
+    /////// real database acces
 
     // apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
     // authDomain: 'momo-coin-23837.firebaseapp.com',
@@ -281,13 +286,13 @@ export class FirebaseApi {
       case FireBaseConstant.NET_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
       case FireBaseConstant.DESACTIVED_ACCOUNT:
-        result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.cion@gmail.com"
+        result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.coin@gmail.com"
         break;
       default:
         let error=new Error();
         error.stack=result.bug.getStackTrace();
         Bugsnag.notify(error);
-        result.message="Unknow error. please contact administrator <br> contact.momo.cion@gmail.com";
+        result.message="Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";
         this.eventService.newBugEvent.next(result.bug);
         break
     };

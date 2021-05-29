@@ -8,7 +8,7 @@ declare var $: any;
 export class NotificationService {
     refresh: number = 1;
 
-    showNotification(from, align, colortype, icon, text, time?) {
+    showNotification(from, align, colortype, icon, text, time?: number) {
         if (!time) {
             time = 3000;
         }
