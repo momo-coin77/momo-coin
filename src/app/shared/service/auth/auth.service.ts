@@ -77,6 +77,7 @@ export class AuthService {
     this.firebaseApi.signOutApi();
     this.localStorageService.clearData();
     this.eventService.logoutEvent.next(true);
+    //this.currentUserSubject.n
   }
 
   signInNewUser(user: User) {

@@ -64,7 +64,7 @@ export class FirebaseApi {
         action.description = 'successful add new collection';
         resolve(action);
       }).catch((err) => {
-        Bugsnag.notify(err)
+        // Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -81,7 +81,7 @@ export class FirebaseApi {
         action.description = 'successful set new collection';
         resolve(action);
       }).catch((err) => {
-        Bugsnag.notify(err)
+        // Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -101,7 +101,7 @@ export class FirebaseApi {
             resolve(action);
           }
           catch (err) {
-            Bugsnag.notify(err)
+            // Bugsnag.notify(err)
             action.apiCode = err.code;
             action.code = ResultStatut.UNKNOW_ERROR;
             action.message = 'error';
@@ -127,7 +127,7 @@ export class FirebaseApi {
           resolve(action);
         }
         catch (err) {
-          Bugsnag.notify(err)
+          // Bugsnag.notify(err)
           action.apiCode = err.code;
           action.code = ResultStatut.UNKNOW_ERROR;
           action.message = 'error';
@@ -147,7 +147,7 @@ export class FirebaseApi {
         resolve(action);
       }
       catch (err) {
-        Bugsnag.notify(err)
+        // Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -164,7 +164,7 @@ export class FirebaseApi {
       updates.forEach((update) => up[update.link.toString()] = update.data);
       this.db.ref().update(up, (error) => {
         if (error) {
-          Bugsnag.notify(error)
+          // Bugsnag.notify(error)
           result.apiCode = error.error;
           result.message = error.message;
           return reject(result);
@@ -184,7 +184,7 @@ export class FirebaseApi {
         resolve(action);
       }
       catch (err) {
-        Bugsnag.notify(err)
+        // Bugsnag.notify(err)
         action.apiCode = err.code;
         action.code = ResultStatut.UNKNOW_ERROR;
         action.message = 'error';
@@ -209,7 +209,7 @@ export class FirebaseApi {
           resolve(result);
         })
         .catch((error) => {
-          Bugsnag.notify(error)
+          // Bugsnag.notify(error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = 'error';
@@ -232,6 +232,7 @@ export class FirebaseApi {
       this.db.currentUser.updateProfile(r)
       .then(()=>resolve(new ResultStatut()))
       .catch((error)=>{
+        // Bugsnag.notify(error)
         let result:ResultStatut = new ResultStatut();
         result.apiCode=error.error;
         result.message=error.getMessage();
@@ -249,6 +250,7 @@ export class FirebaseApi {
           resolve(result);
         })
         .catch((error) => {
+          // Bugsnag.notify(error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = `error: ${error.code}`;
@@ -279,10 +281,13 @@ export class FirebaseApi {
       case FireBaseConstant.NET_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
       case FireBaseConstant.DESACTIVED_ACCOUNT:
-        result.message="Account Disabled. Contacted the administrator for a reactivation"
+        result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.cion@gmail.com"
         break;
       default:
-        result.message="Unknow error. please contact administrator";
+        let error=new Error();
+        error.stack=result.bug.getStackTrace();
+        Bugsnag.notify(error);
+        result.message="Unknow error. please contact administrator <br> contact.momo.cion@gmail.com";
         this.eventService.newBugEvent.next(result.bug);
         break
     };

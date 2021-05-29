@@ -6,8 +6,6 @@ import { DefaultLayoutComponent } from './back-office/containers';
 
 /// Front Office
 import { HowDoesItWorkComponent } from './front-office/how-does-it-work/how-does-it-work.component';
-import { RequestsComponent } from './front-office/requests/requests.component';
-import { AboutUsComponent } from './front-office/about-us/about-us.component';
 import { ForgotPasswordComponent } from './front-office/forgot-password/forgot-password.component';
 import { LoginComponent } from './front-office/login/login.component';
 // import { RegisterComponent } from './front-office/registration/register.component';

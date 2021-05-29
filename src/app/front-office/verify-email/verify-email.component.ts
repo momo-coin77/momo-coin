@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../shared/service/auth/auth.service';
 // import { AuthService } from "../../shared/services/auth.service";
 
 @Component({
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class VerifyEmailComponent implements OnInit {
   user: any;
   constructor(
-    // public authService: AuthService
+    public authService: AuthService,
     private router: Router
   ) { }
 

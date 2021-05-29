@@ -14,16 +14,16 @@ import { NotificationService } from '../../../../shared/service/notification/not
 export class UserComponent implements OnInit {
   updateProfilForm: FormGroup;
   user: User = new User();
-  name: String = '';
-  email: String = '';
-  network: String = '';
+  name: string = '';
+  email: string = '';
+  network: string = '';
   phone: string = '';
   bonus: number = 0;
-  country: String = '';
-  city: String = '';
+  country: string = '';
+  city: string = '';
   message: string = '\<b>Error\</b>\<br>this action not permited!';
-  id: String;
-  parentSponsorShipId: String;
+  id: string;
+  parentSponsorShipId: string;
 
   constructor(
     private authService: AuthService,
@@ -59,10 +59,10 @@ export class UserComponent implements OnInit {
       this.email = user.email;
       this.network = user.network;
       this.phone = user.phone;
-      this.id = user.mySponsorShipId.toString();
+      this.id = user.mySponsorShipId.toString().toString();
       this.country = this.authService.currentUserSubject.getValue().country;
       this.city = this.authService.currentUserSubject.getValue().city;
-      this.parentSponsorShipId = this.authService.currentUserSubject.getValue().parentSponsorShipId.toString();
+      this.parentSponsorShipId = this.authService.currentUserSubject.getValue().parentSponsorShipId.toString().toString();
     });
   }
 

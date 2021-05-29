@@ -8,9 +8,7 @@ import { SpinnerModule } from '../../../shared/components/spinner/spinner.module
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
-import { EditPackComponent } from './packs/edit-pack/edit-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
-import { AddUserComponent } from './users/add-user/add-user.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
 
 @NgModule({
@@ -25,10 +23,8 @@ import { ListsUserComponent } from './users/lists-user/lists-user.component';
   ],
   declarations: [
     ListsUserComponent,
-    AddUserComponent,
     AddPackComponent,
     ListsPackComponent,
-    EditPackComponent,
     AdminComponent
     
   ]

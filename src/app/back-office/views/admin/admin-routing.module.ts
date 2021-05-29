@@ -3,9 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminerGuard } from '../../../shared/guard/adminer.guard';
 import { AdminComponent } from './admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
-import { EditPackComponent } from './packs/edit-pack/edit-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
-import { AddUserComponent } from './users/add-user/add-user.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
 
 const routes: Routes = [
@@ -55,24 +53,7 @@ const routes: Routes = [
                 // canActivate:[AuthGuard]
 
             },
-            {
-                path: 'edit-pack',
-                component: EditPackComponent,
-                data: {
-                    title: 'Edit pack'
-                }
-                // canActivate:[AuthGuard]
-
-            },
-            {
-                path: 'add-user',
-                component: AddUserComponent,
-                data: {
-                    title: 'Add user'
-                }
-                // canActivate:[AuthGuard]
-
-            }
+            
         ]
     }
 ];

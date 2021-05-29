@@ -87,12 +87,7 @@ import { FooterComponent } from './front-office/static-elements/footer/footer.co
 import { FullIntroComponent } from './front-office/static-elements/full-intro/full-intro.component';
 import { WelcomeComponent } from './front-office/welcome/welcome.component';
 import { HowDoesItWorkComponent } from './front-office/how-does-it-work/how-does-it-work.component';
-import { RequestsComponent } from './front-office/requests/requests.component';
-import { AboutUsComponent } from './front-office/about-us/about-us.component';
 import { ForgotPasswordComponent } from './front-office/forgot-password/forgot-password.component';
-import { ViewTripCarrierShipmentComponent } from './front-office/view-trip/view-trip-carrier-shipment/view-trip-carrier-shipment.component';
-import { ViewTripTransportPersonsComponent } from './front-office/view-trip/view-trip-transport-persons/view-trip-transport-persons.component';
-// import { RegisterCarrierShipperTransporterComponent } from './front-office/registration/register-carrier-shipper-transporter/register-carrier-shipper-transporter.component';
 
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
@@ -100,10 +95,8 @@ import { PrivacyPolicyComponent } from './shared/components/privacy-policy/priva
 import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
 import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
-// import { ProgressIndeterminateComponent } from './shared/components/progress-indeterminate/progress-indeterminate.component';
 
 import { ProgressIndeterminateModule } from './shared/components/progress-indeterminate/progress-indeterminate.module';
-import { DetailService } from './shared/service/back-office/detail.service';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 
 // import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -215,7 +208,6 @@ export function errorHandlerFactory() {
     VerifyEmailComponent,
     ForgotPasswordComponent,
     PrivacyPolicyComponent,
-    AboutUsComponent,
     TermsAndConditionsComponent,
     HowDoesItWorkComponent,
     BlankPageComponent,

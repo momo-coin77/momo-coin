@@ -7,19 +7,19 @@ import { NotificationService } from '../service/notification/notification.servic
 @Injectable()
 export class AdminerGuard implements CanActivate {
 
-    constructor(private authService: AuthService,
-        private router: Router,
-        private notif: NotificationService) { }
+  constructor(private authService: AuthService,
+    private router: Router,
+    private notif: NotificationService) { }
 
-    canActivate(
-        route: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> | Promise<boolean | UrlTree> | Promise<boolean> | boolean{
-            return new Promise<UrlTree | boolean>((resolve,reject)=>{
-                this.authService.currentUserSubject.subscribe((user)=>{
-                  if(this.authService.isAdminer)  return resolve(true);
-                this.notif.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br> You are not administrator');
-                  resolve(this.router.parseUrl("/dashboard"))
-                })
-              });
-    }
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean | UrlTree> | Promise<boolean> | boolean {
+    return new Promise<UrlTree | boolean>((resolve, reject) => {
+      this.authService.currentUserSubject.subscribe((user) => {
+        if (this.authService.isAdminer) return resolve(true);
+        // this.notif.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br> You are not administrator');
+        resolve(this.router.parseUrl("/dashboard"));
+      });
+    });
+  }
 }
