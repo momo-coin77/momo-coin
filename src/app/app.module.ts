@@ -119,6 +119,8 @@ import { RegistrationModule } from './front-office/registration/registration.mod
 import { AuthGuard } from './back-office';
 import { AdminerGuard } from './shared/guard/adminer.guard';
 
+
+
 @NgModule({
   imports: [
     SpinnerModule,
