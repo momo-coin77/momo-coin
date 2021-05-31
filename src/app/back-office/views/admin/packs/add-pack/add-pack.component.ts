@@ -8,6 +8,7 @@ import { EntityID } from '../../../../../shared/entity/EntityID';
 import { ResultStatut } from '../../../../../shared/service/firebase/resultstatut';
 import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.service';
 import { NotificationService } from '../../../../../shared/service/notification/notification.service';
+import { ValidatorinputService } from '../../../../../shared/service/validatorinput/validatorinput.service';
 // import Swal from 'sweetalert2';
 
 @Component({
@@ -30,6 +31,7 @@ export class AddPackComponent implements OnInit {
     private packService: BasicPackService,
     private userService:UserService,
     private notificationService:NotificationService,
+    private validatorInput:ValidatorinputService,
     private router: Router) { }
 
   ngOnInit() {
@@ -44,10 +46,15 @@ export class AddPackComponent implements OnInit {
   addPack() {//
     this.submitted=true;
     if(this.form.invalid) return;
+    if(this.validatorInput.numberSanitize(this.form.value.amount))
+    {
+      this.form.controls.amount.markAsDirty();
+    }
     this.waitResponse=true;
     this.userService.getListUser()
     let idOwner:EntityID=new EntityID();
     idOwner.setId(this.form.value.idOwner);
+    
     
     this.userService.getUserById(idOwner)
     .then((result:ResultStatut)=>{

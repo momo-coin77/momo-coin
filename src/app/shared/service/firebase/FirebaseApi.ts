@@ -266,7 +266,7 @@ export class FirebaseApi {
     });
   }
 
-  handleConnexionState(callBack) {
+  handleConnexionState(callBack:({connected:boolean})=>void) {
     firebase.database().ref('./info/connected').on('value', (snap) => {
       if (snap.val() === true) { callBack({ connected: true }); }
       else { callBack({ connected: false }); }
@@ -276,10 +276,8 @@ export class FirebaseApi {
   handleApiError(result: ResultStatut) {    
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_USER_NOT_FOUND:
-      case FireBaseConstant.AUTH_WRONG_PASSWORD:       
-        let b=new Bug(result,new Error());
-        this.eventService.newBugEvent.next(b); 
-        Bugsnag.notify(b.error)
+      case FireBaseConstant.AUTH_WRONG_PASSWORD: 
+      case FireBaseConstant.AUTH_ACCOUNT_EXIST_WITH_DIFFERENT_CREDENTIAL:      
         result.message = 'Incorrect email or password';        
         break;
       case FireBaseConstant.AUTH_WEAK_PASSWORD:
@@ -288,13 +286,24 @@ export class FirebaseApi {
       case FireBaseConstant.AUTH_EMAIL_ALREADY_USE:
         result.message = 'Email already used by another user';
         break;
-      case FireBaseConstant.NET_NETWORK_FAIL:
-        result.message = 'Offline. Please check your network connectivity';
+      
+      case FireBaseConstant.AUTH_REQUIRE_RECENT_LOGIN:
+        result.message="You must log in to access the application. if you recently made a connection, you need to do it again"
+        break;
+      case FireBaseConstant.AUTH_CREDENTIAL_ALREADY_IN_USE:
+        result.message="You are already connected"
+        break;
+      case FireBaseConstant.AUTH_TOO_MANY_REQUEST:
+        result.message=result.description
+        break;
       case FireBaseConstant.DESACTIVED_ACCOUNT:
         result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.coin@gmail.com"
         break;
+      case FireBaseConstant.AUTH_NETWORK_FAIL:
+        result.message = 'Offline. Please check your network connectivity';
+      
       default:
-      let bug=new Bug(result,new Error());
+      let bug=new Bug(result);
       this.eventService.newBugEvent.next(bug); 
       Bugsnag.notify(bug.error) 
         result.message="Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";        

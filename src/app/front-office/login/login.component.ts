@@ -7,6 +7,7 @@ import { FireBaseConstant } from '../../shared/service/firebase/firebase-constan
 import { ResultStatut } from '../../shared/service/firebase/resultstatut';
 import { NotificationService } from '../../shared/service/notification/notification.service';
 import { UserService } from '../../shared/service/user/user.service';
+import { ValidatorinputService } from '../../shared/service/validatorinput/validatorinput.service';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class LoginComponent implements OnInit {
     constructor(
         private authService:AuthService,
         private router: Router,
+        private sanitezeService:ValidatorinputService,
         // private authen: AuthService,
         private formLog: FormBuilder,
         private userData: UserService,
@@ -57,7 +59,7 @@ export class LoginComponent implements OnInit {
         }
         this.waitingLogin = true;
         let user:User=new User();
-        user.email=this.loginForm.value.email;
+        user.email=this.sanitezeService.emailSanitize(this.loginForm.value.email);
         user.password=this.loginForm.value.password;
 
         this.authService.signIn(user)

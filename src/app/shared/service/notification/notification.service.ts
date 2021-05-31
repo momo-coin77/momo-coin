@@ -23,9 +23,12 @@ export class NotificationService {
                 align: align
             }
         });
+       if(time>0) 
+       {
         setTimeout(() => {
-            // return this.refreshFonct();
+            return this.refreshFonct();
         }, time);
+       }
 
     }
     refreshFonct() {

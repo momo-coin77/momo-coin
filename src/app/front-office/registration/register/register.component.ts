@@ -7,6 +7,7 @@ import { AuthService } from '../../../shared/service/auth/auth.service';
 import { NotificationService } from '../../../shared/service/notification/notification.service';
 import { SponsorService } from '../../../shared/service/sponsoring/sponsoring.service';
 import { UserService } from '../../../shared/service/user/user.service';
+import { ValidatorinputService } from '../../../shared/service/validatorinput/validatorinput.service';
 import { MustMatch } from '../../../shared/service/_helpers/must-match.validator';
 
 
@@ -28,6 +29,7 @@ export class RegisterComponent implements OnInit {
 
     constructor(
         private authService: AuthService, // firebase auth
+        private sanitizeService:ValidatorinputService,
         private formBuilder: FormBuilder,
         private userService: UserService,
         private router: Router,
@@ -77,7 +79,7 @@ export class RegisterComponent implements OnInit {
 
         let user: User = new User();
         user.fullName = this.registerForm.value.name;
-        user.email = this.registerForm.value.email;
+        user.email = this.sanitizeService.emailSanitize(this.registerForm.value.email);
         user.password = this.registerForm.value.password;
         user.country = this.registerForm.value.country;
 

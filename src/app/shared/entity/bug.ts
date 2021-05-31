@@ -7,13 +7,12 @@ export class Bug extends Entity
     date:Date=new Date();
     user=null;
     resultAction:ResultStatut=new ResultStatut();
-    error:Error;
+    error:Error=new Error();
 
-    constructor(result:ResultStatut,error:Error)
+    constructor(result:ResultStatut)
     {
         super();
         this.resultAction.hydrate(result.toString());
-        this.error = error;
     }
 
     toString(): Record<string | number, any> {

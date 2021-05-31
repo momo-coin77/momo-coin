@@ -12,6 +12,7 @@ import { Pack } from '../../../shared/entity/pack';
 import { UserNotificationService } from '../../../shared/service/user-notification/user-notification.service';
 import { BasicPackService } from '../../../shared/service/pack/basic-pack.service';
 import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
+import { FirebaseApi } from '../../../shared/service/firebase/FirebaseApi';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 
@@ -49,6 +50,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     private dashbaord: ElementRef,
     private userService: UserService,
     private userNotif: UserNotificationService,
+    private firebaseApi:FirebaseApi,
     private notification: NotificationService,
     private packService: BasicPackService) {
     this.fullName = this.authService.currentUserSubject.getValue().fullName;
@@ -64,6 +66,15 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     this.authService.currentUserSubject.subscribe((user: User) => {
       if (!user) { return this.userName = user.name; }
     });
+    
+    this.firebaseApi.handleConnexionState((state:{connected:boolean})=>{
+      if(state.connected)
+      {
+        this.notification.showNotification('top', 'right', 'success', 'pe-7s-close-circle', '\<b>Connection established !\</b>')
+      }
+      else this.notification.showNotification('top', 'right', 'warning', 'pe-7s-close-circle', '\<b>Internet connection lost !\</b>')
+    })
+
     this.myfunc();
   }
 

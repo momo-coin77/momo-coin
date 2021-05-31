@@ -5,7 +5,7 @@
 @created: 09/10/2020
 */
 export class EntityID {
-    private _id: String;
+    private _id: String="";
     constructor() {
         this._id = this.generateId();
     }
