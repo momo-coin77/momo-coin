@@ -267,10 +267,10 @@ export class FirebaseApi {
   }
 
   handleConnexionState(callBack:({connected:boolean})=>void) {
-    firebase.database().ref('./info/connected').on('value', (snap) => {
-      if (snap.val() === true) { callBack({ connected: true }); }
-      else { callBack({ connected: false }); }
-    })
+    // firebase.database().ref('./info/connected').on('value', (snap) => {
+    //   if (snap.val() === true) { callBack({ connected: true }); }
+    //   else { callBack({ connected: false }); }
+    // })
   }
 
   handleApiError(result: ResultStatut) {    
