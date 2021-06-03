@@ -13,6 +13,7 @@ import { UserNotificationService } from '../../../shared/service/user-notificati
 import { BasicPackService } from '../../../shared/service/pack/basic-pack.service';
 import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
 import { FirebaseApi } from '../../../shared/service/firebase/FirebaseApi';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 
@@ -40,8 +41,11 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   year: Date = new Date();
   fullName: string = '';
   isAdmin: boolean = false;
+  defaultLang="";
 
   today: number = Date.now();
+
+  @ViewChild('languageSpan') languageSpanShow:ElementRef
 
   constructor(
     private authService: AuthService, // firebase auth
@@ -52,6 +56,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     private userNotif: UserNotificationService,
     private firebaseApi:FirebaseApi,
     private notification: NotificationService,
+    public translateService:TranslateService,
     private packService: BasicPackService) {
     this.fullName = this.authService.currentUserSubject.getValue().fullName;
     if (this.authService.currentUserSubject.getValue().email == 'admin@gmail.com'){
@@ -76,6 +81,10 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     })
 
     this.myfunc();
+    this.translateService.onLangChange.subscribe((e:LangChangeEvent)=> {
+      this.defaultLang=e.translations["LANG"][e.lang.toUpperCase()];
+      // console.log("Default lang ",e.translations["LANG"],e.lang.toUpperCase())
+    })
   }
 
   ngAfterViewInit(): void {
@@ -155,6 +164,20 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message), 200)
         this.waitResponse = false;
       });
+  }
+
+  changeLanguage(language)
+  {
+    this.translateService.use(language)
+    switch (language)
+    {
+      case 'fr':
+        this.languageSpanShow.nativeElement.classList.replace("flag-icon-us","flag-icon-fr")
+        break;
+      case 'en':
+        this.languageSpanShow.nativeElement.classList.replace("flag-icon-fr","flag-icon-us")
+        break
+    }
   }
   
 }
