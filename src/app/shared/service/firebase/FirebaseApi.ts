@@ -209,7 +209,10 @@ export class FirebaseApi {
   get user() {
     return firebase.auth().currentUser;
   }
-
+  auth()
+  {
+    return firebase.auth();
+  }
   signInApi(email: string, password: string): Promise<ResultStatut> {
     let result: ResultStatut = new ResultStatut();
     return new Promise(async (resolve, reject) => {
@@ -318,3 +321,4 @@ export class FirebaseApi {
     };
   }
 }
+

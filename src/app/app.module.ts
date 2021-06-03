@@ -94,8 +94,6 @@ import { BlankPageComponent } from './shared/blank-page/blank-page.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
-import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
-
 import { ProgressIndeterminateModule } from './shared/components/progress-indeterminate/progress-indeterminate.module';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
 
@@ -205,7 +203,6 @@ export function errorHandlerFactory() {
     FooterComponent,
     FullIntroComponent,
     WelcomeComponent,
-    VerifyEmailComponent,
     ForgotPasswordComponent,
     PrivacyPolicyComponent,
     TermsAndConditionsComponent,

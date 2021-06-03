@@ -41,7 +41,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   fullName: string = '';
   isAdmin: boolean = false;
 
-  today: number = Date.now();
+  todayTime: number = Date.now();
 
   constructor(
     private authService: AuthService, // firebase auth

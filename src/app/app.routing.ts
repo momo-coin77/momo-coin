@@ -16,7 +16,6 @@ import { PrivacyPolicyComponent } from './shared/components/privacy-policy/priva
 import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
 //// Back Office
-import { VerifyEmailComponent } from './front-office/verify-email/verify-email.component';
 import { RegistrationComponent } from './front-office/registration/registration.component';
 import { AuthGuard } from './shared/guard/auth.guard';
 
@@ -33,10 +32,6 @@ export const routes: Routes = [
   {
     path: 'privacy-policy',
     component: PrivacyPolicyComponent
-  },
-  {
-    path: 'verify-email-address',
-    component: VerifyEmailComponent
   },
   {
     path: 'how-does-it-work',

@@ -1,0 +1,61 @@
+
+<style type="text/css">
+    button {
+    display: inline-block;
+    background-color: #ed993f;
+    border-radius: 10px;
+    border: 4px double #cccccc;
+    color: #eeeeee;
+    text-align: center;
+    font-size: 28px;
+    padding: 0px;
+    width: 300px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+    }
+    button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+    }
+    button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+    }
+    button:hover {
+    background-color: #edbc3f;
+    }
+    button:hover span {
+    padding-right: 25px;
+    }
+    button:hover span:after {
+    opacity: 1;
+    right: 0;
+    }
+    
+    
+p { font-size:1.3em;font-family: arial; font-family: "Trebuchet MS", Verdana, sans-serif}
+.coin { color: #ed993f}
+.conten { background-color: #f0e8e0}
+</style>
+<div class = "conten">
+<p class="img">Hello dear user,</p>
+<p>Forgot your password?
+<br>No problem, your coins will always remain secure at <b>Mobile Money <a class="coin">Coin</a></b>.
+</p>
+<p>To reset your %EMAIL% account password, click on the following button and follow the instructions.</p>
+<br>
+<p><a href='%LINK%'>
+  <button>
+  <span>Resset my password</span>
+  </button></a></p>
+<p>If you didn’t ask to reset your password, you can ignore this email.</p>
+<p>Thanks,</p>
+<p>Your  <b>MoMo-<a class="coin">Coin</a> Team</b></p>
+</div>

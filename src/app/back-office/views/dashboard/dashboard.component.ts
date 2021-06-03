@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
   bonus: number = 0;
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
-  allUsers: number = 93;  // valeur fictive du nombre total d'utilisateurs. créé la
+  allUsers: number = 140;  // valeur fictive du nombre total d'utilisateurs. créé la
   // fonctionnalité dans les service (utilisable par la suite dans admin) mais laisser ici fictif.
   balence: number = 0; // somme de toutes les montants de chaqueq pack avec son id
   bonusBalence: number = 0; // Bonus de pa
@@ -48,13 +48,13 @@ export class DashboardComponent implements OnInit {
     // let kk = Math.floor((Math.random() * k) + 1);
     // let cc = Math.floor((Math.random() * c) + 1);
     let d = new Date();
-    let val = 10;
+    let val = 53;
     let hh = d.getHours();
     if (hh > 21) {
-      val = 10;
+      val = 30;
     }
     if (hh < 7) {
-      val = 5;
+      val = 15;
     }
     let number = val + mm;
 // console.log('random: ' + number);
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.updateSubscription = interval(8000).subscribe(
       (val) => {
-        this.activeUser = this.randomNumber(10);
+        this.activeUser = this.randomNumber(30);
       });
 
     this.authService.currentUserSubject.subscribe((user: User) => {

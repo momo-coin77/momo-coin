@@ -119,9 +119,13 @@ export class AuthService {
   }
 
   // Send email verification when new user sign up
-  
   SendVerificationMail() {
     return this.firebaseApi.user.sendEmailVerification();
+  }
+
+  // Send reset password email
+  SendResetPassword(email) {
+    return this.firebaseApi.auth().sendPasswordResetEmail(email);
   }
 
   ifAdminer(email: string) {

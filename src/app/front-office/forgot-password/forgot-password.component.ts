@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../shared/service/auth/auth.service';
+import { NotificationService } from '../../shared/service/notification/notification.service';
 // import { AuthentificationService } from 'src/app/shared/services/authentication.service';
 
 @Component({
@@ -17,8 +19,9 @@ export class ForgotPasswordComponent implements OnInit {
     ]
     forgotForm: FormGroup;
     constructor(private router: Router,
-        // private authen: AuthentificationService,
-        private formLog: FormBuilder) { }
+        private auth: AuthService,
+        private formLog: FormBuilder,
+        private notif: NotificationService) { }
 
     ngOnInit(): void {
         this.user = localStorage.getItem('user-data');
@@ -37,13 +40,12 @@ export class ForgotPasswordComponent implements OnInit {
     navigateToRegister() {
         this.router.navigate(['/register']);
     }
-    navigateToActiveAccount() {
-        this.router.navigate(['/account-activation']);
-    }
 
-    onSubmitForm(event) {
+    submit() {
     // console.log(event)
-        // this.authen.sendForgottenMail(event.email);
+    this.auth.SendResetPassword(this.forgotForm.value.email);
+    this.navigateToLogin();
+    this.notif.showNotification('top', 'center', 'success', '', '\<br>Account created successfully! <br>Check your email to reset your password.', 3000);
     }
 
     get f() {
