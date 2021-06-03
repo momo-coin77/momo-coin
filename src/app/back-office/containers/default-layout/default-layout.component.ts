@@ -70,9 +70,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     this.firebaseApi.handleConnexionState((state:{connected:boolean})=>{
       if(state.connected)
       {
-        this.notification.showNotification('top', 'right', 'success', 'pe-7s-close-circle', '\<b>Connection established !\</b>')
+        this.notification.showNotificationWithoutTimer('top', 'right', 'success', 'pe-7s-close-circle', '\<b>Internet connection established !\</b>')
       }
-      else this.notification.showNotification('top', 'right', 'warning', 'pe-7s-close-circle', '\<b>Internet connection lost !\</b>')
+      else this.notification.showNotificationWithoutTimer('top', 'right', 'warning', 'pe-7s-close-circle', '\<b>Internet connection lost !\</b>')
     })
 
     this.myfunc();

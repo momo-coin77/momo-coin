@@ -7,8 +7,8 @@ declare var $: any;
 })
 export class NotificationService {
     refresh: number = 1;
-
-    showNotification(from, align, colortype, icon, text, time?: number) {
+    showNotificationWithoutTimer(from, align, colortype, icon, text, time?: number)
+    {
         if (!time) {
             time = 3000;
         }
@@ -23,7 +23,14 @@ export class NotificationService {
                 align: align
             }
         });
-       if(time>0) 
+    }
+
+    showNotification(from, align, colortype, icon, text, time?: number) {
+        if (!time) {
+            time = 3000;
+        }
+        this.showNotificationWithoutTimer(from, align, colortype, icon, text, time);
+       if(time && time>0) 
        {
         setTimeout(() => {
             return this.refreshFonct();

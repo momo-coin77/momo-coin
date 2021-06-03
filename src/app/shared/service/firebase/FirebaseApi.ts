@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
@@ -13,37 +13,44 @@ import Bugsnag from '@bugsnag/js';
 })
 export class FirebaseApi {
 
-  static firebaseConfig: any = {
-
-    /////// dev database access
-
-    apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
-    authDomain: "momocoin-4d42f.firebaseapp.com",
-    databaseURL: "https://momocoin-4d42f-default-rtdb.firebaseio.com",
-    projectId: "momocoin-4d42f",
-    storageBucket: "momocoin-4d42f.appspot.com",
-    messagingSenderId: "333841563981",
-    appId: "1:333841563981:web:7ae9d993da9dff9b5eb704",
-    measurementId: "G-BBYSGZECVV"
-
-
-    /////// real database acces
-
-    // apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
-    // authDomain: 'momo-coin-23837.firebaseapp.com',
-    // databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
-    // projectId: 'momo-coin-23837',
-    // storageBucket: 'momo-coin-23837.appspot.com',
-    // messagingSenderId: '155737173284',
-    // appId: '1:155737173284:web:07f41f5db9527097d017b1',
-    // measurementId: 'G-KPM5Z0YSG1'
-
-  };
+  static firebaseConfig: any = {};
   debug: boolean = false;
   offlineMode: boolean = false;
   db: any;
 
   constructor(private eventService:EventService ) {
+
+    if(isDevMode())
+    {
+      console.log("Dev Mode")
+      FirebaseApi.firebaseConfig={
+        /////// dev database access
+        apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
+        authDomain: "momocoin-4d42f.firebaseapp.com",
+        databaseURL: "https://momocoin-4d42f-default-rtdb.firebaseio.com",
+        projectId: "momocoin-4d42f",
+        storageBucket: "momocoin-4d42f.appspot.com",
+        messagingSenderId: "333841563981",
+        appId: "1:333841563981:web:7ae9d993da9dff9b5eb704",
+        measurementId: "G-BBYSGZECVV"
+      }
+    }
+    else 
+    {
+      console.log("Prod Mode")
+      FirebaseApi.firebaseConfig={
+        /////// real database acces
+
+      apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
+      authDomain: 'momo-coin-23837.firebaseapp.com',
+      databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
+      projectId: 'momo-coin-23837',
+      storageBucket: 'momo-coin-23837.appspot.com',
+      messagingSenderId: '155737173284',
+      appId: '1:155737173284:web:07f41f5db9527097d017b1',
+      measurementId: 'G-KPM5Z0YSG1'
+      }
+    }
 
     // Initialize Firebase
     firebase.initializeApp(FirebaseApi.firebaseConfig);
@@ -267,10 +274,10 @@ export class FirebaseApi {
   }
 
   handleConnexionState(callBack:({connected:boolean})=>void) {
-    // firebase.database().ref('./info/connected').on('value', (snap) => {
-    //   if (snap.val() === true) { callBack({ connected: true }); }
-    //   else { callBack({ connected: false }); }
-    // })
+    firebase.database().ref('.info/connected').on('value', (snap) => {
+      if (snap.val() === true) { callBack({ connected: true }); }
+      else { callBack({ connected: false }); }
+    })
   }
 
   handleApiError(result: ResultStatut) {    

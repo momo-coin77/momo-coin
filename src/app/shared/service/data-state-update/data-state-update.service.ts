@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityID } from '../../entity/EntityID';
-import { Pack, PackBuyState } from '../../entity/pack';
+import { Pack, PackBuyState, PackState } from '../../entity/pack';
 import { User } from '../../entity/user';
 import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
@@ -73,6 +73,10 @@ export class DataStateUpdateService {
           {
             link:`packs/${id.toString()}/plan`,
             data: 0
+          },
+          {
+            link:`packs/${id.toString()}/state`,
+            data: PackState.ON_MARKET
           },
           {
             link:`packs/${id.toString()}/waintedGain`,
