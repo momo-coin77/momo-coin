@@ -68,13 +68,13 @@ export class AddPackComponent implements OnInit {
     })
     .then((result)=> {
       this.waitResponse=false;
-      this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The pack has been successfully added to the list of packs for this user');
+      this.notificationService.showNotificationWithoutTimer('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The pack has been successfully added to the list of packs for this user');
       this.form.reset();
       this.submitted=false;
     })
     .catch((error:ResultStatut)=>{
       this.waitResponse=false;
-      this.notificationService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+      this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
       
     })
       

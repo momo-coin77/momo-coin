@@ -41,7 +41,7 @@
                                                           'table-danger' : pack.pack.state=='not_on_market'}">
                   <td>
                     <button [ngClass]="{'b-danger': pack.pack.state=='on_market',
-                                  'b-success' : pack.pack.state=='on_market'}" (click)="changeStatusMarket(pack)" class="btn btn-sm btn-danger">
+                                  'b-success' : pack.pack.state=='not_on_market'}" (click)="changeStatusMarket(pack)" class="btn btn-sm btn-danger">
                       <i *ngIf="!pack.waitResponse" class="fa fa-power-off"></i>
                       <app-spinner *ngIf="pack.waitResponse" ></app-spinner>
                     </button>

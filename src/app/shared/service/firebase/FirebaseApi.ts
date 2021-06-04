@@ -18,12 +18,11 @@ export class FirebaseApi {
   offlineMode: boolean = false;
   db: any;
 
-  constructor(private eventService:EventService ) {
+  constructor(private eventService: EventService) {
 
-    if(isDevMode())
-    {
+    if (isDevMode()) {
       console.log("Dev Mode")
-      FirebaseApi.firebaseConfig={
+      FirebaseApi.firebaseConfig = {
         /////// dev database access
         apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
         authDomain: "momocoin-4d42f.firebaseapp.com",
@@ -35,20 +34,19 @@ export class FirebaseApi {
         measurementId: "G-BBYSGZECVV"
       }
     }
-    else 
-    {
+    else {
       console.log("Prod Mode")
-      FirebaseApi.firebaseConfig={
+      FirebaseApi.firebaseConfig = {
         /////// real database acces
 
-      apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
-      authDomain: 'momo-coin-23837.firebaseapp.com',
-      databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
-      projectId: 'momo-coin-23837',
-      storageBucket: 'momo-coin-23837.appspot.com',
-      messagingSenderId: '155737173284',
-      appId: '1:155737173284:web:07f41f5db9527097d017b1',
-      measurementId: 'G-KPM5Z0YSG1'
+        apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
+        authDomain: 'momo-coin-23837.firebaseapp.com',
+        databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
+        projectId: 'momo-coin-23837',
+        storageBucket: 'momo-coin-23837.appspot.com',
+        messagingSenderId: '155737173284',
+        appId: '1:155737173284:web:07f41f5db9527097d017b1',
+        measurementId: 'G-KPM5Z0YSG1'
       }
     }
 
@@ -209,8 +207,7 @@ export class FirebaseApi {
   get user() {
     return firebase.auth().currentUser;
   }
-  auth()
-  {
+  auth() {
     return firebase.auth();
   }
   signInApi(email: string, password: string): Promise<ResultStatut> {
@@ -225,7 +222,7 @@ export class FirebaseApi {
         })
         .catch((error) => {
           // Bugsnag.notify(error)
-          console.log("Error ",error)
+          console.log("Error ", error)
           result.code = ResultStatut.UNKNOW_ERROR;
           result.apiCode = error.code;
           result.message = 'error';
@@ -239,20 +236,19 @@ export class FirebaseApi {
     firebase.auth().signOut();
   }
 
-  updateUser(user:Record<string,any>):Promise<ResultStatut>
-  {
-    return new Promise<ResultStatut>((resolve,reject)=>{
-      let r={}
-      if(user.hasOwnProperty("name")) r['displayName'] = user.name;
-      if(user.hasOwnProperty("photoUrl")) r['photoURL']=user.photoUrl
+  updateUser(user: Record<string, any>): Promise<ResultStatut> {
+    return new Promise<ResultStatut>((resolve, reject) => {
+      let r = {}
+      if (user.hasOwnProperty("name")) r['displayName'] = user.name;
+      if (user.hasOwnProperty("photoUrl")) r['photoURL'] = user.photoUrl
       this.db.currentUser.updateProfile(r)
-      .then(()=>resolve(new ResultStatut()))
-      .catch((error)=>{
-        // Bugsnag.notify(error)
-        let result:ResultStatut = new ResultStatut();
-        result.apiCode=error.error;
-        result.message=error.getMessage();
-      })
+        .then(() => resolve(new ResultStatut()))
+        .catch((error) => {
+          // Bugsnag.notify(error)
+          let result: ResultStatut = new ResultStatut();
+          result.apiCode = error.error;
+          result.message = error.getMessage();
+        })
     })
   }
 
@@ -276,19 +272,19 @@ export class FirebaseApi {
     });
   }
 
-  handleConnexionState(callBack:({connected:boolean})=>void) {
-    firebase.database().ref('.info/connected').on('value', (snap) => {
-      if (snap.val() === true) { callBack({ connected: true }); }
-      else { callBack({ connected: false }); }
-    })
+  handleConnexionState(callBack: ({ connected: boolean }) => void) {
+    // firebase.database().ref('.info/connected').on('value', (snap) => {
+    //   if (snap.val() === true) { callBack({ connected: true }); }
+    //   else { callBack({ connected: false }); }
+    // })
   }
 
-  handleApiError(result: ResultStatut) {    
+  handleApiError(result: ResultStatut) {
     switch (result.apiCode) {
       case FireBaseConstant.AUTH_USER_NOT_FOUND:
-      case FireBaseConstant.AUTH_WRONG_PASSWORD: 
-      case FireBaseConstant.AUTH_ACCOUNT_EXIST_WITH_DIFFERENT_CREDENTIAL:      
-        result.message = 'Incorrect email or password';        
+      case FireBaseConstant.AUTH_WRONG_PASSWORD:
+      case FireBaseConstant.AUTH_ACCOUNT_EXIST_WITH_DIFFERENT_CREDENTIAL:
+        result.message = 'Incorrect email or password';
         break;
       case FireBaseConstant.AUTH_WEAK_PASSWORD:
         result.message = 'Password must have at least 6 characters'
@@ -296,27 +292,27 @@ export class FirebaseApi {
       case FireBaseConstant.AUTH_EMAIL_ALREADY_USE:
         result.message = 'Email already used by another user';
         break;
-      
+
       case FireBaseConstant.AUTH_REQUIRE_RECENT_LOGIN:
-        result.message="You must log in to access the application. if you recently made a connection, you need to do it again"
+        result.message = "You must log in to access the application. if you recently made a connection, you need to do it again"
         break;
       case FireBaseConstant.AUTH_CREDENTIAL_ALREADY_IN_USE:
-        result.message="You are already connected"
+        result.message = "You are already connected"
         break;
       case FireBaseConstant.AUTH_TOO_MANY_REQUEST:
-        result.message=result.description
+        result.message = result.description
         break;
       case FireBaseConstant.DESACTIVED_ACCOUNT:
-        result.message="Account Disabled. Contact the administrator for a reactivation <br> contact.momo.coin@gmail.com"
+        result.message = "Account Disabled. Contact the administrator for a reactivation <br> contact.momo.coin@gmail.com"
         break;
       case FireBaseConstant.AUTH_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
-      
+
       default:
-      let bug=new Bug(result);
-      this.eventService.newBugEvent.next(bug); 
-      Bugsnag.notify(bug.error) 
-        result.message="Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";        
+        let bug = new Bug(result);
+        this.eventService.newBugEvent.next(bug);
+        Bugsnag.notify(bug.error)
+        result.message = "Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";
         break
     };
   }

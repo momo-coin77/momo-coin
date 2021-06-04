@@ -114,8 +114,10 @@
       <div class="modal-body">
         <div *ngIf="!waitResponse">
           <p class="text-left">A request to purchase payment for your {{selectedPack.amount}} MC pack has been made.</p>
-            <br>Name: <b>{{selectedUser.fullName}}</b>
-            <br>Amount: <b> {{selectedPack.amount}} FCFA</b>
+          <br>Name: <b>{{selectedUser.fullName}}</b>
+          <br>email: <b>{{selectedUser.email}}</b>
+          <br>Phone: <b>{{selectedUser.phone}}</b>
+          <br>Amount: <b> {{selectedPack.amount}} FCFA</b>
             <div class="text-left">Confirm payment if completed. If not close and wait.</div>
         </div>
         <app-spinner *ngIf="waitResponse"></app-spinner>
