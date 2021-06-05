@@ -4,12 +4,16 @@ import { Pack } from '../../entity/pack';
 import { User } from '../../entity/user';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
+import { FirebaseApi } from '../firebase/FirebaseApi';
+import { ResultStatut } from '../firebase/resultstatut';
 import { MarketService } from '../market/market.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfilService {
+
+  fieulList:User[]=[];
   packForBalanceAccount:Map<string,boolean> = new Map<string,boolean>();
 
   balancedAccount:number = 0;
@@ -18,7 +22,8 @@ export class ProfilService {
   constructor(
     private marketService:MarketService,
     private eventService:EventService,
-    private authService:AuthService
+    private authService:AuthService,
+    private firebaseApi:FirebaseApi
   ) {
 
     this.eventService.loginEvent.subscribe((user:User)=>{
@@ -44,5 +49,32 @@ export class ProfilService {
         this.balancedAccountObservable.next(this.balancedAccount);
       }
     })
+   }
+
+   getFieulList():Promise<ResultStatut>
+   {
+     return new Promise<ResultStatut>((resolve,reject)=>{
+      let resultStatut:ResultStatut = new ResultStatut()
+      if(this.fieulList.length>0) {
+        resultStatut.result = this.fieulList.slice();
+        return resolve(resultStatut)
+      }
+      this.firebaseApi
+      .getFirebaseDatabase()
+      .ref("users")
+      .orderByChild("parentSponsorShipId")
+      .equalTo(this.authService.currentUserSubject.getValue().mySponsorShipId.toString())
+      .once("value",(result)=>{
+        let data = result.val();
+        for(let k in data)
+        {
+          let user:User = new User();
+          user.hydrate(data[k]);
+          this.fieulList.push(user);
+        }
+        resultStatut.result = this.fieulList.slice();
+        return resolve(resultStatut)
+      })
+     })
    }
 }

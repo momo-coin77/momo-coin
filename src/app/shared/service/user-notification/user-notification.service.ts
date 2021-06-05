@@ -72,10 +72,12 @@ export class UserNotificationService {
         result.result=message;
         return resolve(result);
       }
-      this.firebaseApi.db()
+      this.firebaseApi
+      .getFirebaseDatabase()
       .ref("notifications")
       .orderByChild('idPack')
       .equalTo(idPack.toString())
+      .limitToLast(1)
       .once('value',(data)=>{
         let kdata = data.val();
         let message:Message = new Message();

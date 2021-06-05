@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
-import { interval, Subscription } from 'rxjs';
+import { BehaviorSubject, combineLatest, interval, Subject, Subscription } from 'rxjs';
 import { gainConfig, Pack, PackGain } from '../../../../shared/entity/pack';
 import { User } from '../../../../shared/entity/user';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
@@ -16,6 +16,12 @@ import { AuthService } from '../../../../shared/service/auth/auth.service';
 import { EventService } from '../../../../shared/service/event/event.service';
 import { TranslateService } from '@ngx-translate/core';
 
+enum FilterNetwork
+{
+  ALL="all",
+  MTN_MONEY="MTN Money",
+  ORANGE_MONEY="Orang Money"
+}
 
 @Component({
   selector: 'app-market',
@@ -38,6 +44,9 @@ export class MarketComponent implements OnInit, OnDestroy {
   gainList = Object.keys(gainConfig).map((key) => Object.create({}, { value: { value: gainConfig[key] }, key: { value: key } }));
   hasCurrentPack: boolean = false;
   // packs: { user: User, pack: Pack }[] = [];
+
+  montantFilter:BehaviorSubject<Number>=new BehaviorSubject<Number>(-1);
+  networkTypeFilter:BehaviorSubject<FilterNetwork> = new BehaviorSubject<FilterNetwork>(FilterNetwork.ALL);
 
 
   private updateSubscription: Subscription;
@@ -84,21 +93,32 @@ export class MarketComponent implements OnInit, OnDestroy {
         this.searchPacks=[];
       })
 
-    this.dataMarketSubscription = this.marketService.getAllPackInMarket().subscribe((pack: Pack) => {
+    // this.dataMarketSubscription = 
+    combineLatest([this.marketService.getAllPackInMarket(),this.montantFilter,this.networkTypeFilter])
+    .subscribe(([pack,montant,network])=>[
       this.userService.getUserById(pack.idOwner)
         .then((result: ResultStatut) => {
           if (!this.listPacks.has(pack.id.toString().toString())) {
-            this.packs.push({
-              waitResponse: false,
-              pack,
-              user: result.result,
-              selectForm: new FormControl(this.gainList[0].key)
-            });
-            this.searchPacks.push(pack);
-            this.listPacks.set(pack.id.toString().toString(), true);
+            if(montant==-1 || montant==pack.amount)
+            {
+              if(network==FilterNetwork.ALL || network==result.result.network)
+              {
+                this.packs.push({
+                  waitResponse: false,
+                  pack,
+                  user: result.result,
+                  selectForm: new FormControl(this.gainList[0].key)
+                });
+                this.searchPacks.push(pack);
+                this.listPacks.set(pack.id.toString().toString(), true);
+              }
+            }
           }
         })
-    });
+    ])
+    // this.marketService.getAllPackInMarket().subscribe((pack: Pack) => {
+      
+    // });
   }
 
   getArrayPacks() {
