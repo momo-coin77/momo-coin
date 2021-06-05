@@ -62,6 +62,32 @@ export class UserNotificationService {
       }
     ]);
   }
+  findMessageByPackId(idPack:EntityID):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      let message:Message = this.listNotifications.find((msg:Message)=>msg.idPack.toString()==idPack.toString());
+      let result:ResultStatut = new ResultStatut();
+      if(message)
+      {
+        result.result=message;
+        return resolve(result);
+      }
+      this.firebaseApi.db()
+      .ref("notifications")
+      .orderByChild('idPack')
+      .equalTo(idPack.toString())
+      .once('value',(data)=>{
+        let kdata = data.val();
+        let message:Message = new Message();
+        for (let key in kdata) 
+        {
+          message.hydrate(kdata[key])
+        }
+        result.result = message;
+        resolve(result);
+      })
+    })
+  }
   deleteNotification(message:Message):Promise<ResultStatut>
   {
 // console.log("Message ",message)
@@ -81,6 +107,7 @@ export class UserNotificationService {
       .catch((error)=>reject(error))
     })
   }
+
   newNotifications(msg: Record<string, any>) {
     if (!msg) { return null; }
 

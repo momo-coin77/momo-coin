@@ -36,8 +36,7 @@ export class BasicPackService {
         private marketService:MarketService
         ){
             this.eventService.loginEvent.subscribe((log)=>{
-            //   if(!log) return;
-            
+            //   if(!log) return;            
               this.newPackHandler();  
             })
         }
