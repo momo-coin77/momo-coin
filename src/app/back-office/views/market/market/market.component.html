@@ -11,10 +11,33 @@
           <table class="table table-bordered table-striped table-sm">
             <thead>
               <tr>
-                <th><b> Network</b></th>
-                <th><b>Amount</b></th>
-                <th><b>Period</b></th>
-                <th><b></b></th>
+                <th>
+                  <div class="row">
+                    <div class="col-2"><b> Network</b></div>
+                    <div class="col-2">
+                      <select id="network" placeholder="MTN Mobile Money">
+                        <option value="All" selected>All</option>
+                        <option value="MTN Money">MTN Mobile Money</option>
+                        <option value="Orange Money">Orange Money</option>
+                      </select>
+                    </div>
+                  </div>
+                </th>
+                <th>
+                  <div class="row">
+                    <div class="col-2"><b>Amount </b></div>
+                    <div class="col-2"> <input type="number"></div>
+                  </div>
+                </th>
+                <th><b>Period 
+                  <select  placeholder="5days">
+                    <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
+                  </select>
+                </b></th>
+                <th><b>
+                  <i class="action-fa-filter fa fa-check" title=""></i> {{ 'DASHBOARD.MARKET.APPLY_FILTER' | translate }}
+                  <i title="{{ 'DASHBOARD.MARKET.REMOVE_FILTER' | translate }}" class="action-fa-filter fa fa-close"></i>
+                </b></th>
               </tr>
             </thead>
             <tbody *ngIf="packs.length>0">
@@ -39,9 +62,6 @@
                     </span></b>
                 </th>
               </tr>
-
-
-
             </tbody>
 
             <tbody *ngIf="packs.length==0">

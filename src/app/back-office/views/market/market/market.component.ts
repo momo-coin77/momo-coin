@@ -14,6 +14,7 @@ import { BasicPackService } from '../../../../shared/service/pack/basic-pack.ser
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
 import { EventService } from '../../../../shared/service/event/event.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private marketService: MarketService,
     private notification: NotificationService,
+    public translate:TranslateService,
     private eventService:EventService
   ) {
     this.marketService.marketTime();

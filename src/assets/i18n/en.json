@@ -3,5 +3,10 @@
       "FR": "French",
       "EN": "English"
     },
-    "TEST":"testons"
+    "DASHBOARD":{
+      "MARKET":{
+          "APPLY_FILTER":"Apply filter",
+          "REMOVE_FILTER":"Clear filter"        
+      }
+    }
   }
