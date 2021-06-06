@@ -2,18 +2,18 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { interval, Subscription } from 'rxjs';
-import { gainConfig, Pack, PackGain } from '../../../../shared/entity/pack';
+import { gainConfig, Pack, PackBuyState, PackGain, PackState } from '../../../../shared/entity/pack';
 import { User } from '../../../../shared/entity/user';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { MarketService } from '../../../../shared/service/market/market.service';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 import { PackService } from '../../../../shared/service/pack/pack.service';
-import { UserService } from '../../../../shared/service/user/user.service';
 import * as _ from 'lodash';
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 import { FormControl } from '@angular/forms';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
 import { EventService } from '../../../../shared/service/event/event.service';
+import { UserService } from '../../../../shared/service/user/user.service';
 
 
 @Component({
@@ -117,20 +117,34 @@ export class MarketComponent implements OnInit, OnDestroy {
     }
     // console.log('Gain ',gain)
 
-    this.packService.BuyAPack(this.currentPack.pack, gain)
-      .then((result: ResultStatut) => {
-        let date = new Date();
-        date.setHours(date.getHours() + 5);
-        this.resultOperation.okresult = true;
-        this.resultOperation.message = '\<b>Infos !\</b>\<br>The owner of the pack has been informed of your request being the transfer of money. Please complete the transfer before ' + date.toUTCString()
-        // this.listPacks.clear();
-        // this.packs=[];
+    this.packService.getOnlinePack(this.currentPack.pack.id)
+    .then((result:ResultStatut)=>{
+      let pack:Pack=result.result;
+      if(pack.state!=PackState.ON_MARKET  ||  pack.buyState!=PackBuyState.ON_WAITING_BUYER)
+      {
+        let result:ResultStatut=new ResultStatut();
+        result.code=ResultStatut.INVALID_ARGUMENT_ERROR;
+        return Promise.reject(result);
+      }
+      return this.packService.BuyAPack(this.currentPack.pack, gain)
+    })    
+    .then((result: ResultStatut) => {
+      let date = new Date();
+      date.setHours(date.getHours() + 5);
+      this.resultOperation.okresult = true;
+      this.resultOperation.message = '\<b>Infos !\</b>\<br>The owner of the pack has been informed of your request being the transfer of money. Please complete the transfer before ' + date.toUTCString()
+      // this.listPacks.clear();
+      // this.packs=[];
 
-      })
-      .catch((error: ResultStatut) => {
-        this.resultOperation.okresult = false;
-        this.resultOperation.message = '\<b>Sorry !\</b>\<br> Error when selecting the pack <br/>' + error.message;
-      })
+    })
+    .catch((error: ResultStatut) => {
+      this.resultOperation.okresult = false;
+      if(error.code==ResultStatut.INVALID_ARGUMENT_ERROR)
+      {
+        this.resultOperation.message= "\<b>Sorry !\</b>\<br>  this pack is no longer available. You can buy another one";
+      }
+      else this.resultOperation.message = '\<b>Sorry !\</b>\<br> Error when selecting the pack <br/>' + error.message;
+    })
 
   }
 

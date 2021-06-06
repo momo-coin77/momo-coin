@@ -108,6 +108,13 @@ export class BasicPackService {
                 result.result=this.packList.getValue().get(idPack.toString())
                 return resolve(result);
             }
+            this.getOnlinePack(idPack).then((result)=>resolve(result)).catch((error)=>reject(error));
+        })
+    }
+
+    getOnlinePack(idPack:EntityID)
+    {
+        return new Promise<ResultStatut>((resolve,reject)=>{
             this.firebaseApi.fetchOnce(`packs/${idPack.toString()}`)
             .then((result:ResultStatut)=>{
                 if(!result.result)
@@ -129,8 +136,9 @@ export class BasicPackService {
                 this.firebaseApi.handleApiError(error);
                 reject(error);
             })
-        })
+        })   
     }
+
     addPack(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve, reject) => {
@@ -150,6 +158,8 @@ export class BasicPackService {
             })
         })
     }
+
+    
 
     //Etape 1
     //L'acheteur envoi la demande d'achat en faisant le depos

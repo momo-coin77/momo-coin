@@ -2,7 +2,7 @@ import { Entity } from "../../entity/entity";
 
 
 export class ResultStatut extends Entity {
-  code: number;
+  code: number=ResultStatut.UNKNOW_ERROR;
   apiCode: any;
   result: any;
   message: string;
