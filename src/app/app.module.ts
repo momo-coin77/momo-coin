@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, enableProdMode } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NguiMapModule} from '@ngui/map';
@@ -122,6 +122,9 @@ Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
 export function errorHandlerFactory() {
   return new BugsnagErrorHandler()
 }
+
+//enableProdMode
+// enableProdMode();
 
 @NgModule({
   imports: [

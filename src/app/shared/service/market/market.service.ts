@@ -25,7 +25,6 @@ export class MarketService {
       //cette requete ne doit ce faire que si le marché est ouvert
       this.firebaseApi.getFirebaseDatabase()
         .ref('packs')
-        .limitToLast(200)
         .on('value', (snapshot) => this.newPackFromMarket(snapshot)),
         this.firebaseApi.getFirebaseDatabase()
           .ref('packs')
@@ -44,7 +43,9 @@ export class MarketService {
   getMyOrderedPack()
   {
     return this.getOrderMarket().pipe(
-      filter((p: Pack) =>  p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) =>  {
+        return p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()
+      }),
     )
   }
 
@@ -80,7 +81,7 @@ export class MarketService {
     this.packs.next(this.listPack);
   }
 
-  newPackFromMarket(packs: any) {
+  newPackFromMarket(packs: any) {    
     let packList: Pack[] = [];
     let oplist = packs.val();
     for (let pkey in oplist) {
