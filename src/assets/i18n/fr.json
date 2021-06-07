@@ -1,0 +1,12 @@
+{
+    "LANG": {
+      "FR": "Francais",
+      "EN": "Anglais"
+    },
+    "DASHBOARD":{
+      "MARKET":{
+          "APPLY_FILTER":"Appliquer filtre",
+          "REMOVE_FILTER":"Effacer filter"        
+      }
+    }
+  }

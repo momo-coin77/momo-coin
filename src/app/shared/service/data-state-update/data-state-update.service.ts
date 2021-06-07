@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Message } from '../../entity/chat';
 import { EntityID } from '../../entity/EntityID';
 import { Pack, PackBuyState, PackState } from '../../entity/pack';
 import { User } from '../../entity/user';
@@ -6,6 +7,7 @@ import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { BasicPackService } from '../pack/basic-pack.service';
+import { UserNotificationService } from '../user-notification/user-notification.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -16,6 +18,7 @@ export class DataStateUpdateService {
   constructor(
     private firebaseApi: FirebaseApi,
     private eventService: EventService,
+    private userNotification:UserNotificationService,
     private userService: UserService,
     private packService: BasicPackService
   ) {
@@ -54,46 +57,52 @@ export class DataStateUpdateService {
 
   async updatePackNotPaid()
   {
-    this.findAndUpdate("toupdate/pack/waittopaid",(id:EntityID)=>{
+    this.findAndUpdate("toupdate/pack/waittopaid",(id:EntityID)=>{      
+      
       this.deleteToUpdate(`toupdate/pack/waittopaid/${id.toString()}`);
+
       this.packService
       .getPackById(id)
       .then((result:ResultStatut)=>{
         this.userService.changeStatusUsingId(result.result.idBuyer);
-
-        this.firebaseApi.updates([
-          {
-            link:`packs/${id.toString()}/idBuyer`,
-            data: ""
-          },
-          {
-            link:`packs/${id.toString()}/buyState`,
-            data: PackBuyState.ON_WAITING_BUYER
-          },
-          {
-            link:`packs/${id.toString()}/plan`,
-            data: 0
-          },
-          {
-            link:`packs/${id.toString()}/state`,
-            data: PackState.ON_MARKET
-          },
-          {
-            link:`packs/${id.toString()}/waintedGain`,
-            data: {
-              jour:0,
-              pourcent:0
-            }
-          }
-        ]);
-        
+        return this.userNotification.findMessageByPackId(id)
       })
+      .then((result:ResultStatut)=>{
+        this.userNotification.deleteNotification(result.result);
+      });
+      this.firebaseApi.updates([
+        {
+          link:`packs/${id.toString()}/idBuyer`,
+          data: ""
+        },
+        {
+          link:`packs/${id.toString()}/buyState`,
+          data: PackBuyState.ON_WAITING_BUYER
+        },
+        {
+          link:`packs/${id.toString()}/plan`,
+          data: 0
+        },
+        {
+          link:`packs/${id.toString()}/state`,
+          data: PackState.ON_MARKET
+        },
+        {
+          link:`packs/${id.toString()}/waintedGain`,
+          data: {
+            jour:0,
+            pourcent:0
+          }
+        }
+      ]);        
     })
   }
+  
   async updatePackMarket() {    
       this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
       {
           this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
+          
           this.packService.changePackStatus(id);
       })
   }

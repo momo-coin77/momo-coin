@@ -76,7 +76,7 @@ import { AppBootStrapModule } from './shared/app-boot-strap/app-boot-strap.modul
 import { ToastrModule } from 'ngx-toastr';
 // import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
@@ -113,7 +113,8 @@ import { AdminerGuard } from './shared/guard/adminer.guard';
 // Import Bugsnag and the Angular integration
 import Bugsnag from '@bugsnag/js'
 import { BugsnagErrorHandler } from '@bugsnag/plugin-angular'
-
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // configure Bugsnag asap
 Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
@@ -122,15 +123,18 @@ Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
 export function errorHandlerFactory() {
   return new BugsnagErrorHandler()
 }
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 //enableProdMode
 // enableProdMode();
 
 @NgModule({
-  imports: [
+  imports: [    
     SpinnerModule,
     BrowserModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule,    
     // SocketIoModule.forRoot(config),
     AppRoutingModule,
     AppAsideModule,
@@ -196,6 +200,14 @@ export function errorHandlerFactory() {
     AngularFirestoreModule,
     ModalModule.forRoot(),
     SpinnerModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    })
   ],
   declarations: [
     AppComponent,
@@ -222,7 +234,8 @@ export function errorHandlerFactory() {
   AdminerGuard,
   EventService,
   { provide: ErrorHandler, 
-    useFactory: errorHandlerFactory } 
+    useFactory: errorHandlerFactory
+  }, 
   // UserService,
   // RealtimeService,
   // ChatRealtimeService,
