@@ -10,17 +10,18 @@ import { NotificationService } from '../../../../shared/service/notification/not
 import { PackService } from '../../../../shared/service/pack/pack.service';
 import * as _ from 'lodash';
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
 import { EventService } from '../../../../shared/service/event/event.service';
 import { UserService } from '../../../../shared/service/user/user.service';
 import { TranslateService } from '@ngx-translate/core';
+import { combineAll, mergeAll } from 'rxjs/operators';
 
 enum FilterNetwork
 {
-  ALL="all",
+  ALL="All",
   MTN_MONEY="MTN Money",
-  ORANGE_MONEY="Orang Money"
+  ORANGE_MONEY="Orange Money"
 }
 
 @Component({
@@ -48,6 +49,8 @@ export class MarketComponent implements OnInit, OnDestroy {
   montantFilter:BehaviorSubject<Number>=new BehaviorSubject<Number>(-1);
   networkTypeFilter:BehaviorSubject<FilterNetwork> = new BehaviorSubject<FilterNetwork>(FilterNetwork.ALL);
 
+  formFilter:FormGroup;
+  hasFilter=false;
 
   private updateSubscription: Subscription;
   private dataMarketSubscription: Subscription;
@@ -72,6 +75,24 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.currentUserPhone = user.phone;
     });
+    this.formFilter=new FormGroup({
+      "networkFilter":new FormControl(FilterNetwork.ALL),
+      "amountFilter":new FormControl(this.montantFilter.getValue())
+    });
+  }
+  onFilter()
+  {
+    this.hasFilter=true;
+    this.networkTypeFilter.next(this.formFilter.value.networkFilter),
+    this.montantFilter.next(+this.formFilter.value.amountFilter);
+  }
+  resetFilter()
+  {
+    this.hasFilter=true;
+    this.networkTypeFilter.next(FilterNetwork.ALL),
+    this.montantFilter.next(-1);
+    this.formFilter.controls.networkFilter.setValue(FilterNetwork.ALL);
+    this.formFilter.controls.amountFilter.setValue(-1)
   }
 
 
@@ -94,13 +115,19 @@ export class MarketComponent implements OnInit, OnDestroy {
       })
 
     // this.dataMarketSubscription = 
-    combineLatest([this.marketService.getAllPackInMarket(),this.montantFilter,this.networkTypeFilter])
-    .subscribe(([pack,montant,network])=>[
-      this.userService.getUserById(pack.idOwner)
+    combineLatest([this.marketService.packs,this.montantFilter,this.networkTypeFilter])
+    .subscribe(([packs,montant,network])=>{
+      if(this.hasFilter) this.eventService.newPackArrivedEvent.next(true);
+
+      Array.from(packs.values())
+      .filter((pack:Pack)=>pack.state==PackState.ON_MARKET)
+      .forEach((pack)=>{        
+        this.userService.getUserById(pack.idOwner)
         .then((result: ResultStatut) => {
+          console.log(network,result.result.network)          
           if (!this.listPacks.has(pack.id.toString().toString())) {
             if(montant==-1 || montant==pack.amount)
-            {
+            {              
               if(network==FilterNetwork.ALL || network==result.result.network)
               {
                 this.packs.push({
@@ -115,7 +142,9 @@ export class MarketComponent implements OnInit, OnDestroy {
             }
           }
         })
-    ])
+      })
+      
+      })
     // this.marketService.getAllPackInMarket().subscribe((pack: Pack) => {
       
     // });
