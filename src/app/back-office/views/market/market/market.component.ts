@@ -51,6 +51,7 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   formFilter:FormGroup;
   hasFilter=false;
+  waitForPackOnlineState:boolean=true;
 
   private updateSubscription: Subscription;
   private dataMarketSubscription: Subscription;
@@ -200,9 +201,30 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   show1(pack) {
+    console.log("Show pack ",pack)
     this.currentPack = pack;
     this.hasCurrentPack = true;
-    this.firstModal.show();
+
+    this.packService.getOnlinePack(this.currentPack.pack.id)
+    .then((result:ResultStatut)=>{
+      let p:Pack=result.result;
+      if(p.state!=PackState.ON_MARKET  ||  p.buyState!=PackBuyState.ON_WAITING_BUYER)
+      {
+        let result:ResultStatut=new ResultStatut();
+        result.code=ResultStatut.INVALID_ARGUMENT_ERROR;
+        return Promise.reject(result);
+      }      
+      this.waitForPackOnlineState=false;
+      this.firstModal.show(); 
+    }).catch((error)=>{
+      this.waitForPackOnlineState=false;
+      this.resultOperation.okresult = false;
+      if(error.code==ResultStatut.INVALID_ARGUMENT_ERROR)
+      {
+        this.resultOperation.message= "\<b>Sorry !\</b>\<br>  this pack is no longer available. You can buy another one";
+      }
+      else this.resultOperation.message = '\<b>Sorry !\</b>\<br> Error when selecting the pack <br/>' + error.message;
+    });
   }
 
   showNote() {
