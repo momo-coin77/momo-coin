@@ -112,7 +112,6 @@
           <span aria-hidden="true">&times;</span>
         </button><!-- Package Details-->
       </div>
-      <ng-container *ngIf="waitForPackOnlineState==false" >
         <div class="modal-body">
           <div *ngIf="hasCurrentPack">
             <b>Are you sure you want to buy this pack ?</b>
@@ -128,12 +127,7 @@
           style="background-color: red !important;">Cancel</button>
         <button type="button" class="btn btn-success" style="background-color: green !important;"
           (click)="firstModal.hide();show2()">Pay</button>
-      </ng-container>
-      <div *ngIf="waitForPackOnlineState==true">
-        <div class="d-flex justify-content-center">
-          <app-spinner></app-spinner>
-        </div>
-      </div>
+      
     </div>
   </div>
 </div>
@@ -150,19 +144,26 @@ class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div *ngIf="hasCurrentPack">
-          <br>Network: <b>{{currentPack.user.network}}</b>
-          <br>Phone: <b>{{currentPack.user.phone}}</b>
-          <br>Name: <b>{{currentPack.user.fullName  || 'Not available'}}</b>
-          <br>Amount: <b>{{currentPack.pack.amount}}FCFA</b>
+      <ng-container *ngIf="waitForPackOnlineState==false">
+        <div class="modal-body">
+          <div *ngIf="hasCurrentPack">
+            <br>Network: <b>{{currentPack.user.network}}</b>
+            <br>Phone: <b>{{currentPack.user.phone}}</b>
+            <br>Name: <b>{{currentPack.user.fullName  || 'Not available'}}</b>
+            <br>Amount: <b>{{currentPack.pack.amount}}FCFA</b>
+          </div>
+          
+          <div class="text-left">Contact the beneficiary and ask him to confirm the payment in the system.</div>
+  
         </div>
-        
-        <div class="text-left">Contact the beneficiary and ask him to confirm the payment in the system.</div>
-
+        <button type="button" class="btn btn-success" style="background-color: green !important;"
+          (click)="secondModal.hide()">OK</button>
+      </ng-container>
+      <div *ngIf="waitForPackOnlineState==true">
+        <div class="d-flex justify-content-center">
+          <app-spinner></app-spinner>
+        </div>
       </div>
-      <button type="button" class="btn btn-success" style="background-color: green !important;"
-        (click)="secondModal.hide()">OK</button>
     </div>
   </div>
 </div>

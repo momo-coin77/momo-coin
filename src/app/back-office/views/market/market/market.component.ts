@@ -161,14 +161,12 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   show2() {
-    // console.log('teste pop');
-    this.secondModal.show();
+    // console.log('teste pop');    
     let gain: PackGain = {
       jour: +this.currentPack.selectForm.value,
       pourcent: gainConfig[this.currentPack.selectForm.value]
     }
     // console.log('Gain ',gain)
-
     this.packService.getOnlinePack(this.currentPack.pack.id)
     .then((result:ResultStatut)=>{
       let pack:Pack=result.result;
@@ -181,13 +179,13 @@ export class MarketComponent implements OnInit, OnDestroy {
       return this.packService.BuyAPack(this.currentPack.pack, gain)
     })    
     .then((result: ResultStatut) => {
+      this.secondModal.show();
       let date = new Date();
       date.setHours(date.getHours() + 5);
       this.resultOperation.okresult = true;
       this.resultOperation.message = '\<b>Infos !\</b>\<br>The owner of the pack has been informed of your request being the transfer of money. Please complete the transfer before ' + date.toUTCString()
       // this.listPacks.clear();
       // this.packs=[];
-
     })
     .catch((error: ResultStatut) => {
       this.resultOperation.okresult = false;
@@ -201,30 +199,10 @@ export class MarketComponent implements OnInit, OnDestroy {
   }
 
   show1(pack) {
-    console.log("Show pack ",pack)
+    // console.log("Show pack ",pack)
     this.currentPack = pack;
     this.hasCurrentPack = true;
-
-    this.packService.getOnlinePack(this.currentPack.pack.id)
-    .then((result:ResultStatut)=>{
-      let p:Pack=result.result;
-      if(p.state!=PackState.ON_MARKET  ||  p.buyState!=PackBuyState.ON_WAITING_BUYER)
-      {
-        let result:ResultStatut=new ResultStatut();
-        result.code=ResultStatut.INVALID_ARGUMENT_ERROR;
-        return Promise.reject(result);
-      }      
-      this.waitForPackOnlineState=false;
-      this.firstModal.show(); 
-    }).catch((error)=>{
-      this.waitForPackOnlineState=false;
-      this.resultOperation.okresult = false;
-      if(error.code==ResultStatut.INVALID_ARGUMENT_ERROR)
-      {
-        this.resultOperation.message= "\<b>Sorry !\</b>\<br>  this pack is no longer available. You can buy another one";
-      }
-      else this.resultOperation.message = '\<b>Sorry !\</b>\<br> Error when selecting the pack <br/>' + error.message;
-    });
+    this.firstModal.show(); 
   }
 
   showNote() {
