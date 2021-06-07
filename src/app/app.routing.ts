@@ -18,6 +18,7 @@ import { TermsAndConditionsComponent } from './shared/components/terms-and-condi
 //// Back Office
 import { RegistrationComponent } from './front-office/registration/registration.component';
 import { AuthGuard } from './shared/guard/auth.guard';
+import { RedirectAuthGuard } from './shared/guard/redirect-auth.guard';
 
 export const routes: Routes = [
   {
@@ -44,10 +45,12 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [RedirectAuthGuard]
   },
   {
     path: 'signin',
     component: LoginComponent,
+    canActivate:[RedirectAuthGuard]
   },
   {
     path: '',
@@ -114,7 +117,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    component: BlankPageComponent
+    component: LoginComponent
   },
   {
     path: 'blanck',

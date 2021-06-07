@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, from } from 'rxjs';
 import { filter, map, reduce, scan, switchMap } from 'rxjs/operators';
+import { EntityID } from '../../entity/EntityID';
 import { Pack, PackState } from '../../entity/pack';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
@@ -32,6 +33,16 @@ export class MarketService {
 
       // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
     // });
+  }
+
+  getNumberOfPack(idUser:EntityID):Number
+  {
+    let nbpack = 0;
+    for(let pack of Array.from(this.listPack.values()))
+    {
+      if(pack.idOwner.toString()==idUser.toString()) nbpack++;
+    }
+    return nbpack;
   }
 
   getOrderMarket() {

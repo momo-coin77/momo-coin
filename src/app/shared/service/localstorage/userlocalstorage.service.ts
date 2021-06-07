@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, NavigationStart, Router, } from '@angular/router';
+import { NavigationEnd, NavigationStart, ResolveEnd, Router, } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../../entity/user';
 
@@ -21,7 +21,7 @@ export class UserlocalstorageService {
   getUserDataWhenNavStart()
   {
     this.router.events.subscribe((evt)=> {     
-      if(evt instanceof NavigationEnd)
+      if(evt instanceof NavigationStart)
       {
         if(localStorage.getItem("isLoggedIn") && localStorage.getItem("user"))
         {
@@ -43,10 +43,7 @@ export class UserlocalstorageService {
   {
     localStorage.setItem("isLoggedIn",JSON.stringify(data.isLoggedIn));
     localStorage.setItem("user",JSON.stringify(data.user.toString()));
-    this.dataUser.next({
-      isLoggedIn:true,
-      user:data.user
-    });
+    this.dataUser.next(data);
   }
   clearData()
   {

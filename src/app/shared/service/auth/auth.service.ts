@@ -15,7 +15,7 @@ import { UserService } from '../user/user.service';
 })
 export class AuthService {
   currentUser: User = new User();
-  isLoggedIn: boolean = false;
+  isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAdminer: boolean = false;
   currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
 
@@ -26,13 +26,17 @@ export class AuthService {
     private eventService: EventService,
     private userService: UserService) {
     this.localStorageService.dataUser.subscribe((userData: UserLocalStorageData) => {
-      this.isLoggedIn = userData.isLoggedIn;
+      // console.log("userData ",userData)
+      this.isLoggedIn.next(userData.isLoggedIn);
       this.currentUser = userData.user;
       this.ifAdminer(this.currentUser.email);
-      this.currentUserSubject.next(this.currentUser);
+      this.emitUserData();
     });
   }
-
+  emitUserData()
+  {
+    this.currentUserSubject.next(this.currentUser);
+  }
   signIn(userN: User, emitEvent: boolean = true): Promise<ResultStatut> {
     let action = new ResultStatut();
     return new Promise<ResultStatut>((resolve, reject) => {

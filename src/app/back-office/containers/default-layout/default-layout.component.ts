@@ -56,7 +56,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     private userNotif: UserNotificationService,
     private firebaseApi:FirebaseApi,
     private notification: NotificationService,
-    public translateService:TranslateService,
+    public translate:TranslateService,
     private packService: BasicPackService) {
     this.fullName = this.authService.currentUserSubject.getValue().fullName;
     if (this.authService.currentUserSubject.getValue().email == 'admin@gmail.com'){
@@ -81,7 +81,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     })
 
     this.myfunc();
-    this.translateService.onLangChange.subscribe((e:LangChangeEvent)=> {
+    this.translate.onLangChange.subscribe((e:LangChangeEvent)=> {
       this.defaultLang=e.translations["LANG"][e.lang.toUpperCase()];
       // console.log("Default lang ",e.translations["LANG"],e.lang.toUpperCase())
     })
@@ -168,7 +168,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
   changeLanguage(language)
   {
-    this.translateService.use(language)
+    this.translate.use(language)
     switch (language)
     {
       case 'fr':

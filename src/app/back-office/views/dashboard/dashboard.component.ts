@@ -8,6 +8,7 @@ import { AuthService } from '../../../shared/service/auth/auth.service';
 import { User } from '../../../shared/entity/user';
 import { ProfilService } from '../../../shared/service/profil/profil.service';
 import { EventService } from '../../../shared/service/event/event.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private myPack: MarketService,
     private authService: AuthService,
+    private translate:TranslateService,
     private eventService:EventService,
     private profilService:ProfilService) {
     this.getPurchasePacks();

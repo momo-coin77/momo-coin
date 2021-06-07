@@ -13,7 +13,7 @@ import { MarketService } from '../market/market.service';
 })
 export class ProfilService {
 
-  fieulList:User[]=[];
+  fieulList:{user:User,nberPack:Number}[]=[];
   packForBalanceAccount:Map<string,boolean> = new Map<string,boolean>();
 
   balancedAccount:number = 0;
@@ -69,8 +69,8 @@ export class ProfilService {
         for(let k in data)
         {
           let user:User = new User();
-          user.hydrate(data[k]);
-          this.fieulList.push(user);
+          user.hydrate(data[k]);          
+          this.fieulList.push({user,nberPack:this.marketService.getNumberOfPack(user.id)});
         }
         resultStatut.result = this.fieulList.slice();
         return resolve(resultStatut)
