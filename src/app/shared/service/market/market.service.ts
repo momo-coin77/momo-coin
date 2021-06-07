@@ -40,6 +40,7 @@ export class MarketService {
     let nbpack = 0;
     for(let pack of Array.from(this.listPack.values()))
     {
+      console.log(pack.idOwner.toString(),idUser.toString())
       if(pack.idOwner.toString()==idUser.toString()) nbpack++;
     }
     return nbpack;
@@ -90,6 +91,7 @@ export class MarketService {
     this.listPack.set(pack.id.toString(), pack);
     this.eventService.newPackArrivedEvent.next(true);
     this.packs.next(this.listPack);
+    this.eventService.syncFamilyEvent.next(true);
   }
 
   newPackFromMarket(packs: any) {    
@@ -110,6 +112,7 @@ export class MarketService {
     this.eventService.newPackArrivedEvent.next(true);
     this.packs.next(this.listPack);
     // console.log("list pack ",this.listPack)
+    this.eventService.syncFamilyEvent.next(true);
   }
 
   getPackList() {

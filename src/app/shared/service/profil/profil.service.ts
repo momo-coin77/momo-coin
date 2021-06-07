@@ -55,10 +55,11 @@ export class ProfilService {
    {
      return new Promise<ResultStatut>((resolve,reject)=>{
       let resultStatut:ResultStatut = new ResultStatut()
-      if(this.fieulList.length>0) {
-        resultStatut.result = this.fieulList.slice();
-        return resolve(resultStatut)
-      }
+      // if(this.fieulList.length>0) {
+      //   resultStatut.result = this.fieulList.slice();
+      //   return resolve(resultStatut)
+      // }
+      this.fieulList=[];
       this.firebaseApi
       .getFirebaseDatabase()
       .ref("users")
@@ -68,8 +69,9 @@ export class ProfilService {
         let data = result.val();
         for(let k in data)
         {
-          let user:User = new User();
-          user.hydrate(data[k]);          
+          let user:User = new User();         
+          user.hydrate(data[k]);     
+          user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();     
           this.fieulList.push({user,nberPack:this.marketService.getNumberOfPack(user.id)});
         }
         resultStatut.result = this.fieulList.slice();

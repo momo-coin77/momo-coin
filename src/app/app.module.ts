@@ -128,7 +128,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 //enableProdMode
-// enableProdMode();
+enableProdMode();
 
 @NgModule({
   imports: [    

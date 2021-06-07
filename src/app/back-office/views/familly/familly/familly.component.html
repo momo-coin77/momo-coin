@@ -15,10 +15,30 @@
                 <th><b>Number of packs</b></th>
               </tr>
             </thead>
-            <tbody>
-              <th><b></b></th>
-              <th><b></b></th>
-              <th><b></b></th>
+            <tbody *ngIf="waitData==true">
+              <tr>
+                <td colspan="3">
+                  <div class="d-flex justify-content-center">
+                    <app-spinner></app-spinner>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="waitData!=true">
+              <tr *ngIf="fieuls.length==0">
+                <td colspan="3">
+                  <div class="d-flex justify-content-center">
+                    No data found
+                  </div>
+                </td>
+              </tr>
+              <tr *ngFor="let f of fieuls">
+                <td>
+                  {{f.user.fullName}}
+                </td>
+                <td>{{f.user.dateCreation}}</td>
+                <td>{{f.nberPack}}</td>
+              </tr>
             </tbody>
           </table>
           <nav>

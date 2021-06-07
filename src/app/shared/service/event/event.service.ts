@@ -15,4 +15,5 @@ export class EventService {
   packPaidEvent=new BehaviorSubject<Pack>(null);
   newPackArrivedEvent = new BehaviorSubject<boolean>(false);
   newBugEvent = new BehaviorSubject<Bug>(null);
+  syncFamilyEvent = new BehaviorSubject<boolean> (true);
 }
