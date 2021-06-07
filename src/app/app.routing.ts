@@ -85,6 +85,10 @@ export const routes: Routes = [
         path: 'admin',
         loadChildren: () => import('./back-office/views/admin/admin.module').then(m => m.AdminModule)
       },
+      {
+        path: 'familly',
+        loadChildren: () => import('./back-office/views/familly/familly.module').then(m => m.FamillyModule)
+      },
     ]
   },
   {
