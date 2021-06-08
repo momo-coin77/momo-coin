@@ -235,7 +235,7 @@ export class BasicPackService {
             newPack.id.setId(pack.id.toString())
             newPack.amount=pack.nextAmount;
             newPack.payDate=pack.saleDate;
-            // console.log("Wainted gain ",pack.payDate,pack.wantedGain)
+            
             let dateForSelle=new Date(newPack.payDate);            
             dateForSelle.setDate(dateForSelle.getDate()+pack.wantedGain.jour)
             newPack.saleDate=dateForSelle.toISOString();
@@ -244,7 +244,6 @@ export class BasicPackService {
             newPack.wantedGain={jour:0,pourcent:0};
             newPack.idOwner.setId(pack.idBuyer.toString());
             newPack.idBuyer.setId(" ");
-            // console.log("New PAck ", newPack.toString(),pack.toString())
             
             this.firebaseApi.updates([
                 {
@@ -259,11 +258,16 @@ export class BasicPackService {
                 return this.userService.getUserById(pack.idBuyer);
             })
             .then((result)=>{
-            // console.log("Here is a parentSponserHipId",result.result.parentSponsorShipId.toString())
-
                 if(result.result.parentSponsorShipId.toString()!="") 
                 {
-                    return this.userService.getUserBySponsorId(result.result.parentSponsorShipId)                    
+                    return new Promise<ResultStatut>((resolve,reject)=>{
+                        this.userService.getUserBySponsorId(result.result.parentSponsorShipId)
+                        .then((result:ResultStatut)=>resolve(result.result))
+                        .catch((error:ResultStatut)=>{
+                            result.result=null;
+                            resolve(result);
+                        })
+                    })                   
                 }
                 else 
                 {
@@ -276,7 +280,6 @@ export class BasicPackService {
                 if(result.result!=null)
                 {
                     result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
-                // console.log("Bonus ",result.result)
                     return this.firebaseApi.updates([
                         {
                             link:`users/${result.result.id.toString()}/bonus`,
@@ -287,15 +290,6 @@ export class BasicPackService {
                 else return Promise.resolve(new ResultStatut())
             })
             .then((result)=> this.userNotificationService.deleteNotification(msg))
-            // .then((result) => {
-            //     let message: Message = new Message();
-            //     message.from.setId(this.authService.currentUserSubject.getValue().id.toString());
-            //     message.to.setId(newPack.idOwner.toString())
-            //     message.date = (new Date()).toISOString();
-            //     message.content = 'the payment of the pack has been confirmed by the seller';
-            //     message.idPack = pack.id;
-            //     return this.userNotificationService.sendNotification(message)
-            // })
             .then((result)=> resolve(result))
             .catch((error) => {
                 this.firebaseApi.handleApiError(error);

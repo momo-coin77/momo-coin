@@ -110,20 +110,16 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         this.waitResponse = false;
         this.confirmPayment.hide();
         this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
-        // this.router.navigate(['dashboard']);
-        // window.location.href="/#/dashboard";
       })
       .catch((error) => {
         this.confirmPayment.hide();
-        // tslint:disable-next-line:max-line-length
-        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message), 200)
+        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message,0), 200)
         this.waitResponse = false;
       })
   }
 
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => {
-      // console.log("Message ",list)
       this.unreadMessageList = [];
       if (this.unreadMessageList.length > 0) { this.notif = true; }
       else { this.notif = false; }
@@ -132,8 +128,6 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         this.packService.getPackById(message.idPack)
           .then((result: ResultStatut) => {
 
-            // tslint:disable-next-line:triple-equals
-            // tslint:disable-next-line:max-line-length
             let pos = this.unreadMessageList.findIndex((infos: { pack: Pack, message: Message }) => infos.pack.id.toString() == message.idPack.toString())
             if (pos >= 0) { this.unreadMessageList.splice(pos, 1); }
             this.unreadMessageList.push({ pack: result.result, message });
