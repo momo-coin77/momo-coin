@@ -184,16 +184,20 @@ export class MarketComponent implements OnInit, OnDestroy {
       date.setHours(date.getHours() + 5);
       this.resultOperation.okresult = true;
       this.resultOperation.message = '\<b>Infos !\</b>\<br>The owner of the pack has been informed of your request being the transfer of money. Please complete the transfer before ' + date.toUTCString()
+      this.secondModal.hide();
       // this.listPacks.clear();
       // this.packs=[];
     })
     .catch((error: ResultStatut) => {
+      console.log("Error ",error)
       this.resultOperation.okresult = false;
       if(error.code==ResultStatut.INVALID_ARGUMENT_ERROR)
       {
         this.resultOperation.message= "\<b>Sorry !\</b>\<br>  this pack is no longer available. You can buy another one";
       }
       else this.resultOperation.message = '\<b>Sorry !\</b>\<br> Error when selecting the pack <br/>' + error.message;
+      
+      this.notification.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', this.resultOperation.message);
     })
 
   }
