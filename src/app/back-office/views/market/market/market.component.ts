@@ -166,6 +166,7 @@ export class MarketComponent implements OnInit, OnDestroy {
       jour: +this.currentPack.selectForm.value,
       pourcent: gainConfig[this.currentPack.selectForm.value]
     }
+    this.waitForPackOnlineState=true;
     // console.log('Gain ',gain)
     this.packService.getOnlinePack(this.currentPack.pack.id)
     .then((result:ResultStatut)=>{
@@ -179,17 +180,16 @@ export class MarketComponent implements OnInit, OnDestroy {
       return this.packService.BuyAPack(this.currentPack.pack, gain)
     })    
     .then((result: ResultStatut) => {
+      
+      this.waitForPackOnlineState=false;
+      this.resultOperation.okresult = true;
       this.secondModal.show();
       let date = new Date();
       date.setHours(date.getHours() + 5);
-      this.resultOperation.okresult = true;
       this.resultOperation.message = '\<b>Infos !\</b>\<br>The owner of the pack has been informed of your request being the transfer of money. Please complete the transfer before ' + date.toUTCString()
-      this.secondModal.hide();
-      // this.listPacks.clear();
-      // this.packs=[];
     })
     .catch((error: ResultStatut) => {
-      console.log("Error ",error)
+      this.waitForPackOnlineState=false;
       this.resultOperation.okresult = false;
       if(error.code==ResultStatut.INVALID_ARGUMENT_ERROR)
       {
