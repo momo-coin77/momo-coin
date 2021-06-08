@@ -138,11 +138,12 @@ export class DataStateUpdateService {
         // console.log("Data update",url,kdata)
         for (let key in kdata) 
         {
-          let now = new Date();
+          let now = new Date((new Date()).toLocaleDateString());
           let after = new Date(kdata[key].dateMax);
+          after = new Date(after.toLocaleDateString());
           let id: EntityID = new EntityID();
           id.setId(key);
-          if (after < now) {
+          if (after <= now) {
             // console.log("Data update",kdata)
             updateFnct(id)
           }
