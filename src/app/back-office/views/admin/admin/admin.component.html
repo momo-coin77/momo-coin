@@ -1,0 +1,28 @@
+<app-input-email-search (emailInputEvent)="searchUser($event)"></app-input-email-search>
+
+<div class="row">
+    <div class="col-4">
+        <app-list-user [emailUser]="emailForSearchUser"></app-list-user>           
+    </div>
+    <div class="col-8">
+        <mat-card>
+           <app-tabs></app-tabs>
+        </mat-card>
+    </div>
+</div>
+
+  <!-- <mat-list>
+    <div mat-subheader>Folders</div>
+    <mat-list-option*ngFor="let folder of folders">
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <div mat-line>{{folder.name}}</div>
+      <div mat-line> {{folder.updated | date}} </div>
+    </mat-list-option>
+    <mat-divider></mat-divider>
+    <div mat-subheader>Notes</div>
+    <mat-list-option*ngFor="let note of notes">
+      <mat-icon mat-list-icon>note</mat-icon>
+      <div mat-line>{{note.name}}</div>
+      <div mat-line> {{note.updated | date}} </div>
+    </mat-list-option>
+  </mat-list> -->

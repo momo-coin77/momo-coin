@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminerGuard } from '../../../shared/guard/adminer.guard';
-import { AdminComponent } from './admin.component';
+import { AdminComponent } from './admin/admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';

@@ -65,9 +65,11 @@ export class DataStateUpdateService {
       .getPackById(id)
       .then((result:ResultStatut)=>{
         this.userService.changeStatusUsingId(result.result.idBuyer);
-        return this.userNotification.findMessageByPackId(id)
+        console.log("findpack ",id);
+        return this.userNotification.findMessageByPackId(id,result.result.idOwner)
       })
       .then((result:ResultStatut)=>{
+        console.log("Notif ",result)
         this.userNotification.deleteNotification(result.result);
       });
       this.firebaseApi.updates([
@@ -95,7 +97,7 @@ export class DataStateUpdateService {
           }
         }
       ]);        
-    })
+    },false)
   }
   
   async updatePackMarket() {    
@@ -127,7 +129,32 @@ export class DataStateUpdateService {
       })
   }
 
-  findAndUpdate(url:String,updateFnct:(key:EntityID)=>void)
+  clearAndCheckDateBasePack()//:Promise<ResultStatut>
+  {
+    this.firebaseApi
+    .getFirebaseDatabase()
+    .ref("packs")
+    .orderByChild("state")
+    .equalTo(PackState.NOT_ON_MARKET)
+    .once("value",(snapshot)=>{
+      let data = snapshot.val();
+      let toupdate = {};
+      for(let key in data)
+      {
+        let pack:Pack = new Pack();
+        pack.hydrate(data[key]);
+        let now = new Date((new Date()).toLocaleDateString());
+        let after = new Date(pack.saleDate);
+        after = new Date(after.toLocaleDateString());
+        if (after <= now) {
+          toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate}
+        }
+      }
+      this.firebaseApi.set("toupdate/pack/market",toupdate)
+    })
+  }
+
+  findAndUpdate(url:String,updateFnct:(key:EntityID)=>void,day:boolean=true)
   {
     this.firebaseApi
       .getFirebaseDatabase()
@@ -138,9 +165,13 @@ export class DataStateUpdateService {
         // console.log("Data update",url,kdata)
         for (let key in kdata) 
         {
-          let now = new Date((new Date()).toLocaleDateString());
-          let after = new Date(kdata[key].dateMax);
-          after = new Date(after.toLocaleDateString());
+          let now =new Date();
+          let after= new Date(kdata[key].dateMax)
+          if(day)
+          {
+            now =  new Date((new Date()).toLocaleDateString());
+            after =new Date(after.toLocaleDateString());
+          }
           let id: EntityID = new EntityID();
           id.setId(key);
           if (after <= now) {

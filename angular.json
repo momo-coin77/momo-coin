@@ -54,6 +54,7 @@
               "node_modules/socket.io/client-dist/socket.io.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
               "node_modules/bootstrap/js/dist/dropdown.js"
+              
             ]
           },
           "configurations": {

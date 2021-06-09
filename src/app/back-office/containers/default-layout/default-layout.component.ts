@@ -14,6 +14,7 @@ import { BasicPackService } from '../../../shared/service/pack/basic-pack.servic
 import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
 import { FirebaseApi } from '../../../shared/service/firebase/FirebaseApi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 
@@ -34,6 +35,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   selectedMessage: Message = new Message()
   errorFindingPackageMessage = '';
   unreadMessageList: { pack: Pack, message: Message }[] = [];
+  unreadMessageObservable:BehaviorSubject<{ pack: Pack, message: Message }[]>=new BehaviorSubject<{ pack: Pack, message: Message }[]>([])
   public userName: String = '';
   closeResult = '';
   notif: boolean;
@@ -117,13 +119,17 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         this.waitResponse = false;
       })
   }
+  clearData()
+  {
+    this.unreadMessageList = [];
+  }
 
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => {
-      this.unreadMessageList = [];
+      // console.log("MEssage ",list)
       if (this.unreadMessageList.length > 0) { this.notif = true; }
       else { this.notif = false; }
-
+      this.clearData();
       list.forEach((message: Message) => {
         this.packService.getPackById(message.idPack)
           .then((result: ResultStatut) => {
@@ -134,6 +140,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
           })
       })
       this.unreadMessageList.reverse();
+      this.unreadMessageObservable.next(this.unreadMessageList)
     });
   }
 

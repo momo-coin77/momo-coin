@@ -16,7 +16,7 @@ import { NotificationService } from '../notification/notification.service';
 export class UserNotificationService {
   currentUser: User;
   listNotifications: Message[] = [];
-  notifications: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>(this.listNotifications)
+  notifications: BehaviorSubject<Message[]> = new BehaviorSubject<Message[]>([])
 
   constructor(private authService: AuthService,
     private eventService: EventService,
@@ -35,21 +35,20 @@ export class UserNotificationService {
       .ref(`notifications/${user.id.toString()}`)
       .orderByChild('read')
       .equalTo(MessageReadState.UNREAD)
-        .on('child_changed', (snapshot) => this.newNotification(snapshot.val()))
+        .on('child_removed', (snapshot) => this.newNotification(snapshot.val()))
     });
   }
 
   newNotification(msg:Record<string, any>)
   {
+    
     let message:Message=new Message();
     message.hydrate(msg);
-    let pos= this.listNotifications.findIndex((m:Message)=>m.id.toString()==message.id.toString())
+    let pos= this.listNotifications.findIndex((m:Message)=>m.idPack.toString()==message.idPack.toString())
     if(pos<0) this.listNotifications.push(message)
     else
     {
       this.listNotifications.splice(pos,1);
-      // this.listNotifications.push(message);
-      // this.listNotifications.reverse();
     }
     this.notifications.next(this.listNotifications);
   }
@@ -62,8 +61,9 @@ export class UserNotificationService {
       }
     ]);
   }
-  findMessageByPackId(idPack:EntityID):Promise<ResultStatut>
+  findMessageByPackId(idPack:EntityID,packOwnerID:EntityID):Promise<ResultStatut>
   {
+    console.log("IDpack ",idPack.toString())
     return new Promise<ResultStatut>((resolve,reject)=>{
       let message:Message = this.listNotifications.find((msg:Message)=>msg.idPack.toString()==idPack.toString());
       let result:ResultStatut = new ResultStatut();
@@ -74,16 +74,18 @@ export class UserNotificationService {
       }
       this.firebaseApi
       .getFirebaseDatabase()
-      .ref("notifications")
+      .ref(`notifications/${packOwnerID.toString()}`)
       .orderByChild('idPack')
       .equalTo(idPack.toString())
       .limitToLast(1)
       .once('value',(data)=>{
         let kdata = data.val();
+        console.log(kdata)
         let message:Message = new Message();
         for (let key in kdata) 
         {
           message.hydrate(kdata[key])
+          // console.log("Message ",message,kdata[key])
         }
         result.result = message;
         resolve(result);
@@ -115,13 +117,8 @@ export class UserNotificationService {
 
     for(let okey in msg)
     {
-      let message: Message = new Message();
-      message.hydrate(msg[okey]);
-
-      this.listNotifications.push(message);
-      // this.notificationService.showNotification('top', 'right', 'success', '<i class="bi bi-chat-left-dots-fill"></i>', message.content.toString())
+      this.newNotification(msg[okey]);
     }
-    this.notifications.next(this.listNotifications);
   }
 
   sendNotification(message: Message): Promise<ResultStatut> {
