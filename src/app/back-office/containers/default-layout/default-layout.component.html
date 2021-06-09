@@ -88,10 +88,10 @@
     <tabset>
       <tab>
             <div class="list-group-item bg-light text-center font-weight-bold text-muted text-uppercase small">
-              Unread ({{unreadMessageObservable.length | async}})
+              Unread ({{unreadMessageList.length}})
             </div>
 
-            <div *ngFor="let projet of this.unreadMessageObservable | async" data-toggle="modal" (click)="showModal(projet)"
+            <div *ngFor="let projet of unreadMessageList" data-toggle="modal" (click)="showModal(projet)"
               class="list-group-item list-group-item-accent-warning list-group-item-divider">
               <div>
                 <i class="fas fa-money-bill"></i> 

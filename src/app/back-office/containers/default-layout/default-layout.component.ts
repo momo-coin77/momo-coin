@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../shared/service/user/user.service';
 import { navItems } from '../../../_nav';
 import { Discussion, Message } from '../../../shared/entity/chat';
@@ -15,13 +15,15 @@ import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
 import { FirebaseApi } from '../../../shared/service/firebase/FirebaseApi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+// import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
-  styleUrls: ['./default-layout.component.scss']
+  styleUrls: ['./default-layout.component.scss'],
+  changeDetection:ChangeDetectionStrategy.Default
 })
 export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
@@ -35,7 +37,6 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   selectedMessage: Message = new Message()
   errorFindingPackageMessage = '';
   unreadMessageList: { pack: Pack, message: Message }[] = [];
-  unreadMessageObservable:BehaviorSubject<{ pack: Pack, message: Message }[]>=new BehaviorSubject<{ pack: Pack, message: Message }[]>([])
   public userName: String = '';
   closeResult = '';
   notif: boolean;
@@ -50,6 +51,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('languageSpan') languageSpanShow:ElementRef
 
   constructor(
+    private changeDetectionStrategi:ChangeDetectorRef,
     private authService: AuthService, // firebase auth
     private router: Router,
     private bsModal: BsModalService,
@@ -127,6 +129,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => {
       // console.log("MEssage ",list)
+      this.changeDetectionStrategi.detach();
       if (this.unreadMessageList.length > 0) { this.notif = true; }
       else { this.notif = false; }
       this.clearData();
@@ -140,7 +143,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
           })
       })
       this.unreadMessageList.reverse();
-      this.unreadMessageObservable.next(this.unreadMessageList)
+      this.changeDetectionStrategi.reattach();
     });
   }
 
