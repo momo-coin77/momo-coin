@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import "materialize-css"
+import "materialize-css/dist/js/materialize.min"
+
 declare var M:any;
 
 
@@ -14,6 +15,7 @@ export class TabsComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Tabs ',M)
+    var instance = M.Tabs.init(document.querySelectorAll('.tabs'), {duration:300});
   }
 
 }

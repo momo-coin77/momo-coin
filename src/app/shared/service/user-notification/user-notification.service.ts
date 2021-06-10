@@ -35,21 +35,16 @@ export class UserNotificationService {
       .ref(`notifications/${user.id.toString()}`)
       .orderByChild('read')
       .equalTo(MessageReadState.UNREAD)
-        .on('child_removed', (snapshot) => this.newNotification(snapshot.val()))
+        .on('child_removed', (snapshot) => this.removeNotification(snapshot.val()))
     });
   }
 
-  newNotification(msg:Record<string, any>)
+  removeNotification(msg:Record<string, any>)
   {
-    
     let message:Message=new Message();
     message.hydrate(msg);
     let pos= this.listNotifications.findIndex((m:Message)=>m.idPack.toString()==message.idPack.toString())
-    if(pos<0) this.listNotifications.push(message)
-    else
-    {
-      this.listNotifications.splice(pos,1);
-    }
+    if(pos>-1)  this.listNotifications.splice(pos,1);
     this.notifications.next(this.listNotifications);
   }
   marskAskRead(message:Message):Promise<ResultStatut>
@@ -99,7 +94,7 @@ export class UserNotificationService {
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
         
-        let pos=this.listNotifications.findIndex((msg:Message)=>message.id.toString()==msg.id.toString())
+        let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
         // console.log("delete ",pos)
         if(pos>-1)
         {
@@ -114,11 +109,14 @@ export class UserNotificationService {
 
   newNotifications(msg: Record<string, any>) {
     if (!msg) { return null; }
-
     for(let okey in msg)
-    {
-      this.newNotification(msg[okey]);
+    {      
+      let message:Message=new Message();
+      message.hydrate(msg[okey]);
+      let pos= this.listNotifications.findIndex((m:Message)=>m.idPack.toString()==message.idPack.toString())
+      if(pos<0) this.listNotifications.push(message)
     }
+    this.notifications.next(this.listNotifications)
   }
 
   sendNotification(message: Message): Promise<ResultStatut> {

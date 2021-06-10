@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../shared/service/user/user.service';
 import { navItems } from '../../../_nav';
 import { Discussion, Message } from '../../../shared/entity/chat';
@@ -15,15 +15,14 @@ import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
 import { FirebaseApi } from '../../../shared/service/firebase/FirebaseApi';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
-// import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
+import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
 // import { NotificationService } from '../../../shared/service/back-office/notification.service';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html',
-  styleUrls: ['./default-layout.component.scss'],
-  changeDetection:ChangeDetectionStrategy.Default
+  styleUrls: ['./default-layout.component.scss']
 })
 export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
@@ -51,7 +50,6 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('languageSpan') languageSpanShow:ElementRef
 
   constructor(
-    private changeDetectionStrategi:ChangeDetectorRef,
     private authService: AuthService, // firebase auth
     private router: Router,
     private bsModal: BsModalService,
@@ -109,17 +107,22 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
 
   confirmMessage() {
     this.waitResponse = true;
-    this.packService.confirmPaiementBySeller(this.selectedPack, this.selectedMessage)
-      .then((result: ResultStatut) => {
-        this.waitResponse = false;
-        this.confirmPayment.hide();
-        this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
-      })
-      .catch((error) => {
-        this.confirmPayment.hide();
-        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message,0), 200)
-        this.waitResponse = false;
-      })
+    this.packService.getOnlinePack(this.selectedPack.id)
+    .then((result:ResultStatut)=>this.packService.confirmPaiementBySeller(result.result, this.selectedMessage))
+    .then((result: ResultStatut) => {
+      this.waitResponse = false;
+      this.confirmPayment.hide();
+      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>Your pack has been transferred successfully');
+    })
+    .catch((error) => {
+      this.confirmPayment.hide();
+      if(error.apiCode == ResultStatut.INVALID_ARGUMENT_ERROR)
+      {
+        setTimeout(() => this.notification.showNotification('top', 'center', 'warning', '', '\<b>Sorry !\</b>\<br> This pack is no longer available. You can buy another one',0), 200)
+      }
+      else setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>' + error.message,0), 200)
+      this.waitResponse = false;
+    })
   }
   clearData()
   {
@@ -129,21 +132,22 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   myfunc() {
     this.userNotif.notifications.subscribe((list: Message[]) => {
       // console.log("MEssage ",list)
-      this.changeDetectionStrategi.detach();
+      // console.log("Notif ",list)
       if (this.unreadMessageList.length > 0) { this.notif = true; }
       else { this.notif = false; }
-      this.clearData();
-      list.forEach((message: Message) => {
-        this.packService.getPackById(message.idPack)
-          .then((result: ResultStatut) => {
+      let mlist:{ pack: Pack, message:Message }[] = []
+      this.unreadMessageList = new Array();
 
-            let pos = this.unreadMessageList.findIndex((infos: { pack: Pack, message: Message }) => infos.pack.id.toString() == message.idPack.toString())
-            if (pos >= 0) { this.unreadMessageList.splice(pos, 1); }
-            this.unreadMessageList.push({ pack: result.result, message });
-          })
+      list.forEach((message: Message) => {
+        this.packService
+        .getPackById(message.idPack)
+        .then((result: ResultStatut) =>  {
+          mlist.push({ pack: result.result, message })
+          this.unreadMessageList=([]).concat(mlist);
+          // console.log('list updata' ,mlist)
+        })
       })
-      this.unreadMessageList.reverse();
-      this.changeDetectionStrategi.reattach();
+      
     });
   }
 
@@ -183,10 +187,5 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         break
     }
   }
-
-  
-  refreshFonct() {
-    window.location.reload();
-}
   
 }
