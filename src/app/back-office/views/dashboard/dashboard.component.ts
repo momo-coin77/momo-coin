@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   bonus: number = 0;
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
-  allUsers: number = 350;  // valeur fictive du nombre total d'utilisateurs. créé la
+  allUsers: number = 550;  // valeur fictive du nombre total d'utilisateurs. créé la
   // fonctionnalité dans les service (utilisable par la suite dans admin) mais laisser ici fictif.
   balence: number = 0; // somme de toutes les montants de chaqueq pack avec son id
   bonusBalence: number = 0; // Bonus de pa
@@ -43,20 +43,20 @@ export class DashboardComponent implements OnInit {
   }
 
   randomNumber(m?: number, k?: number, c?: number) {
-    if (!m) { m = 100; }
+    if (!m) { m = 200; }
     // if (!k) { k = 0; }
     // if (!c) { c = 0; }
     let mm = Math.floor((Math.random() * m) + 1);
     // let kk = Math.floor((Math.random() * k) + 1);
     // let cc = Math.floor((Math.random() * c) + 1);
     let d = new Date();
-    let val = 53;
+    let val = 200;
     let hh = d.getHours();
-    if (hh > 21) {
-      val = 30;
+    if (hh > 22) {
+      val = 100;
     }
     if (hh < 7) {
-      val = 15;
+      val = 75;
     }
     let number = val + mm;
 // console.log('random: ' + number);
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.updateSubscription = interval(8000).subscribe(
       (val) => {
-        this.activeUser = this.randomNumber(30);
+        this.activeUser = this.randomNumber(50);
       });
 
     this.authService.currentUserSubject.subscribe((user: User) => {
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
 
     this.profilService.balancedAccountObservable.subscribe((balance:number)=>{
       // console.log("Balance ",balance)
-      this.balence=balance
+      this.balence = balance;
     })
     // this.eventService
     // .newPackArrivedEvent

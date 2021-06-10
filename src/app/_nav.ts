@@ -43,11 +43,7 @@ export const navItems: INavData[] = [
   {
     name: 'Familly',
     url: '/familly',
-    icon: 'fa fa-users',
-    badge: {
-      variant: 'info',
-      text: '< New >'
-    },
+    icon: 'fa fa-users'
   },
   {
     name: 'Forum',

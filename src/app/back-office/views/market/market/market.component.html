@@ -8,17 +8,22 @@
         </div>
         <div class="card-body linear-gradient2">
           <!-- <input (keyup)="searchPack()" [(ngModel)]="search" type="text" class="form-control" placeholder="Search..."> -->
-          <form [formGroup]="formFilter" (ngSubmit)="onFilter()">
+          <form [formGroup]="formFilter" (ngSubmit)="onFilter()">Search... <br>
+            <select id="network" formControlName="networkFilter" placeholder="MTN Mobile Money">
+              <option value="All" selected>All</option>
+              <option value="MTN Money">MTN Mobile Money</option>
+              <option value="Orange Money">Orange Money</option>
+            </select>
+            <!-- <input type="number" formControlName="amountFilter" placeholder="0"> -->
+            <i class="action-fa-filter fa fa-search" title="Apply filter" (click)="onFilter()" ></i> 
+             <!-- {{ 'DASHBOARD.MARKET.APPLY_FILTER' | translate }} -->
+             <i title="Remove filter" class="action-fa-filter fa fa-refresh" (click)="resetFilter()"></i>
+             <!-- {{ 'DASHBOARD.MARKET.REMOVE_FILTER' | translate }} -->
             <table class="table table-bordered table-striped table-sm">
               <thead>
                 <tr>
                   <th>
                     <b> Network</b>
-                    <select id="network" formControlName="networkFilter" placeholder="MTN Mobile Money">
-                      <option value="All" selected>All</option>
-                      <option value="MTN Money">MTN Mobile Money</option>
-                      <option value="Orange Money">Orange Money</option>
-                    </select>
                     <!-- <div class="row">
                       <div class="col-2"></div>
                       <div class="col-2">
@@ -32,7 +37,6 @@
                   </th>
                   <th>
                     <b>Amount </b>
-                    <input type="number" formControlName="amountFilter">
                     <!-- <div class="row">                    
                       <div class="col-2"><b>Amount </b></div>
                       <div class="col-2"></div>
@@ -40,10 +44,6 @@
                   </th>
                   <th><b>Period </b></th>
                   <th><b>
-                   <i class="action-fa-filter fa fa-filter" title="Apply filter" (click)="onFilter()" ></i> 
-                    <!-- {{ 'DASHBOARD.MARKET.APPLY_FILTER' | translate }} -->
-                    <i title="Remove filter" class="action-fa-filter fa fa-close" (click)="resetFilter()"></i>
-                    <!-- {{ 'DASHBOARD.MARKET.REMOVE_FILTER' | translate }} -->
                   </b></th>
                 </tr>
               </thead>

@@ -183,5 +183,10 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
         break
     }
   }
+
+  
+  refreshFonct() {
+    window.location.reload();
+}
   
 }
