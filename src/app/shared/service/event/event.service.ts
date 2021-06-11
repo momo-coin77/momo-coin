@@ -4,7 +4,9 @@ import { Bug } from '../../entity/bug';
 import { Pack } from '../../entity/pack';
 import { User } from '../../entity/user';
 
-@Injectable()
+@Injectable({
+  providedIn:"root"
+})
 export class EventService {
   loginEvent = new BehaviorSubject<User>(null);
   logoutEvent = new BehaviorSubject<boolean>(false);

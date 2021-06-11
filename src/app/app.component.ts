@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import Bugsnag from '@bugsnag/js';
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { DataStateUpdateService } from './shared/service/data-state-update/data-state-update.service';
 import { FirebaseApi } from './shared/service/firebase/FirebaseApi';
 import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
@@ -23,13 +23,14 @@ export class AppComponent implements OnInit {
     private userNotification:UserNotificationService,
     private trackBugService:TrackBugService,
     private updateDataUser:DataStateUpdateService,
-    private translateService:TranslateService) {
+    // private translateService:TranslateService
+    ) {
       
-      this.translateService.setDefaultLang('en');      
-      this.translateService.addLangs(['en','fr']);
+      // this.translateService.setDefaultLang('en');      
+      // this.translateService.addLangs(['en','fr']);
 
-      let browserLang = this.translateService.getBrowserLang();
-      this.translateService.use(browserLang.match("/en|fr/")?browserLang:'en')
+      // let browserLang = this.translateService.getBrowserLang();
+      // this.translateService.use(browserLang.match("/en|fr/")?browserLang:'en')
     }
 
   ngOnInit() {

@@ -93,17 +93,10 @@ export class UserNotificationService {
     return new Promise<ResultStatut>((resolve,reject)=>{
       this.firebaseApi.delete(`notifications/${message.to.toString()}/${message.id.toString()}`)
       .then((result)=>{
-        
-        let pos=this.listNotifications.findIndex((msg:Message)=>message.idPack.toString()==msg.idPack.toString())
-        // console.log("delete ",pos)
-        if(pos>-1)
-        {
-          this.listNotifications.splice(pos,1);
-          this.notifications.next(this.listNotifications);          
-        }
-        resolve(result);
+        this.removeNotification(message.toString())
+        resolve(new ResultStatut())
       })
-      .catch((error)=>reject(error))
+      .catch((error)=>resolve(new ResultStatut()))
     })
   }
 

@@ -7,6 +7,8 @@ import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { MarketService } from '../market/market.service';
+import { MembershipService } from '../opperations/Membership.service';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,9 @@ export class ProfilService {
     private marketService:MarketService,
     private eventService:EventService,
     private authService:AuthService,
-    private firebaseApi:FirebaseApi
+    private firebaseApi:FirebaseApi,
+    private userService:UserService,
+    private memberShipService:MembershipService
   ) {
 
     this.eventService.loginEvent.subscribe((user:User)=>{
@@ -49,6 +53,29 @@ export class ProfilService {
         this.balancedAccountObservable.next(this.balancedAccount);
       }
     })
+   }
+   
+   addParentBonus(user:User,packAmount)
+   {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      if(user.parentSponsorShipId.toString()!="") 
+      {          
+        this.userService.getUserBySponsorId(user.parentSponsorShipId)
+        .then((result:ResultStatut)=>{
+          result.result.bonus=this.memberShipService.membership(packAmount,result.result.bonus)
+
+          return this.firebaseApi.updates([
+                {
+                    link:`users/${result.result.id.toString()}/bonus`,
+                    data:result.result.bonus
+                }
+            ])
+        })
+        .then((result:ResultStatut)=>resolve(result))
+        .catch((error:ResultStatut)=> resolve(new ResultStatut))                   
+      }
+      else resolve(new ResultStatut())
+    }) 
    }
 
    getFieulList():Promise<ResultStatut>

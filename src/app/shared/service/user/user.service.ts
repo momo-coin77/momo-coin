@@ -57,10 +57,10 @@ export class UserService {
   }
 
   // recuperer les informations d'un utilisateur
-  getUserById(id: EntityID): Promise<ResultStatut> {
+  getUserById(id: EntityID,getOnline:boolean=false): Promise<ResultStatut> {
     // console.log("id ",id)
     return new Promise<any>((resolve, reject) => {
-      if (this.listUser.has(id.toString())) {
+      if (getOnline==false && this.listUser.has(id.toString())) {
         let result: ResultStatut = new ResultStatut();
         result.result = this.listUser.get(id.toString());
         return resolve(result);

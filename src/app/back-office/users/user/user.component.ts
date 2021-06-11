@@ -34,9 +34,8 @@ export class UserComponent implements OnInit {
 
   constructor(
     // private userService: UserService,
-    // public authService: AuthService,
-    public router: Router,
-    public ngZone: NgZone) {
+    // public authService: AuthService
+    ) {
     // this.user["name"] = `${this.userService.user.firstName} ${this.userService.user.lastName}`;
 
   }

@@ -18,7 +18,8 @@ export class ForgotPasswordComponent implements OnInit {
         { controlName: 'email', type: 'email', label: 'Email', dim: 'col-md-12' },
     ]
     forgotForm: FormGroup;
-    constructor(private router: Router,
+    constructor(
+        private router: Router,
         private auth: AuthService,
         private formLog: FormBuilder,
         private notif: NotificationService) { }

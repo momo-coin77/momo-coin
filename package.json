@@ -51,8 +51,6 @@
     "@fortawesome/fontawesome-free": "5.8.1",
     "@ng-bootstrap/ng-bootstrap": "4.1.2",
     "@ngui/map": "0.30.3",
-    "@ngx-translate/core": "^13.0.0",
-    "@ngx-translate/http-loader": "^6.0.0",
     "@types/chart.js": "2.7.52",
     "angular-bootstrap-md": "7.5.1",
     "angular-validation-match": "^1.9.0",
@@ -82,7 +80,6 @@
     "moment": "^2.27.0",
     "mutationobserver-shim": "^0.3.7",
     "ng-pick-datetime": "5.2.6",
-    "ng2-charts": "^2.3.2",
     "ngx-bootstrap": "^5.6.1",
     "ngx-perfect-scrollbar": "^9.0.0",
     "ngx-toastr": "10.0.2",
@@ -97,7 +94,6 @@
     "ts-helpers": "^1.1.2",
     "tslib": "^1.13.0",
     "web-animations-js": "^2.3.2",
-    "wft-geodb-angular-client": "^5.1.1",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

@@ -12,6 +12,7 @@ import { ResultStatut } from "../firebase/resultstatut";
 import { MarketService } from "../market/market.service";
 import { MembershipService } from "../opperations/Membership.service";
 import { PlanService } from "../opperations/plan.service";
+import { ProfilService } from "../profil/profil.service";
 import { UserHistoryService } from "../user-history/user-history.service";
 import { UserNotificationService } from "../user-notification/user-notification.service";
 import { UserService } from "../user/user.service";
@@ -33,7 +34,8 @@ export class BasicPackService {
         private userHistoryService:UserHistoryService,
         private memberShipService:MembershipService,
         private userService:UserService,
-        private marketService:MarketService
+        private marketService:MarketService,
+        private userProfil:ProfilService
         ){
             this.eventService.loginEvent.subscribe((log)=>{
             //   if(!log) return;            
@@ -199,7 +201,7 @@ export class BasicPackService {
                 message.to.setId(pack.idOwner.toString())
                 message.date = (new Date()).toISOString();
                 message.content = 'the payment of the pack has been made by the buyer. Please confirm';
-                message.idPack = pack.id;
+                message.idPack.setId(pack.id.toString());
                 return this.userNotificationService.sendNotification(message)
             })
             .then((result) => resolve(result))
@@ -229,7 +231,7 @@ export class BasicPackService {
             pack.buyState = PackBuyState.ON_END_SEL;
             pack.state= PackState.NOT_ON_MARKET;
             pack.saleDate=(new Date()).toISOString();
-            pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
+            // pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
             
             let newPack:Pack = new Pack();
             newPack.id.setId(pack.id.toString())
@@ -242,7 +244,7 @@ export class BasicPackService {
             newPack.buyState=PackBuyState.ON_WAITING_BUYER;
             newPack.plan=pack.wantedGain.jour
             newPack.wantedGain={jour:0,pourcent:0};
-            newPack.idOwner.setId(pack.idBuyer.toString());
+            newPack.idOwner.setId(msg.from.toString());
             newPack.idBuyer.setId(" ");
             
             this.firebaseApi.updates([
@@ -255,41 +257,10 @@ export class BasicPackService {
             .then((result)=> {
                 this.eventService.packPaidEvent.next(newPack);
                 this.eventService.addPackEvent.next(newPack);
-                return this.userService.getUserById(pack.idBuyer);
+                return this.userNotificationService.deleteNotification(msg)                
             })
-            .then((result)=>{
-                if(result.result.parentSponsorShipId.toString()!="") 
-                {
-                    return new Promise<ResultStatut>((resolve,reject)=>{
-                        this.userService.getUserBySponsorId(result.result.parentSponsorShipId)
-                        .then((result:ResultStatut)=>resolve(result.result))
-                        .catch((error:ResultStatut)=>{
-                            result.result=null;
-                            resolve(result);
-                        })
-                    })                   
-                }
-                else 
-                {
-                    result.result=null;
-                    return Promise.resolve(result)
-                }
-            }) 
-            .then((result)=>{
-                
-                if(result.result!=null)
-                {
-                    result.result.bonus=this.memberShipService.membership(pack.amount,result.result.bonus)
-                    return this.firebaseApi.updates([
-                        {
-                            link:`users/${result.result.id.toString()}/bonus`,
-                            data:result.result.bonus
-                        }
-                    ])
-                }
-                else return Promise.resolve(new ResultStatut())
-            })
-            .then((result)=> this.userNotificationService.deleteNotification(msg))
+            .then((result)=>this.userService.getUserById(msg.from,true))
+            .then((result)=>this.userProfil.addParentBonus(result.result,newPack.amount))            
             .then((result)=> resolve(result))
             .catch((error) => {
                 this.firebaseApi.handleApiError(error);

@@ -14,7 +14,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AuthService } from '../../../../shared/service/auth/auth.service';
 import { EventService } from '../../../../shared/service/event/event.service';
 import { UserService } from '../../../../shared/service/user/user.service';
-import { TranslateService } from '@ngx-translate/core';
+// import { TranslateService } from '@ngx-translate/core';
 import { combineAll, mergeAll } from 'rxjs/operators';
 
 enum FilterNetwork {
@@ -66,7 +66,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private marketService: MarketService,
     private notification: NotificationService,
-    public translate: TranslateService,
+    // public translate: TranslateService,
     private eventService: EventService
   ) {
     this.marketService.marketTime();

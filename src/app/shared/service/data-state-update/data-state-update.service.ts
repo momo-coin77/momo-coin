@@ -65,11 +65,11 @@ export class DataStateUpdateService {
       .getPackById(id)
       .then((result:ResultStatut)=>{
         this.userService.changeStatusUsingId(result.result.idBuyer);
-        console.log("findpack ",id);
+        // console.log("findpack ",id);
         return this.userNotification.findMessageByPackId(id,result.result.idOwner)
       })
       .then((result:ResultStatut)=>{
-        console.log("Notif ",result)
+        // console.log("Notif ",result)
         this.userNotification.deleteNotification(result.result);
       });
       this.firebaseApi.updates([
@@ -124,9 +124,9 @@ export class DataStateUpdateService {
             this.deleteToUpdate(`toupdate/account/${id.toString()}`);
             this.userService.changeStatusUsingId(id)
           }
-          // else 
+          else this.deleteToUpdate(`toupdate/account/${id.toString()}`);
         })
-      })
+      },false)
   }
 
   clearAndCheckDateBasePack()//:Promise<ResultStatut>
@@ -143,12 +143,9 @@ export class DataStateUpdateService {
       {
         let pack:Pack = new Pack();
         pack.hydrate(data[key]);
-        let now = new Date((new Date()).toLocaleDateString());
+        let now = new Date();
         let after = new Date(pack.saleDate);
-        after = new Date(after.toLocaleDateString());
-        if (after <= now) {
-          toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate}
-        }
+        if (after >= now) toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate};
       }
       this.firebaseApi.set("toupdate/pack/market",toupdate)
     })
@@ -167,11 +164,11 @@ export class DataStateUpdateService {
         {
           let now =new Date();
           let after= new Date(kdata[key].dateMax)
-          if(day)
-          {
-            now =  new Date((new Date()).toLocaleDateString());
-            after =new Date(after.toLocaleDateString());
-          }
+          // if(day)
+          // {
+          //   now =  new Date((new Date()).toLocaleDateString());
+          //   after =new Date(after.toLocaleDateString());
+          // }
           let id: EntityID = new EntityID();
           id.setId(key);
           if (after <= now) {

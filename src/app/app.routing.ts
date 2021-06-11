@@ -13,7 +13,7 @@ import { LoginComponent } from './front-office/login/login.component';
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
-import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
+// import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
 //// Back Office
 import { RegistrationComponent } from './front-office/registration/registration.component';
@@ -26,10 +26,10 @@ export const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full',
   },
-  {
-    path: 'terms-and-conditions',
-    component: TermsAndConditionsComponent
-  },
+  // {
+  //   path: 'terms-and-conditions',
+  //   component: TermsAndConditionsComponent
+  // },
   {
     path: 'privacy-policy',
     component: PrivacyPolicyComponent

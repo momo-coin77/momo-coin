@@ -34,7 +34,6 @@ import { AppRoutingModule } from './app.routing';
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts';
 import { UserService } from './shared/service/user/user.service';
 
 // Angular Material Components
@@ -92,7 +91,7 @@ import { ForgotPasswordComponent } from './front-office/forgot-password/forgot-p
 // Shared
 import { BlankPageComponent } from './shared/blank-page/blank-page.component';
 import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
-import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
+// import { TermsAndConditionsComponent } from './shared/components/terms-and-conditions/terms-and-conditions.component';
 
 import { ProgressIndeterminateModule } from './shared/components/progress-indeterminate/progress-indeterminate.module';
 // import { UserlocalstorageService } from './shared/service/localstorage/userlocalstorage.service';
@@ -113,8 +112,7 @@ import { AdminerGuard } from './shared/guard/adminer.guard';
 // Import Bugsnag and the Angular integration
 import Bugsnag from '@bugsnag/js'
 import { BugsnagErrorHandler } from '@bugsnag/plugin-angular'
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+// import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // configure Bugsnag asap
 Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
@@ -123,9 +121,9 @@ Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
 export function errorHandlerFactory() {
   return new BugsnagErrorHandler()
 }
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+// export function HttpLoaderFactory(http: HttpClient) {
+//   return new TranslateHttpLoader(http);
+// }
 
 //enableProdMode
 if(false) enableProdMode(); //true en prod et false en dev
@@ -145,7 +143,7 @@ if(false) enableProdMode(); //true en prod et false en dev
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule,
+    // ChartsModule,
     BrowserAnimationsModule,
     NguiMapModule.forRoot({apiUrl: 'https://maps.google.com/maps/api/js?key=MY_GOOGLE_API_KEY'}),
     // ChatModule,
@@ -201,13 +199,13 @@ if(false) enableProdMode(); //true en prod et false en dev
     ModalModule.forRoot(),
     SpinnerModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-        loader: {
-            provide: TranslateLoader,
-            useFactory: HttpLoaderFactory,
-            deps: [HttpClient]
-        }
-    })
+    // TranslateModule.forRoot({
+    //     loader: {
+    //         provide: TranslateLoader,
+    //         useFactory: HttpLoaderFactory,
+    //         deps: [HttpClient]
+    //     }
+    // })
   ],
   declarations: [
     AppComponent,
@@ -220,7 +218,7 @@ if(false) enableProdMode(); //true en prod et false en dev
     WelcomeComponent,
     ForgotPasswordComponent,
     PrivacyPolicyComponent,
-    TermsAndConditionsComponent,
+    // TermsAndConditionsComponent,
     HowDoesItWorkComponent,
     BlankPageComponent,
     RegistrationComponent
