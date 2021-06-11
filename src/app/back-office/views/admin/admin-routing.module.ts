@@ -15,7 +15,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'panel'
+                redirectTo: 'list-user'
             },
             {
                 path: 'panel',
