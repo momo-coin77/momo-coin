@@ -36,11 +36,11 @@ export class ListsUserComponent implements OnInit {
     this.userService.changeStatus(user.user)
     .then((result)=>{
       user.waitResponse=false;
-      this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.user.status}'`);
+      this.notifService.showNotificationWithoutTimer('top', 'center', 'success', '', `\<b>Success !\</b>\<br>Account status has been successfully updated to '${user.user.status}'`);
     })
     .catch((error)=>{
       user.waitResponse=false;
-      this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
+      this.notifService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
     })
   }
 
