@@ -1,12 +1,17 @@
   <div class="row">
     <div class="col-12">
       <ul class="tabs">
-        <li class="tab col-3"><a href="#test1">Test 1</a></li>
-        <li class="tab col-3"><a class="active" href="#test2">Test 2</a></li>
-        <li class="tab col-3"><a href="#test4">Test 4</a></li>
+        <li class="tab" *ngFor="let tab of tabs;let i=index"> 
+          <a href="#{{tab.title}}" [ngClass]="{'active':i==0}">{{tab.title}}</a>
+        </li>
       </ul>
     </div>
-    <div id="test1" class="col-12">Test 1</div>
-    <div id="test2" class="col-12">Test 2</div>
-    <div id="test4" class="col-12">Test 4</div>
+    
+      <div *ngFor="let tab of tabs;let i=index"  id="{{tab.title}}" class="col-12 tab-body">
+        <ng-container *ngIf="shouldShow">
+          <ng-container  *ngTemplateOutlet="tab.body"></ng-container>
+        </ng-container>        
+      </div>
   </div>
+
+  

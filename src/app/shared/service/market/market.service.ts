@@ -52,13 +52,17 @@ export class MarketService {
     );
   }
 
-  getMyOrderedPack()
+  getMyOrderedPack(idOwner:EntityID = this.authService.currentUserSubject.getValue().id)
   {
     return this.getOrderMarket().pipe(
       filter((p: Pack) =>  {
-        return p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()
+        return p.idOwner.toString() == idOwner.toString()
       }),
     )
+  }
+  getUserOrderedPack(idOwner:EntityID)
+  {
+    return this.getMyOrderedPack(idOwner);
   }
 
   getAllPackInMarket() {
@@ -72,16 +76,26 @@ export class MarketService {
     )
   }
 
-  getMyOrderedPackOnMarket() {
+  getMyOrderedPackOnMarket(idOwner:EntityID= this.authService.currentUserSubject.getValue().id) {
     return this.getAllPackInMarket().pipe(
-      filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) => p.idOwner.toString()== idOwner.toString()),
     )
   }
-  getMyOrderdPackNotInMarket() {
+
+  getUserOrderedPackOnMarket(idOwner:EntityID)
+  {
+    return this.getMyOrderedPackOnMarket(idOwner);
+  }
+
+  getMyOrderdPackNotInMarket(idOwner:EntityID=this.authService.currentUserSubject.getValue().id) {
     return this.getOrderMarket().pipe(
-      filter((p: Pack) => p.idOwner.toString() == this.authService.currentUserSubject.getValue().id.toString()),
+      filter((p: Pack) => p.idOwner.toString() == idOwner.toString()),
       filter((p: Pack) => p.state == PackState.NOT_ON_MARKET)
     )
+  }
+  getUserOrderdPackNotInMarket(idOwner:EntityID)
+  {
+    return this.getMyOrderdPackNotInMarket(idOwner);
   }
 
   updatePackFromMarket(packs: any) {
@@ -127,7 +141,7 @@ export class MarketService {
     hh = hh;
 // console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 7 || hh == 8 || hh == 9 || hh == 19 || hh == 20 || hh == 21) {
+      if (hh == 12 || hh == 13 || hh == 9 || hh == 19 || hh == 20 || hh == 21) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

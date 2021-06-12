@@ -5,9 +5,9 @@
     <mat-divider></mat-divider>
     <br>
     <mat-card-content>
-            <mat-selection-list #listSelectUser >
+            <mat-selection-list #listSelectUser>
                 <ng-container *ngIf="loadingData==false && users.length>0">
-                    <mat-list-option class="container" *ngFor="let user of users">
+                    <mat-list-option class="container" *ngFor="let user of users" [value]="user">
                         <div class="row">
                             <div class="col-3">
                                 <img src="./../../../../../assets/img/user_image.jpg" class="rounded rounded-smal-pp" alt="...">

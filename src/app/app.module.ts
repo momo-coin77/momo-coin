@@ -111,7 +111,7 @@ import { AdminerGuard } from './shared/guard/adminer.guard';
 
 // Import Bugsnag and the Angular integration
 import Bugsnag from '@bugsnag/js'
-import { BugsnagErrorHandler } from '@bugsnag/plugin-angular'
+import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
 // import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // configure Bugsnag asap
@@ -221,7 +221,7 @@ if(false) enableProdMode(); //true en prod et false en dev
     // TermsAndConditionsComponent,
     HowDoesItWorkComponent,
     BlankPageComponent,
-    RegistrationComponent
+    RegistrationComponent,
   ],
   providers: [
     {

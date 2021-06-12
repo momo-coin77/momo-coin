@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterContentInit, AfterViewChecked, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { User } from '../../../../shared/entity/user';
@@ -17,6 +17,7 @@ export class ListUserComponent implements OnInit, OnChanges {
   users:User[]=[];
   @Input() emailUser:string;
   emailUserObservable:BehaviorSubject<string>=new BehaviorSubject<string>("");
+  @Output() selectedUser:EventEmitter<User> = new EventEmitter<User>();
 
   @ViewChild(MatSelectionList, {static: true}) private selectionList: MatSelectionList;
 
@@ -35,6 +36,11 @@ export class ListUserComponent implements OnInit, OnChanges {
       }
       this.users=Array.from(userList.values())
       .filter((user:User)=> user.email.startsWith(email));               
+    })
+    this.selectionList.selectionChange.subscribe((change)=>{
+      console.log("change ",this.selectionList.selectedOptions.selected[0].value)
+      this.selectedUser.emit(this.selectionList.selectedOptions.selected[0].value)
+
     })
   }
   ngOnChanges(changes: SimpleChanges) {

@@ -26,7 +26,8 @@ export class PurchasesComponent implements OnInit {
 
   getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
-      if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
+      if (!this.listPurchasePacks.has(pack.id.toString().toString())) {        
+        
         this.listPurchasePacks.set(pack.id.toString().toString(), true);
         this.packs.push({ waitResponse: false, pack });
       }

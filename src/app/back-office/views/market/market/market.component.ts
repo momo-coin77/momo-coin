@@ -164,16 +164,7 @@ export class MarketComponent implements OnInit, OnDestroy {
     }
     this.waitForPackOnlineState = true;
     // console.log('Gain ',gain)
-    this.packService.getOnlinePack(this.currentPack.pack.id)
-      .then((result: ResultStatut) => {
-        let pack: Pack = result.result;
-        if (pack.state != PackState.ON_MARKET || pack.buyState != PackBuyState.ON_WAITING_BUYER) {
-          let result: ResultStatut = new ResultStatut();
-          result.code = ResultStatut.INVALID_ARGUMENT_ERROR;
-          return Promise.reject(result);
-        }
-        return this.packService.BuyAPack(this.currentPack.pack, gain)
-      })
+     this.packService.BuyAPack(this.currentPack.pack, gain)
       .then((result: ResultStatut) => {
 
         this.waitForPackOnlineState = false;

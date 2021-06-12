@@ -38,6 +38,26 @@ export class UserHistoryService {
         this.history.next(this.historyList)
       })
     }
+    getUserPackHistory(idUser:EntityID)
+    {
+      return new Promise<ResultStatut>((resolve,reject)=>{
+        this.firebaseApi.fetch(`history/${idUser.toString()}`)
+        .then((result:ResultStatut)=> {
+          //console.log("History ",result.result)
+          let historyList=[];
+          if(!result.result) reject(result)
+          for(let key in result.result)
+          {
+            let pack=new Pack();
+            pack.hydrate(result.result[key]);
+            historyList.push(pack);
+          }
+          result.result=historyList
+          resolve(result);
+        })
+        .catch((error)=>reject(error))
+      })
+    }
     getPacksHistoryFromApi(user:User)
     {
       //console.log(user)

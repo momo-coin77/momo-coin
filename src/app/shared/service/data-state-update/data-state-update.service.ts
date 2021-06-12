@@ -37,7 +37,7 @@ export class DataStateUpdateService {
 
     this.eventService.addPackEvent.subscribe((pack:Pack)=>{
       if(!pack) return;
-      let date: Date = new Date();
+      let date: Date = new Date(pack.saleDate);
       date.setDate(date.getDate() + pack.plan);
       this.addMaxDateTo(`toupdate/pack/market/${pack.id.toString()}`,date)
     })

@@ -9,6 +9,7 @@ import { ResultStatut } from '../../../../../shared/service/firebase/resultstatu
 import { BasicPackService } from '../../../../../shared/service/pack/basic-pack.service';
 import { NotificationService } from '../../../../../shared/service/notification/notification.service';
 import { ValidatorinputService } from '../../../../../shared/service/validatorinput/validatorinput.service';
+import { User } from '../../../../../shared/entity/user';
 // import Swal from 'sweetalert2';
 
 @Component({
@@ -64,7 +65,7 @@ export class AddPackComponent implements OnInit {
       pack.saleDate=this.form.value.saleDate;
       pack.idBuyer.setId(" ");
       pack.idOwner=idOwner;
-      return this.packService.addPack(pack)
+      return this.packService.addPack(pack,new User())
     })
     .then((result)=> {
       this.waitResponse=false;

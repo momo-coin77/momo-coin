@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material';
+import { User } from '../../../../shared/entity/user';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { MatListOption, MatSelectionList } from '@angular/material';
 export class AdminComponent implements OnInit {
  
   emailForSearchUser:string=""
-
+  selectedUser:User=null;
   constructor() { }
 
   ngOnInit(): void {
@@ -19,5 +20,9 @@ export class AdminComponent implements OnInit {
   searchUser(userEmail)
   {
     this.emailForSearchUser=userEmail
+  }
+  setSelectedUser(user:User)
+  {
+    this.selectedUser=user;
   }
 }

@@ -2,11 +2,17 @@
 
 <div class="row">
     <div class="col-4">
-        <app-list-user [emailUser]="emailForSearchUser"></app-list-user>           
+        <app-list-user [emailUser]="emailForSearchUser" (selectedUser)="setSelectedUser($event)"></app-list-user>           
     </div>
     <div class="col-8">
         <mat-card>
-           <app-tabs></app-tabs>
+           <app-tabs>
+             <app-tab-item title="Profil"><app-user-profil [user]="selectedUser"></app-user-profil></app-tab-item>
+             <app-tab-item title="Packs"> 
+               <app-user-packs [user]="selectedUser"></app-user-packs>
+             </app-tab-item>
+             <app-tab-item title="Transaction"> Transactions</app-tab-item>
+           </app-tabs>
         </mat-card>
     </div>
 </div>

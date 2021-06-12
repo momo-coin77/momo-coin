@@ -1,0 +1,99 @@
+<div class="mb-3">
+    <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Purchases ( {{listPurchasedPack.length}} )</mat-panel-title>
+            <mat-panel-description> List of packs purchased </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table class="table">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Amount</th>
+                  <th>Plan</th>
+                  <th>Date of purchase</th>
+                  <th>Date of sale</th>
+                  <th>Hours</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let pack of listPurchasedPack;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{pack.amount}}</td>
+                <td>{{pack.plan}}</td>
+                <td>{{getFormatDate(pack.payDate)}}</td>
+                <td>{{getFormatDate(pack.saleDate)}}</td>
+                <td>{{getFormatHours(pack.saleDate)}}</td>
+                <td> <span (click)="tranferPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+              </tr>             
+            </tbody>
+          </table>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title> Sales ( {{listSalePack.length}} )</mat-panel-title>
+            <mat-panel-description> List of packs for sale </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table class="table">
+            <thead>
+              <tr>
+                  <th>#</th>
+                  <th>Amount</th>
+                  <th>Plan</th>
+                  <th>Date of purchase</th>
+                  <th>Hours</th>
+                  <th>Action</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let pack of listSalePack;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{pack.amount}}</td>
+                <td>{{pack.plan}}</td>
+                <td>{{getFormatDate(pack.payDate)}}</td>
+                <td>{{getFormatHours(pack.saleDate)}}</td>
+                <td><span (click)="tranferPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+              </tr>             
+            </tbody>
+          </table>
+        </mat-expansion-panel>
+    
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title> History ( {{listHistoryPack.length}} )</mat-panel-title>
+            <mat-panel-description> Packs purchased history </mat-panel-description>
+          </mat-expansion-panel-header>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Amount</th>
+                <th>Date of purchase</th>
+                <th>Date of sale</th>
+                <th>Hours</th>
+                <th>Buyer</th>
+              </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let pack of listHistoryPack;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{pack.amount}}</td>
+                <td>{{getFormatDate(pack.payDate)}}</td>
+                <td>{{getFormatDate(pack.saleDate)}}</td>
+                <td>{{getFormatHours(pack.saleDate)}}</td>
+                <td>{{getBuyer(pack.idBuyer)}}</td>
+              </tr>             
+            </tbody>
+          </table>
+        </mat-expansion-panel>
+      </mat-accordion>
+</div>
+  <mat-divider></mat-divider>
+  <button (click)="openDialog()" class="mt-2 btn btn-infos text-white float-end"><i class="fa fa-plus"></i>Assign new pack</button>
