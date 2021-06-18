@@ -111,8 +111,10 @@ import { AdminerGuard } from './shared/guard/adminer.guard';
 
 // Import Bugsnag and the Angular integration
 import Bugsnag from '@bugsnag/js'
-import { BugsnagErrorHandler } from '@bugsnag/plugin-angular';
-// import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { BugsnagErrorHandler } from '@bugsnag/plugin-angular'
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { UserManageGuard } from './shared/guard/user-manage.guard';
 
 // configure Bugsnag asap
 Bugsnag.start({ apiKey: '2737b9ab0303671f752970255de0f652' })
@@ -230,6 +232,7 @@ if(true) enableProdMode(); //true en prod et false en dev
   },
   AuthGuard,
   AdminerGuard,
+  UserManageGuard,
   EventService,
   { provide: ErrorHandler, 
     useFactory: errorHandlerFactory

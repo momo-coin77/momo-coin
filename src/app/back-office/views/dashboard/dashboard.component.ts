@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
   bonus: number = 0;
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
-  allUsers: number = 550;  // valeur fictive du nombre total d'utilisateurs. créé la
+  allUsers: number = 750;  // valeur fictive du nombre total d'utilisateurs. créé la
   // fonctionnalité dans les service (utilisable par la suite dans admin) mais laisser ici fictif.
   balence: number = 0; // somme de toutes les montants de chaqueq pack avec son id
   bonusBalence: number = 0; // Bonus de pa
@@ -50,7 +50,7 @@ export class DashboardComponent implements OnInit {
     // let kk = Math.floor((Math.random() * k) + 1);
     // let cc = Math.floor((Math.random() * c) + 1);
     let d = new Date();
-    let val = 200;
+    let val = 300;
     let hh = d.getHours();
     if (hh > 22) {
       val = 100;

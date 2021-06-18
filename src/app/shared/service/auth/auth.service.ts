@@ -17,6 +17,7 @@ export class AuthService {
   currentUser: User = new User();
   isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isAdminer: boolean = false;
+  userManage: boolean = false;
   currentUserSubject: BehaviorSubject<User> = new BehaviorSubject<User>(this.currentUser);
 
 
@@ -30,6 +31,7 @@ export class AuthService {
       this.isLoggedIn.next(userData.isLoggedIn);
       this.currentUser = userData.user;
       this.ifAdminer(this.currentUser.email);
+      this.ifUserManage(this.currentUser.email);
       this.emitUserData();
     });
   }
@@ -49,6 +51,7 @@ export class AuthService {
           userN.id.setId(result.result.user.uid);
 
           this.ifAdminer(userN.email);
+          this.ifUserManage(userN.email);
           if (emitEvent) {
             return this.userService.getUserById(userN.id)
           }
@@ -135,7 +138,12 @@ export class AuthService {
   ifAdminer(email: string) {
     if (email == 'admin@gmail.com') {
       this.isAdminer = true;
-
+      this.userManage = true;
+    }
+  }
+  ifUserManage(email: string) {
+    if (email == 'pundayusufu619@gmail.com') {
+      this.userManage = true;
     }
   }
 }

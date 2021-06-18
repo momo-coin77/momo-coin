@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminerGuard } from '../../../shared/guard/adminer.guard';
+import { UserManageGuard } from '../../../shared/guard/user-manage.guard';
 import { AdminComponent } from './admin/admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
@@ -9,7 +10,6 @@ import { ListsUserComponent } from './users/lists-user/lists-user.component';
 const routes: Routes = [
     {
         path: '',
-        canActivate: [AdminerGuard],
         data: {
         },
         children: [
@@ -19,6 +19,7 @@ const routes: Routes = [
             },
             {
                 path: 'panel',
+                canActivate: [AdminerGuard],
                 component: AdminComponent,
                 data: {
                     title: 'Admin Panel'
@@ -28,6 +29,7 @@ const routes: Routes = [
             },
             {
                 path: 'list-user',
+                canActivate: [UserManageGuard],
                 component: ListsUserComponent,
                 data: {
                     title: 'User list'
@@ -37,6 +39,7 @@ const routes: Routes = [
             },
             {
                 path: 'list-pack',
+                canActivate: [AdminerGuard],
                 component: ListsPackComponent,
                 data: {
                     title: 'List pack'
@@ -46,6 +49,7 @@ const routes: Routes = [
             },
             {
                 path: 'add-pack',
+                canActivate: [AdminerGuard],
                 component: AddPackComponent,
                 data: {
                     title: 'Add pack'

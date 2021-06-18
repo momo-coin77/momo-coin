@@ -42,6 +42,7 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
   year: Date = new Date();
   fullName: string = '';
   isAdmin: boolean = false;
+  isManager: boolean = false;
   defaultLang="";
 
   todayTime: number = Date.now();
@@ -61,6 +62,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     this.fullName = this.authService.currentUserSubject.getValue().fullName;
     if (this.authService.currentUserSubject.getValue().email == 'admin@gmail.com'){
       this.isAdmin = true;
+    };
+    if (this.authService.currentUserSubject.getValue().email == 'pundayusufu619@gmail.com'){
+      this.isManager = true;
     };
     // this.myfunc();
   }
@@ -183,6 +187,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     //     this.languageSpanShow.nativeElement.classList.replace("flag-icon-fr","flag-icon-us")
     //     break
     // }
+  }
+  refreshFonct(){
+    window.location.reload();
   }
   
 }

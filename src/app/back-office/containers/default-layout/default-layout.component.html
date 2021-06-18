@@ -65,6 +65,9 @@
     </cui-breadcrumb>
     <div class="container-fluid">
       <div style="color: #5a4103 !important;">
+        <div class="nav-item px-3" *ngIf="isManager">
+          <button class="btn btn-active" [routerLink]="['/admin']" style="background-color: #ed993f;">Users Manager</button>
+        </div>
         <p>
           <font size=6 style=""><strong>1 MoMo Coin = 1 XAF</strong></font>
         </p>
@@ -74,7 +77,7 @@
         </p>
       </div>
       <div class="right">
-        <br><button class="btn" (click)="refreshFonct()" style="background-color: rgb(236, 156, 18); color: white;">Refresh</button>
+        <br><button class="btn" (click)="refreshFonct()" style="background-color: rgb(26, 163, 37); color: white;">Refresh</button>
         <p>{{todayTime | date:'fullDate'}}</p><strong class="text-right">
             <div id="div_horloge" style="size: 15 !important;"></div>
           </strong>
