@@ -83,8 +83,6 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 /// Front Office
 import { NavBarComponent } from './front-office/static-elements/nav-bar/nav-bar.component';
 import { FooterComponent } from './front-office/static-elements/footer/footer.component';
-import { FullIntroComponent } from './front-office/static-elements/full-intro/full-intro.component';
-import { WelcomeComponent } from './front-office/welcome/welcome.component';
 import { HowDoesItWorkComponent } from './front-office/how-does-it-work/how-does-it-work.component';
 import { ForgotPasswordComponent } from './front-office/forgot-password/forgot-password.component';
 
@@ -216,8 +214,6 @@ if(true) enableProdMode(); //true en prod et false en dev
     // RegisterComponent,
     NavBarComponent,
     FooterComponent,
-    FullIntroComponent,
-    WelcomeComponent,
     ForgotPasswordComponent,
     PrivacyPolicyComponent,
     // TermsAndConditionsComponent,
