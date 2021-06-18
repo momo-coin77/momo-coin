@@ -216,11 +216,12 @@ export class BasicPackService {
         })
     }
 
-    confirmPaiementBySeller(p: Pack,msg:Message): Promise<ResultStatut> {
+    confirmPaiementBySeller(p: Pack,msg:Message,user:User=this.authService.currentUserSubject.getValue(),onLine:boolean=true): Promise<ResultStatut> {
         return new Promise<ResultStatut>((resolve, reject) => {
             this.getOnlinePack(p.id)
             .then((result:ResultStatut)=>{
                 let pack:Pack=result.result;
+                if(!onLine) pack=p;
                 if (pack.state == PackState.ON_MARKET) {
                     let result: ResultStatut = new ResultStatut();
                     result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
@@ -235,7 +236,7 @@ export class BasicPackService {
                 }
                 pack.buyState = PackBuyState.ON_END_SEL;
                 pack.state= PackState.NOT_ON_MARKET;
-                pack.saleDate=(new Date()).toISOString();
+                pack.saleDate=pack.saleDate==""?(new Date()).toISOString():pack.saleDate;
                 // pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
                 
                 let newPack:Pack = new Pack();
@@ -243,7 +244,8 @@ export class BasicPackService {
                 newPack.amount=pack.nextAmount;
                 newPack.payDate=pack.saleDate;
 
-                let dateForSelle=new Date(newPack.payDate);            
+                let dateForSelle=new Date(newPack.payDate); 
+                // console.log("here date", pack.wantedGain,dateForSelle.getDate()+pack.wantedGain.jour)           
                 dateForSelle.setDate(dateForSelle.getDate()+pack.wantedGain.jour)
                 newPack.saleDate=dateForSelle.toISOString();
                 newPack.buyState=PackBuyState.ON_WAITING_BUYER;
@@ -258,7 +260,7 @@ export class BasicPackService {
                         data: newPack.toString()
                     } 
                 ])  
-                .then((result)=> this.userHistoryService.addToHistory(pack))              
+                .then((result)=> this.userHistoryService.addToHistory(pack,user.id))              
                 .then((result)=> {
                     this.eventService.packPaidEvent.next(newPack);
                     this.eventService.addPackEvent.next(newPack);

@@ -2,7 +2,12 @@
 
 <div class="row">
     <div class="col-4">
-        <app-list-user [emailUser]="emailForSearchUser" (selectedUser)="setSelectedUser($event)"></app-list-user>           
+        <!-- <div class="row"> -->
+          <app-list-user [emailUser]="emailForSearchUser" (selectedUser)="setSelectedUser($event)"></app-list-user> 
+        <!-- </div>    -->
+        <div class="row">
+          <button class="btn" (click)="checkPackList()">Check update pack to update</button>
+        </div>       
     </div>
     <div class="col-8">
         <mat-card>

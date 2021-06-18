@@ -103,6 +103,7 @@ export class DataStateUpdateService {
   async updatePackMarket() {    
       this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
       {
+        console.log("lqsdfjsd")
           this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
           
           this.packService.changePackStatus(id);
@@ -143,9 +144,10 @@ export class DataStateUpdateService {
       {
         let pack:Pack = new Pack();
         pack.hydrate(data[key]);
-        let now = new Date();
-        let after = new Date(pack.saleDate);
-        if (after >= now) toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate};
+        // let now = new Date();
+        // let after = new Date(pack.saleDate);
+        // if (after >= now) 
+        toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate};
       }
       this.firebaseApi.set("toupdate/pack/market",toupdate)
     })
@@ -164,6 +166,7 @@ export class DataStateUpdateService {
         {
           let now =new Date();
           let after= new Date(kdata[key].dateMax)
+          // console.log("Now ",now,"after ",after, url);
           // if(day)
           // {
           //   now =  new Date((new Date()).toLocaleDateString());
@@ -172,6 +175,7 @@ export class DataStateUpdateService {
           let id: EntityID = new EntityID();
           id.setId(key);
           if (after <= now) {
+            // console.log("Yes")
             // console.log("Data update",kdata)
             updateFnct(id)
           }

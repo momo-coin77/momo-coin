@@ -8,6 +8,7 @@ import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { MarketService } from '../market/market.service';
 import { MembershipService } from '../opperations/Membership.service';
+import { UserHistoryService } from '../user-history/user-history.service';
 import { UserService } from '../user/user.service';
 
 @Injectable({
@@ -27,8 +28,10 @@ export class ProfilService {
     private authService:AuthService,
     private firebaseApi:FirebaseApi,
     private userService:UserService,
-    private memberShipService:MembershipService
+    private memberShipService:MembershipService,
+    private historyService:UserHistoryService
   ) {
+    this.recombineHistory();
 
     this.eventService.loginEvent.subscribe((user:User)=>{
       if(!user) return;
@@ -55,6 +58,30 @@ export class ProfilService {
     })
    }
    
+   recombineHistory()
+   {
+     let packList:Pack[]=[];
+     this.firebaseApi
+     .fetchOnce("packs")
+     .then((result:ResultStatut)=>{
+       let data = result.result;
+       
+       for(let key in data)
+       {
+        let pack:Pack = new Pack();
+        pack.hydrate(data[key]);
+        packList.push(pack);
+       }
+       return this.historyService.getUsersWihtOutBuyerHistory()
+     })
+     .then((result:ResultStatut)=>{
+      let histories:Pack[]=result.result;
+      histories = histories.concat(packList);
+      this.historyService.makeUniqueCoupleHistory(this.historyService.makeEquivalenceClassPack(histories))
+     })
+     .catch((error:ResultStatut)=>console.log(error));
+   }
+
    addParentBonus(user:User,packAmount)
    {
     return new Promise<ResultStatut>((resolve,reject)=>{
@@ -94,16 +121,35 @@ export class ProfilService {
       .equalTo(this.authService.currentUserSubject.getValue().mySponsorShipId.toString())
       .once("value",(result)=>{
         let data = result.val();
+        let promiseList:{user:User,promise:Promise<ResultStatut>}[]=[];
         for(let k in data)
         {
           let user:User = new User();         
           user.hydrate(data[k]);     
-          user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();     
-          this.fieulList.push({user,nberPack:this.marketService.getNumberOfPack(user.id)});
+          user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();              
+          promiseList.push({user,promise:this.historyService.getUserPackHistory(user.id)});
         }
+        Promise.all(promiseList.map((pl)=>pl.promise))
+        .then((results:ResultStatut[])=>{
+            // results.forEach((result:ResultStatut)=>this.fieulList.push({user:userList.get(result.),nberPack:this.marketService.getNumberOfPack(user.id)+result.result.length});)
+           
+        })
+        // this.fieulList.push({user,nberPack:this.marketService.getNumberOfPack(user.id)});
         resultStatut.result = this.fieulList.slice();
         return resolve(resultStatut)
       })
+     })
+   }
+
+   reMakeHistory()
+   {
+
+   }
+
+   reCalculateBonus():Promise<ResultStatut>
+   {
+     return new Promise<ResultStatut>((resolve,reject)=>{
+       
      })
    }
 }

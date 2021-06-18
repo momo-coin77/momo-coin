@@ -141,7 +141,7 @@ export class MarketService {
     hh = hh;
 // console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 12 || hh == 13 || hh == 9 || hh == 19 || hh == 20 || hh == 21) {
+      if (hh == 16 || hh == 3 || hh == 5 || hh == 19 || hh == 20 || hh == 21) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

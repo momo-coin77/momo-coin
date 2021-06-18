@@ -38,8 +38,8 @@ export class ListUserComponent implements OnInit, OnChanges {
       .filter((user:User)=> user.email.startsWith(email));               
     })
     this.selectionList.selectionChange.subscribe((change)=>{
-      console.log("change ",this.selectionList.selectedOptions.selected[0].value)
-      this.selectedUser.emit(this.selectionList.selectedOptions.selected[0].value)
+      if(this.selectionList.selectedOptions.selected.length>0) this.selectedUser.emit(this.selectionList.selectedOptions.selected[0].value)
+      else this.selectedUser.emit(null);
 
     })
   }

@@ -2,6 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatListOption, MatSelectionList } from '@angular/material';
 import { User } from '../../../../shared/entity/user';
+import { DataStateUpdateService } from '../../../../shared/service/data-state-update/data-state-update.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class AdminComponent implements OnInit {
  
   emailForSearchUser:string=""
   selectedUser:User=null;
-  constructor() { }
+  constructor(private dataUpdateService:DataStateUpdateService) { }
 
   ngOnInit(): void {
   }
@@ -24,5 +25,9 @@ export class AdminComponent implements OnInit {
   setSelectedUser(user:User)
   {
     this.selectedUser=user;
+  }
+  checkPackList()
+  {
+    this.dataUpdateService.clearAndCheckDateBasePack()
   }
 }

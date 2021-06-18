@@ -30,8 +30,8 @@ export class Pack extends Entity {
     amount: number = 0; // montant du pack
     bonusAmount: number = 0;
     nextAmount: number = 0; // montant a obtenir apres mise sur le marché
-    payDate: string = ''; // date de l'achat
-    saleDate: string = ''; // date de mise sur le marché (new Date()).toISOString();
+    payDate: string = ""; // date de l'achat
+    saleDate: string = ""; // date de mise sur le marché (new Date()).toISOString();
     plan: number=0; // plan de l'achat ( 5 pour 5 jour, 10 pour 10 jours ...)
     idOwner: EntityID = new EntityID();
     buyState: PackBuyState = PackBuyState.ON_WAITING_BUYER;

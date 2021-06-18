@@ -13,7 +13,24 @@
 <div class="modal-body">
 
     <div class="row">
-
+        <div class="col-12">
+            <form [formGroup]="form" (submit)="confirm()">
+                <div class="form-group">
+                    <label for="plan">Plan</label>
+                    <select  formControlName="plan" placeholder="5days">
+                        <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payDate">Pay date</label>
+                    <input formControlName="payDate" name="payDate" id="payDate" type="date" class="form-control" [ngClass]="{'is-invalid': submitted && form.controls.payDate.errors }">
+                    <div *ngIf="submitted && form.controls.payDate.errors" class="invalid-feedback text-danger">
+                        <div *ngIf="form.controls.payDate.errors.required">payDate is required</div>
+                    </div>
+                </div> 
+            </form> 
+        </div>
+        
         <div class="col-12">
             <app-input-email-search (emailInputEvent)="selectedEmailUser($event)"></app-input-email-search>
         </div>
