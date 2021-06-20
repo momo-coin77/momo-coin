@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { interval, Subscription } from 'rxjs';
@@ -8,6 +8,10 @@ import { AuthService } from '../../../shared/service/auth/auth.service';
 import { User } from '../../../shared/entity/user';
 import { ProfilService } from '../../../shared/service/profil/profil.service';
 import { EventService } from '../../../shared/service/event/event.service';
+import { NotificationService } from '../../../shared/service/notification/notification.service';
+import { BsModalService, ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
+import { CommonModule } from '@angular/common';  
+import { BrowserModule } from '@angular/platform-browser';
 // import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -16,7 +20,11 @@ import { EventService } from '../../../shared/service/event/event.service';
 })
 
 export class DashboardComponent implements OnInit {
+  
+  @ViewChild('showSaleBonus') public showSaleBonus: ModalDirective;
   bonus: number = 0;
+  nextBonus: number = 0;
+  saleBonus: boolean = false;
   private updateSubscription: Subscription;
   activeUser: number; // valeur fictive du nombre d'utilisateurs en ligne.
   allUsers: number = 750;  // valeur fictive du nombre total d'utilisateurs. créé la
@@ -31,13 +39,16 @@ export class DashboardComponent implements OnInit {
   allSaleAmount: number = 0;
   allPurchaseAmount: number = 0;
   allAmount: number = 0;
+  waitResponse = false;
 
   constructor(
+    private notification: NotificationService,
     private myPack: MarketService,
     private authService: AuthService,
+    private bsModal: BsModalService,
     // private translate:TranslateService,
-    private eventService:EventService,
-    private profilService:ProfilService) {
+    private eventService: EventService,
+    private profilService: ProfilService) {
     this.getPurchasePacks();
     this.getSalePacks();
   }
@@ -59,7 +70,7 @@ export class DashboardComponent implements OnInit {
       val = 75;
     }
     let number = val + mm;
-// console.log('random: ' + number);
+    // console.log('random: ' + number);
     return number;
   }
 
@@ -71,12 +82,16 @@ export class DashboardComponent implements OnInit {
 
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.bonus = user.bonus;
+      if(user.bonus >= 15000) {
+        this.saleBonus = true;
+        this.nextBonus = user.bonus - 15000;
+      }
     });
 
     this.getPurchasePacks();
     this.getSalePacks();
 
-    this.profilService.balancedAccountObservable.subscribe((balance:number)=>{
+    this.profilService.balancedAccountObservable.subscribe((balance: number) => {
       // console.log("Balance ",balance)
       this.balence = balance;
     })
@@ -94,7 +109,7 @@ export class DashboardComponent implements OnInit {
 
   getPurchasePacks() {
     this.myPack.getMyOrderdPackNotInMarket().subscribe((pack: Pack) => {
-  // console.log("Arrived")
+      // console.log("Arrived")
       if (!this.listPurchasePacks.has(pack.id.toString().toString())) {
         this.listPurchasePacks.set(pack.id.toString().toString(), true);
         this.allAmount = this.allAmount + pack.amount;
@@ -115,4 +130,27 @@ export class DashboardComponent implements OnInit {
     });
     // this.allAmount = this.allSaleAmount + this.allAmount;
   }
+  saleMyBonus() {
+    this.waitResponse = true;
+    this.assignPack()
+    // .then((result: ResultStatut) => {
+      this.waitResponse = false;
+      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>15000MC \</b>of your bonuses have been put on the market');
+    // })
+      // .catch((error) => {
+        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'
+        //  + error.message
+         ), 200)
+        this.waitResponse = false;
+
+      // }
+    }
+
+    showModal() {
+      // console.log('teste pop');
+      this.showSaleBonus.show();
+    }
+    assignPack(){
+      //ici la fonction du service qui crée le pack à son nom
+    }
 }

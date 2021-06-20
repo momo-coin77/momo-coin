@@ -48,7 +48,9 @@
         <div class="card-body text-center linear-gradient">
           <div class="chart-wrapper">
             <h3 class="mx-4"><b>{{bonus}}</b></h3>
-          </div>
+            <div *ngIf="saleBonus">
+            <a (click)="showModal()" class="btn btn-info" style="background-color: rgb(206, 204, 71) !important; color: black !important;"><i class="fa fa-money-bill">. Sale my bonus</i></a>
+          </div></div>
         </div>
       </div>
     </div>
@@ -87,6 +89,36 @@
         <a href="https://t.me/joinchat/4jY9U7bkumBlOTU0" class="btn btn-info" style="background-color: rgb(36, 120, 194) !important; color: white !important;"><i class="fa fa-telegram-plane">. Telegram group</i></a>
         <a href="https://chat.whatsapp.com/KR4ZxGCPIJc5HZ6DIBgJXN" class="btn btn-info" style="background-color: rgb(16, 130, 16) !important; color: white !important"><i class="fa fa-whatsapp">. Whatsapp group</i></a>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<div bsModal #showSaleBonus="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><b> Sale my bonus </b></h4>
+        <button type="button" class="close" (click)="confirmPayment.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="!waitResponse">
+          <p class="text-left">You will put your bonuses on the market.</p>
+          <br>bonus: <b>{{bonus}}</b>
+          <br>Sale: <b> 15 000 MC</b>
+          <br>Remaining: <b> {{nextBonus}} </b>
+        </div>
+        <app-spinner *ngIf="waitResponse"></app-spinner>
+      </div>
+        
+      <button *ngIf="!waitResponse" type="button" class="btn btn-danger" (click)="confirmPayment.hide()"
+        style="background-color: rgb(96, 104, 121) !important;">Cancel</button>
+      <button *ngIf="!waitResponse" type="button" class="btn btn-success" style="background-color: green !important;"
+        (click)="confirmMessage()">Sale</button>
+        
     </div>
   </div>
 </div>
