@@ -171,17 +171,19 @@ export class BasicPackService {
        if(user.bonus<MIN_RETREIVAL_BONUS)
        {
          result.apiCode=ResultStatut.INVALID_ARGUMENT_ERROR;
-         result.message="The bonus amount must be greater than 15000";
+         result.message="\<b>Oops!!\</b>The bonus amount must be greater than 15000";
          return reject(result);
        }
        let newPack = new Pack();
        newPack.payDate=new Date().toISOString();
-       newPack.saleDate=newPack.saleDate;
+       newPack.saleDate=newPack.payDate;
+       newPack.state=PackState.ON_MARKET;
        newPack.amount=MIN_RETREIVAL_BONUS;
        newPack.idOwner.setId(user.id.toString())
-
+    //    console.log("bonus pack ",newPack)
        this.addPack(newPack,user,true)
-       .then((result:ResultStatut)=>this.userProfil)
+       .then((result:ResultStatut)=>this.userProfil.retreiveBonus(MIN_RETREIVAL_BONUS))
+       .then((result:ResultStatut)=>resolve(result))
        .catch((error:ResultStatut)=>{
            if(error.apiCode!=ResultStatut.INVALID_ARGUMENT_ERROR) this.firebaseApi.handleApiError(error);
            reject(error);

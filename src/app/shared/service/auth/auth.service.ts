@@ -35,6 +35,14 @@ export class AuthService {
       this.emitUserData();
     });
   }
+
+  setUserData(user:User)
+  {
+    this.localStorageService.setUserData({
+      user,
+      isLoggedIn:true
+    })
+  }
   emitUserData()
   {
     this.currentUserSubject.next(this.currentUser);

@@ -69,8 +69,7 @@ export class ProfilService {
       {
         let user = this.authService.currentUserSubject.getValue();
         user.bonus -= amount;
-        this.authService.currentUser=user;
-        this.authService.currentUserSubject.next(user);
+        this.authService.setUserData(user)
         this.firebaseApi.updates([{
           link:`users/${user.id.toString()}/bonus`,
           data:user.bonus

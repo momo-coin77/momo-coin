@@ -12,6 +12,8 @@ import { NotificationService } from '../../../shared/service/notification/notifi
 import { BsModalService, ModalDirective, ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule } from '@angular/common';  
 import { BrowserModule } from '@angular/platform-browser';
+import { BasicPackService } from '../../../shared/service/pack/basic-pack.service';
+import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
 // import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -48,6 +50,7 @@ export class DashboardComponent implements OnInit {
     private bsModal: BsModalService,
     // private translate:TranslateService,
     private eventService: EventService,
+    private basicPackService:BasicPackService,
     private profilService: ProfilService) {
     this.getPurchasePacks();
     this.getSalePacks();
@@ -132,18 +135,20 @@ export class DashboardComponent implements OnInit {
   }
   saleMyBonus() {
     this.waitResponse = true;
-    this.assignPack()
-    // .then((result: ResultStatut) => {
+    this.basicPackService.transfertBonusToPack()
+    .then((result: ResultStatut) => {
       this.waitResponse = false;
+      this.showSaleBonus.hide()
       this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>15000MC \</b>of your bonuses have been put on the market');
-    // })
-      // .catch((error) => {
-        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', '\<b>Oops!!\</b>An error has occurred <br/>'
-        //  + error.message
-         ), 200)
+    })
+      .catch((error:ResultStatut) => {
+        let message="";
+        this.showSaleBonus.hide()
+        if(error.apiCode==ResultStatut.INVALID_ARGUMENT_ERROR) message =error.message;
+        else message="\<b>Oops!!\</b>Unknow error. please contact administrator <br> contact.momo.coin@gmail.com"
+        setTimeout(() => this.notification.showNotification('top', 'center', 'danger', '', 'An error has occurred <br/>'), 200)
         this.waitResponse = false;
-
-      // }
+      })
     }
 
     showModal() {

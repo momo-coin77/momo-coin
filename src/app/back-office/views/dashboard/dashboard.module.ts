@@ -6,13 +6,17 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
     FormsModule,
     DashboardRoutingModule,
     // ChartsModule,
+    SpinnerModule,
     BsDropdownModule,
+    ModalModule,
     CommonModule,
     ButtonsModule.forRoot()
   ],
