@@ -1,6 +1,9 @@
 import { Entity, purgeAttribute } from './entity';
 import { EntityID } from './EntityID';
 
+export const MIN_RETREIVAL_BONUS =15000;
+
+
 export enum PackState {
     ON_MARKET = 'on_market',
     NOT_ON_MARKET = 'not_on_market',
@@ -19,9 +22,9 @@ export interface PackGain {
     jour?: number;
 }
 export const gainConfig={
-    "5":20,
-    "10":45,
-    "20":65
+    "5":15,
+    "10":35,
+    "20":85
 }
 
 // pack representation

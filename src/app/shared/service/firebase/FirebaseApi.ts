@@ -25,25 +25,25 @@ export class FirebaseApi {
       FirebaseApi.firebaseConfig = {
         /////// real database acces
 
-        apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
-        authDomain: 'momo-coin-23837.firebaseapp.com',
-        databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
-        projectId: 'momo-coin-23837',
-        storageBucket: 'momo-coin-23837.appspot.com',
-        messagingSenderId: '155737173284',
-        appId: '1:155737173284:web:07f41f5db9527097d017b1',
-        measurementId: 'G-KPM5Z0YSG1'
+        // apiKey: 'AIzaSyCIi9bNVRxjBxEF5FgUsJwivy1bGH34EzY',
+        // authDomain: 'momo-coin-23837.firebaseapp.com',
+        // databaseURL: 'https://momo-coin-23837-default-rtdb.firebaseio.com',
+        // projectId: 'momo-coin-23837',
+        // storageBucket: 'momo-coin-23837.appspot.com',
+        // messagingSenderId: '155737173284',
+        // appId: '1:155737173284:web:07f41f5db9527097d017b1',
+        // measurementId: 'G-KPM5Z0YSG1'
 
         /////// dev database access
 
-        // apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
-        // authDomain: "momocoin-4d42f.firebaseapp.com",
-        // databaseURL: "https://momocoin-4d42f-default-rtdb.firebaseio.com",
-        // projectId: "momocoin-4d42f",
-        // storageBucket: "momocoin-4d42f.appspot.com",
-        // messagingSenderId: "333841563981",
-        // appId: "1:333841563981:web:7ae9d993da9dff9b5eb704",
-        // measurementId: "G-BBYSGZECVV"
+        apiKey: "AIzaSyBYZNb1yOmyv9VvW_X5MxSoZCy2VqclicY",
+        authDomain: "momocoin-4d42f.firebaseapp.com",
+        databaseURL: "https://momocoin-4d42f-default-rtdb.firebaseio.com",
+        projectId: "momocoin-4d42f",
+        storageBucket: "momocoin-4d42f.appspot.com",
+        messagingSenderId: "333841563981",
+        appId: "1:333841563981:web:7ae9d993da9dff9b5eb704",
+        measurementId: "G-BBYSGZECVV"
       }
     }
     else {
@@ -157,25 +157,6 @@ export class FirebaseApi {
           reject(action);
         }
       });
-    });
-  }
-
-  update(url: string, updates: any): Promise<ResultStatut> {
-    let action = new ResultStatut();
-    return new Promise<ResultStatut>((resolve, reject) => {
-      try {
-        this.db.ref(url).update(updates);
-        action.description = 'Successful update information';
-        resolve(action);
-      }
-      catch (err) {
-        // Bugsnag.notify(err)
-        action.apiCode = err.code;
-        action.code = ResultStatut.UNKNOW_ERROR;
-        action.message = 'error';
-        action.description = `${err}`;
-        reject(action);
-      }
     });
   }
 
@@ -322,7 +303,7 @@ export class FirebaseApi {
 
       default:
         let bug = new Bug(result);
-        this.eventService.newBugEvent.next(bug);
+        // this.eventService.newBugEvent.next(bug);
         Bugsnag.notify(bug.error)
         result.message = "Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";
         break

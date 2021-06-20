@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { Message } from "../../entity/chat";
 import { EntityID } from "../../entity/EntityID";
-import { Pack, PackBuyState, PackGain, PackState } from "../../entity/pack";
+import { MIN_RETREIVAL_BONUS, Pack, PackBuyState, PackGain, PackState } from "../../entity/pack";
 import { User } from "../../entity/user";
 import { AuthService } from "../auth/auth.service";
 import { EventService } from "../event/event.service";
@@ -42,6 +42,7 @@ export class BasicPackService {
               this.newPackHandler();  
             })
         }
+    
     changePackStatus(idPack:EntityID)
     {
         let nstatus=PackState.ON_MARKET;
@@ -140,7 +141,7 @@ export class BasicPackService {
         })   
     }
 
-    addPack(pack:Pack,user:User):Promise<ResultStatut>
+    addPack(pack:Pack,user:User,isBonusPack=false):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve, reject) => {
             this.firebaseApi.updates([
@@ -151,7 +152,8 @@ export class BasicPackService {
             ])
             .then((result:ResultStatut)=>{
                 this.eventService.addPackEvent.next(pack)
-                return this.userProfil.addParentBonus(user,pack.amount)}
+                if(isBonusPack) return Promise.resolve(new ResultStatut())
+                else return this.userProfil.addParentBonus(user,pack.amount)}
             )
             .then((result:ResultStatut)=> resolve(result))
             .catch((error) => {
@@ -161,7 +163,31 @@ export class BasicPackService {
         })
     }
 
-    
+    transfertBonusToPack()
+    {
+     return new Promise<ResultStatut>((resolve,reject)=>{
+       let user:User = this.authService.currentUserSubject.getValue();
+       let result:ResultStatut=new ResultStatut()
+       if(user.bonus<MIN_RETREIVAL_BONUS)
+       {
+         result.apiCode=ResultStatut.INVALID_ARGUMENT_ERROR;
+         result.message="The bonus amount must be greater than 15000";
+         return reject(result);
+       }
+       let newPack = new Pack();
+       newPack.payDate=new Date().toISOString();
+       newPack.saleDate=newPack.saleDate;
+       newPack.amount=MIN_RETREIVAL_BONUS;
+       newPack.idOwner.setId(user.id.toString())
+
+       this.addPack(newPack,user,true)
+       .then((result:ResultStatut)=>this.userProfil)
+       .catch((error:ResultStatut)=>{
+           if(error.apiCode!=ResultStatut.INVALID_ARGUMENT_ERROR) this.firebaseApi.handleApiError(error);
+           reject(error);
+       })
+    })
+   }
 
     //Etape 1
     //L'acheteur envoi la demande d'achat en faisant le depos

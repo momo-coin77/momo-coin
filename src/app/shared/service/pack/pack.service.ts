@@ -246,21 +246,30 @@ export class PackService {
         })
     }
 
-    getPackList() {
-        let list: Pack[] = [];
-        // tslint:disable-next-line:forin
-        for (const key in this.packs) {
-            list.push(this.packs.get(key));
-        }
-        return list;
-    }
-
-    ///////////////
-    
-    _deletePack(id) {
-        return this.packCollection.doc(id).delete();
-    }
-    updateStatus(data, id) {
+    ///////////////////////////////////
+    /////////////////////////////
+    //////////////////////////
+    ///////******** Juste pour eviter le probléme de dépendance cicylcle profil.service.ts -> basic-pack.service.ts *****/
+    getUserPackByBuyerId(idBuyer:EntityID):Promise<ResultStatut>
+    {
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            this.firebaseApi.getFirebaseDatabase()
+            .ref("packs")
+            .orderByChild("idBuyer")
+            .equalTo(idBuyer.toString())
+            .once("value",(result)=>{
+                let rs:ResultStatut=new ResultStatut();
+                rs.result=[];
+                let data=result.val();
+                for(let idPack in data)
+                {
+                    let pack:Pack=new Pack();
+                    pack.hydrate(data[idPack])
+                    rs.result.push(pack);
+                }
+                resolve(rs);
+            })
+        })
     }
 
 }

@@ -149,7 +149,10 @@ export class UserService {
 
   updateUser(user: User): Promise<ResultStatut> {
     return new Promise<ResultStatut>((resolve, reject) => {
-      this.firebaseApi.update(`users/${user.id.toString()}`, user.toString())
+      this.firebaseApi.updates([{
+        link:`users/${user.id.toString()}`, 
+        data:user.toString()
+      }])
         .then((result: ResultStatut) => resolve(result))
         .catch((error: ResultStatut) => {
           this.firebaseApi.handleApiError(error);

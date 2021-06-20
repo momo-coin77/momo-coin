@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Pack } from '../../entity/pack';
+import { EntityID } from '../../entity/EntityID';
+import { MIN_RETREIVAL_BONUS, Pack } from '../../entity/pack';
+import { SponsorID } from '../../entity/sponsorid';
 import { User } from '../../entity/user';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
@@ -8,6 +10,7 @@ import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 import { MarketService } from '../market/market.service';
 import { MembershipService } from '../opperations/Membership.service';
+import { PackService } from '../pack/pack.service';
 import { UserHistoryService } from '../user-history/user-history.service';
 import { UserService } from '../user/user.service';
 
@@ -29,9 +32,11 @@ export class ProfilService {
     private firebaseApi:FirebaseApi,
     private userService:UserService,
     private memberShipService:MembershipService,
-    private historyService:UserHistoryService
+    private historyService:UserHistoryService,
+    private packService:PackService
   ) {
-    this.recombineHistory();
+    // this.recombineHistory();
+    // this.reCalculateBonus();
 
     this.eventService.loginEvent.subscribe((user:User)=>{
       if(!user) return;
@@ -57,7 +62,63 @@ export class ProfilService {
       }
     })
    }
-   
+   retreiveBonus(amount)
+   {
+     return new Promise<ResultStatut>((resolve,reject)=>{
+      if(this.authService.currentUserSubject.getValue().bonus>=amount)
+      {
+        let user = this.authService.currentUserSubject.getValue();
+        user.bonus -= amount;
+        this.authService.currentUser=user;
+        this.authService.currentUserSubject.next(user);
+        this.firebaseApi.updates([{
+          link:`users/${user.id.toString()}/bonus`,
+          data:user.bonus
+        }])
+        .then((result:ResultStatut)=>resolve(result))
+        .catch((error:ResultStatut)=>reject(error))
+      }
+      else {
+        let error:ResultStatut = new ResultStatut();
+        error.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
+        error.message="The bonus amount must be greater than 15000";
+        reject(error);
+      }
+     })
+   }
+   reCalculateBonus()
+   {
+     console.log("Start recalculate bonus");
+     this.firebaseApi.fetchOnce("users")
+     .then((result:ResultStatut)=>{
+       let data = result.result;
+       for(let idUser in data)
+       {
+         let userBonus:Number=0;
+          let user:User=new User();
+          user.hydrate(data[idUser]);
+          this.getFieulList(user.mySponsorShipId,false)
+          .then((rs:ResultStatut)=> Promise.all(rs.result.map((user:User)=>this.historyService.getUserPackByIdBuyer(user.id))))
+          .then((results)=>{
+            // console.log("Results ",results)
+            userBonus=results
+              .map((r:ResultStatut)=>r.result.reduce((bonus,curr:Pack)=>{
+                // console.log(bonus,curr)
+                return this.memberShipService.membership(curr.amount,bonus)
+              },0))
+              .reduce((bonus,currBonus)=>bonus+currBonus,userBonus);
+              // console.log("Firs bonus ",userBonus)
+            return this.packService.getUserPackByBuyerId(user.id)
+          })
+          .then((result:ResultStatut)=>{
+            userBonus = result.result.reduce((bonus,pack:Pack)=>this.memberShipService.membership(pack.amount,bonus),userBonus)
+            console.log("Email: ",user.email, "Last Bonus ",user.bonus," New Bonus ",userBonus);
+          })
+          .catch((error:ResultStatut)=>console.log("Error ",error)) //2272.8
+       }
+     })
+   }
+
    recombineHistory()
    {
      let packList:Pack[]=[];
@@ -105,7 +166,7 @@ export class ProfilService {
     }) 
    }
 
-   getFieulList():Promise<ResultStatut>
+   getFieulList(sponsorShipId:SponsorID=this.authService.currentUserSubject.getValue().mySponsorShipId,withUserPack=true):Promise<ResultStatut>
    {
      return new Promise<ResultStatut>((resolve,reject)=>{
       let resultStatut:ResultStatut = new ResultStatut()
@@ -118,25 +179,39 @@ export class ProfilService {
       .getFirebaseDatabase()
       .ref("users")
       .orderByChild("parentSponsorShipId")
-      .equalTo(this.authService.currentUserSubject.getValue().mySponsorShipId.toString())
+      .equalTo(sponsorShipId.toString())
       .once("value",(result)=>{
         let data = result.val();
-        let promiseList:{user:User,promise:Promise<ResultStatut>}[]=[];
+        let promiseList=[];
+        let userList=[];
+
         for(let k in data)
         {
           let user:User = new User();         
           user.hydrate(data[k]);     
-          user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();              
+          user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();       
           promiseList.push({user,promise:this.historyService.getUserPackHistory(user.id)});
         }
         Promise.all(promiseList.map((pl)=>pl.promise))
         .then((results:ResultStatut[])=>{
-            // results.forEach((result:ResultStatut)=>this.fieulList.push({user:userList.get(result.),nberPack:this.marketService.getNumberOfPack(user.id)+result.result.length});)
-           
+            for(let i=0;i<results.length;i++) 
+            {
+              if(withUserPack)
+              {
+                this.fieulList.push({
+                  user:promiseList[i].user,
+                  nberPack:this.marketService.getNumberOfPack(promiseList[i].user.id)+result.result.length
+                })
+              }
+              else userList.push(promiseList[i].user)
+            }
+
+            if(withUserPack) resultStatut.result = this.fieulList.slice();
+            else resultStatut.result = userList;
+          resolve(resultStatut)
         })
         // this.fieulList.push({user,nberPack:this.marketService.getNumberOfPack(user.id)});
-        resultStatut.result = this.fieulList.slice();
-        return resolve(resultStatut)
+       
       })
      })
    }
@@ -144,12 +219,5 @@ export class ProfilService {
    reMakeHistory()
    {
 
-   }
-
-   reCalculateBonus():Promise<ResultStatut>
-   {
-     return new Promise<ResultStatut>((resolve,reject)=>{
-       
-     })
    }
 }

@@ -40,6 +40,31 @@ export class UserHistoryService {
         this.history.next(this.historyList)
       })
     }
+    getUserPackByIdBuyer(idBuyer:EntityID)
+    {
+      console.log("idBuer ",idBuyer.toString())
+      return new Promise<ResultStatut>((resolve,reject)=>{
+        this.firebaseApi.fetchOnce("history")
+          .then((result)=>{
+            // console.log("jlqsdjqqfsd")
+            let rd=result.result;
+            let rs:ResultStatut=new ResultStatut();
+            rs.result=[];
+            for(let idUser in rd)
+            {
+              for(let idPack in rd[idUser])
+              {
+                let pack:Pack=new Pack();
+                pack.hydrate(rd[idUser][idPack]);
+                if(pack.idBuyer.toString()==idBuyer.toString()) rs.result.push(pack);
+              }              
+            }
+            console.log("Result buyer ",rs.result)
+            resolve(rs);
+          })
+          .catch((error:ResultStatut)=>reject(error))
+      })
+    }
     getUserPackHistory(idUser:EntityID)
     {
       return new Promise<ResultStatut>((resolve,reject)=>{
@@ -115,44 +140,93 @@ export class UserHistoryService {
           reject(error)
         })
       })
-        
     }
-
-    makeUniqueCoupleHistory(classEquiPack:Map<string,{first:Pack,second:Pack}[]>):{first:Pack,second:Pack}[]
+  
+  getUserPackSingleHistory(idUser:EntityID, idPack:EntityID):Promise<ResultStatut>
   {
-    let historySequence:{first:Pack,second:Pack}[]=[];
-    for (const seq of Array.from(classEquiPack.values()))
-    {
-      console.log("Sequence ",seq);
-      if(seq.length==1) historySequence.push(seq[0])
-      else {
-        //determiner le couple unique
-      }
-    }
-    return historySequence;
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.fetchOnce(`history/${idUser.toString()}/${idPack.toString()}`)
+      .then((result:ResultStatut)=>{
+        let pack:Pack=new Pack();
+        pack.hydrate(result.result);
+        result.result=pack;
+        resolve(result);
+      })
+      .catch((error:ResultStatut)=>reject(error))
+      })
   }
+
+
+
+  updateHistoryBuyer(link:{first:Pack,second:Pack}):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      if(link.first.idBuyer.toString().trim()=="")
+      {
+        console.log("link ",link);
+        this.firebaseApi
+        .updates([
+          {
+            link:`history/${link.first.idOwner.toString()}/${link.first.id.toString()}/idBuyer`,
+            data:link.second.idOwner.toString()
+          }
+        ])
+        .then((result:ResultStatut)=>resolve(result))
+        .catch((error:ResultStatut)=>{
+          console.log("Error ",error)
+          this.firebaseApi.handleApiError(error);
+          reject(error);
+        })
+        // resolve(new ResultStatut())
+      }
+    })
+  }
+
+  makeUniqueCoupleHistory(classEquiPack:Map<string,{first:Pack,second:Pack}[]>):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      let historySequence:{first:Pack,second:Pack}[]=[];
+      let historyMap:Map<String,boolean>=new Map<String,boolean>()
+      for (const seq of Array.from(classEquiPack.values()))
+      {
+        seq.forEach((couple)=>{
+          if(!historyMap.has(`${couple.first.id.toString()}${couple.second.id.toString()}`)) 
+          {
+            historyMap.set(`${couple.first.id.toString()}${couple.second.id.toString()}`,true);
+            historySequence.push(couple);
+          }
+        });
+      }
+      // console.log("historySequence ",historySequence)
+      Promise.all(historySequence.map((couple:{first:Pack,second:Pack})=>this.updateHistoryBuyer(couple)))
+      .then((result:ResultStatut[])=>resolve(new ResultStatut()))
+      .catch((error:ResultStatut)=>reject(error))
+    })
+  }
+
   makeEquivalenceClassPack(histories:Pack[]):Map<string,{first:Pack,second:Pack}[]>
   {
     let classEquiPack:Map<string,{first:Pack,second:Pack}[]>=new Map<string,{first:Pack,second:Pack}[]>()
+    // console.log("Historie equi ",histories)
+    let md:Map<string,boolean>=new Map<string,boolean>();
+
     for(let i=0;i<histories.length;i++)
-    {      
+    { 
       for(let j=i+1;j<histories.length;j++)
       {
         let payDatei=new Date(histories[i].payDate).toLocaleDateString();
         let saleDatei=new Date(histories[i].saleDate).toLocaleDateString();
         let payDatej=new Date(histories[j].payDate).toLocaleDateString();
         let saleDatej=new Date(histories[j].saleDate).toLocaleDateString();
-
+        // if(saleDatej==payDatei && histories[j].plan==histories[i].plan)  console.log(histories[i], histories[j])
         if(
           saleDatej==payDatei && 
-          histories[j].plan==histories[i].plan && 
-          histories[i].amount==this.planService.calculePlan(histories[j].amount,histories[j].plan )
+          histories[i].idOwner.toString()!=histories[j].idOwner.toString() &&
+          (histories[j].plan==histories[i].plan || histories[j].wantedGain.jour==histories[i].plan) && 
+          (histories[i].amount==histories[j].nextAmount )
         )
         {
-          if(
-            (histories[j].idBuyer.toString()!="" && histories[j].idBuyer.toString()==histories[i].idOwner.toString()) ||
-            (histories[j].idBuyer.toString()=="")            
-            )
+          if(histories[j].idBuyer.toString().trim()=="")
          {
           if(classEquiPack.has(saleDatej) ) classEquiPack.get(saleDatej).push({first:histories[j],second:histories[i]});
           else classEquiPack.set(saleDatej,[{first:histories[j],second:histories[i]}]);
@@ -160,14 +234,12 @@ export class UserHistoryService {
         }
         else if(
           saleDatei==payDatej && 
-          histories[j].plan==histories[i].plan &&
-          histories[j].amount==this.planService.calculePlan(histories[i].amount,histories[i].plan)
+          histories[i].idOwner.toString()!=histories[j].idOwner.toString() &&
+          (histories[j].plan==histories[i].plan || histories[i].wantedGain.jour==histories[j].plan) &&
+            histories[j].amount==histories[i].nextAmount
         )
         {
-          if(
-            (histories[i].idBuyer.toString()!="" && histories[i].idBuyer.toString()==histories[j].idOwner.toString()) ||
-            (histories[i].idBuyer.toString()=="")            
-            )
+          if(histories[i].idBuyer.toString().trim()=="")
          {
           if(classEquiPack.has(saleDatei)) classEquiPack.get(saleDatei).push({first:histories[i],second:histories[j]});
           else classEquiPack.set(saleDatei,[{first:histories[i],second:histories[j]}]);
@@ -191,7 +263,8 @@ export class UserHistoryService {
           {
             let pack:Pack=new Pack();
             pack.hydrate(data[idUser][idPack]);
-            if(pack.idBuyer.toString()!="") histories.push(pack)
+            // if(pack.idBuyer.toString().trim()=="")
+             histories.push(pack)
           }
         }
         // console.log("historique ",histories)

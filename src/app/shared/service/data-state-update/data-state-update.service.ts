@@ -103,7 +103,6 @@ export class DataStateUpdateService {
   async updatePackMarket() {    
       this.findAndUpdate("toupdate/pack/market",(id:EntityID)=>
       {
-        console.log("lqsdfjsd")
           this.deleteToUpdate(`toupdate/pack/market/${id.toString()}`);
           
           this.packService.changePackStatus(id);
