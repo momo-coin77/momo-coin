@@ -183,23 +183,23 @@ export class ProfilService {
         let data = result.val();
         let promiseList=[];
         let userList=[];
-
         for(let k in data)
         {
           let user:User = new User();         
-          user.hydrate(data[k]);     
+          user.hydrate(data[k]);    
           user.dateCreation=(new Date(user.dateCreation)).toLocaleDateString();       
           promiseList.push({user,promise:this.historyService.getUserPackHistory(user.id)});
         }
         Promise.all(promiseList.map((pl)=>pl.promise))
         .then((results:ResultStatut[])=>{
+          // console.log("result ",results)
             for(let i=0;i<results.length;i++) 
             {
               if(withUserPack)
               {
                 this.fieulList.push({
                   user:promiseList[i].user,
-                  nberPack:this.marketService.getNumberOfPack(promiseList[i].user.id)+result.result.length
+                  nberPack:this.marketService.getNumberOfPack(promiseList[i].user.id)+results[i].result.length
                 })
               }
               else userList.push(promiseList[i].user)

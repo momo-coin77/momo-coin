@@ -70,9 +70,8 @@ export class UserHistoryService {
       return new Promise<ResultStatut>((resolve,reject)=>{
         this.firebaseApi.fetchOnce(`history/${idUser.toString()}`)
         .then((result:ResultStatut)=> {
-          //console.log("History ",result.result)
+          // console.log("History ",result.result)
           let historyList=[];
-          if(!result.result) reject(result)
           for(let key in result.result)
           {
             let pack=new Pack();
