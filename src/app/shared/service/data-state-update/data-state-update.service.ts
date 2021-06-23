@@ -82,10 +82,6 @@ export class DataStateUpdateService {
           data: PackBuyState.ON_WAITING_BUYER
         },
         {
-          link:`packs/${id.toString()}/plan`,
-          data: 0
-        },
-        {
           link:`packs/${id.toString()}/state`,
           data: PackState.ON_MARKET
         },

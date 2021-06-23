@@ -164,9 +164,9 @@ export class MarketComponent implements OnInit, OnDestroy {
     }
     this.waitForPackOnlineState = true;
     // console.log('Gain ',gain)
-     this.packService.BuyAPack(this.currentPack.pack, gain)
+    this.packService.getOnlinePack(this.currentPack.pack.id)
+    .then((result:ResultStatut)=>this.packService.BuyAPack(result.result, gain))     
       .then((result: ResultStatut) => {
-
         this.waitForPackOnlineState = false;
         this.resultOperation.okresult = true;
         this.secondModal.show();

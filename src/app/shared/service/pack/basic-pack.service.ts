@@ -202,13 +202,13 @@ export class BasicPackService {
                     let result: ResultStatut = new ResultStatut();
                     result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
                     result.message = 'Pack is not on market';
-                    reject(result);
+                    return reject(result);
                 }
-                if (pack.buyState != PackBuyState.ON_WAITING_BUYER) {
+                if (pack.buyState != PackBuyState.ON_WAITING_BUYER) {// pack.idBuyer.toString().trim()!=""
                     let result: ResultStatut = new ResultStatut();
                     result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
                     result.message = 'The pack do not wait for buyer\'s payment';
-                    reject(result);
+                    return reject(result);
                 }
                 pack.state=PackState.NOT_ON_MARKET;
                 pack.buyState = PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT;
@@ -233,6 +233,7 @@ export class BasicPackService {
                     message.date = (new Date()).toISOString();
                     message.content = 'the payment of the pack has been made by the buyer. Please confirm';
                     message.idPack.setId(pack.id.toString());
+                    message.id.setId(pack.id.toString())
                     return this.userNotificationService.sendNotification(message)
                 })
                 .then((result) => resolve(result))
@@ -254,13 +255,13 @@ export class BasicPackService {
                     let result: ResultStatut = new ResultStatut();
                     result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
                     result.message = 'Pack is already on market';
-                    reject(result);
+                    return reject(result);
                 }
-                if (pack.buyState != PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT) {
+                if (pack.buyState != PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT) {//|| pack.idBuyer.toString().trim()==""
                     let result: ResultStatut = new ResultStatut();
                     result.apiCode = ResultStatut.INVALID_ARGUMENT_ERROR;
                     result.message = 'The pack is not awaiting confirmation by the seller';
-                    reject(result);
+                    return reject(result);
                 }
                 pack.buyState = PackBuyState.ON_END_SEL;
                 pack.state= PackState.NOT_ON_MARKET;
