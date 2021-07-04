@@ -1,0 +1,112 @@
+<mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> All Packs ( {{listAllPack.length}} )</mat-panel-title>
+        <mat-panel-description> List all packs </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table class="table">
+        <thead>
+          <tr>
+              <th>#</th>
+              <th>Amount</th>
+              <th>Plan</th>
+              <th>Date of purchase</th>
+              <th>Date of sale</th>
+              <th>Hours</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let pack of listAllPack;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{pack.amount}}</td>
+            <td>{{pack.plan}}</td>
+            <td>{{getFormatDate(pack.payDate)}}</td>
+            <td>{{getFormatDate(pack.saleDate)}}</td>
+            <td>{{getFormatHours(pack.saleDate)}}</td>
+            <td> 
+              <span *ngIf="pack.state=='not_on_market'" (click)="changeStatusPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span>
+              <span *ngIf="pack.state=='on_market'" (click)="changeStatusPack(pack)" class="red-text hand"><b><i class="fa fa-ban"></i></b></span>
+              
+            </td>
+          </tr>             
+        </tbody>
+      </table>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> Not On Market ( {{listNotOnMarketPack.length}} )</mat-panel-title>
+        <mat-panel-description> Packs not on the market </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table class="table">
+        <thead>
+          <tr>
+              <th>#</th>
+              <th>Amount</th>
+              <th>Plan</th>
+              <th>Date of purchase</th>
+              <th>Hours</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let pack of listNotOnMarketPack;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{pack.amount}}</td>
+            <td>{{pack.plan}}</td>
+            <td>{{getFormatDate(pack.payDate)}}</td>
+            <td>{{getFormatHours(pack.saleDate)}}</td>
+            <td><span (click)="changeStatusPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+          </tr>             
+        </tbody>
+      </table>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title> On Market ( {{listOnMarketPack.length}} )</mat-panel-title>
+        <mat-panel-description> Packs on the market </mat-panel-description>
+      </mat-expansion-panel-header>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Amount</th>
+            <th>Date of purchase</th>
+            <th>Date of sale</th>
+            <th>Hours</th>
+            <th>Owner</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let pack of listOnMarketPack;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{pack.amount}}</td>
+            <td>{{getFormatDate(pack.payDate)}}</td>
+            <td>{{getFormatDate(pack.saleDate)}}</td>
+            <td>{{getFormatHours(pack.saleDate)}}</td>
+            <td>{{getBuyer(pack.idOwner)}}</td>
+            <th>
+              <i *ngIf="selectedPackId!=pack.id.toString() || !waitResponse " (click)="changeStatusPack(pack)" class="fa fa-ban red-text "></i>
+              <!-- <i (click)="changeStatusPack(pack)" class="fas fa-trash-alt pink-text"></i> -->
+              <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponse " style="margin-right: 5px;"></app-spinner>
+            </th>
+          </tr>             
+        </tbody>
+      </table>
+  
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-divider></mat-divider>
+  <button (click)="emptyMarket()"  class="mt-2 btn btn-infos pink-text float-end">
+    <i *ngIf="!waitResponse" class="fa fa-ban pink-text" style="margin-right: 5px;"></i>
+    <app-spinner *ngIf="waitResponse" style="margin-right: 5px;"></app-spinner>
+    Empty the market
+  </button>

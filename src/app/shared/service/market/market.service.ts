@@ -7,6 +7,7 @@ import { Pack, PackState } from '../../entity/pack';
 import { AuthService } from '../auth/auth.service';
 import { EventService } from '../event/event.service';
 import { FirebaseApi } from '../firebase/FirebaseApi';
+import { ResultStatut } from '../firebase/resultstatut';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class MarketService {
     private eventService: EventService,
     private firebaseApi: FirebaseApi,
     private router: Router) {
-
+      // this.putAllNoToMarket();
     // this.eventService.loginEvent.subscribe((user) => {
     //   if (!user) return;
       //cette requete ne doit ce faire que si le marché est ouvert
@@ -33,6 +34,30 @@ export class MarketService {
 
       // this.getMyOrderedPackOnMarket().subscribe((pack)=>console.log("Data in market ",pack))
     // });
+  }
+
+  putAllNoToMarket()
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.getFirebaseDatabase()
+        .ref('packs')
+        .once('value', (packs) =>{
+          let packListTack: Promise<ResultStatut>[] = [];
+          let oplist = packs.val();
+          for (let pkey in oplist) {
+            let pck: Pack = new Pack();
+            pck.hydrate(oplist[pkey]);
+            pck.state=PackState.NOT_ON_MARKET;
+            packListTack.push(this.firebaseApi.updates([{
+              link:`packs/${pck.id.toString()}/state`,
+              data:PackState.NOT_ON_MARKET
+            }]));            
+          }
+          Promise.all(packListTack)
+          .then((result)=>resolve(new ResultStatut()))
+          .catch((error:ResultStatut)=>reject(error))         
+        });
+    })
   }
 
   getNumberOfPack(idUser:EntityID):Number
@@ -86,7 +111,12 @@ export class MarketService {
   {
     return this.getMyOrderedPackOnMarket(idOwner);
   }
-
+  getAllPackNotInMarket()
+  {
+    return this.getOrderMarket().pipe(
+      filter((p: Pack) => p.state == PackState.NOT_ON_MARKET)
+    )
+  }
   getMyOrderdPackNotInMarket(idOwner:EntityID=this.authService.currentUserSubject.getValue().id) {
     return this.getOrderMarket().pipe(
       filter((p: Pack) => p.idOwner.toString() == idOwner.toString()),
@@ -141,7 +171,7 @@ export class MarketService {
     hh = hh;
 // console.log(hh);
     if (tab[1] === 'market') {
-      if (hh == 7 || hh == 6 || hh == 18 || hh == 19 || hh == 20 || hh == 21) {
+      if (hh == 8 || hh == 9 || hh == 10 || hh == 16 || hh == 20 || hh == 21) {
         return this.router.navigate(['market/open']);
       } else {
         return this.router.navigate(['market/wait']);

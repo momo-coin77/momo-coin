@@ -126,7 +126,7 @@ export function errorHandlerFactory() {
 // }
 
 //enableProdMode
-if(true) enableProdMode(); //true en prod et false en dev
+if(false) enableProdMode(); //true en prod et false en dev
 
 @NgModule({
   imports: [    

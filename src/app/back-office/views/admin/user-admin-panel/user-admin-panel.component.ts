@@ -6,11 +6,11 @@ import { DataStateUpdateService } from '../../../../shared/service/data-state-up
 
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  selector: 'app-user-admin-panel',
+  templateUrl: './user-admin-panel.component.html',
+  styleUrls: ['./user-admin-panel.component.css']
 })
-export class AdminComponent implements OnInit {
+export class UserAdminPanel implements OnInit {
  
   emailForSearchUser:string=""
   selectedUser:User=null;

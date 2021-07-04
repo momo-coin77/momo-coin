@@ -81,7 +81,8 @@ export class BasicPackService {
     changeStatusMarket(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve,reject)=>{
-            let nstatus=PackState.ON_MARKET==pack.state?PackState.ON_MARKET:PackState.NOT_ON_MARKET;
+            let nstatus= PackState.ON_MARKET==pack.state?PackState.NOT_ON_MARKET:PackState.ON_MARKET;
+            console.log("new status",nstatus,pack.state)
             this.firebaseApi.updates([{
                 link:`packs/${pack.id.toString()}/state`,
                 data:nstatus

@@ -7,7 +7,6 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SpinnerModule } from '../../../shared/components/spinner/spinner.module';
 import { AdminRoutingModule } from './admin-routing.module';
-import { AdminComponent } from './admin/admin.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
@@ -21,6 +20,9 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { UserAddPackComponent } from './user-add-pack/user-add-pack.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserTransferPackComponent } from './user-transfer-pack/user-transfer-pack.component';
+import { PanelComponent } from './panel/panel.component';
+import { UserAdminPanel } from './user-admin-panel/user-admin-panel.component';
+import { PacksPanelComponent } from './packs-panel/packs-panel.component';
 
 @NgModule({
   imports: [
@@ -51,14 +53,16 @@ import { UserTransferPackComponent } from './user-transfer-pack/user-transfer-pa
     ListsUserComponent,
     AddPackComponent,
     ListsPackComponent,
-    AdminComponent,
+    UserAdminPanel,
     InputEmailSearchComponent,
     ListUserComponent,
     UserProfilComponent,
     UserPacksComponent,
     UserPacksListComponent,
     UserAddPackComponent,
-    UserTransferPackComponent,       
+    UserTransferPackComponent,
+    PanelComponent,
+    PacksPanelComponent,       
   ],
   exports:[
   ],

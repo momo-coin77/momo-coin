@@ -2,9 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminerGuard } from '../../../shared/guard/adminer.guard';
 import { UserManageGuard } from '../../../shared/guard/user-manage.guard';
-import { AdminComponent } from './admin/admin.component';
+import { PacksPanelComponent } from './packs-panel/packs-panel.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
+import { PanelComponent } from './panel/panel.component';
+import { UserAdminPanel } from './user-admin-panel/user-admin-panel.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
 
 const routes: Routes = [
@@ -15,14 +17,34 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'list-user'
+                redirectTo: 'panel'
             },
             {
                 path: 'panel',
                 canActivate: [AdminerGuard],
-                component: AdminComponent,
+                component: PanelComponent,
                 data: {
                     title: 'Admin Panel'
+                }
+                // canActivate:[AuthGuard]
+
+            },
+            {
+                path: 'user-panel',
+                canActivate: [AdminerGuard],
+                component: UserAdminPanel,
+                data: {
+                    title: 'Users Panel'
+                }
+                // canActivate:[AuthGuard]
+
+            },
+            {
+                path: 'packs-panel',
+                canActivate: [AdminerGuard],
+                component: PacksPanelComponent,
+                data: {
+                    title: 'Packs Panel'
                 }
                 // canActivate:[AuthGuard]
 
