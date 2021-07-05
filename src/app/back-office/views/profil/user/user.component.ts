@@ -41,7 +41,7 @@ export class UserComponent implements OnInit {
     selBox.style.left = '0';
     selBox.style.top = '0';
     selBox.style.opacity = '0';
-    selBox.value = 'https://2mocoin.000webhostapp.com/#/register/' + val; // a remplacer par le lien https de la page registration de MC
+    selBox.value = 'https://app.momo-coin.store/#/register/' + val; // a remplacer par le lien https de la page registration de MC
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();

@@ -78,11 +78,11 @@ export class BasicPackService {
             }
         })
     }
+
     changeStatusMarket(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve,reject)=>{
-            let nstatus= PackState.ON_MARKET==pack.state?PackState.NOT_ON_MARKET:PackState.ON_MARKET;
-            console.log("new status",nstatus,pack.state)
+            let nstatus=PackState.ON_MARKET==pack.state?PackState.NOT_ON_MARKET:PackState.ON_MARKET;
             this.firebaseApi.updates([{
                 link:`packs/${pack.id.toString()}/state`,
                 data:nstatus
@@ -97,6 +97,7 @@ export class BasicPackService {
               })
         })
     }
+
     getPackById(idPack:EntityID):Promise<ResultStatut>
     {
         let result=new ResultStatut()
