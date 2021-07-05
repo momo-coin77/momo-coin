@@ -189,7 +189,9 @@ export class DefaultLayoutComponent implements OnInit, AfterViewInit {
     // }
   }
   refreshFonct(){
-    window.location.reload();
+    // window.location.reload(true);
+    window.location.href = window.location.href,
+    window.location.reload(true);
   }
   
 }

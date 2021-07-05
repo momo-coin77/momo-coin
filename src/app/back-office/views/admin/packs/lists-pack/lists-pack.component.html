@@ -25,14 +25,13 @@
                 <tr>
                   <th></th>
                   <th>Amount</th>
-                  <th>Next Amount</th>
+                  <th>Id Pack</th>
                   <th>payDate</th>
                   <th>saleDate</th>
                   <th>buyState</th>
                   <th>plan</th>
                   <th>idOwner</th>
-                  <th>idBuyer</th>
-                  <th>state</th>
+                  <!-- <th>idBuyer</th> -->
                   <th></th>
                 </tr>
               </thead>
@@ -47,14 +46,14 @@
                     </button>
                   </td>
                   <td>{{ pack.pack.amount }}</td>
-                  <td>{{ pack.pack.nextAmount }}</td>
+                  <td>{{ pack.pack.id }}</td>
                   <td>{{ pack.pack.payDate }}</td>
                   <td>{{ pack.pack.saleDate }}</td>
                   <td>{{ pack.pack.getBuyState() }}</td>
                   <td>{{ pack.pack.plan }}</td>
                   <td>{{ pack.pack.idOwner }}</td>
-                  <td>{{ pack.pack.idBuyer }}</td>
-                  <td>{{ pack.pack.state }}</td>
+                  <!-- <td>{{ pack.pack.idBuyer }}</td> -->
+                  <!-- <td>{{ pack.pack.state }}</td> -->
                   <td class="text-right">
                     <button (click)="deletePack(pack.pack.id)" class="btn btn-sm btn-warning" style="background-color: rgb(223, 31, 31) !important;">
                       <i class="fa fa-trash-o" aria-hidden="true" style="color: cornsilk;"></i>

@@ -41,11 +41,11 @@ export class ListsPackComponent implements OnInit {
     this.packService.changeStatusMarket(pack.pack)
       .then((result) => {
         pack.waitResponse = false;
-        this.notifService.showNotification('top', 'center', 'success', '', `\<b>Success !\</b>\<br>The market status of the pack has been updated to '${pack.pack.status}'`);
+        this.notifService.showNotificationWithoutTimer('top', 'center', 'success', '', `\<b>Success !\</b>\<br>The market status of the pack has been updated to '${pack.pack.status}'`);
       })
       .catch((error) => {
         pack.waitResponse = false;
-        this.notifService.showNotification('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>' + error.message);
+        this.notifService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>' + error.message);
       });
   }
   searchPack() {
