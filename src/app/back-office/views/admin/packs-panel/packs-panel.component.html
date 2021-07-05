@@ -13,6 +13,7 @@
               <th>Date of purchase</th>
               <th>Date of sale</th>
               <th>Hours</th>
+              <th>Owner</th>
               <th>Action</th>
           </tr>
         </thead>
@@ -25,10 +26,9 @@
             <td>{{getFormatDate(pack.payDate)}}</td>
             <td>{{getFormatDate(pack.saleDate)}}</td>
             <td>{{getFormatHours(pack.saleDate)}}</td>
-            <td> 
-              <span *ngIf="pack.state=='not_on_market'" (click)="changeStatusPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span>
-              <span *ngIf="pack.state=='on_market'" (click)="changeStatusPack(pack)" class="red-text hand"><b><i class="fa fa-ban"></i></b></span>
-              
+            <td>{{getBuyer(pack.idOwner)}}</td>
+            <td>
+              <app-packs-admin-action [pack]="pack"></app-packs-admin-action>
             </td>
           </tr>             
         </tbody>
@@ -49,6 +49,7 @@
               <th>Plan</th>
               <th>Date of purchase</th>
               <th>Hours</th>
+              <th>Owner</th>
               <th>Action</th>
           </tr>
         </thead>
@@ -60,7 +61,10 @@
             <td>{{pack.plan}}</td>
             <td>{{getFormatDate(pack.payDate)}}</td>
             <td>{{getFormatHours(pack.saleDate)}}</td>
-            <td><span (click)="changeStatusPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+            <td>{{getBuyer(pack.idOwner)}}</td>
+            <td>
+              <app-packs-admin-action [pack]="pack"></app-packs-admin-action>
+            </td>
           </tr>             
         </tbody>
       </table>
@@ -94,9 +98,7 @@
             <td>{{getFormatHours(pack.saleDate)}}</td>
             <td>{{getBuyer(pack.idOwner)}}</td>
             <th>
-              <i *ngIf="selectedPackId!=pack.id.toString() || !waitResponse " (click)="changeStatusPack(pack)" class="fa fa-ban red-text "></i>
-              <!-- <i (click)="changeStatusPack(pack)" class="fas fa-trash-alt pink-text"></i> -->
-              <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponse " style="margin-right: 5px;"></app-spinner>
+              <app-packs-admin-action [pack]="pack"></app-packs-admin-action>
             </th>
           </tr>             
         </tbody>
@@ -106,7 +108,14 @@
   </mat-accordion>
   <mat-divider></mat-divider>
   <button (click)="emptyMarket()"  class="mt-2 btn btn-infos pink-text float-end">
-    <i *ngIf="!waitResponse" class="fa fa-ban pink-text" style="margin-right: 5px;"></i>
-    <app-spinner *ngIf="waitResponse" style="margin-right: 5px;"></app-spinner>
+    <i *ngIf="!waitResponseBtn" class="fa fa-ban pink-text" style="margin-right: 5px;"></i>
+    <app-spinner *ngIf="waitResponseBtn" style="margin-right: 5px;"></app-spinner>
     Empty the market
   </button>
+
+  <button (click)="checkPackList()"  class="mt-2 btn btn-infos green-text float-end">
+    <i *ngIf="!waitResponseSecondBtn" class="fa fa-check green-text" style="margin-right: 5px;"></i>
+    <app-spinner *ngIf="waitResponseSecondBtn" style="margin-right: 5px;"></app-spinner>
+    Update Packs status
+  </button>
+ 

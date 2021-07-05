@@ -125,26 +125,33 @@ export class DataStateUpdateService {
       },false)
   }
 
-  clearAndCheckDateBasePack()//:Promise<ResultStatut>
+  clearAndCheckDateBasePack():Promise<ResultStatut>
   {
-    this.firebaseApi
-    .getFirebaseDatabase()
-    .ref("packs")
-    .orderByChild("state")
-    .equalTo(PackState.NOT_ON_MARKET)
-    .once("value",(snapshot)=>{
-      let data = snapshot.val();
-      let toupdate = {};
-      for(let key in data)
-      {
-        let pack:Pack = new Pack();
-        pack.hydrate(data[key]);
-        // let now = new Date();
-        // let after = new Date(pack.saleDate);
-        // if (after >= now) 
-        toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate};
-      }
-      this.firebaseApi.set("toupdate/pack/market",toupdate)
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi
+      .getFirebaseDatabase()
+      .ref("packs")
+      .orderByChild("state")
+      .equalTo(PackState.NOT_ON_MARKET)
+      .once("value",(snapshot)=>{
+        let data = snapshot.val();
+        let toupdate = {};
+        for(let key in data)
+        {
+          let pack:Pack = new Pack();
+          pack.hydrate(data[key]);
+          // let now = new Date();
+          // let after = new Date(pack.saleDate);
+          // if (after >= now) 
+          toupdate[pack.id.toString().toString()]={dateMax:pack.saleDate};
+        }
+        this.firebaseApi.set("toupdate/pack/market",toupdate)
+        .then((result:ResultStatut)=>resolve(result))
+        .catch((error:ResultStatut)=>{
+          this.firebaseApi.handleApiError(error);
+          reject(error);
+        })
+      })
     })
   }
 

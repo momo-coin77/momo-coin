@@ -300,7 +300,9 @@ export class FirebaseApi {
         break;
       case FireBaseConstant.AUTH_NETWORK_FAIL:
         result.message = 'Offline. Please check your network connectivity';
-
+        break;
+      case ResultStatut.INVALID_ARGUMENT_ERROR:
+        break;
       default:
         let bug = new Bug(result);
         // this.eventService.newBugEvent.next(bug);

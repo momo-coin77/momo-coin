@@ -14,7 +14,7 @@ export class UserAdminPanel implements OnInit {
  
   emailForSearchUser:string=""
   selectedUser:User=null;
-  constructor(private dataUpdateService:DataStateUpdateService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
@@ -26,8 +26,5 @@ export class UserAdminPanel implements OnInit {
   {
     this.selectedUser=user;
   }
-  checkPackList()
-  {
-    this.dataUpdateService.clearAndCheckDateBasePack()
-  }
+  
 }

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Message } from '../../../../shared/entity/chat';
-import { gainConfig, Pack } from '../../../../shared/entity/pack';
+import { gainConfig, Pack, PackBuyState } from '../../../../shared/entity/pack';
 import { User } from '../../../../shared/entity/user';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
@@ -51,8 +51,8 @@ export class UserTransferPackComponent implements OnInit {
   confirm()
   {
     this.submitted=true;
-
-    if(this.form.invalid) return;
+    console.log(this.form.valid,this.selectedUser)
+    if(!this.form.valid) return;
     if(this.selectedUser==null) return;
     this.waitResponse=true;
     this.pack.idBuyer.setId(this.selectedUser.id.toString())
@@ -67,6 +67,7 @@ export class UserTransferPackComponent implements OnInit {
     message.from.setId(this.selectedUser.id.toString());
     message.to.setId(this.user.id.toString());
     message.idPack.setId(this.pack.id.toString());
+    this.pack.buyState=PackBuyState.ON_WAITING_SELLER_CONFIRMATION_PAIEMENT
     // console.log(this.pack,message)
     this.packService.confirmPaiementBySeller(this.pack,message,this.selectedUser,false)
     .then((result:ResultStatut)=>{
@@ -75,11 +76,13 @@ export class UserTransferPackComponent implements OnInit {
       this.submitted=false;
       this.close();
       setTimeout(() => {
-        this.notificationService.showNotificationWithoutTimer('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The pack has been successfully added to the list of packs for this user');
+        this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The pack has been successfully added to the list of packs for this user',200);
       }, 200);
     })
     .catch((error:ResultStatut)=>{
       this.waitResponse=false;
+      this.submitted=false;
+      this.close();
       setTimeout(()=>{
         this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Sorry !\</b>\<br>'+error.message);
         },

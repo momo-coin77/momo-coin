@@ -62,7 +62,41 @@ export class BasicPackService {
         })
         })
     }
+    splitPack(pack:Pack,amount:number):Promise<ResultStatut>
+    {
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            if(amount>=pack.amount)
+            {
+                let result:ResultStatut=new ResultStatut();
+                result.message="Cannot perform division. the amount is greater than or equal to the amount of the pack"
+                result.code=ResultStatut.INVALID_ARGUMENT_ERROR;
+                result.apiCode=ResultStatut.INVALID_ARGUMENT_ERROR;
+                return reject(result);
+            }
 
+            let newPack:Pack=new Pack();
+            newPack.hydrate(pack.toString());
+            newPack.id.setId(new EntityID().toString());
+
+            newPack.amount=amount;
+            pack.amount=pack.amount-amount;
+            this.firebaseApi.updates([
+                {
+                    link:`packs/${pack.id.toString()}/amount`,
+                    data:pack.amount
+                },
+                {
+                    link:`packs/${newPack.id.toString()}`,
+                    data:newPack.toString()
+                }
+            ])
+            .then((result:ResultStatut)=>resolve(result))
+            .catch((error:ResultStatut)=>{
+                this.firebaseApi.handleApiError(error);
+                reject(error)
+            })
+        })
+    }
     newPackHandler()
     {
         this.firebaseApi
@@ -78,11 +112,22 @@ export class BasicPackService {
             }
         })
     }
+    deletePack(pack:Pack):Promise<ResultStatut>
+    {
+        return new Promise<ResultStatut>((resolve,reject)=>{
+            this.firebaseApi.delete(`packs/${pack.id}`)
+            .then((result:ResultStatut)=>resolve(result))
+            .catch((error:ResultStatut)=>{
+                this.firebaseApi.handleApiError(error);
+                reject(error)
+            });
+        })
+    }
     changeStatusMarket(pack:Pack):Promise<ResultStatut>
     {
         return new Promise<ResultStatut>((resolve,reject)=>{
             let nstatus= PackState.ON_MARKET==pack.state?PackState.NOT_ON_MARKET:PackState.ON_MARKET;
-            console.log("new status",nstatus,pack.state)
+            // console.log("new status",nstatus,pack.state)
             this.firebaseApi.updates([{
                 link:`packs/${pack.id.toString()}/state`,
                 data:nstatus

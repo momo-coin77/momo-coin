@@ -23,6 +23,8 @@ import { UserTransferPackComponent } from './user-transfer-pack/user-transfer-pa
 import { PanelComponent } from './panel/panel.component';
 import { UserAdminPanel } from './user-admin-panel/user-admin-panel.component';
 import { PacksPanelComponent } from './packs-panel/packs-panel.component';
+import { PacksAdminActionComponent } from './packs-admin-action/packs-admin-action.component';
+import { SplitAdminPackComponent } from './split-admin-pack/split-admin-pack.component';
 
 @NgModule({
   imports: [
@@ -62,13 +64,16 @@ import { PacksPanelComponent } from './packs-panel/packs-panel.component';
     UserAddPackComponent,
     UserTransferPackComponent,
     PanelComponent,
-    PacksPanelComponent,       
+    PacksPanelComponent,
+    PacksAdminActionComponent,
+    SplitAdminPackComponent,       
   ],
   exports:[
   ],
   entryComponents:[
     UserAddPackComponent,
-    UserTransferPackComponent
+    UserTransferPackComponent,
+    SplitAdminPackComponent
   ]
 })
 export class AdminModule { }

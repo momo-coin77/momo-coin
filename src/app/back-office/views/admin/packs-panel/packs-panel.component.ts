@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { BsModalService } from 'ngx-bootstrap/modal';
 import { merge } from 'rxjs';
 import { EntityID } from '../../../../shared/entity/EntityID';
 import { Pack } from '../../../../shared/entity/pack';
+import { DataStateUpdateService } from '../../../../shared/service/data-state-update/data-state-update.service';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { MarketService } from '../../../../shared/service/market/market.service';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 import { BasicPackService } from '../../../../shared/service/pack/basic-pack.service';
 import { UserService } from '../../../../shared/service/user/user.service';
+import { UserTransferPackComponent } from '../user-transfer-pack/user-transfer-pack.component';
 
 @Component({
   selector: 'app-packs-panel',
@@ -23,13 +26,21 @@ export class PacksPanelComponent implements OnInit {
   listNotOnMarketPack:Pack[]=[];
   listNotOnMarketPackCheck:Map<string,boolean>=new Map<string,boolean>();
 
-  waitResponse:boolean=false
+  
+
+  waitResponseSecondBtn:boolean=false;
+  waitResponseBtn:boolean=false
+
+  
+
   selectedPackId:String="";
   constructor(
     private marketService:MarketService,
     private userService:UserService,
     private notificationService:NotificationService,
-    private basicPackService:BasicPackService
+    private basicPackService:BasicPackService,
+    private dataUpdateService:DataStateUpdateService,
+    private dialog:BsModalService
   ) { }
 
   ngOnInit(): void {
@@ -86,35 +97,33 @@ export class PacksPanelComponent implements OnInit {
   }
   emptyMarket()
   {
-    if(this.waitResponse) return;
-    this.waitResponse=true;
+    if(this.waitResponseBtn || this.waitResponseSecondBtn) return;
+    this.waitResponseBtn=true;
     this.marketService.putAllNoToMarket()
     .then((result:ResultStatut)=>{
-      this.waitResponse=false
+      this.waitResponseBtn=false
       this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>The market was successfully emptied',200);
     })
     .catch((error:ResultStatut)=>{
-      this.waitResponse=false
+      this.waitResponseBtn=false
       this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Error !\</b>\<br>'+error.message);
     })
   }
-  changeStatusPack(pack:Pack)
+  
+  checkPackList()
   {
-    if(this.waitResponse) return;
-    this.waitResponse=true;
-    this.selectedPackId=pack.id.toString()
-    // console.log(pack)
-    this.basicPackService.changeStatusMarket(pack)
+    if(this.waitResponseBtn || this.waitResponseSecondBtn) return;
+    this.waitResponseSecondBtn=true;
+    this.dataUpdateService.clearAndCheckDateBasePack()
     .then((result:ResultStatut)=>{
-      this.waitResponse=false
-      this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', `\<b>Success !\</b>\<br>The status of the pack is now '${pack.state}'`,200); 
-      this.selectedPackId=""
+      this.waitResponseSecondBtn=false;
+      this.notificationService.showNotification('top', 'center', 'success', 'pe-7s-close-circle', `\<b>Success !\</b>\<br> The market has been updated successfully `,200)
     })
     .catch((error:ResultStatut)=>{
-      this.waitResponse=false
-      this.selectedPackId="";
+      this.waitResponseSecondBtn=false
       this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', '\<b>Error !\</b>\<br>'+error.message);
-    })
+    })    
   }
+  
 
 }

@@ -26,7 +26,9 @@
                 <td>{{getFormatDate(pack.payDate)}}</td>
                 <td>{{getFormatDate(pack.saleDate)}}</td>
                 <td>{{getFormatHours(pack.saleDate)}}</td>
-                <td> <span (click)="tranferPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+                <td> 
+                  <app-packs-admin-action [pack]="pack"></app-packs-admin-action>
+                </td>
               </tr>             
             </tbody>
           </table>
@@ -57,7 +59,9 @@
                 <td>{{pack.plan}}</td>
                 <td>{{getFormatDate(pack.payDate)}}</td>
                 <td>{{getFormatHours(pack.saleDate)}}</td>
-                <td><span (click)="tranferPack(pack)" class="green-text hand"><b><mat-icon>arrow_right_alt</mat-icon></b></span></td>
+                <td>
+                  <app-packs-admin-action [pack]="pack"></app-packs-admin-action>
+                </td>
               </tr>             
             </tbody>
           </table>

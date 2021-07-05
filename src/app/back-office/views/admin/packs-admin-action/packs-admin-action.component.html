@@ -1,0 +1,36 @@
+ 
+<span title="Remove from the market" *ngIf="pack.state=='on_market'" (click)="changeStatusPack(pack)" class="green-text hand">
+    <b>
+        <i *ngIf="selectedPackId!=pack.id.toString() && !waitResponse" class="fa fa-shopping-cart"></i>
+        <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponse" style="margin-right: 5px;"></app-spinner>
+    </b>
+</span>
+
+<span title="Put on the market" *ngIf="pack.state=='not_on_market'" (click)="changeStatusPack(pack)" class="red-text hand">
+    <b>
+        <i *ngIf="selectedPackId!=pack.id.toString() && !waitResponse" class="fa fa-shopping-cart"></i>
+        <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponse" style="margin-right: 5px;"></app-spinner>
+    </b>
+</span>
+
+<span  title="Transfer to a buyer" (click)="transferPack(pack)" class="blue-text" >
+    <b>
+        <i  class="fas fa-paper-plane" *ngIf="selectedPackId!=pack.id.toString() || !waitResponseThird "></i>
+        <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponseThird " style="margin-right: 5px;"></app-spinner>
+    </b>  
+</span>
+
+<span  title="Split the pack" (click)="splitPack(pack)" class="orange-text" >
+    <b>
+        <i  class="fas fa-cut" *ngIf="selectedPackId!=pack.id.toString() || !waitResponseFour "></i>
+        <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponseFour " style="margin-right: 5px;"></app-spinner>
+    </b>  
+</span>
+
+<span  title="Remove the pack from the system" (click)="deletePack(pack)" class="pink-text" >
+    <b>
+        <i *ngIf="selectedPackId!=pack.id.toString() || !waitResponseSecond " class="fas fa-trash-alt"></i>
+        <app-spinner *ngIf="selectedPackId==pack.id.toString() && waitResponseSecond " style="margin-right: 5px;"></app-spinner>
+    </b>  
+</span>
+            

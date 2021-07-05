@@ -5,9 +5,7 @@
         <!-- <div class="row"> -->
           <app-list-user [emailUser]="emailForSearchUser" (selectedUser)="setSelectedUser($event)"></app-list-user> 
         <!-- </div>    -->
-        <div class="row">
-          <button class="btn" (click)="checkPackList()">Check update pack to update</button>
-        </div>       
+             
     </div>
     <div class="col-8">
         <mat-card>
@@ -15,8 +13,7 @@
              <app-tab-item title="Profil"><app-user-profil [user]="selectedUser"></app-user-profil></app-tab-item>
              <app-tab-item title="Packs"> 
                <app-user-packs [user]="selectedUser"></app-user-packs>
-             </app-tab-item>
-             <app-tab-item title="Transaction"> Transactions</app-tab-item>
+             </app-tab-item>            
            </app-tabs>
         </mat-card>
     </div>
