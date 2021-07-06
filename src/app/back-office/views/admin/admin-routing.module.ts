@@ -6,6 +6,7 @@ import { PacksPanelComponent } from './packs-panel/packs-panel.component';
 import { AddPackComponent } from './packs/add-pack/add-pack.component';
 import { ListsPackComponent } from './packs/lists-pack/lists-pack.component';
 import { PanelComponent } from './panel/panel.component';
+import { SettingsAdminComponent } from './settings-admin/settings-admin.component';
 import { UserAdminPanel } from './user-admin-panel/user-admin-panel.component';
 import { ListsUserComponent } from './users/lists-user/lists-user.component';
 
@@ -69,6 +70,16 @@ const routes: Routes = [
                 // canActivate:[AuthGuard]
 
             },
+            {
+                path: 'setting-panel',
+                canActivate: [AdminerGuard],
+                component: SettingsAdminComponent,
+                data: {
+                    title: 'Settings'
+                }
+                // canActivate:[AuthGuard]
+
+            }, 
             {
                 path: 'add-pack',
                 canActivate: [AdminerGuard],

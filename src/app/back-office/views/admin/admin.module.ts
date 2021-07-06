@@ -25,6 +25,8 @@ import { UserAdminPanel } from './user-admin-panel/user-admin-panel.component';
 import { PacksPanelComponent } from './packs-panel/packs-panel.component';
 import { PacksAdminActionComponent } from './packs-admin-action/packs-admin-action.component';
 import { SplitAdminPackComponent } from './split-admin-pack/split-admin-pack.component';
+import { SettingsAdminComponent } from './settings-admin/settings-admin.component';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { SplitAdminPackComponent } from './split-admin-pack/split-admin-pack.com
     AdminRoutingModule,
     AlertModule.forRoot(),
     ModalModule.forRoot(),    
+    TimepickerModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     SpinnerModule,
@@ -66,7 +69,8 @@ import { SplitAdminPackComponent } from './split-admin-pack/split-admin-pack.com
     PanelComponent,
     PacksPanelComponent,
     PacksAdminActionComponent,
-    SplitAdminPackComponent,       
+    SplitAdminPackComponent,
+    SettingsAdminComponent,       
   ],
   exports:[
   ],

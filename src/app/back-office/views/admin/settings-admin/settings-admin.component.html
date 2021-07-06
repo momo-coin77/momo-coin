@@ -1,0 +1,71 @@
+<mat-card>
+    <app-tabs>
+      <app-tab-item title="Market">
+        
+        <div class="row">
+            <div class="col-12">
+                <alert type="warning">
+                    <strong>Warning!</strong> If you open the market status manually you must also close it manually
+                  </alert>
+            </div>
+            <span class="col-2">Market Status</span>
+            <span class="col-2">
+                <span [ngClass]="{'red-text':market.state!='open', 'green-text':market.state=='open'}">
+                    {{market.state=='open'?'OPEN':'CLOSE'}}
+                </span>
+            </span>
+            <div class="col-2">
+                <!-- <button [ngClass]="{'b-danger': user.user.status=='active',
+              'b-success' : user.user.status!='active'}" (click)="changeStatus(user)"
+                  class="btn btn-sm btn-danger">
+                  <i *ngIf="!user.waitResponse" class="fa fa-power-off"></i>
+                  
+                </button> -->
+
+                <button (click)="changeMarketStatus()" [ngClass]="{'btn-success':market.state!='open', 'btn-danger':market.state=='open'}" class="btn">
+                    <span *ngIf="!waitForChangeStateMarket">{{market.state=='open'?'CLOSE':'OPEN'}}</span>
+                    <app-spinner *ngIf="waitForChangeStateMarket"></app-spinner>
+                </button>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-4">Market opening time</div>
+              <div class="col-4">
+                <button class="btn btn-success">
+                  <i class="fa fa-plus"></i><span>Add time range</span>
+                </button>
+              </div>
+              <div class="col-4">
+                <button class="btn btn-danger">
+                  <i class="fa fa-times"></i><span>Remove time range</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Start</th>
+                <th>End</th>
+              </tr>
+            </thead>
+    
+            <tbody>   
+              <td><timepicker #timepicker ></timepicker></td>           
+              <tr *ngFor="let time of timeList;let i=index">
+                <td>{{i+1}}</td>
+                <td><timepicker [(ngModel)]="mytime"></timepicker></td>
+                <td></td>
+              </tr>             
+            </tbody>
+          </table>
+        </div>
+      </app-tab-item>
+      <app-tab-item title="Gain"> 
+        
+      </app-tab-item>            
+    </app-tabs>
+ </mat-card>
