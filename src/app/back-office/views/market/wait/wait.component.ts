@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, Observable, interval, } from 'rxjs';
+import { ConfigAppService } from '../../../../shared/service/config-app/config-app.service';
 import { MarketService } from '../../../../shared/service/market/market.service';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 
@@ -18,14 +19,14 @@ export class WaitComponent implements OnInit {
     private updateSubscription: Subscription;
 
     constructor(private router: Router,
-        private  market: MarketService) {
-        this.market.marketTime();
+        private  configAppService: ConfigAppService) {
+        this.configAppService.checkMarketTime();
     }
 
     ngOnInit() {
         this.updateSubscription = interval(3000).subscribe(
             (val) => {
-                this.market.marketTime();
+                this.configAppService.checkMarketTime();
             });
     }
 

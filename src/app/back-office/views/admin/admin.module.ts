@@ -27,6 +27,8 @@ import { PacksAdminActionComponent } from './packs-admin-action/packs-admin-acti
 import { SplitAdminPackComponent } from './split-admin-pack/split-admin-pack.component';
 import { SettingsAdminComponent } from './settings-admin/settings-admin.component';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { AdminTimerpickerComponent } from './admin-timerpicker/admin-timerpicker.component';
+import { AdminRangeTimerpickerComponent } from './admin-range-timerpicker/admin-range-timerpicker.component';
 
 @NgModule({
   imports: [
@@ -70,7 +72,9 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     PacksPanelComponent,
     PacksAdminActionComponent,
     SplitAdminPackComponent,
-    SettingsAdminComponent,       
+    SettingsAdminComponent,
+    AdminTimerpickerComponent,
+    AdminRangeTimerpickerComponent,       
   ],
   exports:[
   ],

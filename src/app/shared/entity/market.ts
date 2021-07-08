@@ -22,10 +22,11 @@ export class Market extends Entity
                     for(const id of Object.keys(entity[key]))
                     {
                         let time=new MarketOpenTime();
-                        time.hydrate(entity[key])[id];
+                        time.hydrate(entity[key][id]);
                         this.openTime.push(time);
                     }
                 }
+                else if(key=="id") this.id.setId(entity[key])
                 else Reflect.set(this, key, entity[key]);
             }
         }
@@ -34,11 +35,15 @@ export class Market extends Entity
     toString(): Record<string | number, any> {
         let r = {};
         for (const k of Object.keys(this)) {
-            if (k == "openTime")  r[k]= this.openTime.map((time:MarketOpenTime)=>{
+            if (k == "openTime") 
+            {
                 let t={}
-                t[time.id.toString().toString()]=time.toString();
-                return t;
-            })
+                this.openTime.forEach((time:MarketOpenTime)=>{                    
+                    t[time.id.toString().toString()]=time.toString();
+                })
+                r[k]=t;      
+            }
+            else if (k == "id") r[k]=this.id.toString();
             else r[k] = Reflect.get(this, k);
         }
         return r;

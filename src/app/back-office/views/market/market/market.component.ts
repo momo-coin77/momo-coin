@@ -16,6 +16,7 @@ import { EventService } from '../../../../shared/service/event/event.service';
 import { UserService } from '../../../../shared/service/user/user.service';
 // import { TranslateService } from '@ngx-translate/core';
 import { combineAll, mergeAll } from 'rxjs/operators';
+import { ConfigAppService } from '../../../../shared/service/config-app/config-app.service';
 
 enum FilterNetwork {
   ALL = "All",
@@ -67,9 +68,10 @@ export class MarketComponent implements OnInit, OnDestroy {
     private marketService: MarketService,
     private notification: NotificationService,
     // public translate: TranslateService,
+    private configAppService:ConfigAppService,
     private eventService: EventService
   ) {
-    this.marketService.marketTime();
+    this.configAppService.checkMarketTime()
     this.calculDate();
     // this.refreshFonct();
 
@@ -103,7 +105,7 @@ export class MarketComponent implements OnInit, OnDestroy {
 
     this.updateSubscription = interval(3000).subscribe(
       (val) => {
-        return this.marketService.marketTime();
+        return this.configAppService.checkMarketTime();
       });
 
     this.eventService.newPackArrivedEvent.subscribe((arrived: boolean) => {
