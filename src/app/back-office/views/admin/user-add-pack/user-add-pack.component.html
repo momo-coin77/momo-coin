@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label for="plan">Plan</label>
                     <select  formControlName="plan" placeholder="5days">
-                        <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
+                        <option *ngFor="let option of gainList" value="{{option.percent}}" selected>{{option.numberOfDay}}days</option>
                     </select>
                 </div>
                

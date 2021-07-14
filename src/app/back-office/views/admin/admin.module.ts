@@ -29,6 +29,8 @@ import { SettingsAdminComponent } from './settings-admin/settings-admin.componen
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { AdminTimerpickerComponent } from './admin-timerpicker/admin-timerpicker.component';
 import { AdminRangeTimerpickerComponent } from './admin-range-timerpicker/admin-range-timerpicker.component';
+import { GainComponent } from './gain/gain.component';
+import { GainInputComponent } from './gain-input/gain-input.component';
 
 @NgModule({
   imports: [
@@ -74,7 +76,9 @@ import { AdminRangeTimerpickerComponent } from './admin-range-timerpicker/admin-
     SplitAdminPackComponent,
     SettingsAdminComponent,
     AdminTimerpickerComponent,
-    AdminRangeTimerpickerComponent,       
+    AdminRangeTimerpickerComponent,
+    GainComponent,
+    GainInputComponent,       
   ],
   exports:[
   ],

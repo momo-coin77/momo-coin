@@ -55,7 +55,7 @@
                   <td>{{pack.pack.amount}} MC</td>
                   <th><b>
                       <select  [formControl]="pack.selectForm" placeholder="5days">
-                        <option *ngFor="let option of gainList" value="{{option.key}}" selected>{{option.key}}days</option>
+                        <option *ngFor="let option of gainList" value="{{option.percent}}" selected>{{option.numberOfDay}}days</option>
                       </select></b>
                   </th>
                   <th *ngIf="pack.user.phone == currentUserPhone"><b>

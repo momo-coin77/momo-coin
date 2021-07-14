@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { BehaviorSubject, combineLatest, interval, Subscription } from 'rxjs';
-import { gainConfig, Pack, PackBuyState, PackGain, PackState } from '../../../../shared/entity/pack';
+import { Pack, PackBuyState, PackGain, PackState } from '../../../../shared/entity/pack';
 import { User } from '../../../../shared/entity/user';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { MarketService } from '../../../../shared/service/market/market.service';
@@ -42,7 +42,7 @@ export class MarketComponent implements OnInit, OnDestroy {
   packs: { waitResponse: boolean, pack: Pack, user: User, selectForm: FormControl }[] = [];
   listPacks: Map<string, boolean> = new Map<string, boolean>();
   currentPack: { waitResponse?: boolean, pack?: Pack, user?: User, selectForm?: FormControl } = {};
-  gainList = Object.keys(gainConfig).map((key) => Object.create({}, { value: { value: gainConfig[key] }, key: { value: key } }));
+  gainList:{percent:string,numberOfDay:number}[]=[] 
   hasCurrentPack: boolean = false;
   // packs: { user: User, pack: Pack }[] = [];
 
@@ -75,6 +75,8 @@ export class MarketComponent implements OnInit, OnDestroy {
     this.calculDate();
     // this.refreshFonct();
 
+    
+
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.currentUserPhone = user.phone;
     });
@@ -98,6 +100,10 @@ export class MarketComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
+    this.configAppService.gains.subscribe((gain:{percent:string,numberOfDay:number}[])=>{
+      this.gainList=gain;
+    })
 
     this.authService.currentUserSubject.subscribe((user: User) => {
       this.currentUserPhone = user.phone;
@@ -133,7 +139,7 @@ export class MarketComponent implements OnInit, OnDestroy {
                         waitResponse: false,
                         pack,
                         user: result.result,
-                        selectForm: new FormControl(this.gainList[0].key)
+                        selectForm: this.gainList.length>0?new FormControl(this.gainList[0].numberOfDay):new FormControl()
                       });
                       this.searchPacks.push(pack);
                       this.listPacks.set(pack.id.toString().toString(), true);
@@ -160,10 +166,12 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   show2() {
     // console.log('teste pop');    
-    let gain: PackGain = {
-      jour: +this.currentPack.selectForm.value,
-      pourcent: gainConfig[this.currentPack.selectForm.value]
-    }
+    let gain: PackGain = new PackGain();
+    gain.hydrate({
+      jour: +this.gainList.find((gain:{percent:string,numberOfDay:number})=>this.currentPack.selectForm.value==gain.percent).numberOfDay,
+      pourcent: +this.currentPack.selectForm.value 
+    });
+    console.log("Gain ", gain)
     this.waitForPackOnlineState = true;
     // console.log('Gain ',gain)
     // this.packService.getOnlinePack(this.currentPack.pack.id)
@@ -192,7 +200,6 @@ export class MarketComponent implements OnInit, OnDestroy {
 
         this.notification.showNotification('top', 'center', style, 'pe-7s-close-circle', this.resultOperation.message);
       })
-
   }
 
   show1(pack) {

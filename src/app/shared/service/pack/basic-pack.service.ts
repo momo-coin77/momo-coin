@@ -264,7 +264,7 @@ export class BasicPackService {
                 let d:Date = new Date();
                 d.setHours(d.getHours()+5);
                 pack.maxPayDate=d.toISOString();
-                pack.wantedGain=gain;
+                pack.wantedGain.hydrate(gain.toString());
                 pack.nextAmount = this.planService.calculePlan(pack.amount,gain.jour);
                 this.firebaseApi.updates([
                     {
@@ -326,7 +326,7 @@ export class BasicPackService {
                 newPack.saleDate=dateForSelle.toISOString();
                 newPack.buyState=PackBuyState.ON_WAITING_BUYER;
                 newPack.plan=pack.wantedGain.jour
-                newPack.wantedGain={jour:0,pourcent:0};
+                newPack.wantedGain.init();
                 newPack.idOwner.setId(msg.from.toString());
                 newPack.idBuyer.setId(" ");
 

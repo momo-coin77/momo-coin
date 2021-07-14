@@ -11,15 +11,28 @@ import { ResultStatut } from '../firebase/resultstatut';
 export class ConfigAppService {
   market:BehaviorSubject<Market>=new BehaviorSubject<Market>(new Market());
   isForcedOpenMarketStatus:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  gains:BehaviorSubject<{percent:string,numberOfDay:number}[]>=new BehaviorSubject<{percent:string,numberOfDay:number}[]>([])
+  
   constructor(private firebaseApi:FirebaseApi,
     private router:Router) {
     this.firebaseApi.getFirebaseDatabase()
-    .ref("config/market")
+    .ref("config")
     .on("value",(data)=>{
-      let market:Market=new Market();
-      market.hydrate(data.val());
-      this.market.next(market);
-      this.isForcedOpenMarketStatus.next(market.state==MarketState.OPEN)
+      let dataConfig=data.val();
+      if(dataConfig.market)
+      {
+        let market:Market=new Market();
+        market.hydrate(dataConfig.market);
+        this.market.next(market);
+        this.isForcedOpenMarketStatus.next(market.state==MarketState.OPEN)
+      }
+      console.log("gains ",dataConfig)
+      if(dataConfig.gains)
+      {
+        let g:{percent:string,numberOfDay:number}[]=[]
+        for(const key in dataConfig.gains) g.push({percent:key,numberOfDay:dataConfig.gains[key]})
+        this.gains.next(g);
+      }
     })
   }
 
@@ -44,6 +57,25 @@ export class ConfigAppService {
         // console.log("Result ",result)
         this.market.next(market);
         resolve(result)
+      })
+      .catch((error:ResultStatut)=>{
+        this.firebaseApi.handleApiError(error);
+        reject(error);
+      })
+    })
+  }
+
+  saveGain(gains:{percent,numberOfDay}[]):Promise<ResultStatut>
+  {
+    let gainsList={};
+    gains.forEach((gain:{percent,numberOfDay})=>{
+      gainsList[gain.percent]=gain.numberOfDay
+    })
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.set(`config/gains`,gainsList)
+      .then((result:ResultStatut)=> {
+        this.gains.next(gains)
+        resolve(new ResultStatut())
       })
       .catch((error:ResultStatut)=>{
         this.firebaseApi.handleApiError(error);

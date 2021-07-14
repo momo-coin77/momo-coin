@@ -29,7 +29,7 @@ export class SettingsAdminComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.configAppService.market.subscribe((market:Market)=>{
       this.market=market;
-      console.log("market ",market)
+      // console.log("market ",market)
       this.timeList=market.openTime.slice();
       if(market.openTime.length>0) this.waitLoadData=false;
     })

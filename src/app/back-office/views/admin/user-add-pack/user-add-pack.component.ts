@@ -3,8 +3,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { EntityID } from '../../../../shared/entity/EntityID';
-import { gainConfig, Pack, PackState } from '../../../../shared/entity/pack';
+import { Pack, PackState } from '../../../../shared/entity/pack';
 import { User } from '../../../../shared/entity/user';
+import { ConfigAppService } from '../../../../shared/service/config-app/config-app.service';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
 import { PlanService } from '../../../../shared/service/opperations/plan.service';
@@ -26,8 +27,8 @@ export class UserAddPackComponent implements OnInit {
     {text:"Pas sur le marché" , value:PackState.NOT_ON_MARKET}
   ]; 
   waitResponse:boolean=false;
-  gainList = Object.keys(gainConfig).map((key) => Object.create({}, { value: { value: gainConfig[key] }, key: { value: key } }));
-  
+  // gainList = Object.keys(gainConfig).map((key) => Object.create({}, { value: { value: gainConfig[key] }, key: { value: key } }));
+  gainList:{percent:string,numberOfDay:number}[]=[] 
   constructor(
     private bsModalRef: BsModalRef,
     private packService: BasicPackService,
@@ -35,6 +36,8 @@ export class UserAddPackComponent implements OnInit {
     private userService:UserService,
     private planService:PlanService,
     private validatorInput:ValidatorinputService,
+    private configAppService:ConfigAppService
+
     // public dialogRef: MatDialogRef<UserAddPackComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
@@ -42,10 +45,15 @@ export class UserAddPackComponent implements OnInit {
     this.bsModalRef.hide();
   }
   ngOnInit(): void {
+    this.configAppService.gains.subscribe((gain:{percent:string,numberOfDay:number}[])=>{
+      this.gainList=gain;
+    })
+
     this.form=new FormGroup({
       amount:new FormControl("",[Validators.required]),
       payDate:new FormControl(""),
-      plan:new FormControl(this.gainList[Object.keys(this.gainList)[0]].key)
+      plan: this.gainList.length>0?new FormControl(this.gainList[0].numberOfDay):new FormControl()
+
     });
   }
   confirm()
@@ -59,8 +67,11 @@ export class UserAddPackComponent implements OnInit {
     this.waitResponse=true;
     
     let pack:Pack=new Pack();
+    let waintedGain = this.gainList.find((value)=>value.percent==this.form.value.plan)
+    // console.log("WaintedGain ",waintedGain)
+
     pack.amount=+this.form.value.amount;
-    pack.plan=+this.form.value.plan;
+    pack.plan=+waintedGain.numberOfDay;
     pack.amount=this.planService.calculePlan(pack.amount,pack.plan);
 
     let date: Date = new Date(this.form.value.payDate);

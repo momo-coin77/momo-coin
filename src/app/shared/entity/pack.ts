@@ -17,14 +17,21 @@ export enum PackBuyState {
     ON_END_SEL = 'on_end_sel'
 }
 
-export interface PackGain {
-    pourcent?: number;
-    jour?: number;
-}
+
 export const gainConfig={
     "5":15,
     "10":35,
     "20":85
+}
+
+export class PackGain extends Entity {
+    pourcent: number=0;
+    jour: number=0;
+    init()
+    {
+        this.pourcent=0;
+        this.jour=0;
+    }
 }
 
 // pack representation
@@ -40,7 +47,7 @@ export class Pack extends Entity {
     buyState: PackBuyState = PackBuyState.ON_WAITING_BUYER;
     idBuyer: EntityID = new EntityID();
     state: PackState = PackState.NOT_ON_MARKET;
-    wantedGain : PackGain={pourcent:0,jour:0};
+    wantedGain : PackGain=new PackGain();
     maxPayDate:String="";
 
     getBuyState() {
@@ -56,13 +63,7 @@ export class Pack extends Entity {
                 if (key == 'id') { this.id.setId(entity.id); }
                 else if (key == 'idOwner') { this.idOwner.setId(entity.idOwner); }
                 else if (key == 'idBuyer') { this.idBuyer.setId(entity.idBuyer); }
-                else if(key == "wantedGain") 
-                {
-                    let r={};
-                    if(entity[key].pourcent) r["pourcent"]=entity[key].pourcent;
-                    if(entity[key].jour) r["jour"]=entity[key].jour;
-                    this.wantedGain=r;
-                }
+                else if(key == "wantedGain") this.wantedGain.hydrate(entity[key]);
                 else { Reflect.set(this, key, entity[key]); }
             }
         }
@@ -74,25 +75,10 @@ export class Pack extends Entity {
             if (k == 'id') { r[k] = this.id.toString(); }
             else if (k == 'idOwner') { r[k] = this.idOwner.toString(); }
             else if (k == 'idBuyer') { r[k] = this.idBuyer.toString(); }
-            else if(k == 'wantedGain ') r[k]={pourcent:this.wantedGain.pourcent,jour:this.wantedGain.jour}
+            else if(k == 'wantedGain ') r[k]=this.toString()
             else { r[k] = Reflect.get(this, k); }
         }
         return r;
     }
 }
 
-export class ReceiverPayment extends Entity {
-    public name: String = '';
-    public contact: String = '';
-    public parttypesupplied: String = '';
-}
-
-
-export function packBuilder(entity: Record<string, any>): Pack {
-    let pck: Pack = null;
-    if (entity.options) {
-        pck.hydrate(entity);
-    }
-// console.log('Hydrated pack ', pck);
-    return pck;
-}
