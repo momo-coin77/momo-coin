@@ -108,7 +108,7 @@
         <div *ngIf="!waitResponse">
           <p class="text-left">You will put your bonuses on the market.</p>
           <br>bonus: <b>{{bonus}}</b>
-          <br>Sale: <b> 15 000 MC</b>
+          <br>Sale: <b> {{minBonus}} MC</b>
           <br>Remaining: <b> {{nextBonus}} </b>
         </div>
         <app-spinner *ngIf="waitResponse"></app-spinner>

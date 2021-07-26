@@ -103,6 +103,7 @@ export class MarketComponent implements OnInit, OnDestroy {
 
     this.configAppService.gains.subscribe((gain:{percent:string,numberOfDay:number}[])=>{
       this.gainList=gain;
+
     })
 
     this.authService.currentUserSubject.subscribe((user: User) => {
@@ -139,7 +140,7 @@ export class MarketComponent implements OnInit, OnDestroy {
                         waitResponse: false,
                         pack,
                         user: result.result,
-                        selectForm: this.gainList.length>0?new FormControl(this.gainList[0].numberOfDay):new FormControl()
+                        selectForm: new FormControl()
                       });
                       this.searchPacks.push(pack);
                       this.listPacks.set(pack.id.toString().toString(), true);
@@ -166,6 +167,7 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   show2() {
     // console.log('teste pop');    
+    
     let gain: PackGain = new PackGain();
     gain.hydrate({
       jour: +this.gainList.find((gain:{percent:string,numberOfDay:number})=>this.currentPack.selectForm.value==gain.percent).numberOfDay,
@@ -204,6 +206,11 @@ export class MarketComponent implements OnInit, OnDestroy {
 
   show1(pack) {
     // console.log("Show pack ",pack)
+    if(pack.selectForm.value==null || pack.selectForm.value==undefined)
+    {
+      return this.notification.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', `\<b>Sorry !\</b>\<br> please choose the plan`);
+     
+    }
     this.currentPack = pack;
     this.hasCurrentPack = true;
     this.firstModal.show();

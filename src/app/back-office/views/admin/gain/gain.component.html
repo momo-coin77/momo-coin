@@ -51,4 +51,38 @@
           </tbody>
         </table>
       </div>
+
+      <div class="row">
+        <div class="col-12">
+            <form [formGroup]="formBonus" (ngSubmit)="saveBonus()">
+                <div class="row">
+                    <div class="col-3">Bonus</div>                
+                    <div class="col-3">
+                        <button class="btn btn-success white-text" type="submit">
+                            <app-spinner *ngIf="waitForChangeStateBonus"></app-spinner>
+                            <span *ngIf="!waitForChangeStateBonus">
+                                <i class="fa fa-save"></i><span>Save bonus</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col-6">
+                        <div class="row">
+                            <span class="col-3">Value </span>
+                            <span class="col-7">
+                                <input type="number" formControlName="formBonusValue">
+                            </span></div>
+                    </div>   
+                    <div class="input-field col-6">
+                      <div class="row">
+                          <span class="col-7">Minimum withdrawal value </span>
+                          <span class="col-5">
+                              <input type="number" formControlName="formMinBonus">
+                          </span></div>
+                  </div>                   
+                </div>
+            </form>
+          </div>
+      </div>
 </div>

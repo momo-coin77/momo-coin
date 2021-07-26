@@ -68,7 +68,13 @@ export class UserService {
       this.firebaseApi.fetchOnce(`users/${id.toString()}`)
         .then((result: ResultStatut) => {
           let user: User = new User();
-          // console.log("result, ",result)
+          console.log("result, ",result)
+          if(result.result==null || result.result==undefined)
+          {
+            result.message="User not found";
+            result.apiCode=ResultStatut.INVALID_ARGUMENT_ERROR;
+            return reject(result);
+          }
           user.hydrate(result.result);
           this.listUser.set(user.id.toString(), user);
           this.usersSubject.next(this.listUser);

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { BasicPackService } from '../../../shared/service/pack/basic-pack.service';
 import { ResultStatut } from '../../../shared/service/firebase/resultstatut';
+import { ConfigAppService } from '../../../shared/service/config-app/config-app.service';
 // import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
   allSaleAmount: number = 0;
   allPurchaseAmount: number = 0;
   allAmount: number = 0;
+  minBonus :number =0;
   waitResponse = false;
 
   constructor(
@@ -51,6 +53,7 @@ export class DashboardComponent implements OnInit {
     // private translate:TranslateService,
     private eventService: EventService,
     private basicPackService:BasicPackService,
+    private configAppService:ConfigAppService,
     private profilService: ProfilService) {
     this.getPurchasePacks();
     this.getSalePacks();
@@ -84,12 +87,23 @@ export class DashboardComponent implements OnInit {
       });
 
     this.authService.currentUserSubject.subscribe((user: User) => {
+      console.log("min ",this.minBonus)
       this.bonus = user.bonus;
-      if(user.bonus >= 15000) {
+      if(user.bonus >= this.configAppService.bonus.getValue().minBonus) {
         this.saleBonus = true;
-        this.nextBonus = user.bonus - 15000;
+        this.nextBonus = user.bonus - this.configAppService.bonus.getValue().minBonus;
       }
     });
+
+    this.configAppService.bonus.subscribe((value)=>{
+      this.minBonus=value.minBonus;
+      if(this.bonus >= this.configAppService.bonus.getValue().minBonus) {
+        this.saleBonus = true;
+        this.nextBonus = this.bonus - this.configAppService.bonus.getValue().minBonus;
+      }
+    })
+
+    
 
     this.getPurchasePacks();
     this.getSalePacks();
@@ -139,7 +153,7 @@ export class DashboardComponent implements OnInit {
     .then((result: ResultStatut) => {
       this.waitResponse = false;
       this.showSaleBonus.hide()
-      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', '\<b>Success !\</b>\<br>15000MC \</b>of your bonuses have been put on the market');
+      this.notification.showNotification('top', 'center', 'success', 'pe-7s-close-circle', `\<b>Success !\</b>\<br>${this.minBonus} MC \</b>of your bonuses have been put on the market`);
     })
       .catch((error:ResultStatut) => {
         let message="";

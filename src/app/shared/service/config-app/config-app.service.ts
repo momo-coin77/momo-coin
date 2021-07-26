@@ -5,6 +5,14 @@ import { Market, MarketState } from '../../entity/market';
 import { FirebaseApi } from '../firebase/FirebaseApi';
 import { ResultStatut } from '../firebase/resultstatut';
 
+export interface BonusHeritage
+{
+  firstParent:number,
+  secondParent:number,
+  thirdParent:number,
+  fourParent:number
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +20,8 @@ export class ConfigAppService {
   market:BehaviorSubject<Market>=new BehaviorSubject<Market>(new Market());
   isForcedOpenMarketStatus:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   gains:BehaviorSubject<{percent:string,numberOfDay:number}[]>=new BehaviorSubject<{percent:string,numberOfDay:number}[]>([])
-  
+  // bonus:BehaviorSubject<BonusHeritage>=new BehaviorSubject<BonusHeritage>({firstParent:0,secondParent:0,thirdParent:0,fourParent:0})
+  bonus:BehaviorSubject<{bonus:number,minBonus:number}> = new BehaviorSubject<{bonus:number,minBonus:number}>({bonus:0,minBonus:0});
   constructor(private firebaseApi:FirebaseApi,
     private router:Router) {
     this.firebaseApi.getFirebaseDatabase()
@@ -26,12 +35,18 @@ export class ConfigAppService {
         this.market.next(market);
         this.isForcedOpenMarketStatus.next(market.state==MarketState.OPEN)
       }
-      console.log("gains ",dataConfig)
+      // console.log("gains ",dataConfig)
       if(dataConfig.gains)
       {
         let g:{percent:string,numberOfDay:number}[]=[]
         for(const key in dataConfig.gains) g.push({percent:key,numberOfDay:dataConfig.gains[key]})
         this.gains.next(g);
+      }
+
+      if(dataConfig.bonus)  
+      {
+        this.bonus.next(dataConfig.bonus);
+        console.log(dataConfig.bonus)
       }
     })
   }
@@ -65,6 +80,20 @@ export class ConfigAppService {
     })
   }
 
+  saveBonus(bonus:{bonus:number,minBonus:number}):Promise<ResultStatut>
+  {
+    return new Promise<ResultStatut>((resolve,reject)=>{
+      this.firebaseApi.set("config/bonus",bonus)
+      .then((result:ResultStatut)=>{
+        this.bonus.next(bonus);
+        resolve(result)
+      })
+      .catch((error:ResultStatut)=>{
+        this.firebaseApi.handleApiError(error);
+        reject(error);
+      })
+    })
+  }
   saveGain(gains:{percent,numberOfDay}[]):Promise<ResultStatut>
   {
     let gainsList={};
@@ -108,14 +137,11 @@ export class ConfigAppService {
     let href = this.router.url;
     let tab = href.split('/');
     let isOpen = this.checkOpenTime();
-    // console.log("isOpen ",isOpen)
-    if(this.isForcedOpenMarketStatus.getValue()) return this.router.navigate(['market/open']);
-
+    // console.log("isOpen ",isOpen)   
     if (tab[1] === 'market') {
-
+      if(this.isForcedOpenMarketStatus.getValue()) return this.router.navigate(['market/open']); 
         if(isOpen && this.market.getValue().state==MarketState.CLOSE)
         {
-          console.log("open")
           this.market.getValue().state=MarketState.OPEN;
           this.checkBeforSave(this.market.getValue())
           return this.router.navigate(['market/open']);

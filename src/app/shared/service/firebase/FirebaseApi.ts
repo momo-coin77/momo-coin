@@ -6,7 +6,6 @@ import { ResultStatut } from './resultstatut';
 import { FireBaseConstant } from './firebase-constant'
 import { EventService } from '../event/event.service';
 import { Bug } from '../../entity/bug';
-import Bugsnag from '@bugsnag/js';
 
 @Injectable({
   providedIn: 'root'
@@ -306,7 +305,7 @@ export class FirebaseApi {
       default:
         let bug = new Bug(result);
         // this.eventService.newBugEvent.next(bug);
-        Bugsnag.notify(bug.error)
+        //Bugsnag.notify(bug.error)
         result.message = "Unknow error. please contact administrator <br> contact.momo.coin@gmail.com";
         break
     };

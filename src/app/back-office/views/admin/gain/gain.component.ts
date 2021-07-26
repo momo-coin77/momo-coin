@@ -1,4 +1,5 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConfigAppService } from '../../../../shared/service/config-app/config-app.service';
 import { ResultStatut } from '../../../../shared/service/firebase/resultstatut';
 import { NotificationService } from '../../../../shared/service/notification/notification.service';
@@ -13,8 +14,12 @@ import { GainInputComponent } from '../gain-input/gain-input.component';
 export class GainComponent implements OnInit {
 
   waitForChangeStateGain:boolean=false;
+  waitForChangeStateBonus:boolean=false;
   gainList:{percent:string,numberOfDay:number}[]=[]
   waitLoadData=true;
+
+  formBonus:FormGroup;
+
   @ViewChildren(GainInputComponent) gains:QueryList<GainInputComponent>;
   constructor(
     private configAppService:ConfigAppService,
@@ -22,10 +27,29 @@ export class GainComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.formBonus=new FormGroup({
+      formBonusValue:new FormControl(0,[Validators.required]),
+      formMinBonus:new FormControl(0,[Validators.required]),
+    })
+
     this.configAppService.gains.subscribe((gains:{percent:string,numberOfDay:number}[])=>{
       this.gainList=gains;
       if(this.gainList.length>0) this.waitLoadData=false
     })
+
+    this.configAppService.bonus.subscribe((value)=>{
+      this.formBonus.controls.formBonusValue.setValue(value.bonus);
+      this.formBonus.controls.formMinBonus.setValue(value.minBonus);
+    })
+
+   
+
+    // this.formBonus=new FormGroup({
+    //   "toFirstParent":new FormControl(0,[Validators.required]),
+    //   "toSecondParent":new FormControl(0),
+    //   "toThirdParent":new FormControl(0),
+    //   "toFourParent":new FormControl(0)
+    // })
   }
   addGain()
   {
@@ -71,5 +95,21 @@ export class GainComponent implements OnInit {
       this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', `\<b>Error !\</b>\<br>`+result.message);
     })
     // console.log("Gain",ngList)
+  }
+
+
+  saveBonus()
+  {
+    if(!this.formBonus.valid) this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', `\<b>Error !\</b>\<br>the bonus value is invalid`);
+    this.waitForChangeStateBonus=true;
+    this.configAppService.saveBonus({bonus:this.formBonus.value.formBonusValue,minBonus:this.formBonus.value.formMinBonus})
+    .then((result:ResultStatut)=>{
+      this.waitForChangeStateBonus=false;
+      this.notificationService.showNotificationWithoutTimer('top', 'center', 'success', 'pe-7s-close-circle', `\<b>Success !\</b>\<br>The bonus have been successfully updated`);
+    })
+    .catch((result:ResultStatut)=>{
+      this.waitForChangeStateGain=false;
+      this.notificationService.showNotificationWithoutTimer('top', 'center', 'danger', 'pe-7s-close-circle', `\<b>Error !\</b>\<br>`+result.message);
+    })
   }
 }

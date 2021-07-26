@@ -5,6 +5,7 @@ import { EntityID } from "../../entity/EntityID";
 import { MIN_RETREIVAL_BONUS, Pack, PackBuyState, PackGain, PackState } from "../../entity/pack";
 import { User } from "../../entity/user";
 import { AuthService } from "../auth/auth.service";
+import { ConfigAppService } from "../config-app/config-app.service";
 import { EventService } from "../event/event.service";
 import { FireBaseConstant } from "../firebase/firebase-constant";
 import { FirebaseApi } from "../firebase/FirebaseApi";
@@ -35,7 +36,8 @@ export class BasicPackService {
         private memberShipService:MembershipService,
         private userService:UserService,
         private marketService:MarketService,
-        private userProfil:ProfilService
+        private userProfil:ProfilService,
+        private configAppService:ConfigAppService
         ){
             this.eventService.loginEvent.subscribe((log)=>{
             //   if(!log) return;            
@@ -215,7 +217,7 @@ export class BasicPackService {
      return new Promise<ResultStatut>((resolve,reject)=>{
        let user:User = this.authService.currentUserSubject.getValue();
        let result:ResultStatut=new ResultStatut()
-       if(user.bonus<MIN_RETREIVAL_BONUS)
+       if(user.bonus<this.configAppService.bonus.getValue().minBonus)
        {
          result.apiCode=ResultStatut.INVALID_ARGUMENT_ERROR;
          result.message="\<b>Oops!!\</b>The bonus amount must be greater than 15000";
@@ -225,11 +227,11 @@ export class BasicPackService {
        newPack.payDate=new Date().toISOString();
        newPack.saleDate=newPack.payDate;
        newPack.state=PackState.ON_MARKET;
-       newPack.amount=MIN_RETREIVAL_BONUS;
+       newPack.amount=this.configAppService.bonus.getValue().minBonus;
        newPack.idOwner.setId(user.id.toString())
     //    console.log("bonus pack ",newPack)
        this.addPack(newPack,user,true)
-       .then((result:ResultStatut)=>this.userProfil.retreiveBonus(MIN_RETREIVAL_BONUS))
+       .then((result:ResultStatut)=>this.userProfil.retreiveBonus(this.configAppService.bonus.getValue().minBonus))
        .then((result:ResultStatut)=>resolve(result))
        .catch((error:ResultStatut)=>{
            if(error.apiCode!=ResultStatut.INVALID_ARGUMENT_ERROR) this.firebaseApi.handleApiError(error);
@@ -312,7 +314,7 @@ export class BasicPackService {
                 }
                 pack.buyState = PackBuyState.ON_END_SEL;
                 pack.state= PackState.NOT_ON_MARKET;
-                pack.saleDate=pack.saleDate==""?(new Date()).toISOString():pack.saleDate;
+                pack.saleDate=  onLine==true?(new Date()).toISOString():pack.saleDate;
                 // pack.nextAmount=this.planService.calculePlan(pack.amount,pack.wantedGain.jour)
                 
                 let newPack:Pack = new Pack();
